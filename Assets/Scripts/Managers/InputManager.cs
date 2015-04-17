@@ -4,6 +4,7 @@ using System.Collections;
 public class InputManager : MonoBehaviour
 {
     GameObject player;
+    Vector3 mousePrevPos;
 
     void Start()
     {
@@ -20,5 +21,10 @@ public class InputManager : MonoBehaviour
         {
             player.SendMessage("Rotate");
         }
+        else if (mousePrevPos != Input.mousePosition)
+        {
+            player.SendMessage("MouseRotate");
+        }
+        mousePrevPos = Input.mousePosition;
     }
 }

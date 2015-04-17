@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PlayerMovement : MonoBehaviour {
 
-    public float speed;
+    public float speed = 4.5f;
     CharacterController controller;
     Vector2 MoveDirect;
     Vector2 CharRotate;
@@ -12,7 +12,6 @@ public class PlayerMovement : MonoBehaviour {
     void Start()
     {
         controller = gameObject.GetComponent<CharacterController>();
-        speed = .05f;
     }
 
 	void Update ()
@@ -25,7 +24,6 @@ public class PlayerMovement : MonoBehaviour {
         if (Input.GetAxis("Horizontal") > .8f || Input.GetAxis("Vertical") > .8f || Input.GetAxis("Vertical") < -.8f || Input.GetAxis("Horizontal") < -.8f)
         {
             speed = 4.5f;
-            // print("Speedup");
         }
         else
             speed = 2.5f;
@@ -35,7 +33,6 @@ public class PlayerMovement : MonoBehaviour {
 
         MoveDirect.Normalize();
         MoveDirect *= speed * Time.deltaTime;
-        //Move();
 
         controller.Move(MoveDirect);
 
