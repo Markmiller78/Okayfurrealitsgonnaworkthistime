@@ -14,29 +14,30 @@ public class PlayerMovement : MonoBehaviour {
         controller = gameObject.GetComponent<CharacterController>();
         speed = .05f;
     }
-	// Update is called once per frame
+
 	void Update ()
     {
-
-        //if(Input.GetKeyDown(KeyCode "w"))
-        //{
-
-        //}
+        
+	}
+   
+    void Move()
+    {
         if (Input.GetAxis("Horizontal") > .8f || Input.GetAxis("Vertical") > .8f || Input.GetAxis("Vertical") < -.8f || Input.GetAxis("Horizontal") < -.8f)
         {
             speed = 4.5f;
-            print("Speedup");
+            // print("Speedup");
         }
         else
             speed = 2.5f;
-        
+
         MoveDirect.x = Input.GetAxis("Horizontal");
         MoveDirect.y = Input.GetAxis("Vertical");
 
         MoveDirect.Normalize();
         MoveDirect *= speed * Time.deltaTime;
-        Move();
+        //Move();
 
+        controller.Move(MoveDirect);
 
         if (MoveDirect != Vector2.zero)
         {
@@ -50,8 +51,10 @@ public class PlayerMovement : MonoBehaviour {
             angle += 270;
             controller.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         }
+    }
 
-
+    void Rotate()
+    {
         MoveDirect.x = Input.GetAxis("RStickHorizontal");
         MoveDirect.y = Input.GetAxis("RStickVertical");
         MoveDirect.Normalize();
@@ -69,17 +72,5 @@ public class PlayerMovement : MonoBehaviour {
             angle += 90;
             controller.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         }
-
-
-	}
-   
-    void Move()
-    {
-        controller.Move(MoveDirect);
-    }
-
-    void Rotate()
-    {
-
     }
 }
