@@ -6,10 +6,13 @@ public class Health : MonoBehaviour
 
     public float maxHP;
     public float currentHP;
-
-    void GainHealth()
+    void Start()
     {
-
+        maxHP = 100;
+    }
+    void GainHealth(float Amount)
+    {
+        
     }
 
     void LoseHealth()
