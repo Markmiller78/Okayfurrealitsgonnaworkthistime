@@ -87,15 +87,11 @@ public class PlayerMovement : MonoBehaviour {
     void MouseRotate()
     {
 
-
-
-
-
-
-
-
-
-
-
+        // Rotate to face the mouse at all 
+        // times if Mouse/keyboar is active
+        Vector3 pos = Camera.main.WorldToScreenPoint(controller.transform.position);
+        Vector3 dir = Input.mousePosition - pos;
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90;
+        controller.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward); 
     }
 }
