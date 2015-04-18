@@ -82,7 +82,6 @@ public class InputManager : MonoBehaviour
                         obj.SendMessage("UnPause", SendMessageOptions.DontRequireReceiver);
                     }
                 }
-                //Debug.Log("Paused = " + isPaused);
             }
             // Back for map/stats
             if (!isPaused && Input.GetButtonDown("CMapAndStats"))
@@ -94,17 +93,16 @@ public class InputManager : MonoBehaviour
                 {
                     foreach (GameObject obj in allObjects)
                     {
-                        obj.SendMessage("UnMapAndStats", SendMessageOptions.DontRequireReceiver);
+                        obj.SendMessage("MapAndStats", SendMessageOptions.DontRequireReceiver);
                     }
                 }
                 else
                 {
                     foreach (GameObject obj in allObjects)
                     {
-                        obj.SendMessage("MapAndStats", SendMessageOptions.DontRequireReceiver);
+                        obj.SendMessage("UnMapAndStats", SendMessageOptions.DontRequireReceiver);
                     }
                 }
-                //Debug.Log("MapMenu = " + mapMenu);
             }
         }
         else // KB/M controls
@@ -164,7 +162,6 @@ public class InputManager : MonoBehaviour
                         obj.SendMessage("UnPause", SendMessageOptions.DontRequireReceiver);
                     }
                 }
-                //Debug.Log("Paused = " + isPaused);
             }
             // O for map/stats
             if (!isPaused && Input.GetButtonDown("KBMapAndStats"))
@@ -176,17 +173,16 @@ public class InputManager : MonoBehaviour
                 {
                     foreach (GameObject obj in allObjects)
                     {
-                        obj.SendMessage("UnMapAndStats", SendMessageOptions.DontRequireReceiver);
+                        obj.SendMessage("MapAndStats", SendMessageOptions.DontRequireReceiver);
                     }
                 }
                 else
                 {
                     foreach (GameObject obj in allObjects)
                     {
-                        obj.SendMessage("MapAndStats", SendMessageOptions.DontRequireReceiver);
+                        obj.SendMessage("UnMapAndStats", SendMessageOptions.DontRequireReceiver);
                     }
                 }
-                //Debug.Log("MapMenu = " + mapMenu);
             }
         }
     }
