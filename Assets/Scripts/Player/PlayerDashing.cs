@@ -65,7 +65,7 @@ public class PlayerDashing : MonoBehaviour {
                 trailBlazerDropTimer += Time.deltaTime;
                 if (trailBlazerDropTimer > 0.03f)
                 {
-                    Instantiate(TrailBlazerPickUp, transform.position, transform.rotation);
+                    Instantiate(TrailBlazerPickUp, transform.position, new Quaternion(0, 0, 0, 0));
                     trailBlazerDropTimer = 0.0f;
                 }
             }
