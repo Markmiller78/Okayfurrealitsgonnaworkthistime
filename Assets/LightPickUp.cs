@@ -10,6 +10,6 @@ public class LightPickUp : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+        //gameObject.GetComponent<Light>().range = Random.Range(2, 4);
 	}
 }
