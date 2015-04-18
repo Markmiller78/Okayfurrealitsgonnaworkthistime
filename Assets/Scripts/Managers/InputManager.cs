@@ -26,7 +26,7 @@ public class InputManager : MonoBehaviour
             // LStick to move
             if (Input.GetAxis("CLSHorizontal") != 0.0f || Input.GetAxis("CLSVertical") != 0.0f)
             {
-                player.SendMessage("Move");
+                player.SendMessage("CMove");
             }
             // RStick to rotate
             if (Input.GetAxis("CRSHorizontal") != 0.0f || Input.GetAxis("CRSVertical") != 0.0f)
@@ -34,12 +34,12 @@ public class InputManager : MonoBehaviour
                 player.SendMessage("Rotate");
             }
             // RTrigger to melee
-            if (Input.GetAxis("MeleeAndSpells") < 0.0f)
+            if (Input.GetAxis("CMeleeAndSpells") < 0.0f)
             {
                 player.SendMessage("Melee", SendMessageOptions.DontRequireReceiver);
             }
             // LTrigger to cast
-            if (Input.GetAxis("MeleeAndSpells") > 0.0f)
+            if (Input.GetAxis("CMeleeAndSpells") > 0.0f)
             {
                 player.SendMessage("CastSpell", SendMessageOptions.DontRequireReceiver);
             }
@@ -105,7 +105,7 @@ public class InputManager : MonoBehaviour
             // WASD or arrow keys to move
             if (Input.GetAxis("KBHorizontal") != 0.0f || Input.GetAxis("KBVertical") != 0.0f)
             {
-                player.SendMessage("Move");
+                player.SendMessage("KBMove");
             }
             // Mouse to rotate
             player.SendMessage("MouseRotate");
