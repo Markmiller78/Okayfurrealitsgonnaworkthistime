@@ -4,14 +4,15 @@ using System.Collections;
 public class InputManager : MonoBehaviour
 {
     GameObject player;
-    Vector3 mousePrevPos;
-    bool controller = false;
+    //Vector3 mousePrevPos;
+    public static bool controller = false;
     bool isPaused = false;
     bool mapMenu = false;
 
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        isPaused = false;
     }
 
     void Update()
@@ -71,17 +72,17 @@ public class InputManager : MonoBehaviour
                 {
                     foreach (GameObject obj in allObjects)
                     {
-                        obj.SendMessage("UnPause", SendMessageOptions.DontRequireReceiver);
+                        obj.SendMessage("Pause", SendMessageOptions.DontRequireReceiver);
                     }
                 }
                 else
                 {
                     foreach (GameObject obj in allObjects)
                     {
-                        obj.SendMessage("Pause", SendMessageOptions.DontRequireReceiver);
+                        obj.SendMessage("UnPause", SendMessageOptions.DontRequireReceiver);
                     }
                 }
-                Debug.Log("Paused = " + isPaused);
+                //Debug.Log("Paused = " + isPaused);
             }
             // Back for map/stats
             if (!isPaused && Input.GetButtonDown("CMapAndStats"))
@@ -103,7 +104,7 @@ public class InputManager : MonoBehaviour
                         obj.SendMessage("MapAndStats", SendMessageOptions.DontRequireReceiver);
                     }
                 }
-                Debug.Log("MapMenu = " + mapMenu);
+                //Debug.Log("MapMenu = " + mapMenu);
             }
         }
         else // KB/M controls
@@ -153,17 +154,17 @@ public class InputManager : MonoBehaviour
                 {
                     foreach (GameObject obj in allObjects)
                     {
-                        obj.SendMessage("UnPause", SendMessageOptions.DontRequireReceiver);
+                        obj.SendMessage("Pause", SendMessageOptions.DontRequireReceiver);
                     }
                 }
                 else
                 {
                     foreach (GameObject obj in allObjects)
                     {
-                        obj.SendMessage("Pause", SendMessageOptions.DontRequireReceiver);
+                        obj.SendMessage("UnPause", SendMessageOptions.DontRequireReceiver);
                     }
                 }
-                Debug.Log("Paused = " + isPaused);
+                //Debug.Log("Paused = " + isPaused);
             }
             // O for map/stats
             if (!isPaused && Input.GetButtonDown("KBMapAndStats"))
@@ -185,7 +186,7 @@ public class InputManager : MonoBehaviour
                         obj.SendMessage("MapAndStats", SendMessageOptions.DontRequireReceiver);
                     }
                 }
-                Debug.Log("MapMenu = " + mapMenu);
+                //Debug.Log("MapMenu = " + mapMenu);
             }
         }
     }
