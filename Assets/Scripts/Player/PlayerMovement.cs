@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerMovement : MonoBehaviour {
+public class PlayerMovement : MonoBehaviour
+{
 
     public float speed;
     CharacterController controller;
@@ -15,28 +16,27 @@ public class PlayerMovement : MonoBehaviour {
         speed = 1;
     }
 
-	void Update ()
+    void Update()
     {
-        
-	}
-   
-    void Move()
+
+    }
+
+    void CMove()
     {
 
         //Check for Left Stick Axis to 
-        //see if it is surpressed fully '
+        //see if it is surpressed fully
         //for more speed
-        if (Input.GetAxis("Horizontal") > .8f || Input.GetAxis("Vertical") > .8f || Input.GetAxis("Vertical") < -.8f || Input.GetAxis("Horizontal") < -.8f)
+        if (Input.GetAxis("CLSHorizontal") > .8f || Input.GetAxis("CLSVertical") > .8f || Input.GetAxis("CLSVertical") < -.8f || Input.GetAxis("CLSHorizontal") < -.8f)
         {
             speed = 3.1f;
-            // print("Speedup");
         }
         else
             speed = 1.6f;
 
         //Check Left Joysticks for Movement
-        MoveDirect.x = Input.GetAxis("Horizontal");
-        MoveDirect.y = Input.GetAxis("Vertical");
+        MoveDirect.x = Input.GetAxis("CLSHorizontal");
+        MoveDirect.y = Input.GetAxis("CLSVertical");
 
         //Normalize the directional vector
         //Factor in speed and time
@@ -61,11 +61,36 @@ public class PlayerMovement : MonoBehaviour {
         }
     }
 
+    void KBMove()
+    {
+        //Check for WASD to 
+        //see if it is surpressed fully
+        //for more speed
+        if (Input.GetAxis("KBHorizontal") > .8f || Input.GetAxis("KBVertical") > .8f || Input.GetAxis("KBVertical") < -.8f || Input.GetAxis("KBHorizontal") < -.8f)
+        {
+            speed = 3.1f;
+        }
+        else
+            speed = 1.6f;
+
+        //Check WASD for Movement
+        MoveDirect.x = Input.GetAxis("KBHorizontal");
+        MoveDirect.y = Input.GetAxis("KBVertical");
+
+        //Normalize the directional vector
+        //Factor in speed and time
+        MoveDirect.Normalize();
+        MoveDirect *= speed * Time.deltaTime;
+
+        //Actually Move the player
+        controller.Move(MoveDirect);
+    }
+
     void Rotate()
     {
         //Check Right sticks for Rotation
-        MoveDirect.x = Input.GetAxis("RStickHorizontal");
-        MoveDirect.y = Input.GetAxis("RStickVertical");
+        MoveDirect.x = Input.GetAxis("CRSHorizontal");
+        MoveDirect.y = Input.GetAxis("CRSVertical");
         MoveDirect.Normalize();
 
         //If Right sticks have input
@@ -92,6 +117,6 @@ public class PlayerMovement : MonoBehaviour {
         Vector3 pos = Camera.main.WorldToScreenPoint(controller.transform.position);
         Vector3 dir = Input.mousePosition - pos;
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90;
-        controller.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward); 
+        controller.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
     }
 }
