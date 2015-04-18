@@ -19,7 +19,6 @@ public class PauseMenu : MonoBehaviour
 
     void Update()
     {
-        Debug.Log("Paused = " + isPaused);
         if (isPaused)
         {
             if (InputManager.controller)
