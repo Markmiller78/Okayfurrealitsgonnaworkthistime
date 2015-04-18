@@ -12,12 +12,16 @@ public class Health : MonoBehaviour
     }
     void GainHealth(float Amount)
     {
-        
+        currentHP += Amount;
+        if (currentHP > maxHP)
+            currentHP = maxHP;
     }
 
-    void LoseHealth()
+    void LoseHealth(float Amount)
     {
-
+        currentHP -= Amount;
+        if (currentHP <= 0)
+            Die();
     }
 
     void Die()
