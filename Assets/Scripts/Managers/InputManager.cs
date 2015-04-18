@@ -128,7 +128,7 @@ public class InputManager : MonoBehaviour
                 {
                     player.SendMessage("CastSpell", SendMessageOptions.DontRequireReceiver);
                 }
-                // J to dash
+                // Spacebar to dash
                 if (Input.GetButtonDown("KBDash"))
                 {
                     player.SendMessage("Dash", SendMessageOptions.DontRequireReceiver);
