@@ -60,7 +60,7 @@ public class PlayerDashing : MonoBehaviour {
             //Actually Move the player
             controller.Move(MoveDirect);
 
-            if (gameObject.GetComponent<PlayerEquipment>().equippedBoots == (int)boots.Trailblazer)
+            if (gameObject.GetComponent<PlayerEquipment>().equippedBoot == (int)boot.Trailblazer)
             {
                 trailBlazerDropTimer += Time.deltaTime;
                 if (trailBlazerDropTimer > 0.03f)
