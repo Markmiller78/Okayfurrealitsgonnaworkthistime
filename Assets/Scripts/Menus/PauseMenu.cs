@@ -63,7 +63,7 @@ public class PauseMenu : MonoBehaviour
             switch (currOption)
             {
                 case 0:
-                    arrow.GetComponent<RectTransform>().position = new Vector3(287.5f, 303f, 0.0f);
+                    arrow.GetComponent<RectTransform>().position = new Vector3(527.5f, 420f, 0.0f);
                     if (InputManager.controller && Input.GetButtonDown("CMenuAccept"))
                     {
                         // Options Code Here
@@ -74,7 +74,7 @@ public class PauseMenu : MonoBehaviour
                     }
                     break;
                 case 1:
-                    arrow.GetComponent<RectTransform>().position = new Vector3(322.5f, 263f, 0.0f);
+                    arrow.GetComponent<RectTransform>().position = new Vector3(562.5f, 380f, 0.0f);
                     if (InputManager.controller && Input.GetButtonDown("CMenuAccept"))
                     {
                         // Save Code Here
@@ -85,7 +85,7 @@ public class PauseMenu : MonoBehaviour
                     }
                     break;
                 case 2:
-                    arrow.GetComponent<RectTransform>().position = new Vector3(252.5f, 223f, 0.0f);
+                    arrow.GetComponent<RectTransform>().position = new Vector3(492.5f, 340f, 0.0f);
                     if (InputManager.controller && Input.GetButtonDown("CMenuAccept"))
                     {
                         // Save & Quit Code Here
