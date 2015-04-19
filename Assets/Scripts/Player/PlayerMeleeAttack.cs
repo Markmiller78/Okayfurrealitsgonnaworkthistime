@@ -37,9 +37,9 @@ public class PlayerMeleeAttack : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (attacking && other.gameObject != player && other.GetComponent<Health>() != null)
+        if (attacking && other.gameObject != player && other.gameObject.GetComponent<Health>() != null)
         {
-            other.GetComponent<Health>().LoseHealth(attackDamage + playerStats.meleeModifier);
+            other.gameObject.GetComponent<Health>().LoseHealth(attackDamage + playerStats.meleeModifier);
         }
     }
 
