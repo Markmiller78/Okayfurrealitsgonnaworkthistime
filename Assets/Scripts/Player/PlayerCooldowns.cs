@@ -4,36 +4,56 @@ using System.Collections;
 public class PlayerCooldowns : MonoBehaviour
 {
     public float dashCooldown;
+    public float dashCooldownMax;
+    public bool dashCooling = false;
     public float spellCooldown;
+    public float spellCooldownMax;
+    public bool spellCooling = false;
     public float meleeCooldown;
+    public float meleeCooldownMax;
+    public bool meleeCooling = false;
     public float collectorCooldown;
+    public float collectorCooldownMax;
+    public bool collectorCooling = false;
 
     // Update is called once per frame
     void Update()
     {
-        if (dashCooldown > 0.0f)
+        if (dashCooling)
         {
             dashCooldown -= Time.deltaTime;
             if (dashCooldown <= 0.0f)
-                dashCooldown = 0.0f;
+            {
+                dashCooldown = dashCooldownMax;
+                dashCooling = false;
+            }
         }
-        if (spellCooldown > 0.0f)
+        if (spellCooling)
         {
             spellCooldown -= Time.deltaTime;
             if (spellCooldown <= 0.0f)
-                spellCooldown = 0.0f;
+            {
+                spellCooldown = spellCooldownMax;
+                spellCooling = false;
+            }
         }
-        if (meleeCooldown > 0.0f)
+        if (meleeCooling)
         {
             meleeCooldown -= Time.deltaTime;
             if (meleeCooldown <= 0.0f)
-                meleeCooldown = 0.0f;
+            {
+                meleeCooldown = meleeCooldownMax;
+                meleeCooling = false;
+            }
         }
-        if (collectorCooldown > 0.0f)
+        if (collectorCooling)
         {
             collectorCooldown -= Time.deltaTime;
             if (collectorCooldown <= 0.0f)
-                collectorCooldown = 0.0f;
+            {
+                collectorCooldown = collectorCooldownMax;
+                collectorCooling = false;
+            }
         }
     }
 }
