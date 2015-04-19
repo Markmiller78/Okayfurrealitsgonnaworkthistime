@@ -9,13 +9,14 @@ public class PlayerMeleeAttack : MonoBehaviour
     bool attacking = false;
     float hasRotated = 0.0f;
     float toRotate = 90.0f;
+    float rotationDelta = 0.0f;
     public float speed = 3.0f;
-    Quaternion startingRotation;
 
     void Start()
     {
         player = transform.parent.gameObject;
         playerStats = player.GetComponent<PlayerStats>();
+        rotationDelta = player.transform.rotation.z;
     }
 
     void Update()
@@ -23,19 +24,20 @@ public class PlayerMeleeAttack : MonoBehaviour
         if (attacking)
         {
             hasRotated += 90.0f * Time.deltaTime * speed;
-            transform.Rotate(Vector3.forward, 90.0f * Time.deltaTime * speed);
+            transform.Rotate(Vector3.forward, 90.0f * Time.deltaTime * speed - rotationDelta);
+            rotationDelta = player.transform.rotation.z - rotationDelta;
             if (hasRotated >= toRotate)
             {
                 hasRotated = 0.0f;
                 attacking = false;
-                transform.rotation = startingRotation;
+                transform.rotation = player.transform.rotation;
             }
         }
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject != player && other.GetComponent<Health>() != null)
+        if (attacking && other.gameObject != player && other.GetComponent<Health>() != null)
         {
             other.GetComponent<Health>().LoseHealth(attackDamage + playerStats.meleeModifier);
         }
@@ -44,6 +46,5 @@ public class PlayerMeleeAttack : MonoBehaviour
     void Melee()
     {
         attacking = true;
-        startingRotation = transform.rotation;
     }
 }
