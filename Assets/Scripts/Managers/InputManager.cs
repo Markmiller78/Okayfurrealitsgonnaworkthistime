@@ -5,6 +5,7 @@ public class InputManager : MonoBehaviour
 {
     GameObject player;
     PlayerCooldowns cooldowns;
+    PlayerMeleeAttack melee;
     public static bool controller = false;
     bool isPaused = false;
     bool mapMenu = false;
@@ -13,6 +14,7 @@ public class InputManager : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
         cooldowns = player.GetComponent<PlayerCooldowns>();
+        melee = player.GetComponentInChildren<PlayerMeleeAttack>();
     }
 
     void Update()
@@ -40,7 +42,7 @@ public class InputManager : MonoBehaviour
                 // RTrigger to melee
                 if (Input.GetAxis("CMeleeAndSpells") < 0.0f && !cooldowns.meleeCooling)
                 {
-                    player.SendMessage("Melee", SendMessageOptions.DontRequireReceiver);
+                    melee.SendMessage("Melee");
                     cooldowns.meleeCooling = true;
                 }
                 // LTrigger to cast
@@ -123,7 +125,7 @@ public class InputManager : MonoBehaviour
                 // C to melee
                 if (Input.GetButtonDown("KBMelee"))
                 {
-                    player.SendMessage("Melee", SendMessageOptions.DontRequireReceiver);
+                    melee.SendMessage("Melee");
                 }
                 // V to cast
                 if (Input.GetButtonDown("KBSpells"))
