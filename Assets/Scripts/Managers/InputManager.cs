@@ -4,6 +4,7 @@ using System.Collections;
 public class InputManager : MonoBehaviour
 {
     GameObject player;
+    PlayerCooldowns cooldowns;
     public static bool controller = false;
     bool isPaused = false;
     bool mapMenu = false;
@@ -11,7 +12,7 @@ public class InputManager : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        isPaused = false;
+        cooldowns = player.GetComponent<PlayerCooldowns>();
     }
 
     void Update()
@@ -37,9 +38,10 @@ public class InputManager : MonoBehaviour
                     player.SendMessage("Rotate");
                 }
                 // RTrigger to melee
-                if (Input.GetAxis("CMeleeAndSpells") < 0.0f)
+                if (Input.GetAxis("CMeleeAndSpells") < 0.0f && !cooldowns.meleeCooling)
                 {
                     player.SendMessage("Melee", SendMessageOptions.DontRequireReceiver);
+                    cooldowns.meleeCooling = true;
                 }
                 // LTrigger to cast
                 if (Input.GetAxis("CMeleeAndSpells") > 0.0f)
