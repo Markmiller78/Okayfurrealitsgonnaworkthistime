@@ -17,7 +17,7 @@ public class Pickup : MonoBehaviour
         equipment = player.GetComponent<PlayerEquipment>();
     }
 
-    void OnTriggerEnter(Collider other)
+    void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject == player)
         {
