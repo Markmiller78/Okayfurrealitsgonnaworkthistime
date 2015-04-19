@@ -10,9 +10,6 @@ public enum ember { Life = 0, Death, Earth, Wind, Fire, Ice};
 public class PlayerEquipment : MonoBehaviour
 {
     public boot equippedBoot;
-    //public int equippedBoots;
     public accessory equippedAccessory;
-    //public int equippedAccessory;
     public ember equippedEmber;
-    //public int equippedEmber;
 }
