@@ -4,7 +4,6 @@ using System.Collections;
 public class InputManager : MonoBehaviour
 {
     GameObject player;
-    //Vector3 mousePrevPos;
     public static bool controller = false;
     bool isPaused = false;
     bool mapMenu = false;
@@ -22,8 +21,9 @@ public class InputManager : MonoBehaviour
         {
             controller = !controller;
         }
-        if (controller) // controller controls
+        if (controller)
         {
+            #region Controller Input
             if (!isPaused && !mapMenu)
             {
                 // LStick to move
@@ -104,9 +104,11 @@ public class InputManager : MonoBehaviour
                     }
                 }
             }
+            #endregion
         }
-        else // KB/M controls
+        else
         {
+            #region KB/M controls
             if (!isPaused && !mapMenu)
             {
                 // WASD or arrow keys to move
@@ -184,6 +186,7 @@ public class InputManager : MonoBehaviour
                     }
                 }
             }
+            #endregion
         }
     }
 }
