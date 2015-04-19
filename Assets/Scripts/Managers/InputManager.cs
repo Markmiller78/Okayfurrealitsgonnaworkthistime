@@ -123,9 +123,10 @@ public class InputManager : MonoBehaviour
                 // Mouse to rotate
                 player.SendMessage("MouseRotate");
                 // C to melee
-                if (Input.GetButtonDown("KBMelee"))
+                if (Input.GetButtonDown("KBMelee") && !cooldowns.meleeCooling)
                 {
                     melee.SendMessage("Melee");
+                    cooldowns.meleeCooling = true;
                 }
                 // V to cast
                 if (Input.GetButtonDown("KBSpells"))
