@@ -4,6 +4,7 @@ using System.Collections;
 public class PlayerMeleeAttack : MonoBehaviour
 {
     GameObject player;
+    PlayerStats playerStats;
     public float attackDamage = 5.0f;
     bool attacking = false;
     float hasRotated = 0.0f;
@@ -14,6 +15,7 @@ public class PlayerMeleeAttack : MonoBehaviour
     void Start()
     {
         player = transform.parent.gameObject;
+        playerStats = player.GetComponent<PlayerStats>();
     }
 
     void Update()
@@ -28,6 +30,14 @@ public class PlayerMeleeAttack : MonoBehaviour
                 attacking = false;
                 transform.rotation = startingRotation;
             }
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject != player && other.GetComponent<Health>() != null)
+        {
+            other.GetComponent<Health>().LoseHealth(attackDamage + playerStats.meleeModifier);
         }
     }
 

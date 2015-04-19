@@ -16,7 +16,7 @@ public class Health : MonoBehaviour
         
         //LoseHealth(20); //Used for testing
     }
-    void GainHealth(float Amount)
+    public void GainHealth(float Amount)
     {
         currentHP += Amount;
         if (currentHP > maxHP)
@@ -29,7 +29,7 @@ public class Health : MonoBehaviour
         }
     }
 
-    void LoseHealth(float Amount)
+    public void LoseHealth(float Amount)
     {
         currentHP -= Amount;
         if (currentHP <= 0)
