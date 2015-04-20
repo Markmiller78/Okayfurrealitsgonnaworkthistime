@@ -40,6 +40,11 @@ public class PlayerMeleeAttack : MonoBehaviour
         if (attacking && other.gameObject != player && other.gameObject.GetComponent<Health>() != null)
         {
             other.gameObject.GetComponent<Health>().LoseHealth(attackDamage + playerStats.meleeModifier);
+            if (other.gameObject.GetComponent<Rigidbody2D>() != null)
+            {
+                Vector2 forceVector = (player.transform.position - other.transform.position).normalized;
+                other.gameObject.GetComponent<Rigidbody2D>().velocity = forceVector;
+            }
         }
     }
 

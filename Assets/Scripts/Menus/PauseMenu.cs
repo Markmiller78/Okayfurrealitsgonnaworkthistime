@@ -24,7 +24,7 @@ public class PauseMenu : MonoBehaviour
             if (InputManager.controller)
             {
                 #region Controller Input
-                if (axisChanged && Input.GetAxis("CLSVertical") == 0.0f)
+                if (axisChanged && Input.GetAxis("CLSVertical") == 0.0f && Input.GetAxis("CDPadVertical") == 0.0f)
                 {
                     axisChanged = false;
                 }

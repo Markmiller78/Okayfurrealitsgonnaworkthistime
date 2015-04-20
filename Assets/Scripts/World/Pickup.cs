@@ -19,7 +19,8 @@ public class Pickup : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject == player)
+        if ((InputManager.controller && Input.GetButtonDown("CInteract") || (!InputManager.controller && Input.GetButtonDown("KBInteract"))) 
+            && other.gameObject == player)
         {
             switch (typeOfEquipment)
             {
