@@ -32,7 +32,7 @@ public class SkeletonProjectile : MonoBehaviour
     void FixedUpdate()
     {
         if (isActive)
-            transform.position += transform.forward * speed * Time.deltaTime;
+            transform.position += transform.up * speed * Time.deltaTime;
     }
 
     void Update()
