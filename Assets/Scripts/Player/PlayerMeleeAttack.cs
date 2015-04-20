@@ -43,7 +43,7 @@ public class PlayerMeleeAttack : MonoBehaviour
             if (other.gameObject.GetComponent<Rigidbody2D>() != null)
             {
                 Vector2 forceVector = (player.transform.position - other.transform.position).normalized;
-                other.gameObject.GetComponent<Rigidbody2D>().velocity = forceVector;
+                other.gameObject.GetComponent<Rigidbody2D>().AddRelativeForce(forceVector);
             }
         }
     }

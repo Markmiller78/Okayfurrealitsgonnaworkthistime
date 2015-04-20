@@ -35,7 +35,11 @@ public class AISkeletonArcher : MonoBehaviour
         distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
         if (distanceToPlayer > (attackMaxRange + attackMinRange) / 2.0f)
         {
-            Move();
+            MoveTowards();
+        }
+        else if (distanceToPlayer < (attackMaxRange + attackMinRange) / 2.0f)
+        {
+            MoveAway();
         }
         Turn();
         if (!hasAttacked && distanceToPlayer <= attackMaxRange && distanceToPlayer >= attackMinRange)
@@ -45,9 +49,14 @@ public class AISkeletonArcher : MonoBehaviour
         }
     }
 
-    void Move()
+    void MoveTowards()
     {
         rb2d.MovePosition(Vector2.MoveTowards(transform.position, player.transform.position, Time.deltaTime * moveSpeed));
+    }
+
+    void MoveAway()
+    {
+        rb2d.MovePosition(Vector2.MoveTowards(transform.position, player.transform.position, Time.deltaTime * -moveSpeed));        
     }
 
     void Turn()
