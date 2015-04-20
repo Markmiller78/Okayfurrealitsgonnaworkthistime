@@ -170,7 +170,7 @@ public class InputManager : MonoBehaviour
                     }
                 }
             }
-            // O for map/stats
+            // ~ for map/stats
             if (!isPaused && Input.GetButtonDown("KBMapAndStats"))
             {
                 GameObject[] allObjects;

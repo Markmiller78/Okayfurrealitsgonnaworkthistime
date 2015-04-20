@@ -34,7 +34,10 @@ public class Health : MonoBehaviour
     {
         currentHP -= Amount;
         if (currentHP <= 0)
+        {
+            currentHP = 0;
             Die();
+        }
 
         if (this.tag == "Player")
         {
