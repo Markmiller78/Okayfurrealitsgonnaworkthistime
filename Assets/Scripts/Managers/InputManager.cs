@@ -122,18 +122,18 @@ public class InputManager : MonoBehaviour
                 }
                 // Mouse to rotate
                 player.SendMessage("MouseRotate");
-                // C to melee
+                // Space to melee
                 if (Input.GetButtonDown("KBMelee") && !cooldowns.meleeCooling)
                 {
                     melee.SendMessage("Melee");
                     cooldowns.meleeCooling = true;
                 }
-                // V to cast
+                // Left Click to cast
                 if (Input.GetButtonDown("KBSpells"))
                 {
                     player.SendMessage("CastSpell", SendMessageOptions.DontRequireReceiver);
                 }
-                // Spacebar to dash
+                // Left Shift to dash
                 if (Input.GetButtonDown("KBDash"))
                 {
                     player.SendMessage("Dash", SendMessageOptions.DontRequireReceiver);
@@ -143,7 +143,7 @@ public class InputManager : MonoBehaviour
                 {
                     player.SendMessage("CollectLight", SendMessageOptions.DontRequireReceiver);
                 }
-                // K to interact
+                // E to interact
                 if (Input.GetButtonDown("KBInteract"))
                 {
                     player.SendMessage("Interact", SendMessageOptions.DontRequireReceiver);
