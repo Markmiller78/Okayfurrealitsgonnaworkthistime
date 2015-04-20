@@ -42,8 +42,8 @@ public class PlayerMeleeAttack : MonoBehaviour
             other.gameObject.GetComponent<Health>().LoseHealth(attackDamage + playerStats.meleeModifier);
             if (other.gameObject.GetComponent<Rigidbody2D>() != null)
             {
-                Vector2 forceVector = (player.transform.position - other.transform.position).normalized;
-                other.gameObject.GetComponent<Rigidbody2D>().AddRelativeForce(forceVector);
+                Vector2 forceVector = (other.transform.position - player.transform.position) * 1000.0f;
+                other.gameObject.GetComponent<Rigidbody2D>().AddForce(forceVector);
             }
         }
     }
