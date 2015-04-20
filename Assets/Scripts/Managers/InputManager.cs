@@ -4,7 +4,8 @@ using System.Collections;
 public class InputManager : MonoBehaviour
 {
     GameObject player;
-    //Vector3 mousePrevPos;
+    PlayerCooldowns cooldowns;
+    PlayerMeleeAttack melee;
     public static bool controller = false;
     bool isPaused = false;
     bool mapMenu = false;
@@ -12,7 +13,8 @@ public class InputManager : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        isPaused = false;
+        cooldowns = player.GetComponent<PlayerCooldowns>();
+        melee = player.GetComponentInChildren<PlayerMeleeAttack>();
     }
 
     void Update()
@@ -22,8 +24,9 @@ public class InputManager : MonoBehaviour
         {
             controller = !controller;
         }
-        if (controller) // controller controls
+        if (controller)
         {
+            #region Controller Input
             if (!isPaused && !mapMenu)
             {
                 // LStick to move
@@ -37,9 +40,10 @@ public class InputManager : MonoBehaviour
                     player.SendMessage("Rotate");
                 }
                 // RTrigger to melee
-                if (Input.GetAxis("CMeleeAndSpells") < 0.0f)
+                if (Input.GetAxis("CMeleeAndSpells") < 0.0f && !cooldowns.meleeCooling)
                 {
-                    player.SendMessage("Melee", SendMessageOptions.DontRequireReceiver);
+                    melee.SendMessage("Melee");
+                    cooldowns.meleeCooling = true;
                 }
                 // LTrigger to cast
                 if (Input.GetAxis("CMeleeAndSpells") > 0.0f)
@@ -104,9 +108,11 @@ public class InputManager : MonoBehaviour
                     }
                 }
             }
+            #endregion
         }
-        else // KB/M controls
+        else
         {
+            #region KB/M controls
             if (!isPaused && !mapMenu)
             {
                 // WASD or arrow keys to move
@@ -117,9 +123,10 @@ public class InputManager : MonoBehaviour
                 // Mouse to rotate
                 player.SendMessage("MouseRotate");
                 // C to melee
-                if (Input.GetButtonDown("KBMelee"))
+                if (Input.GetButtonDown("KBMelee") && !cooldowns.meleeCooling)
                 {
-                    player.SendMessage("Melee", SendMessageOptions.DontRequireReceiver);
+                    melee.SendMessage("Melee");
+                    cooldowns.meleeCooling = true;
                 }
                 // V to cast
                 if (Input.GetButtonDown("KBSpells"))
@@ -184,6 +191,7 @@ public class InputManager : MonoBehaviour
                     }
                 }
             }
+            #endregion
         }
     }
 }

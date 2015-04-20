@@ -13,6 +13,7 @@ public class PlayerDashing : MonoBehaviour {
     float trailBlazerDropTimer;
 
     public GameObject TrailBlazerPickUp;
+    public GameObject TrailBlazerExplosion;
 
     void Start()
     {
@@ -79,6 +80,13 @@ public class PlayerDashing : MonoBehaviour {
         {
             dashTimeRemaining = dashDuration;
             trailBlazerDropTimer = 0.1f;
+
+            if (gameObject.GetComponent<PlayerEquipment>().equippedBoot == (int)boot.Trailblazer)
+            {
+              //  Instantiate(TrailBlazerExplosion, transform.position, new Quaternion(0, 0, 0, 0));
+
+            }
+
         }
     }
 }

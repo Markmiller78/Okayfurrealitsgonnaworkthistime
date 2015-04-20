@@ -10,13 +10,14 @@ public class Health : MonoBehaviour
     GameObject healthBar;
     void Start()
     {
-        maxHP = 100;
-        healthBar = GameObject.FindGameObjectWithTag("HealthBar");
+        // maxHP = 100; Commented out because we don't want everything to have a starting health of 100
+        if (this.tag == "Player")
+            healthBar = GameObject.FindGameObjectWithTag("HealthBar");
         healthPercent = currentHP / maxHP * 100;
         
         //LoseHealth(20); //Used for testing
     }
-    void GainHealth(float Amount)
+    public void GainHealth(float Amount)
     {
         currentHP += Amount;
         if (currentHP > maxHP)
@@ -29,7 +30,7 @@ public class Health : MonoBehaviour
         }
     }
 
-    void LoseHealth(float Amount)
+    public void LoseHealth(float Amount)
     {
         currentHP -= Amount;
         if (currentHP <= 0)
