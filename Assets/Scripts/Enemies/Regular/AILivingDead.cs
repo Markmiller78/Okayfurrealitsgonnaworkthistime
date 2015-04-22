@@ -4,7 +4,7 @@ using System.Collections;
 public class AILivingDead : MonoBehaviour
 {
     GameObject player;
-    Health playerHealth;
+//    Health playerHealth;
     Rigidbody2D rb2d;
 
     public float attackDamage;
@@ -19,7 +19,7 @@ public class AILivingDead : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        playerHealth = player.GetComponent<Health>();
+//        playerHealth = player.GetComponent<Health>();
         attackCooldown = attackCooldownMax;
         rb2d = GetComponent<Rigidbody2D>();
     }

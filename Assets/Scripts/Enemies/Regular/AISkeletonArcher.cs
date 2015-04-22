@@ -5,7 +5,6 @@ public class AISkeletonArcher : MonoBehaviour
 {
 
     GameObject player;
-    Health playerHealth;
 
     public float attackCooldownMax;
     float attackCooldown;
@@ -16,14 +15,15 @@ public class AISkeletonArcher : MonoBehaviour
     float distanceToPlayer;
     public GameObject projectile;
     bool hasAttacked = false;
-    Rigidbody2D rb2d;
+    //Rigidbody2D rb2d;
+    CharacterController controller;
 
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        playerHealth = player.GetComponent<Health>();
         attackCooldown = attackCooldownMax;
-        rb2d = GetComponent<Rigidbody2D>();
+        //rb2d = GetComponent<Rigidbody2D>();
+        controller = GetComponent<CharacterController>();
     }
 
     void Update()
@@ -51,12 +51,16 @@ public class AISkeletonArcher : MonoBehaviour
 
     void MoveTowards()
     {
-        rb2d.MovePosition(Vector2.MoveTowards(transform.position, player.transform.position, Time.deltaTime * moveSpeed));
+        //rb2d.MovePosition(Vector2.MoveTowards(transform.position, player.transform.position, Time.deltaTime * moveSpeed));
+        Vector2 moveTo = (player.transform.position - transform.position).normalized;
+        controller.Move(moveTo * Time.deltaTime * moveSpeed);
     }
 
     void MoveAway()
     {
-        rb2d.MovePosition(Vector2.MoveTowards(transform.position, player.transform.position, Time.deltaTime * -moveSpeed));        
+        //rb2d.MovePosition(Vector2.MoveTowards(transform.position, player.transform.position, Time.deltaTime * -moveSpeed));
+        Vector2 moveTo = (player.transform.position - transform.position).normalized;
+        controller.Move(moveTo * Time.deltaTime * -moveSpeed);
     }
 
     void Turn()

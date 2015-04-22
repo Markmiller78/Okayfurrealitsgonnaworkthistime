@@ -6,13 +6,13 @@ public class RoomGeneration : MonoBehaviour
 
     public GameObject[] rooms;
     Room[] roomsInfo;
-    GameObject player;
+//    GameObject player;
     public int currentRoom = 0;
 
     void Start()
     {
         DontDestroyOnLoad(this);
-        player = GameObject.FindGameObjectWithTag("Player");
+ //       player = GameObject.FindGameObjectWithTag("Player");
         roomsInfo = new Room[rooms.Length];
         for (int i = 0; i < rooms.Length; i++)
         {
