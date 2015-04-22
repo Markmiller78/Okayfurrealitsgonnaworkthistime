@@ -6,10 +6,12 @@ public class MainMenu : MonoBehaviour
 
 
     public float[] choices = new float[] { };
+    int maxchoices = 4;
+
     public int currentSelection = 0;
     public GameObject SelectIcon;
     bool AxisChanged = false;
-    public enum Menu { Main = 0, Options, Achievements, Credits , Continue, AreYouSure, SelectDifficulty};
+    public enum Menu { Main = 0, Options, Achievements, Credits, Continue, AreYouSure, SelectDifficulty };
     Menu CurrMenu = Menu.Main;
     public GameObject MainMenuText;
     public GameObject[] MainMenu4Highlight = new GameObject[] { };
@@ -26,13 +28,15 @@ public class MainMenu : MonoBehaviour
     public GameObject OptionsMenuText;
     public GameObject[] OptionsMenuText4Highlight = new GameObject[] { };
 
+
+
     public GameObject Achievements;
     public GameObject[] Achievements4Highlight = new GameObject[] { };
 
     public GameObject Credits;
     public GameObject[] Credits4Highlight = new GameObject[] { };
 
-
+    float timer = 0;
 
     // Use this for initialization
     void Start()
@@ -44,18 +48,19 @@ public class MainMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        timer -= Time.deltaTime;
         SelectIcon.transform.position = new Vector3(-1.0f, choices[currentSelection], -5);
         if ((Input.GetAxis("CLSVertical") > .7f || Input.GetAxis("KBVertical") > 0) && AxisChanged == false)
         {
             if (currentSelection > 0)
                 currentSelection -= 1;
             else
-                currentSelection = 4;
+                currentSelection = maxchoices;
             AxisChanged = true;
         }
         if ((Input.GetAxis("CLSVertical") < -0.7f || Input.GetAxis("KBVertical") < 0) && AxisChanged == false)
         {
-            if (currentSelection < 4)
+            if (currentSelection < maxchoices)
                 currentSelection += 1;
             else
                 currentSelection = 0;
@@ -67,7 +72,7 @@ public class MainMenu : MonoBehaviour
             AxisChanged = false;
         }
 
-        switch(CurrMenu)
+        switch (CurrMenu)
         {
             case Menu.Main:
                 {
@@ -93,10 +98,15 @@ public class MainMenu : MonoBehaviour
 
     }
 
-   
+
     void MainMenuSelect()
     {
-
+        maxchoices = 4;
+        choices[0] = 1.8f;
+        choices[1] = 1.1f;
+        choices[2] = 0.4f;
+        choices[3] = -0.3f;
+        choices[4] = -1.7f;
         MainMenuText.SetActive(true);
 
         switch (currentSelection)
@@ -150,14 +160,15 @@ public class MainMenu : MonoBehaviour
         }
 
 
-        if (Input.GetButtonDown("CMenuAccept") || Input.GetButtonDown("KBMenuAccept"))
+        if ((Input.GetButtonDown("CMenuAccept") || Input.GetButtonDown("KBMenuAccept")) && timer < 0)
         {
+            timer = .5f;
             for (int i = 0; i < 5; i++)
             {
                 MainMenu4Highlight[i].SetActive(false);
             }
-            
-            switch(currentSelection)
+
+            switch (currentSelection)
             {
                 case 0:
                     {
@@ -185,7 +196,8 @@ public class MainMenu : MonoBehaviour
                     }
                 case 4:
                     {
-                        //Exit the Game
+                        Application.Quit();
+                        UnityEditor.EditorApplication.isPlaying = false;
                         break;
                     }
             }
@@ -196,6 +208,11 @@ public class MainMenu : MonoBehaviour
 
     void OptionsMenu()
     {
+        maxchoices = 3;
+        choices[0] = 1.8f;
+        choices[1] = 1.1f;
+        choices[2] = 0.4f;
+        choices[3] = -1.7f;
         OptionsMenuText.SetActive(true);
 
 
@@ -205,7 +222,7 @@ public class MainMenu : MonoBehaviour
             //This is used for Highlighting the currently selected menu option
             case 0:
                 {
-                    for (int i = 0; i < 5; i++)
+                    for (int i = 0; i < 6; i++)
                     {
                         OptionsMenuText4Highlight[i].SetActive(false);
                     }
@@ -214,7 +231,7 @@ public class MainMenu : MonoBehaviour
                 }
             case 1:
                 {
-                    for (int i = 0; i < 5; i++)
+                    for (int i = 0; i < 6; i++)
                     {
                         OptionsMenuText4Highlight[i].SetActive(false);
                     }
@@ -223,7 +240,7 @@ public class MainMenu : MonoBehaviour
                 }
             case 2:
                 {
-                    for (int i = 0; i < 5; i++)
+                    for (int i = 0; i < 6; i++)
                     {
                         OptionsMenuText4Highlight[i].SetActive(false);
                     }
@@ -232,37 +249,155 @@ public class MainMenu : MonoBehaviour
                 }
             case 3:
                 {
-                    for (int i = 0; i < 5; i++)
+                    for (int i = 0; i < 6; i++)
                     {
                         OptionsMenuText4Highlight[i].SetActive(false);
                     }
                     OptionsMenuText4Highlight[3].SetActive(true);
                     break;
                 }
+
             case 4:
                 {
-                    for (int i = 0; i < 5; i++)
+                    for (int i = 0; i < 6; i++)
                     {
                         OptionsMenuText4Highlight[i].SetActive(false);
                     }
                     OptionsMenuText4Highlight[4].SetActive(true);
                     break;
                 }
+            case 5:
+                {
+                    for (int i = 0; i < 6; i++)
+                    {
+                        OptionsMenuText4Highlight[i].SetActive(false);
+                    }
+                    OptionsMenuText4Highlight[5].SetActive(true);
+                    break;
+                }
         }
 
+        if ((Input.GetButtonDown("CMenuAccept") || Input.GetButtonDown("KBMenuAccept")) && timer < 0)
+        {
+            timer = .5f;
+            for (int i = 0; i < 4; i++)
+            {
+                OptionsMenuText4Highlight[i].SetActive(false);
+            }
+
+            switch (currentSelection)
+            {
+                case 0:
+                    {
+                        currentSelection = 6;
+                        break;
+                    }
+                case 1:
+                    {
+
+                        break;
+                    }
+                case 2:
+                    {
+                        //OptionsMenuText.SetActive(false);
+                        //CurrMenu = Menu.Main;
+                        //currentSelection = 1;
+                        break;
+                    }
+                case 3:
+                    {
+                        OptionsMenuText.SetActive(false);
+                        CurrMenu = Menu.Main;
+                        currentSelection = 1;
+                        break;
+                    }
+            }
+
+        }
     }
 
     void CreditsMenu()
     {
+        maxchoices = 0;
+        choices[0] = -1.7f;
+        Credits.SetActive(true);
 
 
+
+        switch (currentSelection)
+        {
+            //This is used for Highlighting the currently selected menu option
+            case 0:
+                {
+                    for (int i = 0; i < 1; i++)
+                    {
+                        Credits4Highlight[i].SetActive(false);
+                    }
+                    Credits4Highlight[0].SetActive(true);
+                    break;
+                }
+        }
+        if ((Input.GetButtonDown("CMenuAccept") || Input.GetButtonDown("KBMenuAccept")) && timer < 0)
+        {
+            timer = 1;
+            for (int i = 0; i < 1; i++)
+            {
+                Credits4Highlight[i].SetActive(false);
+            }
+
+            switch (currentSelection)
+            {
+                case 0:
+                    {
+                        Credits.SetActive(false);
+                        CurrMenu = Menu.Main;
+                        currentSelection = 2;
+                        break;
+                    }
+            }
+        }
     }
-    
+
 
     void AchievementsMenu()
     {
+        maxchoices = 0;
+        choices[0] = -1.7f;
+        Achievements.SetActive(true);
 
 
 
+        switch (currentSelection)
+        {
+            //This is used for Highlighting the currently selected menu option
+            case 0:
+                {
+                    for (int i = 0; i < 1; i++)
+                    {
+                        Achievements4Highlight[i].SetActive(false);
+                    }
+                    Achievements4Highlight[0].SetActive(true);
+                    break;
+                }
+        }
+        if ((Input.GetButtonDown("CMenuAccept") || Input.GetButtonDown("KBMenuAccept")) && timer < 0)
+        {
+            timer = 1;
+            for (int i = 0; i < 1; i++)
+            {
+                Achievements4Highlight[i].SetActive(false);
+            }
+
+            switch (currentSelection)
+            {
+                case 0:
+                    {
+                        Achievements.SetActive(false);
+                        CurrMenu = Menu.Main;
+                        currentSelection = 3;
+                        break;
+                    }
+            }
+        }
     }
 }
