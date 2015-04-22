@@ -54,7 +54,6 @@ public class AISkeletonArcher : MonoBehaviour
         //rb2d.MovePosition(Vector2.MoveTowards(transform.position, player.transform.position, Time.deltaTime * moveSpeed));
         Vector2 moveTo = (player.transform.position - transform.position).normalized;
         controller.Move(moveTo * Time.deltaTime * moveSpeed);
-        //controller.Move(Vector2.MoveTowards(transform.position, player.transform.position, Time.deltaTime * moveSpeed));
     }
 
     void MoveAway()
@@ -62,7 +61,6 @@ public class AISkeletonArcher : MonoBehaviour
         //rb2d.MovePosition(Vector2.MoveTowards(transform.position, player.transform.position, Time.deltaTime * -moveSpeed));
         Vector2 moveTo = (player.transform.position - transform.position).normalized;
         controller.Move(moveTo * Time.deltaTime * -moveSpeed);
-        //controller.Move(Vector2.MoveTowards(transform.position, player.transform.position, Time.deltaTime * -moveSpeed));
     }
 
     void Turn()
