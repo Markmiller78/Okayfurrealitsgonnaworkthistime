@@ -60,8 +60,10 @@ public class PlayerDashing : MonoBehaviour {
 
             //Actually Move the player
             controller.Move(MoveDirect);
-
-            if (gameObject.GetComponent<PlayerEquipment>().equippedBoot == boot.Trailblazer)
+ 
+            if ((int)gameObject.GetComponent<PlayerEquipment>().equippedBoot == (int)boot.Trailblazer)
+ 
+ 
             {
                 trailBlazerDropTimer += Time.deltaTime;
                 if (trailBlazerDropTimer > 0.03f)
@@ -80,8 +82,9 @@ public class PlayerDashing : MonoBehaviour {
         {
             dashTimeRemaining = dashDuration;
             trailBlazerDropTimer = 0.1f;
-
-            if (gameObject.GetComponent<PlayerEquipment>().equippedBoot == boot.Trailblazer)
+ 
+            if ((int)gameObject.GetComponent<PlayerEquipment>().equippedBoot == (int)boot.Trailblazer)
+ 
             {
               //  Instantiate(TrailBlazerExplosion, transform.position, new Quaternion(0, 0, 0, 0));
 
@@ -89,4 +92,11 @@ public class PlayerDashing : MonoBehaviour {
 
         }
     }
+
+	void Blink()
+	{
+
+
+
+	}
 }
