@@ -4,7 +4,7 @@ using System.Collections;
 public class PauseMenu : MonoBehaviour
 {
     bool isPaused = false;
-    Canvas pauseCanvas;
+    GameObject pauseCanvas;
     int currOption = 0;
     int numOptions = 3;
     public GameObject arrow;
@@ -12,8 +12,8 @@ public class PauseMenu : MonoBehaviour
 
     void Start()
     {
-        pauseCanvas = Canvas.FindObjectOfType<Canvas>();
-        pauseCanvas.enabled = false;
+        pauseCanvas = GameObject.FindGameObjectWithTag("PauseCanvas");
+        pauseCanvas.SetActive(false);
         isPaused = false;
     }
 
@@ -24,7 +24,7 @@ public class PauseMenu : MonoBehaviour
             if (InputManager.controller)
             {
                 #region Controller Input
-                if (axisChanged && Input.GetAxis("CLSVertical") == 0.0f)
+                if (axisChanged && Input.GetAxis("CLSVertical") == 0.0f && Input.GetAxis("CDPadVertical") == 0.0f)
                 {
                     axisChanged = false;
                 }
@@ -115,12 +115,12 @@ public class PauseMenu : MonoBehaviour
     void Pause()
     {
         isPaused = true;
-        pauseCanvas.enabled = true;
+        pauseCanvas.SetActive(true);
     }
 
     void UnPause()
     {
         isPaused = false;
-        pauseCanvas.enabled = false;
+        pauseCanvas.SetActive(false);
     }
 }

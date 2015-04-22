@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
 
     public float speed;
     CharacterController controller;
+    //Rigidbody2D rb2d;
     Vector2 MoveDirect;
     Vector2 CharRotate;
     Quaternion Rotation;
@@ -13,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         controller = gameObject.GetComponent<CharacterController>();
+        //rb2d = GetComponent<Rigidbody2D>();
         speed = 1;
     }
 
@@ -44,7 +46,8 @@ public class PlayerMovement : MonoBehaviour
         MoveDirect *= speed * Time.deltaTime;
 
         //Actually Move the player
-        controller.Move(MoveDirect);
+        controller.Move(MoveDirect);        
+        //rb2d.MovePosition(new Vector2(rb2d.transform.position.x + MoveDirect.x, rb2d.transform.position.y + MoveDirect.y));
 
         //Rotate the player to where they are moving
         if (MoveDirect != Vector2.zero)
@@ -52,12 +55,14 @@ public class PlayerMovement : MonoBehaviour
             float angle = Mathf.Atan2(MoveDirect.y, MoveDirect.x) * Mathf.Rad2Deg;
             angle += 270;
             controller.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            //rb2d.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         }
         if (MoveDirect != Vector2.zero)
         {
             float angle = Mathf.Atan2(MoveDirect.y, MoveDirect.x) * Mathf.Rad2Deg;
             angle += 270;
             controller.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            //rb2d.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         }
     }
 
@@ -84,6 +89,7 @@ public class PlayerMovement : MonoBehaviour
 
         //Actually Move the player
         controller.Move(MoveDirect);
+        //rb2d.MovePosition(new Vector2(rb2d.transform.position.x + MoveDirect.x, rb2d.transform.position.y + MoveDirect.y));
     }
 
     void Rotate()
@@ -101,12 +107,14 @@ public class PlayerMovement : MonoBehaviour
             float angle = Mathf.Atan2(MoveDirect.y, -MoveDirect.x) * Mathf.Rad2Deg;
             angle += 90;
             controller.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            //rb2d.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         }
         if (MoveDirect != Vector2.zero)
         {
             float angle = Mathf.Atan2(MoveDirect.y, -MoveDirect.x) * Mathf.Rad2Deg;
             angle += 90;
             controller.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            //rb2d.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         }
     }
     void MouseRotate()
@@ -115,8 +123,10 @@ public class PlayerMovement : MonoBehaviour
         // Rotate to face the mouse at all 
         // times if Mouse/keyboar is active
         Vector3 pos = Camera.main.WorldToScreenPoint(controller.transform.position);
+        //Vector3 pos = Camera.main.WorldToScreenPoint(rb2d.transform.position);
         Vector3 dir = Input.mousePosition - pos;
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90;
         controller.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        //rb2d.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
     }
 }
