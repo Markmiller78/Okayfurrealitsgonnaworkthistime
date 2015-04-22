@@ -35,7 +35,7 @@ public class PlayerMeleeAttack : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerEnter(Collider other)
     {
         if (attacking && other.gameObject != player && other.gameObject.GetComponent<Health>() != null)
         {
