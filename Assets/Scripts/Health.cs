@@ -14,7 +14,7 @@ public class Health : MonoBehaviour
         if (this.tag == "Player")
             healthBar = GameObject.FindGameObjectWithTag("HealthBar");
         healthPercent = currentHP / maxHP * 100;
-        
+
         //LoseHealth(20); //Used for testing
     }
     public void GainHealth(float Amount)
@@ -23,7 +23,7 @@ public class Health : MonoBehaviour
         if (currentHP > maxHP)
             currentHP = maxHP;
 
-        if(this.tag == "Player")
+        if (this.tag == "Player")
         {
             healthPercent = currentHP / maxHP;
             healthBar.transform.localScale = new Vector3(1, healthPercent, 1);
@@ -48,6 +48,7 @@ public class Health : MonoBehaviour
 
     void Die()
     {
-
+        if (this.tag != "Player")
+            Destroy(gameObject);
     }
 }
