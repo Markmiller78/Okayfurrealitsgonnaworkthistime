@@ -10,6 +10,6 @@ public class OrbParticle : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        transform.Rotate(new Vector3(2f, 0, 0));
+        transform.Rotate(new Vector3(0, 0, 2f));
 	}
 }

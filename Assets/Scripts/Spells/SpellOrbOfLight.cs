@@ -18,7 +18,7 @@ public class SpellOrbOfLight : MonoBehaviour {
 	void Update ()
     {
        // transform.Rotate(new Vector3(0, 0, 5));
-        controller.Move(new Vector3(0, 5 * Time.deltaTime, 0));
+        controller.Move(new Vector3(0, speed * Time.deltaTime, 0));
 	}
 
     void OnTriggerEnter()
