@@ -10,6 +10,7 @@ public class PlayerDashing : MonoBehaviour
     CharacterController controller;
     Vector2 MoveDirect;
     PlayerEquipment heroEquipment;
+    PlayerLight heroLight;
 
     float dashTimeRemaining;
     float trailBlazerDropTimer;
@@ -21,6 +22,7 @@ public class PlayerDashing : MonoBehaviour
     {
         controller = gameObject.GetComponent<CharacterController>();
         heroEquipment = gameObject.GetComponent<PlayerEquipment>();
+        heroLight = gameObject.GetComponent<PlayerLight>();
         dashTimeRemaining = 0.0f;
         trailBlazerDropTimer = 0.0f;
     }
@@ -89,7 +91,11 @@ public class PlayerDashing : MonoBehaviour
     {
         //If the player isnt already dashing, begin dashing
         if (dashTimeRemaining <= 0.0f)
-        {
+        { 
+            //Make the player spend light
+            heroLight.LoseLight(5);
+
+            //Set up the local variables
             dashTimeRemaining = dashDuration;
             trailBlazerDropTimer = 0.1f;
 
