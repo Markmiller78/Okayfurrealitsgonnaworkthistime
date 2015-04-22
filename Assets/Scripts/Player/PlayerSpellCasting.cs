@@ -5,9 +5,11 @@ public class PlayerSpellCasting : MonoBehaviour {
 
     public float spellCooldown;
 
-    void FireSpell()
-    {
+    public GameObject orbOfLight;
 
+    void CastSpell()
+    {
+        Instantiate(orbOfLight, transform.position, transform.rotation);
     }
 
     void SpellListen()
