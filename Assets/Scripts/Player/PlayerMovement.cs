@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
 public class PlayerMovement : MonoBehaviour
 {
 
@@ -13,12 +14,14 @@ public class PlayerMovement : MonoBehaviour
     Vector2 CharRotate;
     Quaternion Rotation;
     Vector3 Rotate3d;
+
     void Start()
     {
         controller = gameObject.GetComponent<CharacterController>();
         //rb2d = GetComponent<Rigidbody2D>();
         fullSpeed = 3.1f;
         halfSpeed = 1.6f;
+
     }
 
     void Update()
