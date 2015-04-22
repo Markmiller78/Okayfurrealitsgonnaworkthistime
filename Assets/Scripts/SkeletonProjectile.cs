@@ -16,7 +16,7 @@ public class SkeletonProjectile : MonoBehaviour
         playerHealth = player.GetComponent<Health>();
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerEnter(Collider other)
     {
         if (other.gameObject == player && isActive)
         {
