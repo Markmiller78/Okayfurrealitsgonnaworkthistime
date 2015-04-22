@@ -8,6 +8,8 @@ public class SaveTest : MonoBehaviour {
 	GameObject player;
 	public float life;
 	public float lightss;
+
+
 	// Use this for initialization
 	void Start () {
 	//player= 
