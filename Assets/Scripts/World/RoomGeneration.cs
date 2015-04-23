@@ -67,7 +67,7 @@ public class RoomGeneration : MonoBehaviour
                 int chance = Random.Range(1, 5);
                 if (!roomsInfo[currentRoom].enemySpawnPointUsed[i] && chance == 1)
                 {
-                    Instantiate(roomsInfo[currentRoom].enemiesThatCanSpawn[Random.Range(0, roomsInfo[currentRoom].enemiesThatCanSpawn.Length - 1)], new Vector3(roomsInfo[currentRoom].enemySpawnPoints[i].x, -roomsInfo[currentRoom].enemySpawnPoints[i].y, -1f), Quaternion.identity);
+                    Instantiate(roomsInfo[currentRoom].enemiesThatCanSpawn[Random.Range(0, roomsInfo[currentRoom].enemiesThatCanSpawn.Length)], new Vector3(roomsInfo[currentRoom].enemySpawnPoints[i].x, -roomsInfo[currentRoom].enemySpawnPoints[i].y, -1f), Quaternion.identity);
                     roomsInfo[currentRoom].enemySpawnPointUsed[i] = true;
                     ++enemiesSpawned;
                     if (enemiesSpawned == howManyEnemies)
