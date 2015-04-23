@@ -12,7 +12,7 @@ public class ShadowHazard : MonoBehaviour {
     PlayerMovement heroMovement;
     PlayerDashing heroDash;
 
-    AudioSource audio;
+    AudioSource audioPlayer;
 
     void Start()
     {
@@ -21,7 +21,7 @@ public class ShadowHazard : MonoBehaviour {
         heroLight = hero.GetComponentInChildren<Light>();
         heroMovement = hero.GetComponent<PlayerMovement>();
         heroDash = hero.GetComponent<PlayerDashing>();
-        audio = gameObject.GetComponent<AudioSource>();
+        audioPlayer = gameObject.GetComponent<AudioSource>();
     }
 
     void OnTriggerEnter(Collider other)
@@ -36,7 +36,7 @@ public class ShadowHazard : MonoBehaviour {
 
             //Play the hazard sound attached to the player
 
-            audio.Play();
+            audioPlayer.Play();
 
 
            // other.GetComponentInChildren<AudioSource>().enabled = true;
@@ -62,7 +62,7 @@ public class ShadowHazard : MonoBehaviour {
             heroLight.cookie = null;
 
             //Stop playing audio
-            audio.Stop();
+            audioPlayer.Stop();
 
 
         }
