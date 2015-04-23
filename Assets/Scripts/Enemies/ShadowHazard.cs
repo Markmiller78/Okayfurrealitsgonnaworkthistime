@@ -26,7 +26,7 @@ public class ShadowHazard : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.gameObject == hero)
         {
             // Slow the player
             heroMovement.halfSpeed = 0.8f;
