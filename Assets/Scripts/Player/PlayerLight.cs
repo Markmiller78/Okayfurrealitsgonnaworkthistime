@@ -3,13 +3,25 @@ using System.Collections;
 
 public class PlayerLight : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
+    public float maxLight;
+    public float currentLight;
+
+    public void GainLight(float Amount)
+    {
+        currentLight += Amount;
+        if (currentLight > maxLight)
+            currentLight = maxLight;
+
+    }
+
+    public void LoseLight(float Amount)
+    {
+        currentLight -= Amount;
+        if (currentLight <= 0)
+        {
+            currentLight = 0;
+        }
+
+    }
 }
