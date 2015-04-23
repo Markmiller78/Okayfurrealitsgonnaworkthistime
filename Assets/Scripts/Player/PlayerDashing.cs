@@ -17,6 +17,7 @@ public class PlayerDashing : MonoBehaviour
 
     public GameObject FireTrail;
     public GameObject LightTrail;
+    public GameObject WindTrail;
 
     void Start()
     {
@@ -80,6 +81,11 @@ public class PlayerDashing : MonoBehaviour
                     else if (heroEquipment.equippedEmber == ember.Fire)
                     {
                         Instantiate(FireTrail, transform.position, new Quaternion(0, 0, 0, 0));
+                    }
+                    //Wind ember equipped
+                    else if (heroEquipment.equippedEmber == ember.Wind)
+                    {
+                        Instantiate(WindTrail, transform.position, new Quaternion(0, 0, 0, 0));
                     }
                     trailBlazerDropTimer = 0.0f;
                 }

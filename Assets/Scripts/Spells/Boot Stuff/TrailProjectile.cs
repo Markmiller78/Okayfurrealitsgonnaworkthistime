@@ -13,12 +13,21 @@ public class TrailProjectile : MonoBehaviour
     public GameObject TrailLightRemains;
 
     bool once;
+    public bool isWindEmber;
 
     void Start()
     {
         //Orient the thing to look correct
-        transform.Rotate(new Vector3(270, 0, 0));
-        particles = gameObject.GetComponent<ParticleSystem>();
+        if (isWindEmber)
+        {
+            transform.Rotate(new Vector3(0, 180, 0));
+            particles = gameObject.GetComponentInChildren<ParticleSystem>();
+        }
+        else
+        {
+            transform.Rotate(new Vector3(270, 0, 0));
+            particles = gameObject.GetComponent<ParticleSystem>();
+        }
         particleLight = gameObject.GetComponent<Light>();
         once = true;
     }
