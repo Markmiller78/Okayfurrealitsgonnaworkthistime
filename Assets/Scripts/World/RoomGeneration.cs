@@ -6,13 +6,21 @@ public class RoomGeneration : MonoBehaviour
 
     public GameObject[] rooms;
     Room[] roomsInfo;
-//    GameObject player;
+    //    GameObject player;
     public int currentRoom = 0;
 
     void Start()
     {
         DontDestroyOnLoad(this);
- //       player = GameObject.FindGameObjectWithTag("Player");
+        for (int i = 0; i < 100; i++)
+        {
+            //for (int x = 0; x < 10; x++)
+            {
+                int b = Random.Range(1, rooms.Length);
+                Swap(rooms, 0, b);
+            }
+        }
+        //       player = GameObject.FindGameObjectWithTag("Player");
         roomsInfo = new Room[rooms.Length];
         for (int i = 0; i < rooms.Length; i++)
         {
@@ -75,5 +83,12 @@ public class RoomGeneration : MonoBehaviour
                 }
             }
         }
+    }
+
+    void Swap(GameObject[] arr, int a, int b)
+    {
+        GameObject temp = arr[a];
+        arr[a] = arr[b];
+        arr[b] = temp;
     }
 }
