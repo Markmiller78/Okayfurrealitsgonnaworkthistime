@@ -12,12 +12,15 @@ public class TrailProjectile : MonoBehaviour
 
     public GameObject TrailLightRemains;
 
+    bool once;
+
     void Start()
     {
         //Orient the thing to look correct
         transform.Rotate(new Vector3(270, 0, 0));
         particles = gameObject.GetComponent<ParticleSystem>();
         particleLight = gameObject.GetComponent<Light>();
+        once = true;
     }
     void Update()
     {
@@ -27,13 +30,19 @@ public class TrailProjectile : MonoBehaviour
         if (timeAlive >= (MaxTimeActive - 0.7))
         {
             particles.emissionRate = 0;
+
+            if (once)
+            {
+                Instantiate(TrailLightRemains, transform.position, new Quaternion(0, 0, 0, 0));
+                once = false;
+            }
+
             particleLight.range -= Time.deltaTime;
         }
 
         if (timeAlive > MaxTimeActive)
         {
             //Spawn the trail light remains and destory the gameobject
-            Instantiate(TrailLightRemains, transform.position, new Quaternion(0, 0, 0, 0));
             Destroy(gameObject);
         }
     }
