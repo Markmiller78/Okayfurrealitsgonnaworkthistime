@@ -40,6 +40,7 @@ public class PlayerMeleeAttack : MonoBehaviour
         if (attacking && other.gameObject != player && other.gameObject.GetComponent<Health>() != null)
         {
             other.gameObject.GetComponent<Health>().LoseHealth(attackDamage + playerStats.meleeModifier);
+            other.SendMessage("GetWrecked", 0.5f);
         }
     }
 

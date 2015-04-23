@@ -20,6 +20,13 @@ public class Room : MonoBehaviour
     [HideInInspector]
     public bool beenThere;
 
+    // 0 = left, 1 = top, 2 = right, 3 = bottom
+    [HideInInspector]
+    public int fromDir;
+    [HideInInspector]
+    public int toDir;
+
+
     public void setUsed()
     {
         enemySpawnPointUsed = new bool[enemySpawnPoints.Length];

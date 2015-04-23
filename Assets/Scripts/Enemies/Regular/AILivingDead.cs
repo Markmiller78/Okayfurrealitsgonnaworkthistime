@@ -4,9 +4,9 @@ using System.Collections;
 public class AILivingDead : MonoBehaviour
 {
     GameObject player;
-//    Health playerHealth;
-    Rigidbody2D rb2d;
-
+    //    Health playerHealth;
+    //    Rigidbody2D rb2d;
+    CharacterController controller;
     public float attackDamage;
     public float attackRange;
     float attackCooldown;
@@ -19,9 +19,10 @@ public class AILivingDead : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-//        playerHealth = player.GetComponent<Health>();
+        //playerHealth = player.GetComponent<Health>();
         attackCooldown = attackCooldownMax;
-        rb2d = GetComponent<Rigidbody2D>();
+        //rb2d = GetComponent<Rigidbody2D>();
+        controller = GetComponent<CharacterController>();
     }
 
     void Update()
@@ -43,7 +44,9 @@ public class AILivingDead : MonoBehaviour
 
     void Move()
     {
-        rb2d.MovePosition(Vector2.MoveTowards(transform.position, player.transform.position, Time.deltaTime * moveSpeed));
+        //rb2d.MovePosition(Vector2.MoveTowards(transform.position, player.transform.position, Time.deltaTime * moveSpeed));
+        Vector2 moveTo = (player.transform.position - transform.position).normalized;
+        controller.Move(moveTo * Time.deltaTime * moveSpeed);
     }
 
     void Turn()
