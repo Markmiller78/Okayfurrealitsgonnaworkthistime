@@ -3,6 +3,7 @@ using System.Collections;
 
 public class AIShadowSpawn : MonoBehaviour
 {
+    enum state { evade, flee, enrage };
 
     GameObject player;
     Health playerHealth;
@@ -13,20 +14,19 @@ public class AIShadowSpawn : MonoBehaviour
     public float moveSpeed;
     float distanceToPlayer;
 
+    state theState;
+
     Vector2 fleeDirection;
 
-    bool fleeing;
-    float fleeTimer;
-    float fleeDuration;
-    float fleeCooldown;
+    float directionTimer;
+
 
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         controller = GetComponent<CharacterController>();
-        fleeing = false;
-        fleeTimer = 0;
-        fleeDuration = 0.5f;
+        theState = state.evade;
+        directionTimer = 0;
     }
 
     // Update is called once per frame
@@ -34,36 +34,44 @@ public class AIShadowSpawn : MonoBehaviour
     {
         distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
 
-        if (fleeing)
+        if (distanceToPlayer < 3)
         {
-            Flee();
+            theState = state.flee;
         }
         else
         {
-            //If the player is close, move away
-            if (distanceToPlayer <= 10)
-            {
-                MoveAway();
-            }
+            theState = state.evade;
         }
 
+        if (theState == state.evade)
+        {
+            Evade();            
+        }
+        else if (theState == state.flee)
+        {
+            Flee();
+            if (directionTimer <= 0)
+            {
+                directionTimer = 0.5f;
+                //Vector3 modifier = player.transform.position + new Vector3(Random.Range(-10, 20), Random.Range(-10, 20), 0);
+                fleeDirection = -(transform.position - player.transform.position ).normalized;
+            }
+        }
     }
 
-    void MoveAway()
+    void Evade()
     {
         Vector2 moveTo = (transform.position - player.transform.position).normalized;
         controller.Move(moveTo * Time.deltaTime * moveSpeed);
-        transform.LookAt(transform.up);
     }
 
     void Flee()
     {
-        controller.Move(fleeDirection * Time.deltaTime * 10);
-
-        fleeTimer -= Time.deltaTime;
-        if (fleeTimer <= 0)
+        if (directionTimer >= 0.5f)
         {
-            fleeing = false;
+            directionTimer -= Time.deltaTime;
         }
+
+        controller.Move(fleeDirection * Time.deltaTime * 10);
     }
 }
