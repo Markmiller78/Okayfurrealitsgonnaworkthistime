@@ -21,6 +21,8 @@ public class BossAIDethros : MonoBehaviour
     {
         distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
         MoveTowardPlayer();
+
+        transform.position = new Vector3(transform.position.x, transform.position.y, -1f);
     }
 
     void MoveTowardPlayer()

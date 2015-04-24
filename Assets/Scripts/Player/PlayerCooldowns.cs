@@ -9,7 +9,7 @@ public class PlayerCooldowns : MonoBehaviour
     public float spellCooldown;
     public float spellCooldownMax;
     public bool spellCooling = false;
-    public float meleeCooldown;
+    /*public*/ float meleeCooldown;
     public float meleeCooldownMax;
     public bool meleeCooling = false;
     public float collectorCooldown;
