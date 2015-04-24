@@ -16,6 +16,14 @@ public class PlayerCooldowns : MonoBehaviour
     public float collectorCooldownMax;
     public bool collectorCooling = false;
 
+    void Start()
+    {
+        dashCooldown = dashCooldownMax;
+        spellCooldown = spellCooldownMax;
+        meleeCooldown = meleeCooldownMax;
+        collectorCooldown = collectorCooldownMax;
+    }
+
     // Update is called once per frame
     void Update()
     {

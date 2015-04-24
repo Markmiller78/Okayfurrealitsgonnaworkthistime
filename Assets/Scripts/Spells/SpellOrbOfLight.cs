@@ -6,23 +6,33 @@ public class SpellOrbOfLight : MonoBehaviour {
     public float speed;
     public float damage;
     public float range;
-    CharacterController controller;
+
+    float distanceTraveled;
 
     void Start()
     {
-        controller = gameObject.GetComponent<CharacterController>();
-
+        distanceTraveled = 0;
     }
 
 	// Update is called once per frame
 	void Update ()
     {
-       // transform.Rotate(new Vector3(0, 0, 5));
-        controller.Move(new Vector3(0, speed * Time.deltaTime, 0));
+        transform.position += transform.up * speed * Time.deltaTime;
+        distanceTraveled += speed * Time.deltaTime;
+
+        if (distanceTraveled >= range)
+        {
+            Explode();
+        }
 	}
 
-    void OnTriggerEnter()
+    void OnTriggerEnter(Collider other)
     {
 
+    }
+
+    void Explode()
+    {
+        Destroy(gameObject);
     }
 }

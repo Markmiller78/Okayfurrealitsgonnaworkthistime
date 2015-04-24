@@ -7,12 +7,14 @@ public class PlayerDashing : MonoBehaviour
     public float dashSpeed;
     public float dashDuration;
 
+    float timeRemaining;
+
     CharacterController controller;
     Vector2 MoveDirect;
     PlayerEquipment heroEquipment;
     PlayerLight heroLight;
 
-    float dashTimeRemaining;
+    PlayerCooldowns heroCooldowns;
     float trailBlazerDropTimer;
 
     public GameObject FireTrail;
@@ -24,17 +26,18 @@ public class PlayerDashing : MonoBehaviour
         controller = gameObject.GetComponent<CharacterController>();
         heroEquipment = gameObject.GetComponent<PlayerEquipment>();
         heroLight = gameObject.GetComponent<PlayerLight>();
-        dashTimeRemaining = 0.0f;
+        heroCooldowns = gameObject.GetComponent<PlayerCooldowns>();
         trailBlazerDropTimer = 0.0f;
     }
 
     void Update()
     {
         //If the player is dashing, perform the dash
-        if (dashTimeRemaining > 0.0f)
+        if (timeRemaining > 0)
         {
-            //Decrement the dashTimeRemaining
-            dashTimeRemaining -= Time.deltaTime;
+
+            timeRemaining -= Time.deltaTime;
+
 
             //Set the dash direction to the direction the player is currently facing
 
@@ -96,13 +99,15 @@ public class PlayerDashing : MonoBehaviour
     void Dash()
     {
         //If the player isnt already dashing, begin dashing
-        if (dashTimeRemaining <= 0.0f)
+        if (!heroCooldowns.dashCooling)
         { 
             //Make the player spend light
             heroLight.LoseLight(5);
+            heroCooldowns.dashCooling = true;
+
+            timeRemaining = dashDuration;
 
             //Set up the local variables
-            dashTimeRemaining = dashDuration;
             trailBlazerDropTimer = 0.1f;
 
             if (heroEquipment.equippedBoot == boot.Trailblazer)
