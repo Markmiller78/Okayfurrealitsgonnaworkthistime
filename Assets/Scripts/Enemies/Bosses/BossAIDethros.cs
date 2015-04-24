@@ -1,15 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BossAIDethros : MonoBehaviour {
+public class BossAIDethros : MonoBehaviour
+{
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    void Start()
+    {
+
+    }
+
+    void Update()
+    {
+
+    }
 }
