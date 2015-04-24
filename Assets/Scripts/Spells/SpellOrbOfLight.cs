@@ -9,13 +9,15 @@ public class SpellOrbOfLight : MonoBehaviour {
 
     float distanceTraveled;
 
+    public GameObject explosion;
+
+
     void Start()
     {
         distanceTraveled = 0;
     }
 
-	// Update is called once per frame
-	void Update ()
+	void FixedUpdate ()
     {
         transform.position += transform.up * speed * Time.deltaTime;
         distanceTraveled += speed * Time.deltaTime;
@@ -28,11 +30,15 @@ public class SpellOrbOfLight : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-
+        if (other.tag == "Wall" || other.tag == "Enemy")
+        {
+            Explode();
+        }
     }
 
     void Explode()
     {
+        Instantiate(explosion, transform.position, transform.rotation);            
         Destroy(gameObject);
     }
 }

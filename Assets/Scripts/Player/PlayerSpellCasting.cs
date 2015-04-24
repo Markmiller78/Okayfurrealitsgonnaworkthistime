@@ -3,7 +3,8 @@ using System.Collections;
 
 public class PlayerSpellCasting : MonoBehaviour {
 
-    public GameObject orbOfLight;
+    public GameObject lightOrb;
+    public GameObject fireOrb;
 
     PlayerEquipment heroEquipment;
     PlayerCooldowns heroCooldowns;
@@ -25,7 +26,14 @@ public class PlayerSpellCasting : MonoBehaviour {
             //If the orb of light is equipped, fire the orb of light ability
             if (heroEquipment.equippedAccessory == accessory.OrbOfLight)
             {
-                Instantiate(orbOfLight, transform.position, transform.rotation);
+                if (heroEquipment.equippedEmber == ember.None)
+                {
+                    Instantiate(lightOrb, transform.position, transform.rotation);                    
+                }
+                else if (heroEquipment.equippedEmber == ember.Fire)
+                {
+                    Instantiate(fireOrb, transform.position, transform.rotation);                                        
+                }
             }
         }
 
