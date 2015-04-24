@@ -31,8 +31,13 @@ public class SpellOrbOfLight : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Wall" || other.tag == "Enemy")
+        if (other.tag == "Wall")
         {
+            Explode();
+        }
+        else if (other.tag == "Enemy")
+        {
+            other.GetComponent<Health>().LoseHealth(5);
             Explode();
         }
     }
