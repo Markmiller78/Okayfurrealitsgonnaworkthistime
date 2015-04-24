@@ -8,8 +8,8 @@ public class RoomGeneration : MonoBehaviour
     Room[] floorOneRoomsInfo;
     //public GameObject[] floorOneMazes;
     //Room[] floorOneMazesInfo;
-    //public GameObject dethrosRoom;
-    //Room dethrosRoomInfo;
+    public GameObject dethrosRoom;
+    Room dethrosRoomInfo;
     //public GameObject[] floorTwoRooms;
     //Room[] floorTwoRoomsInfo;
     //public GameObject[] floorTwoMazes;
@@ -42,8 +42,8 @@ public class RoomGeneration : MonoBehaviour
         //    floorOneMazesInfo[i] = floorOneMazes[i].GetComponent<Room>();
         //    floorOneMazesInfo[i].setUsed();
         //}
-        //dethrosRoomInfo = dethrosRoom.GetComponent<Room>();
-        //dethrosRoomInfo.setUsed();
+        dethrosRoomInfo = dethrosRoom.GetComponent<Room>();
+        dethrosRoomInfo.setUsed();
         //Utilities.ArrayShuffle(floorTwoRooms);
         //floorTwoRoomsInfo = new Room[floorTwoRooms.Length];
         //for (int i = 0; i < floorTwoRooms.Length; i++)
@@ -76,6 +76,12 @@ public class RoomGeneration : MonoBehaviour
         //}
         //morriusRoomInfo = morriusRoom.GetComponent<Room>();
         //morriusRoomInfo.setUsed();
+
+        // FOR TESTING PURPOSES ONLY, DON'T FORGET TO DELETE ME.
+        floorOneRooms[0] = dethrosRoom;
+        floorOneRoomsInfo[0] = dethrosRoomInfo;
+        // THIS MARKS THE END OF THE TEST CODE
+
         CreateRoom();
     }
 
