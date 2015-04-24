@@ -53,7 +53,7 @@ public class AIShadowSpawn : MonoBehaviour
     {
         Vector2 moveTo = (transform.position - player.transform.position).normalized;
         controller.Move(moveTo * Time.deltaTime * moveSpeed);
-       // transform.LookAt(moveTo);
+        transform.LookAt(transform.up);
     }
 
     void Flee()
