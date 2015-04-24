@@ -1,26 +1,32 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
 public class PlayerMovement : MonoBehaviour
 {
 
-    public float speed;
+    public float fullSpeed;
+    public float halfSpeed;
+    float speed;
     CharacterController controller;
     //Rigidbody2D rb2d;
     Vector2 MoveDirect;
     Vector2 CharRotate;
     Quaternion Rotation;
     Vector3 Rotate3d;
+
     void Start()
     {
         controller = gameObject.GetComponent<CharacterController>();
         //rb2d = GetComponent<Rigidbody2D>();
-        speed = 1;
+        fullSpeed = 3.1f;
+        halfSpeed = 1.6f;
+
     }
 
     void Update()
     {
-
+        transform.position = new Vector3(transform.position.x, transform.position.y, -1f);
     }
 
     void CMove()
@@ -31,10 +37,10 @@ public class PlayerMovement : MonoBehaviour
         //for more speed
         if (Input.GetAxis("CLSHorizontal") > .8f || Input.GetAxis("CLSVertical") > .8f || Input.GetAxis("CLSVertical") < -.8f || Input.GetAxis("CLSHorizontal") < -.8f)
         {
-            speed = 3.1f;
+            speed = fullSpeed;
         }
         else
-            speed = 1.6f;
+            speed = halfSpeed;
 
         //Check Left Joysticks for Movement
         MoveDirect.x = Input.GetAxis("CLSHorizontal");
@@ -73,10 +79,10 @@ public class PlayerMovement : MonoBehaviour
         //for more speed
         if (Input.GetAxis("KBHorizontal") > .8f || Input.GetAxis("KBVertical") > .8f || Input.GetAxis("KBVertical") < -.8f || Input.GetAxis("KBHorizontal") < -.8f)
         {
-            speed = 3.1f;
+            speed = fullSpeed;
         }
         else
-            speed = 1.6f;
+            speed = halfSpeed;
 
         //Check WASD for Movement
         MoveDirect.x = Input.GetAxis("KBHorizontal");

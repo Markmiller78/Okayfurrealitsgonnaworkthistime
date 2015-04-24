@@ -1,34 +1,43 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerDashing : MonoBehaviour {
+public class PlayerDashing : MonoBehaviour
+{
 
     public float dashSpeed;
     public float dashDuration;
 
+    float timeRemaining;
+
     CharacterController controller;
     Vector2 MoveDirect;
+    PlayerEquipment heroEquipment;
+    PlayerLight heroLight;
 
-    float dashTimeRemaining;
+    PlayerCooldowns heroCooldowns;
     float trailBlazerDropTimer;
 
-    public GameObject TrailBlazerPickUp;
-    public GameObject TrailBlazerExplosion;
+    public GameObject FireTrail;
+    public GameObject LightTrail;
+    public GameObject WindTrail;
 
     void Start()
     {
         controller = gameObject.GetComponent<CharacterController>();
-        dashTimeRemaining = 0.0f;
+        heroEquipment = gameObject.GetComponent<PlayerEquipment>();
+        heroLight = gameObject.GetComponent<PlayerLight>();
+        heroCooldowns = gameObject.GetComponent<PlayerCooldowns>();
         trailBlazerDropTimer = 0.0f;
     }
 
     void Update()
     {
         //If the player is dashing, perform the dash
-        if (dashTimeRemaining > 0.0f)
+        if (timeRemaining > 0)
         {
-            //Decrement the dashTimeRemaining
-            dashTimeRemaining -= Time.deltaTime;
+
+            timeRemaining -= Time.deltaTime;
+
 
             //Set the dash direction to the direction the player is currently facing
 
@@ -60,15 +69,27 @@ public class PlayerDashing : MonoBehaviour {
 
             //Actually Move the player
             controller.Move(MoveDirect);
- 
-            if ((int)gameObject.GetComponent<PlayerEquipment>().equippedBoot == (int)boot.Trailblazer)
- 
- 
+
+            if (heroEquipment.equippedBoot == boot.Trailblazer)
             {
                 trailBlazerDropTimer += Time.deltaTime;
                 if (trailBlazerDropTimer > 0.03f)
                 {
-                    Instantiate(TrailBlazerPickUp, transform.position, new Quaternion(0, 0, 0, 0));
+                    //No ember equipped
+                    if (heroEquipment.equippedEmber == ember.None)
+                    {
+                        Instantiate(LightTrail, transform.position, new Quaternion(0, 0, 0, 0));
+                    }
+                    //Fire ember equipped
+                    else if (heroEquipment.equippedEmber == ember.Fire)
+                    {
+                        Instantiate(FireTrail, transform.position, new Quaternion(0, 0, 0, 0));
+                    }
+                    //Wind ember equipped
+                    else if (heroEquipment.equippedEmber == ember.Wind)
+                    {
+                        Instantiate(WindTrail, transform.position, new Quaternion(0, 0, 0, 0));
+                    }
                     trailBlazerDropTimer = 0.0f;
                 }
             }
@@ -78,25 +99,30 @@ public class PlayerDashing : MonoBehaviour {
     void Dash()
     {
         //If the player isnt already dashing, begin dashing
-        if (dashTimeRemaining <= 0.0f)
-        {
-            dashTimeRemaining = dashDuration;
+        if (!heroCooldowns.dashCooling)
+        { 
+            //Make the player spend light
+            heroLight.LoseLight(5);
+            heroCooldowns.dashCooling = true;
+
+            timeRemaining = dashDuration;
+
+            //Set up the local variables
             trailBlazerDropTimer = 0.1f;
- 
-            if ((int)gameObject.GetComponent<PlayerEquipment>().equippedBoot == (int)boot.Trailblazer)
- 
+
+            if (heroEquipment.equippedBoot == boot.Trailblazer)
             {
-              //  Instantiate(TrailBlazerExplosion, transform.position, new Quaternion(0, 0, 0, 0));
+                //  Instantiate(TrailBlazerExplosion, transform.position, new Quaternion(0, 0, 0, 0));
 
             }
 
         }
     }
 
-	void Blink()
-	{
+    void Blink()
+    {
 
 
 
-	}
+    }
 }
