@@ -17,7 +17,7 @@ public class Pickup : MonoBehaviour
         equipment = player.GetComponent<PlayerEquipment>();
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerStay(Collider other)
     {
         if ((InputManager.controller && Input.GetButtonDown("CInteract") || (!InputManager.controller && Input.GetButtonDown("KBInteract"))) 
             && other.gameObject == player)
@@ -108,6 +108,7 @@ public class Pickup : MonoBehaviour
                 default:
                     break;
             }
+            Destroy(gameObject);
         }
     }
 }

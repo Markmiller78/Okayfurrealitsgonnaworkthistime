@@ -577,7 +577,6 @@ public class MainMenu : MonoBehaviour
             {
                 case 0:
                     {
-
                         //CONTINUE PREVIOUS GAME
                         Application.LoadLevel("Game");
                         break;
@@ -618,9 +617,6 @@ public class MainMenu : MonoBehaviour
                     }
             }
         }
-
-
-
     }
 
     void SelectDifficultyMenu()
@@ -674,14 +670,12 @@ public class MainMenu : MonoBehaviour
             {
                 case 0:
                     {
-
                         //HARD DIFFICULTY
                         Application.LoadLevel("Game");
                         break;
                     }
                 case 1:
                     {
-
                         //NORMAL DIFFICULTY
                         Application.LoadLevel("Game");
                         break;
@@ -715,9 +709,6 @@ public class MainMenu : MonoBehaviour
                     }
             }
         }
-
-
-
     }
 }
 
