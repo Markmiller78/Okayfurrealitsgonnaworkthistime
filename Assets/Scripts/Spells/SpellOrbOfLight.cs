@@ -10,6 +10,7 @@ public class SpellOrbOfLight : MonoBehaviour {
     float distanceTraveled;
 
     public GameObject explosion;
+    public GameObject lightRemains;
 
 
     void Start()
@@ -38,7 +39,8 @@ public class SpellOrbOfLight : MonoBehaviour {
 
     void Explode()
     {
-        Instantiate(explosion, transform.position, transform.rotation);            
+        Instantiate(explosion, transform.position, transform.rotation);
+        Instantiate(lightRemains, transform.position, transform.rotation);            
         Destroy(gameObject);
     }
 }

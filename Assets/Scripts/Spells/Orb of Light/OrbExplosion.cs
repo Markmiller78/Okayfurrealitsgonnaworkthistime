@@ -4,7 +4,6 @@ using System.Collections;
 public class OrbExplosion : MonoBehaviour
 {
     Light theLight;
-
     float timeAlive;
     // Use this for initialization
     void Start()
@@ -26,6 +25,9 @@ public class OrbExplosion : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        other.GetComponent<Health>().LoseHealth(5);
+        if (other.tag == "Enemy")
+        {
+            other.GetComponent<Health>().LoseHealth(5);            
+        }
     }
 }
