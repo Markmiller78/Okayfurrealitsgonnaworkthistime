@@ -4,12 +4,29 @@ using System.Collections;
 public class OrbExplosion : MonoBehaviour
 {
     Light theLight;
+    PlayerEquipment heroEquipment;
     float timeAlive;
+
+    public GameObject debuff;
+
+    float maxLife;
+
     // Use this for initialization
     void Start()
     {
         timeAlive = 0;
         theLight = gameObject.GetComponent<Light>();
+        heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
+
+        if (heroEquipment.equippedEmber == ember.Ice)
+        {
+            maxLife = 1.1f;
+        }
+        else
+        {
+            maxLife = 0.6f;
+        }
+
     }
 
     // Update is called once per frame
@@ -17,7 +34,7 @@ public class OrbExplosion : MonoBehaviour
     {
         timeAlive += Time.deltaTime;
         theLight.range -= Time.deltaTime * 4;
-        if (timeAlive >= 1.0f)
+        if (timeAlive >= maxLife)
         {
             Destroy(gameObject);
         }
@@ -27,7 +44,22 @@ public class OrbExplosion : MonoBehaviour
     {
         if (other.tag == "Enemy")
         {
-            other.GetComponent<Health>().LoseHealth(5);            
+            if (heroEquipment.equippedEmber == ember.None)
+            {
+                other.GetComponent<Health>().LoseHealth(5);                            
+            }
+            else if (heroEquipment.equippedEmber == ember.Fire)
+            {
+                other.GetComponent<Health>().LoseHealth(5);
+                GameObject tempObj = (GameObject)Instantiate(debuff, other.transform.position, other.transform.rotation);
+                tempObj.GetComponent<DebuffFire>().target = other.gameObject;
+            }
+            else if (heroEquipment.equippedEmber == ember.Ice)
+            {
+                other.GetComponent<Health>().LoseHealth(5);
+                GameObject tempObj = (GameObject)Instantiate(debuff, other.transform.position, other.transform.rotation);
+                tempObj.GetComponent<DebuffFrost>().target = other.gameObject;
+            }
         }
     }
 }
