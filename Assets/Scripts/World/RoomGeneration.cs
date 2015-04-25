@@ -22,6 +22,8 @@ public class RoomGeneration : MonoBehaviour
     //Room[] floorThreeMazesInfo;
     //public GameObject morriusRoom;
     //Room morriusRoomInfo;
+    public GameObject[] finalRoomArray;
+    Room[] finalRoomInfoArray;
     //public int currentFloor = 1;
     public int currentRoom = 0;
 
@@ -35,7 +37,7 @@ public class RoomGeneration : MonoBehaviour
             floorOneRoomsInfo[i] = floorOneRooms[i].GetComponent<Room>();
             floorOneRoomsInfo[i].setUsed();
         }
-        //Utilities.ArrayShuffle(floorOneMazes);
+        Utilities.ArrayShuffle(floorOneMazes, 3);
         floorOneMazesInfo = new Room[floorOneMazes.Length];
         for (int i = 0; i < floorOneMazes.Length; i++)
         {
@@ -78,11 +80,15 @@ public class RoomGeneration : MonoBehaviour
         //morriusRoomInfo.setUsed();
 
         // FOR TESTING PURPOSES ONLY, DON'T FORGET TO DELETE ME.
-        floorOneRooms[0] = dethrosRoom;
-        floorOneRoomsInfo[0] = dethrosRoomInfo;
-        //floorOneRooms[0] = floorOneMazes[0];
-        //floorOneRoomsInfo[0] = floorOneMazesInfo[0];
+        //floorOneRooms[0] = dethrosRoom;
+        //floorOneRoomsInfo[0] = dethrosRoomInfo;
+        //floorOneRooms[0] = floorOneMazes[1];
+        //floorOneRoomsInfo[0] = floorOneMazesInfo[1];
         // THIS MARKS THE END OF THE TEST CODE
+
+        finalRoomArray = new GameObject[9];
+        finalRoomInfoArray = new Room[9];
+        FillDungeon();
 
         CreateRoom();
     }
@@ -140,5 +146,27 @@ public class RoomGeneration : MonoBehaviour
                 }
             }
         }
+    }
+
+    void FillDungeon()
+    {
+        finalRoomArray[0] = floorOneRooms[0];
+        finalRoomInfoArray[0] = floorOneRoomsInfo[0];
+        finalRoomArray[1] = floorOneRooms[1];
+        finalRoomInfoArray[1] = floorOneRoomsInfo[1];
+        finalRoomArray[2] = floorOneMazes[0];
+        finalRoomInfoArray[2] = floorOneMazesInfo[0];
+        finalRoomArray[3] = floorOneRooms[2];
+        finalRoomInfoArray[3] = floorOneRoomsInfo[2];
+        finalRoomArray[4] = floorOneRooms[3];
+        finalRoomInfoArray[4] = floorOneRoomsInfo[3];
+        finalRoomArray[5] = floorOneMazes[1];
+        finalRoomInfoArray[5] = floorOneMazesInfo[1];
+        finalRoomArray[6] = floorOneRooms[4];
+        finalRoomInfoArray[6] = floorOneRoomsInfo[4];
+        finalRoomArray[7] = floorOneRooms[5];
+        finalRoomInfoArray[7] = floorOneRoomsInfo[5];
+        finalRoomArray[8] = dethrosRoom;
+        finalRoomInfoArray[8] = dethrosRoomInfo;
     }
 }
