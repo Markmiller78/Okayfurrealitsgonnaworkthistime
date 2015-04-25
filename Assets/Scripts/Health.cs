@@ -8,12 +8,19 @@ public class Health : MonoBehaviour
     public float currentHP;
     public float healthPercent;
     GameObject healthBar;
+
+    GameObject dungeon;
+    RoomGeneration generator;
+
     void Start()
     {
         // maxHP = 100; Commented out because we don't want everything to have a starting health of 100
         if (this.tag == "Player")
             healthBar = GameObject.FindGameObjectWithTag("HealthBar");
         healthPercent = currentHP / maxHP * 100;
+
+        dungeon = GameObject.FindGameObjectWithTag("Dungeon");
+        generator = dungeon.GetComponent<RoomGeneration>();
 
         //LoseHealth(20); //Used for testing
     }
@@ -49,6 +56,9 @@ public class Health : MonoBehaviour
     void Die()
     {
         if (this.tag != "Player")
+        {
             Destroy(gameObject);
+            --generator.finalRoomInfoArray[generator.currentRoom].numEnemies;
+        }
     }
 }
