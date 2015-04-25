@@ -6,8 +6,8 @@ public class RoomGeneration : MonoBehaviour
 
     public GameObject[] floorOneRooms;
     Room[] floorOneRoomsInfo;
-    //public GameObject[] floorOneMazes;
-    //Room[] floorOneMazesInfo;
+    public GameObject[] floorOneMazes;
+    Room[] floorOneMazesInfo;
     public GameObject dethrosRoom;
     Room dethrosRoomInfo;
     //public GameObject[] floorTwoRooms;
@@ -36,12 +36,12 @@ public class RoomGeneration : MonoBehaviour
             floorOneRoomsInfo[i].setUsed();
         }
         //Utilities.ArrayShuffle(floorOneMazes);
-        //floorOneMazesInfo = new Room[floorOneMazes.Length];
-        //for (int i = 0; i < floorOneMazes.Length; i++)
-        //{
-        //    floorOneMazesInfo[i] = floorOneMazes[i].GetComponent<Room>();
-        //    floorOneMazesInfo[i].setUsed();
-        //}
+        floorOneMazesInfo = new Room[floorOneMazes.Length];
+        for (int i = 0; i < floorOneMazes.Length; i++)
+        {
+            floorOneMazesInfo[i] = floorOneMazes[i].GetComponent<Room>();
+            floorOneMazesInfo[i].setUsed();
+        }
         dethrosRoomInfo = dethrosRoom.GetComponent<Room>();
         dethrosRoomInfo.setUsed();
         //Utilities.ArrayShuffle(floorTwoRooms);
@@ -80,6 +80,8 @@ public class RoomGeneration : MonoBehaviour
         // FOR TESTING PURPOSES ONLY, DON'T FORGET TO DELETE ME.
         floorOneRooms[0] = dethrosRoom;
         floorOneRoomsInfo[0] = dethrosRoomInfo;
+        //floorOneRooms[0] = floorOneMazes[0];
+        //floorOneRoomsInfo[0] = floorOneMazesInfo[0];
         // THIS MARKS THE END OF THE TEST CODE
 
         CreateRoom();
