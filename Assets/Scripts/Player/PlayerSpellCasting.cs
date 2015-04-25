@@ -1,12 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerSpellCasting : MonoBehaviour {
+public class PlayerSpellCasting : MonoBehaviour
+{
 
     public GameObject lightOrb;
     public GameObject fireOrb;
     public GameObject frostOrb;
     public GameObject windOrb;
+
+    public GameObject lightSing;
+    public GameObject fireSing;
+    public GameObject frostSing;
+    public GameObject windSing;
 
     PlayerEquipment heroEquipment;
     PlayerCooldowns heroCooldowns;
@@ -31,20 +37,41 @@ public class PlayerSpellCasting : MonoBehaviour {
             {
                 if (heroEquipment.equippedEmber == ember.None)
                 {
-                    Instantiate(lightOrb, transform.position, transform.rotation);                    
+                    Instantiate(lightOrb, transform.position, transform.rotation);
                 }
                 else if (heroEquipment.equippedEmber == ember.Fire)
                 {
-                    Instantiate(fireOrb, transform.position, transform.rotation);                                        
+                    Instantiate(fireOrb, transform.position, transform.rotation);
                 }
                 else if (heroEquipment.equippedEmber == ember.Wind)
                 {
-                    Instantiate(windOrb, transform.position, transform.rotation);                                        
-                    
+                    Instantiate(windOrb, transform.position, transform.rotation);
+
                 }
                 else if (heroEquipment.equippedEmber == ember.Ice)
                 {
-                    Instantiate(frostOrb, transform.position, transform.rotation);                                        
+                    Instantiate(frostOrb, transform.position, transform.rotation);
+
+                }
+            }
+            else if (heroEquipment.equippedAccessory == accessory.Singularity)
+            {
+                if (heroEquipment.equippedEmber == ember.None)
+                {
+                    Instantiate(lightSing, transform.position, transform.rotation);
+                }
+                else if (heroEquipment.equippedEmber == ember.Fire)
+                {
+                    Instantiate(fireSing, transform.position, transform.rotation);
+                }
+                else if (heroEquipment.equippedEmber == ember.Wind)
+                {
+                    Instantiate(windSing, transform.position, transform.rotation);
+
+                }
+                else if (heroEquipment.equippedEmber == ember.Ice)
+                {
+                    Instantiate(frostSing, transform.position, transform.rotation);
 
                 }
             }
