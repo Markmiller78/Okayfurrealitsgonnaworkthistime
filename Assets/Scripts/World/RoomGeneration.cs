@@ -95,25 +95,25 @@ public class RoomGeneration : MonoBehaviour
 
     void CreateRoom()
     {
-        for (int y = 0; y < floorOneRoomsInfo[currentRoom].height; y++)
+        for (int y = 0; y < finalRoomInfoArray[currentRoom].height; y++)
         {
             bool skip = false;
             bool hasSkipped = false;
-            for (int x = 0; x < floorOneRoomsInfo[currentRoom].width; x++)
+            for (int x = 0; x < finalRoomInfoArray[currentRoom].width; x++)
             {
-                if (x == 0 || x == floorOneRoomsInfo[currentRoom].width - 1 || y == 0 || y == floorOneRoomsInfo[currentRoom].height - 1)
+                if (x == 0 || x == finalRoomInfoArray[currentRoom].width - 1 || y == 0 || y == finalRoomInfoArray[currentRoom].height - 1)
                 {
-                    if (x == floorOneRoomsInfo[currentRoom].width / 2 - 1)
+                    if (x == finalRoomInfoArray[currentRoom].width / 2 - 1)
                     {
-                        Instantiate(floorOneRoomsInfo[currentRoom].door, new Vector3(x + .5f, -y, -1.4f), Quaternion.identity);
+                        Instantiate(finalRoomInfoArray[currentRoom].door, new Vector3(x + .5f, -y, -1.4f), Quaternion.identity);
                         skip = true;
                     }
                     else if (!skip)
-                        Instantiate(floorOneRoomsInfo[currentRoom].wallTiles[0], new Vector3(x, -y, -1.4f), Quaternion.identity);
+                        Instantiate(finalRoomInfoArray[currentRoom].wallTiles[0], new Vector3(x, -y, -1.4f), Quaternion.identity);
                 }
                 else
                 {
-                    Instantiate(floorOneRoomsInfo[currentRoom].floorTiles[0], new Vector3(x, -y, 0.0f), Quaternion.identity);
+                    Instantiate(finalRoomInfoArray[currentRoom].floorTiles[0], new Vector3(x, -y, 0.0f), Quaternion.identity);
                 }
                 if (hasSkipped)
                     skip = false;
@@ -121,25 +121,25 @@ public class RoomGeneration : MonoBehaviour
                     hasSkipped = true;
             }
         }
-        for (int i = 0; i < floorOneRoomsInfo[currentRoom].innerWallPositions.Length; i++)
+        for (int i = 0; i < finalRoomInfoArray[currentRoom].innerWallPositions.Length; i++)
         {
-            Instantiate(floorOneRoomsInfo[currentRoom].wallTiles[0], new Vector3(floorOneRoomsInfo[currentRoom].innerWallPositions[i].x, -floorOneRoomsInfo[currentRoom].innerWallPositions[i].y, -1.4f), Quaternion.identity);
+            Instantiate(finalRoomInfoArray[currentRoom].wallTiles[0], new Vector3(finalRoomInfoArray[currentRoom].innerWallPositions[i].x, -finalRoomInfoArray[currentRoom].innerWallPositions[i].y, -1.4f), Quaternion.identity);
         }
-        for (int i = 0; i < floorOneRoomsInfo[currentRoom].hazardSpawnPoints.Length; i++)
+        for (int i = 0; i < finalRoomInfoArray[currentRoom].hazardSpawnPoints.Length; i++)
         {
-            Instantiate(floorOneRoomsInfo[currentRoom].hazard, new Vector3(floorOneRoomsInfo[currentRoom].hazardSpawnPoints[i].x, -floorOneRoomsInfo[currentRoom].hazardSpawnPoints[i].y, -1), Quaternion.identity);
+            Instantiate(finalRoomInfoArray[currentRoom].hazard, new Vector3(finalRoomInfoArray[currentRoom].hazardSpawnPoints[i].x, -finalRoomInfoArray[currentRoom].hazardSpawnPoints[i].y, -1), Quaternion.identity);
         }
-        int howManyEnemies = Random.Range(floorOneRoomsInfo[currentRoom].minEnemies, floorOneRoomsInfo[currentRoom].maxEnemies);
+        int howManyEnemies = Random.Range(finalRoomInfoArray[currentRoom].minEnemies, finalRoomInfoArray[currentRoom].maxEnemies);
         int enemiesSpawned = 0;
         while (enemiesSpawned < howManyEnemies)
         {
-            for (int i = 0; i < floorOneRoomsInfo[currentRoom].enemySpawnPoints.Length; i++)
+            for (int i = 0; i < finalRoomInfoArray[currentRoom].enemySpawnPoints.Length; i++)
             {
                 int chance = Random.Range(1, 5);
-                if (!floorOneRoomsInfo[currentRoom].enemySpawnPointUsed[i] && chance == 1)
+                if (!finalRoomInfoArray[currentRoom].enemySpawnPointUsed[i] && chance == 1)
                 {
-                    Instantiate(floorOneRoomsInfo[currentRoom].enemiesThatCanSpawn[Random.Range(0, floorOneRoomsInfo[currentRoom].enemiesThatCanSpawn.Length)], new Vector3(floorOneRoomsInfo[currentRoom].enemySpawnPoints[i].x, -floorOneRoomsInfo[currentRoom].enemySpawnPoints[i].y, -1f), Quaternion.identity);
-                    floorOneRoomsInfo[currentRoom].enemySpawnPointUsed[i] = true;
+                    Instantiate(finalRoomInfoArray[currentRoom].enemiesThatCanSpawn[Random.Range(0, finalRoomInfoArray[currentRoom].enemiesThatCanSpawn.Length)], new Vector3(finalRoomInfoArray[currentRoom].enemySpawnPoints[i].x, -finalRoomInfoArray[currentRoom].enemySpawnPoints[i].y, -1f), Quaternion.identity);
+                    finalRoomInfoArray[currentRoom].enemySpawnPointUsed[i] = true;
                     ++enemiesSpawned;
                     if (enemiesSpawned == howManyEnemies)
                         break;
