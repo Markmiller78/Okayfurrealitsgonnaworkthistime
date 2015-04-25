@@ -7,6 +7,7 @@ public enum accessory { None = 0, OrbOfLight, BoltOfLight, BlastOfLight, ChainLi
 //                                   1             2            3               4             5         6        7
 public enum ember { None = 0, Life, Death, Earth, Wind, Fire, Ice};
 //                              1     2      3      4     5    6
+
 public class PlayerEquipment : MonoBehaviour
 {
     public boot equippedBoot;
