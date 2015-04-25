@@ -21,6 +21,8 @@ public class SpellSingularity : MonoBehaviour {
 	void Update ()
     {
         //transform.position = player.transform.position;
+        transform.Rotate(new Vector3(0, 0, 150f * Time.deltaTime));
+
         lifeTimer += Time.deltaTime;
         if (lifeTimer >= 1.5)
         {
