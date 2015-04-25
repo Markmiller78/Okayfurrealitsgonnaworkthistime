@@ -72,4 +72,14 @@ public class AILivingDead : MonoBehaviour
             attacking = false;
         }
     }
+
+    void Slow()
+    {
+        moveSpeed = moveSpeed * 0.5f;
+    }
+
+    void Unslow()
+    {
+        moveSpeed = moveSpeed * 2;
+    }
 }
