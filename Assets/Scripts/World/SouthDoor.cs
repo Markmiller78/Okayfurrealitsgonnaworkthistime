@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Door : MonoBehaviour
+public class SouthDoor : MonoBehaviour
 {
     public bool isLocked = true;
     public GameObject dungeon;

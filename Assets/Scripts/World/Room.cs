@@ -7,7 +7,10 @@ public class Room : MonoBehaviour
     public int height;
     public GameObject[] wallTiles;
     public GameObject[] floorTiles;
-    public GameObject door;
+    public GameObject SouthDoor;
+    public GameObject NorthDoor;
+    public GameObject EastDoor;
+    public GameObject WestDoor;
     public Vector2[] innerWallPositions;
     public GameObject[] enemiesThatCanSpawn;
     public Vector2[] enemySpawnPoints;

@@ -138,7 +138,7 @@ public class RoomGeneration : MonoBehaviour
         {
             if ((finalRoomInfoArray[currentRoom].entranceDir == 2 || finalRoomInfoArray[currentRoom].exitDir == 2) && i == finalRoomInfoArray[currentRoom].width / 2 - 1)
             {
-                Instantiate(finalRoomInfoArray[currentRoom].door, new Vector3((float)i + .5f, 0, -1.4f), Quaternion.identity);
+                Instantiate(finalRoomInfoArray[currentRoom].NorthDoor, new Vector3((float)i + .5f, 0, -1.4f), Quaternion.identity);
                 Instantiate(finalRoomInfoArray[currentRoom].floorTiles[0], new Vector3(i, 0, 0.0f), Quaternion.identity);
                 skip = true;
             }
@@ -163,7 +163,7 @@ public class RoomGeneration : MonoBehaviour
         {
             if ((finalRoomInfoArray[currentRoom].entranceDir == 0 || finalRoomInfoArray[currentRoom].exitDir == 0) && i == finalRoomInfoArray[currentRoom].width / 2 - 1)
             {
-                Instantiate(finalRoomInfoArray[currentRoom].door, new Vector3((float)i + .5f, -(finalRoomInfoArray[currentRoom].height - 1), -1.4f), Quaternion.identity);
+                Instantiate(finalRoomInfoArray[currentRoom].SouthDoor, new Vector3((float)i + .5f, -(finalRoomInfoArray[currentRoom].height - 1), -1.4f), Quaternion.identity);
                 Instantiate(finalRoomInfoArray[currentRoom].floorTiles[0], new Vector3(i, -(finalRoomInfoArray[currentRoom].height - 1), 0.0f), Quaternion.identity);
                 skip = true;
             }
@@ -188,7 +188,7 @@ public class RoomGeneration : MonoBehaviour
         {
             if ((finalRoomInfoArray[currentRoom].entranceDir == 1 || finalRoomInfoArray[currentRoom].exitDir == 1) && i == finalRoomInfoArray[currentRoom].height / 2 - 1)
             {
-                Instantiate(finalRoomInfoArray[currentRoom].door, new Vector3(0, -i, -1.4f), new Quaternion(0, 0, 90, 0));
+                Instantiate(finalRoomInfoArray[currentRoom].WestDoor, new Vector3(0, -((float)i + .5f), -1.4f), Quaternion.identity);
                 Instantiate(finalRoomInfoArray[currentRoom].floorTiles[0], new Vector3(0, -i, 0.0f), Quaternion.identity);
                 skip = true;
             }
@@ -201,6 +201,31 @@ public class RoomGeneration : MonoBehaviour
             {
                 skip = false;
                 Instantiate(finalRoomInfoArray[currentRoom].floorTiles[0], new Vector3(0, -i, 0.0f), Quaternion.identity);
+            }
+            if (skip)
+            {
+                hasSkipped = true;
+            }
+        }
+        // Spawn east wall and possibly door
+        skip = false;
+        hasSkipped = false;
+        for (int i = 0; i < finalRoomInfoArray[currentRoom].height; i++)
+        {
+            if ((finalRoomInfoArray[currentRoom].entranceDir == 3 || finalRoomInfoArray[currentRoom].exitDir == 3) && i == finalRoomInfoArray[currentRoom].height / 2 - 1)
+            {
+                Instantiate(finalRoomInfoArray[currentRoom].EastDoor, new Vector3(finalRoomInfoArray[currentRoom].width - 1, -((float)i + .5f), -1.4f), Quaternion.identity);
+                Instantiate(finalRoomInfoArray[currentRoom].floorTiles[0], new Vector3(finalRoomInfoArray[currentRoom].width - 1, -i, 0.0f), Quaternion.identity);
+                skip = true;
+            }
+            else if (!skip)
+            {
+                Instantiate(finalRoomInfoArray[currentRoom].wallTiles[0], new Vector3(finalRoomInfoArray[currentRoom].width - 1, -i, -1.4f), Quaternion.identity);
+            }
+            if (hasSkipped)
+            {
+                skip = false;
+                Instantiate(finalRoomInfoArray[currentRoom].floorTiles[0], new Vector3(finalRoomInfoArray[currentRoom].width - 1, -i, 0.0f), Quaternion.identity);
             }
             if (skip)
             {
@@ -239,10 +264,10 @@ public class RoomGeneration : MonoBehaviour
     {
         finalRoomArray[0] = floorOneRooms[0];
         finalRoomInfoArray[0] = floorOneRoomsInfo[0];
-        finalRoomInfoArray[0].entranceDir = Random.Range(0, 3);
+        finalRoomInfoArray[0].entranceDir = Random.Range(0, 4);
         do
         {
-            finalRoomInfoArray[0].exitDir = Random.Range(0, 3);
+            finalRoomInfoArray[0].exitDir = Random.Range(0, 4);
         } while (finalRoomInfoArray[0].exitDir == finalRoomInfoArray[0].entranceDir);
         finalRoomArray[1] = floorOneRooms[1];
         finalRoomInfoArray[1] = floorOneRoomsInfo[1];
