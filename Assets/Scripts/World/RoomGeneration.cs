@@ -3,7 +3,7 @@ using System.Collections;
 
 public class RoomGeneration : MonoBehaviour
 {
-
+    GameObject player;
     public GameObject[] floorOneRooms;
     Room[] floorOneRoomsInfo;
     public GameObject[] floorOneMazes;
@@ -31,6 +31,7 @@ public class RoomGeneration : MonoBehaviour
     void Start()
     {
         DontDestroyOnLoad(this);
+        player = GameObject.FindGameObjectWithTag("Player");
         Utilities.ArrayShuffle(floorOneRooms);
         floorOneRoomsInfo = new Room[floorOneRooms.Length];
         for (int i = 0; i < floorOneRooms.Length; i++)
@@ -91,36 +92,119 @@ public class RoomGeneration : MonoBehaviour
         finalRoomInfoArray = new Room[9];
         FillDungeon();
 
+
         CreateRoom();
     }
 
     void CreateRoom()
     {
-        for (int y = 0; y < finalRoomInfoArray[currentRoom].height; y++)
+        //for (int y = 0; y < finalRoomInfoArray[currentRoom].height; y++)
+        //{
+        //    bool skip = false;
+        //    bool hasSkipped = false;
+        //    for (int x = 0; x < finalRoomInfoArray[currentRoom].width; x++)
+        //    {
+        //        if (x == 0 || x == finalRoomInfoArray[currentRoom].width - 1 || y == 0 || y == finalRoomInfoArray[currentRoom].height - 1)
+        //        {
+        //            if (x == finalRoomInfoArray[currentRoom].width / 2 - 1)
+        //            {
+        //                Instantiate(finalRoomInfoArray[currentRoom].door, new Vector3(x + .5f, -y, -1.4f), Quaternion.identity);
+        //                Instantiate(finalRoomInfoArray[currentRoom].floorTiles[0], new Vector3(x, -y, 0.0f), Quaternion.identity);
+        //                skip = true;
+        //            }
+        //            else if (!skip)
+        //                Instantiate(finalRoomInfoArray[currentRoom].wallTiles[0], new Vector3(x, -y, -1.4f), Quaternion.identity);
+        //        }
+        //        else
+        //        {
+        //            Instantiate(finalRoomInfoArray[currentRoom].floorTiles[0], new Vector3(x, -y, 0.0f), Quaternion.identity);
+        //        }
+        //        if (hasSkipped)
+        //        {
+        //            skip = false;
+        //            Instantiate(finalRoomInfoArray[currentRoom].floorTiles[0], new Vector3(x, -y, 0.0f), Quaternion.identity);
+        //        }
+        //        if (skip)
+        //        {
+        //            hasSkipped = true;
+        //        }
+        //    }
+        //}
+
+        bool skip = false;
+        bool hasSkipped = false;
+        // Spawn north wall and possibly door
+        for (int i = 0; i < finalRoomInfoArray[currentRoom].width; i++)
         {
-            bool skip = false;
-            bool hasSkipped = false;
-            for (int x = 0; x < finalRoomInfoArray[currentRoom].width; x++)
+            if ((finalRoomInfoArray[currentRoom].entranceDir == 2 || finalRoomInfoArray[currentRoom].exitDir == 2) && i == finalRoomInfoArray[currentRoom].width / 2 - 1)
             {
-                if (x == 0 || x == finalRoomInfoArray[currentRoom].width - 1 || y == 0 || y == finalRoomInfoArray[currentRoom].height - 1)
-                {
-                    if (x == finalRoomInfoArray[currentRoom].width / 2 - 1)
-                    {
-                        Instantiate(finalRoomInfoArray[currentRoom].door, new Vector3(x + .5f, -y, -1.4f), Quaternion.identity);
-                        Instantiate(finalRoomInfoArray[currentRoom].floorTiles[0], new Vector3(x, -y, 0.0f), Quaternion.identity);
-                        skip = true;
-                    }
-                    else if (!skip)
-                        Instantiate(finalRoomInfoArray[currentRoom].wallTiles[0], new Vector3(x, -y, -1.4f), Quaternion.identity);
-                }
-                else
-                {
-                    Instantiate(finalRoomInfoArray[currentRoom].floorTiles[0], new Vector3(x, -y, 0.0f), Quaternion.identity);
-                }
-                if (hasSkipped)
-                    skip = false;
-                if (skip)
-                    hasSkipped = true;
+                Instantiate(finalRoomInfoArray[currentRoom].door, new Vector3((float)i + .5f, 0, -1.4f), Quaternion.identity);
+                Instantiate(finalRoomInfoArray[currentRoom].floorTiles[0], new Vector3(i, 0, 0.0f), Quaternion.identity);
+                skip = true;
+            }
+            else if (!skip)
+            {
+                Instantiate(finalRoomInfoArray[currentRoom].wallTiles[0], new Vector3(i, 0, -1.4f), Quaternion.identity);
+            }
+            if (hasSkipped)
+            {
+                skip = false;
+                Instantiate(finalRoomInfoArray[currentRoom].floorTiles[0], new Vector3(i, 0, 0.0f), Quaternion.identity);
+            }
+            if (skip)
+            {
+                hasSkipped = true;
+            }
+        }
+        // Spawn south wall and possibly door
+        skip = false;
+        hasSkipped = false;
+        for (int i = 0; i < finalRoomInfoArray[currentRoom].width; i++)
+        {
+            if ((finalRoomInfoArray[currentRoom].entranceDir == 0 || finalRoomInfoArray[currentRoom].exitDir == 0) && i == finalRoomInfoArray[currentRoom].width / 2 - 1)
+            {
+                Instantiate(finalRoomInfoArray[currentRoom].door, new Vector3((float)i + .5f, -(finalRoomInfoArray[currentRoom].height - 1), -1.4f), Quaternion.identity);
+                Instantiate(finalRoomInfoArray[currentRoom].floorTiles[0], new Vector3(i, -(finalRoomInfoArray[currentRoom].height - 1), 0.0f), Quaternion.identity);
+                skip = true;
+            }
+            else if (!skip)
+            {
+                Instantiate(finalRoomInfoArray[currentRoom].wallTiles[0], new Vector3(i, -(finalRoomInfoArray[currentRoom].height - 1), -1.4f), Quaternion.identity);
+            }
+            if (hasSkipped)
+            {
+                skip = false;
+                Instantiate(finalRoomInfoArray[currentRoom].floorTiles[0], new Vector3(i, -(finalRoomInfoArray[currentRoom].height - 1), 0.0f), Quaternion.identity);
+            }
+            if (skip)
+            {
+                hasSkipped = true;
+            }
+        }
+        // Spawn west wall and possibly door
+        skip = false;
+        hasSkipped = false;
+        for (int i = 0; i < finalRoomInfoArray[currentRoom].height; i++)
+        {
+            if ((finalRoomInfoArray[currentRoom].entranceDir == 1 || finalRoomInfoArray[currentRoom].exitDir == 1) && i == finalRoomInfoArray[currentRoom].height / 2 - 1)
+            {
+                Instantiate(finalRoomInfoArray[currentRoom].door, new Vector3(0, -i, -1.4f), new Quaternion(0, 0, 90, 0));
+                Instantiate(finalRoomInfoArray[currentRoom].floorTiles[0], new Vector3(0, -i, 0.0f), Quaternion.identity);
+                skip = true;
+            }
+            // TODO: MAKE SEPARATE DOORS (NSEW) AND PUT THEM INTO ROOMS. GIVE THEM DIFFERENT SCRIPTS FOR BETTER ROOM TRANS.
+            else if (!skip)
+            {
+                Instantiate(finalRoomInfoArray[currentRoom].wallTiles[0], new Vector3(0, -i, -1.4f), Quaternion.identity);
+            }
+            if (hasSkipped)
+            {
+                skip = false;
+                Instantiate(finalRoomInfoArray[currentRoom].floorTiles[0], new Vector3(0, -i, 0.0f), Quaternion.identity);
+            }
+            if (skip)
+            {
+                hasSkipped = true;
             }
         }
         for (int i = 0; i < finalRoomInfoArray[currentRoom].innerWallPositions.Length; i++)
@@ -148,27 +232,201 @@ public class RoomGeneration : MonoBehaviour
                 }
             }
         }
+        player.transform.position = new Vector3(finalRoomInfoArray[currentRoom].bottomPlayerSpawn.x, -finalRoomInfoArray[currentRoom].bottomPlayerSpawn.y, -1.0f);
     }
 
     void FillDungeon()
     {
         finalRoomArray[0] = floorOneRooms[0];
         finalRoomInfoArray[0] = floorOneRoomsInfo[0];
+        finalRoomInfoArray[0].entranceDir = Random.Range(0, 3);
+        do
+        {
+            finalRoomInfoArray[0].exitDir = Random.Range(0, 3);
+        } while (finalRoomInfoArray[0].exitDir == finalRoomInfoArray[0].entranceDir);
         finalRoomArray[1] = floorOneRooms[1];
         finalRoomInfoArray[1] = floorOneRoomsInfo[1];
+        switch (finalRoomInfoArray[0].exitDir)
+        {
+            case 0:
+                finalRoomInfoArray[1].entranceDir = 2;
+                break;
+            case 1:
+                finalRoomInfoArray[1].entranceDir = 3;
+                break;
+            case 2:
+                finalRoomInfoArray[1].entranceDir = 0;
+                break;
+            case 3:
+                finalRoomInfoArray[1].entranceDir = 1;
+                break;
+            default:
+                break;
+        }
+        do
+        {
+            finalRoomInfoArray[1].exitDir = Random.Range(0, 3);
+        } while (finalRoomInfoArray[1].exitDir == finalRoomInfoArray[1].entranceDir);
         finalRoomArray[2] = floorOneMazes[0];
         finalRoomInfoArray[2] = floorOneMazesInfo[0];
+        switch (finalRoomInfoArray[1].exitDir)
+        {
+            case 0:
+                finalRoomInfoArray[2].entranceDir = 2;
+                break;
+            case 1:
+                finalRoomInfoArray[2].entranceDir = 3;
+                break;
+            case 2:
+                finalRoomInfoArray[2].entranceDir = 0;
+                break;
+            case 3:
+                finalRoomInfoArray[2].entranceDir = 1;
+                break;
+            default:
+                break;
+        }
+        do
+        {
+            finalRoomInfoArray[2].exitDir = Random.Range(0, 3);
+        } while (finalRoomInfoArray[2].exitDir == finalRoomInfoArray[2].entranceDir);
         finalRoomArray[3] = floorOneRooms[2];
         finalRoomInfoArray[3] = floorOneRoomsInfo[2];
+        switch (finalRoomInfoArray[2].exitDir)
+        {
+            case 0:
+                finalRoomInfoArray[3].entranceDir = 2;
+                break;
+            case 1:
+                finalRoomInfoArray[3].entranceDir = 3;
+                break;
+            case 2:
+                finalRoomInfoArray[3].entranceDir = 0;
+                break;
+            case 3:
+                finalRoomInfoArray[3].entranceDir = 1;
+                break;
+            default:
+                break;
+        }
+        do
+        {
+            finalRoomInfoArray[3].exitDir = Random.Range(0, 3);
+        } while (finalRoomInfoArray[3].exitDir == finalRoomInfoArray[3].entranceDir);
         finalRoomArray[4] = floorOneRooms[3];
         finalRoomInfoArray[4] = floorOneRoomsInfo[3];
+        switch (finalRoomInfoArray[3].exitDir)
+        {
+            case 0:
+                finalRoomInfoArray[4].entranceDir = 2;
+                break;
+            case 1:
+                finalRoomInfoArray[4].entranceDir = 3;
+                break;
+            case 2:
+                finalRoomInfoArray[4].entranceDir = 0;
+                break;
+            case 3:
+                finalRoomInfoArray[4].entranceDir = 1;
+                break;
+            default:
+                break;
+        }
+        do
+        {
+            finalRoomInfoArray[4].exitDir = Random.Range(0, 3);
+        } while (finalRoomInfoArray[4].exitDir == finalRoomInfoArray[4].entranceDir);
         finalRoomArray[5] = floorOneMazes[1];
         finalRoomInfoArray[5] = floorOneMazesInfo[1];
+        switch (finalRoomInfoArray[4].exitDir)
+        {
+            case 0:
+                finalRoomInfoArray[5].entranceDir = 2;
+                break;
+            case 1:
+                finalRoomInfoArray[5].entranceDir = 3;
+                break;
+            case 2:
+                finalRoomInfoArray[5].entranceDir = 0;
+                break;
+            case 3:
+                finalRoomInfoArray[5].entranceDir = 1;
+                break;
+            default:
+                break;
+        }
+        do
+        {
+            finalRoomInfoArray[5].exitDir = Random.Range(0, 3);
+        } while (finalRoomInfoArray[5].exitDir == finalRoomInfoArray[5].entranceDir);
         finalRoomArray[6] = floorOneRooms[4];
         finalRoomInfoArray[6] = floorOneRoomsInfo[4];
+        switch (finalRoomInfoArray[5].exitDir)
+        {
+            case 0:
+                finalRoomInfoArray[6].entranceDir = 2;
+                break;
+            case 1:
+                finalRoomInfoArray[6].entranceDir = 3;
+                break;
+            case 2:
+                finalRoomInfoArray[6].entranceDir = 0;
+                break;
+            case 3:
+                finalRoomInfoArray[6].entranceDir = 1;
+                break;
+            default:
+                break;
+        }
+        do
+        {
+            finalRoomInfoArray[6].exitDir = Random.Range(0, 3);
+        } while (finalRoomInfoArray[6].exitDir == finalRoomInfoArray[6].entranceDir);
         finalRoomArray[7] = floorOneRooms[5];
         finalRoomInfoArray[7] = floorOneRoomsInfo[5];
+        switch (finalRoomInfoArray[6].exitDir)
+        {
+            case 0:
+                finalRoomInfoArray[7].entranceDir = 2;
+                break;
+            case 1:
+                finalRoomInfoArray[7].entranceDir = 3;
+                break;
+            case 2:
+                finalRoomInfoArray[7].entranceDir = 0;
+                break;
+            case 3:
+                finalRoomInfoArray[7].entranceDir = 1;
+                break;
+            default:
+                break;
+        }
+        do
+        {
+            finalRoomInfoArray[7].exitDir = Random.Range(0, 3);
+        } while (finalRoomInfoArray[7].exitDir == finalRoomInfoArray[7].entranceDir);
         finalRoomArray[8] = dethrosRoom;
         finalRoomInfoArray[8] = dethrosRoomInfo;
+        switch (finalRoomInfoArray[7].exitDir)
+        {
+            case 0:
+                finalRoomInfoArray[8].entranceDir = 2;
+                break;
+            case 1:
+                finalRoomInfoArray[8].entranceDir = 3;
+                break;
+            case 2:
+                finalRoomInfoArray[8].entranceDir = 0;
+                break;
+            case 3:
+                finalRoomInfoArray[8].entranceDir = 1;
+                break;
+            default:
+                break;
+        }
+        do
+        {
+            finalRoomInfoArray[8].exitDir = Random.Range(0, 3);
+        } while (finalRoomInfoArray[8].exitDir == finalRoomInfoArray[8].entranceDir);
     }
 }

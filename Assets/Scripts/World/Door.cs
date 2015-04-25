@@ -6,9 +6,11 @@ public class Door : MonoBehaviour
     public bool isLocked = true;
     public GameObject dungeon;
     RoomGeneration generator;
+    GameObject player;
 
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
         dungeon = GameObject.FindGameObjectWithTag("Dungeon");
         generator = dungeon.GetComponent<RoomGeneration>();
         isLocked = true;
@@ -41,5 +43,13 @@ public class Door : MonoBehaviour
         }
         //GetComponentInChildren<BoxCollider>().enabled = false;
         GetComponentInChildren<SpriteRenderer>().enabled = false;
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject == player)
+        {
+
+        }
     }
 }

@@ -17,6 +17,12 @@ public class Room : MonoBehaviour
     public int maxEnemies;
     public GameObject hazard;
     public Vector2[] hazardSpawnPoints;
+    public Vector2 bottomPlayerSpawn;
+    public Vector2 rightPlayerSpawn;
+    public Vector2 topPlayerSpawn;
+    public Vector2 leftPlayerSpawn;
+    public int entranceDir; // 0 = bottom, 1 = left, 2 = top, 3 = right
+    public int exitDir;
     [HideInInspector]
     public bool beenThere;
     public int numEnemies = 0;
