@@ -10,13 +10,13 @@ public class DebuffFire : MonoBehaviour
 
     Health targetHealth;
     ParticleSystem particles;
-    Light light;
+    Light theLight;
     void Start()
     {
         timer = 0;
         targetHealth = target.GetComponent<Health>();
         particles = gameObject.GetComponent<ParticleSystem>();
-        light = gameObject.GetComponent<Light>();
+        theLight = gameObject.GetComponent<Light>();
     }
 
     void Update()
@@ -40,7 +40,7 @@ public class DebuffFire : MonoBehaviour
             else
             {
                 particles.emissionRate = 0;
-                light.range -= Time.deltaTime;
+                theLight.range -= Time.deltaTime;
             }
 
             if (timer > 4.0f)
