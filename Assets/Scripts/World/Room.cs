@@ -19,6 +19,7 @@ public class Room : MonoBehaviour
     public Vector2[] hazardSpawnPoints;
     [HideInInspector]
     public bool beenThere;
+    public int numEnemies = 0;
 
     // 0 = left, 1 = top, 2 = right, 3 = bottom
     [HideInInspector]

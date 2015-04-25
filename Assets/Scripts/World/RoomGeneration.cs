@@ -23,7 +23,8 @@ public class RoomGeneration : MonoBehaviour
     //public GameObject morriusRoom;
     //Room morriusRoomInfo;
     public GameObject[] finalRoomArray;
-    Room[] finalRoomInfoArray;
+    [HideInInspector]
+    public Room[] finalRoomInfoArray;
     //public int currentFloor = 1;
     public int currentRoom = 0;
 
@@ -106,6 +107,7 @@ public class RoomGeneration : MonoBehaviour
                     if (x == finalRoomInfoArray[currentRoom].width / 2 - 1)
                     {
                         Instantiate(finalRoomInfoArray[currentRoom].door, new Vector3(x + .5f, -y, -1.4f), Quaternion.identity);
+                        Instantiate(finalRoomInfoArray[currentRoom].floorTiles[0], new Vector3(x, -y, 0.0f), Quaternion.identity);
                         skip = true;
                     }
                     else if (!skip)
@@ -129,9 +131,9 @@ public class RoomGeneration : MonoBehaviour
         {
             Instantiate(finalRoomInfoArray[currentRoom].hazard, new Vector3(finalRoomInfoArray[currentRoom].hazardSpawnPoints[i].x, -finalRoomInfoArray[currentRoom].hazardSpawnPoints[i].y, -1), Quaternion.identity);
         }
-        int howManyEnemies = Random.Range(finalRoomInfoArray[currentRoom].minEnemies, finalRoomInfoArray[currentRoom].maxEnemies);
+        finalRoomInfoArray[currentRoom].numEnemies = Random.Range(finalRoomInfoArray[currentRoom].minEnemies, finalRoomInfoArray[currentRoom].maxEnemies);
         int enemiesSpawned = 0;
-        while (enemiesSpawned < howManyEnemies)
+        while (enemiesSpawned < finalRoomInfoArray[currentRoom].numEnemies)
         {
             for (int i = 0; i < finalRoomInfoArray[currentRoom].enemySpawnPoints.Length; i++)
             {
@@ -141,7 +143,7 @@ public class RoomGeneration : MonoBehaviour
                     Instantiate(finalRoomInfoArray[currentRoom].enemiesThatCanSpawn[Random.Range(0, finalRoomInfoArray[currentRoom].enemiesThatCanSpawn.Length)], new Vector3(finalRoomInfoArray[currentRoom].enemySpawnPoints[i].x, -finalRoomInfoArray[currentRoom].enemySpawnPoints[i].y, -1f), Quaternion.identity);
                     finalRoomInfoArray[currentRoom].enemySpawnPointUsed[i] = true;
                     ++enemiesSpawned;
-                    if (enemiesSpawned == howManyEnemies)
+                    if (enemiesSpawned == finalRoomInfoArray[currentRoom].numEnemies)
                         break;
                 }
             }
