@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SpellSingularity : MonoBehaviour {
+public class SpellSingularity : MonoBehaviour
+{
 
 
     float lifeTimer;
-	
-	// Update is called once per frame
+
+    // Update is called once per frame
 
     Light theLight;
     public GameObject theExplosion;
@@ -18,7 +19,7 @@ public class SpellSingularity : MonoBehaviour {
         theLight = gameObject.GetComponent<Light>();
         player = GameObject.FindGameObjectWithTag("Player");
     }
-	void Update ()
+    void Update()
     {
         //transform.position = player.transform.position;
         transform.Rotate(new Vector3(0, 0, 150f * Time.deltaTime));
@@ -34,14 +35,34 @@ public class SpellSingularity : MonoBehaviour {
             Instantiate(theExplosion, transform.position, new Quaternion(0, 0, 0, 0));
             Destroy(gameObject);
         }
-	}
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Enemy")
+        {
+            enemyid itsID = other.GetComponent<EnemyID>().theID;
+
+            if (itsID == enemyid.shadowCloud)
+            {
+                other.GetComponent<AIShadowCloud>().target = gameObject;
+            }
+        }
+    }
 
     void OnTriggerStay(Collider other)
     {
         if (other.tag == "Enemy")
         {
-            Vector2 moveTo = (transform.position - other.transform.position).normalized;
-            other.GetComponent<CharacterController>().Move(moveTo * Time.deltaTime * 2);
+            enemyid itsID = other.GetComponent<EnemyID>().theID;
+
+            if (itsID != enemyid.shadowCloud)
+            {
+                Vector2 moveTo = (transform.position - other.transform.position).normalized;
+                CharacterController theController = other.GetComponent<CharacterController>();
+
+                theController.Move(moveTo * Time.deltaTime * 2);
+            }
         }
     }
 }
