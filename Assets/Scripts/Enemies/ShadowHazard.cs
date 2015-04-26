@@ -45,7 +45,7 @@ public class ShadowHazard : MonoBehaviour {
 
     void OnTriggerStay(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.gameObject == hero)
         {
             heroHP.LoseHealth(DamagePerSecond * Time.deltaTime);
         }
@@ -53,7 +53,7 @@ public class ShadowHazard : MonoBehaviour {
 
     void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.gameObject == hero)
         {
             // Return the players speeds to normal
             heroMovement.halfSpeed = 1.6f;

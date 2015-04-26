@@ -16,6 +16,7 @@ public class AISkeletonArcher : MonoBehaviour
     public GameObject projectile;
     bool hasAttacked = false;
     CharacterController controller;
+    bool isPaused = false;
 
     void Start()
     {
@@ -26,24 +27,27 @@ public class AISkeletonArcher : MonoBehaviour
 
     void Update()
     {
-        if (hasAttacked)
+        if (!isPaused)
         {
-            UpdateAttackCooldown();
-        }
-        distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
-        if (distanceToPlayer > (attackMaxRange + attackMinRange) / 2.0f)
-        {
-            MoveTowards();
-        }
-        else if (distanceToPlayer < (attackMaxRange + attackMinRange) / 2.0f)
-        {
-            MoveAway();
-        }
-        Turn();
-        if (!hasAttacked && distanceToPlayer <= attackMaxRange && distanceToPlayer >= attackMinRange)
-        {
-            Attack();
-            hasAttacked = true;
+            if (hasAttacked)
+            {
+                UpdateAttackCooldown();
+            }
+            distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
+            if (distanceToPlayer > (attackMaxRange + attackMinRange) / 2.0f)
+            {
+                MoveTowards();
+            }
+            else if (distanceToPlayer < (attackMaxRange + attackMinRange) / 2.0f)
+            {
+                MoveAway();
+            }
+            Turn();
+            if (!hasAttacked && distanceToPlayer <= attackMaxRange && distanceToPlayer >= attackMinRange)
+            {
+                Attack();
+                hasAttacked = true;
+            }
         }
     }
 
@@ -81,5 +85,15 @@ public class AISkeletonArcher : MonoBehaviour
             attackCooldown = attackCooldownMax;
             hasAttacked = false;
         }
+    }
+
+    void Pause()
+    {
+        isPaused = true;
+    }
+
+    void UnPause()
+    {
+        isPaused = false;
     }
 }
