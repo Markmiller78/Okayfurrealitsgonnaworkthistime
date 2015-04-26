@@ -18,6 +18,7 @@ public class BlinkParticle : MonoBehaviour {
 
 		if (timer > 0.5f) 
 		{
+
 			Destroy (gameObject);
 			Instantiate(lightleftbehind, transform.position, transform.rotation);  
 		

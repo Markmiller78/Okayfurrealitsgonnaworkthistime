@@ -124,10 +124,12 @@ public class PlayerDashing : MonoBehaviour
         }
     }
 
-    void Blink()
-    {
+ void OnCollisionEnter(Collider other)
+	{
+		if (other.tag == "Wall") 
+		{
 
+		}
 
-
-    }
+	}
 }

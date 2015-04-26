@@ -3,7 +3,7 @@ using System.Collections;
 
 public class LightRemains : MonoBehaviour
 {
-
+	public 	GameObject[] allObjects;
     PlayerLight heroLight;
     bool active;
     float deathTimer;
@@ -24,6 +24,12 @@ public class LightRemains : MonoBehaviour
         active = true;
         deathTimer = 0;
         once = true;
+	 
+		allObjects = GameObject.FindObjectsOfType<GameObject>();
+		foreach (GameObject obj in allObjects)
+		{
+			obj.SendMessage("AddDrop", this.gameObject, SendMessageOptions.DontRequireReceiver);
+		}
 
     }
 
@@ -59,6 +65,12 @@ public class LightRemains : MonoBehaviour
 
             if (deathTimer > 0.7)
             {
+				 
+				allObjects = GameObject.FindObjectsOfType<GameObject>();
+				foreach (GameObject obj in allObjects)
+				{
+					obj.SendMessage("RemoveDrop", this.gameObject, SendMessageOptions.DontRequireReceiver);
+				}
                 Destroy(gameObject);
             }
         }
