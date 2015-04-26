@@ -17,6 +17,8 @@ public class PlayerDashing : MonoBehaviour
     PlayerCooldowns heroCooldowns;
     float trailBlazerDropTimer;
 
+
+    public GameObject BlinkEffect;
     public GameObject FireTrail;
     public GameObject LightTrail;
     public GameObject WindTrail;
@@ -114,6 +116,14 @@ public class PlayerDashing : MonoBehaviour
             {
                 //  Instantiate(TrailBlazerExplosion, transform.position, new Quaternion(0, 0, 0, 0));
 
+            }
+
+            if (heroEquipment.equippedBoot == boot.Blink)
+            {
+                Instantiate(BlinkEffect, transform.position, new Quaternion(0, 0, 0, 0));
+               // blinkdropTimer = 0.0f;
+                Vector3 temp = transform.TransformDirection(Vector3.up);
+                transform.position += temp * 2.0f;
             }
 
         }
