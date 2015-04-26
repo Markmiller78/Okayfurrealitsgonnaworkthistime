@@ -6,9 +6,8 @@ public class DebuffFrost : MonoBehaviour {
     float timer;
     public GameObject target;
 
-    Health targetHealth;
     ParticleSystem particles;
-    Light light;
+    Light theLight;
 
     bool once;
 
@@ -16,9 +15,8 @@ public class DebuffFrost : MonoBehaviour {
     void Start()
     {
         timer = 0;
-        targetHealth = target.GetComponent<Health>();
         particles = gameObject.GetComponent<ParticleSystem>();
-        light = gameObject.GetComponent<Light>();
+        theLight = gameObject.GetComponent<Light>();
         once = true;
     }
 
@@ -46,7 +44,7 @@ public class DebuffFrost : MonoBehaviour {
                     once = false;
                 }
                 particles.emissionRate = 0;
-                light.range -= Time.deltaTime;
+                theLight.range -= Time.deltaTime;
             }
 
             if (timer > 4.0f)

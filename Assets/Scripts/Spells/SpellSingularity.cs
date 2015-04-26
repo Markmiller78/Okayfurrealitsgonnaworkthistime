@@ -11,13 +11,13 @@ public class SpellSingularity : MonoBehaviour
 
     Light theLight;
     public GameObject theExplosion;
-    GameObject player;
+    //GameObject player;
 
     void Start()
     {
         lifeTimer = 0;
         theLight = gameObject.GetComponent<Light>();
-        player = GameObject.FindGameObjectWithTag("Player");
+        //player = GameObject.FindGameObjectWithTag("Player");
     }
     void Update()
     {
