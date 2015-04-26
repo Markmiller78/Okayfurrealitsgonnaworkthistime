@@ -59,6 +59,11 @@ public class LightRemains : MonoBehaviour
             {
                 Instantiate(endParticles, transform.position, new Quaternion(0, 0, 0, 0));
                 once = false;
+				allObjects = GameObject.FindObjectsOfType<GameObject>();
+				foreach (GameObject obj in allObjects)
+				{
+					obj.SendMessage("RemoveDrop", this.gameObject, SendMessageOptions.DontRequireReceiver);
+				}
             }
 
             particleLight.range -= Time.deltaTime;
@@ -66,11 +71,7 @@ public class LightRemains : MonoBehaviour
             if (deathTimer > 0.7)
             {
 				 
-				allObjects = GameObject.FindObjectsOfType<GameObject>();
-				foreach (GameObject obj in allObjects)
-				{
-					obj.SendMessage("RemoveDrop", this.gameObject, SendMessageOptions.DontRequireReceiver);
-				}
+			
                 Destroy(gameObject);
             }
         }
