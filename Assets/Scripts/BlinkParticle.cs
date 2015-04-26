@@ -14,7 +14,7 @@ public class BlinkParticle : MonoBehaviour {
 		timer += Time.deltaTime;
 
 		if (timer > 0.5f)
-			Destroy (this);
+			Destroy (this.gameObject);
 	
 	}
 }

@@ -4,6 +4,7 @@ using System.Collections;
 public class InputManager : MonoBehaviour
 {
     GameObject player;
+
     PlayerCooldowns cooldowns;
     PlayerMeleeAttack melee;
     public static bool controller = false;
