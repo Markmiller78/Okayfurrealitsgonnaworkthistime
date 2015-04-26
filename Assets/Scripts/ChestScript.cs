@@ -20,7 +20,7 @@ public class ChestScript : MonoBehaviour {
 
 	void Interact()
 	{
-		Vector3 dist = transform - player.transform;
+		Vector3 dist = transform.position - player.transform.position;
 		if (dist.magnitude < 5.0f) {
 			heroLight.LoseLight (5);
 			DestroyImmediate (this);

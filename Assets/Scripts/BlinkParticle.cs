@@ -3,7 +3,10 @@ using System.Collections;
 
 public class BlinkParticle : MonoBehaviour {
 
+	public GameObject lightleftbehind;
+
 	public float timer=0.0f;
+
 	// Use this for initialization
 	void Start () {
 	
@@ -13,8 +16,12 @@ public class BlinkParticle : MonoBehaviour {
 	void Update () {
 		timer += Time.deltaTime;
 
-		if (timer > 0.5f)
-			Destroy (this.gameObject);
+		if (timer > 0.5f) 
+		{
+			Destroy (gameObject);
+			Instantiate(lightleftbehind, transform.position, transform.rotation);  
+		
+		}
 	
 	}
 }
