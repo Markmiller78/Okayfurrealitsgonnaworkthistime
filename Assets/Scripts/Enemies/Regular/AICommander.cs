@@ -42,6 +42,12 @@ public class AICommander : MonoBehaviour {
 				FacePlayer ();
 				dist = vectoplayer.magnitude;
 				if (dist < 2.5f) {
+					list = GameObject.FindGameObjectsWithTag ("Enemy");
+					
+					foreach (GameObject obj in  list)
+					{
+						obj.SendMessage("UnReinforce", SendMessageOptions.DontRequireReceiver);
+					}
 					RunAway ();
 				}
 				else
