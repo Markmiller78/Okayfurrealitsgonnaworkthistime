@@ -132,12 +132,12 @@ public class PlayerDashing : MonoBehaviour
         }
     }
 
- void OnCollisionEnter(Collider other)
-	{
-		if (other.tag == "Wall") 
-		{
+// void OnCollisionEnter(Collider other)
+//    {
+//        if (other.tag == "Wall") 
+//        {
 
-		}
+//        }
 
-	}
+//    }
 }
