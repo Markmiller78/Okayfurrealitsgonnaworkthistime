@@ -23,7 +23,7 @@ public class Pickup : MonoBehaviour
 		if (displaytooltips)
 		{
 			
-			GUI.Box (new Rect (0, 0, 100, 20), "Press E to pick up");
+			GUI.Box (new Rect (0, 0, 140, 20), "Press E to pick up");
 		}
 		
 	}
