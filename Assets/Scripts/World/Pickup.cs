@@ -5,8 +5,21 @@ public enum equipmentType { Boot, Accessory, Ember };
 
 public class Pickup : MonoBehaviour
 {
+    public bool displaytooltips = false;
     public equipmentType typeOfEquipment;     // See above for enum.
     public int whichOneToEquip = 1;     // See PlayerEquipment script for these enums.
+    public GameObject orbOfLightPickup;
+    public GameObject boltOfLightPickup;
+    public GameObject blastOfLightPickup;
+    public GameObject chainLightningPickup;
+    public GameObject singularityPickup;
+    public GameObject snarePickup;
+    public GameObject lightMinePickup;
+    public GameObject TrailblazerBootPickup;
+    public GameObject whirlwindBootPickup;
+    public GameObject chargeBootPickup;
+    public GameObject decoyBootPickup;
+    public GameObject blinkBootPickup;
 
     GameObject player;
     PlayerEquipment equipment;
@@ -17,15 +30,58 @@ public class Pickup : MonoBehaviour
         equipment = player.GetComponent<PlayerEquipment>();
     }
 
+    void OnGUI()
+    {
+        if (displaytooltips)
+        {
+
+            GUI.Box(new Rect(0, 0, 140, 20), "Press E to pick up");
+        }
+
+    }
+    void DisplayTooltip()
+    {
+        displaytooltips = true;
+
+    }
+
+    void DoNotDisplayTooltip()
+    {
+        displaytooltips = false;
+    }
+
+
     void OnTriggerStay(Collider other)
     {
-        if ((InputManager.controller && Input.GetButtonDown("CInteract") || (!InputManager.controller && Input.GetButtonDown("KBInteract"))) 
+        if ((InputManager.controller && Input.GetButtonDown("CInteract") || (!InputManager.controller && Input.GetButtonDown("KBInteract")))
             && other.gameObject == player)
         {
             switch (typeOfEquipment)
             {
                 case equipmentType.Boot:
                     #region Boots
+                    switch (equipment.equippedBoot)
+                    {
+                        case boot.None:
+                            break;
+                        case boot.Trailblazer:
+                            Instantiate(TrailblazerBootPickup, transform.position, transform.rotation);
+                            break;
+                        case boot.Whirlwind:
+                            Instantiate(whirlwindBootPickup, transform.position, transform.rotation);
+                            break;
+                        case boot.Charge:
+                            Instantiate(chargeBootPickup, transform.position, transform.rotation);
+                            break;
+                        case boot.Decoy:
+                            Instantiate(decoyBootPickup, transform.position, transform.rotation);
+                            break;
+                        case boot.Blink:
+                            Instantiate(blinkBootPickup, transform.position, transform.rotation);
+                            break;
+                        default:
+                            break;
+                    }
                     switch (whichOneToEquip)
                     {
                         case 1:
@@ -50,6 +106,34 @@ public class Pickup : MonoBehaviour
                     #endregion
                 case equipmentType.Accessory:
                     #region Accessories
+                    switch (equipment.equippedAccessory)
+                    {
+                        case accessory.None:
+                            break;
+                        case accessory.OrbOfLight:
+                            Instantiate(orbOfLightPickup, transform.position, transform.rotation);
+                            break;
+                        case accessory.BoltOfLight:
+                            Instantiate(boltOfLightPickup, transform.position, transform.rotation);
+                            break;
+                        case accessory.BlastOfLight:
+                            Instantiate(blastOfLightPickup, transform.position, transform.rotation);
+                            break;
+                        case accessory.ChainLightning:
+                            Instantiate(chainLightningPickup, transform.position, transform.rotation);
+                            break;
+                        case accessory.Singularity:
+                            Instantiate(singularityPickup, transform.position, transform.rotation);
+                            break;
+                        case accessory.Snare:
+                            Instantiate(snarePickup, transform.position, transform.rotation);
+                            break;
+                        case accessory.LightMine:
+                            Instantiate(lightMinePickup, transform.position, transform.rotation);
+                            break;
+                        default:
+                            break;
+                    }
                     switch (whichOneToEquip)
                     {
                         case 1:

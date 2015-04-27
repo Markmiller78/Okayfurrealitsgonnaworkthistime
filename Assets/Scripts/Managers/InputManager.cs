@@ -65,6 +65,8 @@ public class InputManager : MonoBehaviour
                 if (Input.GetButtonDown("CInteract"))
                 {
                     player.SendMessage("Interact", SendMessageOptions.DontRequireReceiver);
+                    GameObject chest = GameObject.FindGameObjectWithTag("Chest");
+                    chest.SendMessage("Interact");
                 }
             }
             // Start to pause
@@ -147,7 +149,9 @@ public class InputManager : MonoBehaviour
                 // E to interact
                 if (Input.GetButtonDown("KBInteract"))
                 {
-                    player.SendMessage("Interact", SendMessageOptions.DontRequireReceiver);
+					player.SendMessage("Interact", SendMessageOptions.DontRequireReceiver);
+                    GameObject chest = GameObject.FindGameObjectWithTag("Chest");
+					chest.SendMessage("Interact", SendMessageOptions.DontRequireReceiver);
                 }
             }
             // Escape or P to pause

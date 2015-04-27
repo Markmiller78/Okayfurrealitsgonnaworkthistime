@@ -23,42 +23,70 @@ public class AICommander : MonoBehaviour {
 		player = GameObject.FindGameObjectWithTag ("Player");
 		list = GameObject.FindGameObjectsWithTag ("Enemy");
 		controller = GetComponent<CharacterController>();
+		movementspeed=3.0f;
 
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		vectoplayer = transform.position - player.transform.position;
+		dist = vectoplayer.magnitude;
+		FacePlayer ();
 		if (!isReinforcing) {
 			size = list.Length;
 
 			distance = new float[size];
-			if (size > 1.0f) {
+			if (size > 1) {
 				for (int i = 0; i < size; i++) {
 					distance [i] = (transform.position - list [i].transform.position).magnitude;
 				}
 
-				vectoplayer = transform.position - player.transform.position;
+		
 				FacePlayer ();
-				dist = vectoplayer.magnitude;
-				if (dist < 2.5f) {
+
+				if (dist < 3.5f) {
 					RunAway ();
 				}
+				else
+					isReinforcing=true;
+			}
+			else{
+				MoveTowardsPlayer();
+				AttackPlayer();
 			}
 		} else
 		
 		{
-			GameObject[] allObjects = GameObject.FindObjectsOfType<GameObject>();
-			foreach (GameObject obj in allObjects)
+		 
+			list = GameObject.FindGameObjectsWithTag ("Enemy");
+			if(dist<1.75f)
+				
+			{		foreach (GameObject obj in  list)
+				{
+					obj.SendMessage("UnReinforce", SendMessageOptions.DontRequireReceiver);
+				}
+				isReinforcing=false;
+			}
+			 else
+			{
+			foreach (GameObject obj in  list)
 			{
 				obj.SendMessage("Reinforce", SendMessageOptions.DontRequireReceiver);
 			}
+			}
+		
 		}
 	}
 
 	void RunAway()
 	{
 	 
-		controller.Move (vectoplayer.normalized* Time.deltaTime * movementspeed);
+		controller.Move (vectoplayer.normalized* Time.deltaTime *movementspeed);
+	}
+	void MoveTowardsPlayer()
+	{
+
+		controller.Move (vectoplayer.normalized* Time.deltaTime *-movementspeed);
 	}
 
 	void FacePlayer()
@@ -73,5 +101,34 @@ public class AICommander : MonoBehaviour {
 		transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime *2.5f);
 
 	}
- 
+	void AttackPlayer()
+	{
+		if (dist < atkrange)
+		{
+			player.GetComponent<Health>().LoseHealth(atkdmg);
+		}
+
+
+	}
+
+	void Slow()
+	{
+		movementspeed = movementspeed * 0.5f;
+	}
+	
+	void Unslow()
+	{
+		movementspeed = movementspeed * 2;
+	}
+
+	void Decoy()
+	{
+		player = GameObject.FindGameObjectWithTag ("Decoy");
+	}
+	
+	void UnDecoy()
+	{
+		player = GameObject.FindGameObjectWithTag("Player");
+	}
+
 }

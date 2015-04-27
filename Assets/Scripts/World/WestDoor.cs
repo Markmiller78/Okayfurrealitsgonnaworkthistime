@@ -7,7 +7,7 @@ public class WestDoor : MonoBehaviour
     public GameObject dungeon;
     RoomGeneration generator;
     GameObject player;
-
+	public bool displaytooltips = false;
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -15,7 +15,7 @@ public class WestDoor : MonoBehaviour
         generator = dungeon.GetComponent<RoomGeneration>();
         isLocked = true;
     }
-
+ 
     void Update()
     {
         if (isLocked &&
@@ -55,14 +55,17 @@ public class WestDoor : MonoBehaviour
             && generator.currentRoom < 8)
         {
             ++generator.currentRoom;
-            generator.finalRoomInfoArray[generator.currentRoom].comingFromEntrance = true;
+            generator.finalRoomInfoArray[generator.currentRoom].comingFromEntrance = false;
             generator.Reset();
         }
         else if (other.gameObject == player && generator.currentRoom > 0)
         {
             --generator.currentRoom;
-            generator.finalRoomInfoArray[generator.currentRoom].comingFromEntrance = false;
+            generator.finalRoomInfoArray[generator.currentRoom].comingFromEntrance = true;
             generator.Reset();
         }
     }
+
+	
+
 }

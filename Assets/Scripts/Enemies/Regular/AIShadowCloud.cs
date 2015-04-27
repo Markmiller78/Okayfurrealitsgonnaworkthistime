@@ -25,11 +25,11 @@ public class AIShadowCloud : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if (target == null)
-        //{
-        //    target = GameObject.FindGameObjectWithTag("Player");
+        if (target == null)
+        {
+            target = GameObject.FindGameObjectWithTag("Player");
 
-        //}
+        }
 
         Vector2 moveTo = (target.transform.position - transform.position).normalized;
         moveTo = moveTo * Time.deltaTime * moveSpeed;
@@ -71,4 +71,27 @@ public class AIShadowCloud : MonoBehaviour
     {
         moveSpeed = moveSpeed * 2;
     }
+	void Reinforce()
+	{
+		DamagePerSecond *= 1.2f;
+		moveSpeed *= 1.5f;
+		
+	}
+	void UnReinforce()
+	{
+		DamagePerSecond/= 1.2f;
+	moveSpeed /= 1.5f;
+		
+	}
+
+	void Decoy()
+	{
+		player = GameObject.FindGameObjectWithTag ("Decoy");
+	}
+	
+	void UnDecoy()
+	{
+		player = GameObject.FindGameObjectWithTag("Player");
+	}
+
 }

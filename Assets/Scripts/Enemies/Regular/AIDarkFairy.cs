@@ -13,8 +13,10 @@ public class AIDarkFairy : MonoBehaviour {
 	public float atkrange;
 	public float atkcooldown;
 	public float atkcooldownref;
+	public float stealrange = 0.2f;
 	public float movementspeed;
 	public float[] distance;
+	public bool isReinforced=false;
 	public float dist;
 	public Vector3 vectotarget;
 	public Vector3 vectoplayer;
@@ -28,7 +30,7 @@ public class AIDarkFairy : MonoBehaviour {
 			list.Add(temp[i]);
 
 		}
-	
+		controller = GetComponent<CharacterController>();
 	}
 	
 	// Update is called once per frame
@@ -55,6 +57,7 @@ public class AIDarkFairy : MonoBehaviour {
 			movementspeed=3.0f;
 			FaceTarget(currentlight);
 			MoveTowardsLight (currentlight);
+			StealLightDrop();
 		}
 		 
 	
@@ -68,26 +71,28 @@ public class AIDarkFairy : MonoBehaviour {
 
 	void RunAway()
 	{
-		Vector2 tempdir = (player.transform.position - transform.position).normalized;
-		controller.Move(-tempdir * Time.deltaTime * movementspeed);
+		Vector2 tempdir = (player.transform.position - transform.position);
+	 if(tempdir.magnitude<2.5f)
+controller.Move(tempdir.normalized * Time.deltaTime *- movementspeed);
 	}
 
 	void StealLightDrop()
 	{
-		foreach (GameObject lightdrop in list)
-		{
-			if((transform.position-lightdrop.transform.position).magnitude<1.0f)
+	 
+			if((transform.position-currentlight.transform.position).magnitude<stealrange)
 			{
-				Destroy(lightdrop);
-				break;
+			list.Remove(currentlight);
+				Destroy(currentlight);
+
 			}
 			
-		}
+
 	 
 	}
 	void SpellCast()
 	{
 		vectoplayer=transform.position-player.transform.position;
+
 	
 
 	}
@@ -118,4 +123,45 @@ public class AIDarkFairy : MonoBehaviour {
 		list.Remove (lightdrop);
 
 	}
+
+	void Reinforce()
+	{
+		if (!isReinforced) 
+		{
+			stealrange *= 1.2f;
+			movementspeed *= 1.2f;
+			isReinforced=true;
+		}
+		
+	}
+	
+	void UnReinforce()
+	{
+		if (isReinforced)
+		{
+			stealrange /= 1.2f;
+			movementspeed /= 1.2f;
+			isReinforced=false;
+		}
+		
+	}
+	void Slow()
+	{
+		movementspeed = movementspeed * 0.5f;
+	}
+	
+	void Unslow()
+	{
+		movementspeed = movementspeed * 2;
+	}
+	void Decoy()
+	{
+		player = GameObject.FindGameObjectWithTag ("Decoy");
+	}
+	
+	void UnDecoy()
+	{
+		player = GameObject.FindGameObjectWithTag("Player");
+	}
+
 }
