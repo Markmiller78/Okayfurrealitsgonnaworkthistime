@@ -16,7 +16,7 @@ public class PlayerDashing : MonoBehaviour
 
     PlayerCooldowns heroCooldowns;
     float trailBlazerDropTimer;
-
+	public GameObject Decoy;
 	public GameObject lightRemains;
     public GameObject BlinkEffect;
     public GameObject FireTrail;
@@ -129,6 +129,14 @@ public class PlayerDashing : MonoBehaviour
 
 			}
 
+			if (heroEquipment.equippedBoot == boot.Decoy)
+			{
+				Instantiate(Decoy, transform.position, new Quaternion(0, 0, 0, 0));
+
+			 
+				
+				
+			}
         }
     }
 

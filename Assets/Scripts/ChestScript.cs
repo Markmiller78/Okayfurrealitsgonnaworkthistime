@@ -11,7 +11,7 @@ public class ChestScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		player = GameObject.FindGameObjectWithTag ("Player");
-		heroLight=gameObject.GetComponent<PlayerLight>();
+		heroLight=player.gameObject.GetComponent<PlayerLight>();
 	}
 	
 	// Update is called once per frame
