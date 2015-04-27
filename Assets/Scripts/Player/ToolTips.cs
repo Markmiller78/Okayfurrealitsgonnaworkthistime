@@ -18,7 +18,7 @@ public class ToolTips : MonoBehaviour {
 		objects = GameObject.FindObjectsOfType <GameObject>();
 		foreach (GameObject obj in objects)
 		{
-			if((transform.position-obj.transform.position).magnitude<1.0f)
+			if((transform.position-obj.transform.position).magnitude<1.5f)
 			obj.SendMessage("DisplayTooltip", SendMessageOptions.DontRequireReceiver);
 			else
 				obj.SendMessage("DoNotDisplayTooltip", SendMessageOptions.DontRequireReceiver);
