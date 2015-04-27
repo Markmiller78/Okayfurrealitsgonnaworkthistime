@@ -28,26 +28,31 @@ public class AICommander : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		size = list.Length;
+		if (!isReinforcing) {
+			size = list.Length;
 
-		distance = new float[size];
-		if(size>1.0f)
-		   {
-			for (int i = 0; i < size; i++) {
-				distance[i]= (transform.position-list[i].transform.position).magnitude;
+			distance = new float[size];
+			if (size > 1.0f) {
+				for (int i = 0; i < size; i++) {
+					distance [i] = (transform.position - list [i].transform.position).magnitude;
+				}
+
+				vectoplayer = transform.position - player.transform.position;
+				FacePlayer ();
+				dist = vectoplayer.magnitude;
+				if (dist < 2.5f) {
+					RunAway ();
+				}
 			}
-
-			vectoplayer=transform.position-player.transform.position;
-			FacePlayer();
-			dist=vectoplayer.magnitude;
-			if(dist<4.0f)
+		} else
+		
+		{
+			GameObject[] allObjects = GameObject.FindObjectsOfType<GameObject>();
+			foreach (GameObject obj in allObjects)
 			{
-
-				RunAway();
-
+				obj.SendMessage("Reinforce", SendMessageOptions.DontRequireReceiver);
 			}
 		}
-	
 	}
 
 	void RunAway()
