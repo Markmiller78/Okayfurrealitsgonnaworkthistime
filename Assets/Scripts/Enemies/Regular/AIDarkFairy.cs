@@ -13,9 +13,10 @@ public class AIDarkFairy : MonoBehaviour {
 	public float atkrange;
 	public float atkcooldown;
 	public float atkcooldownref;
-	public float stealrange = 1.0f;
+	public float stealrange = 0.2f;
 	public float movementspeed;
 	public float[] distance;
+	public bool isReinforced=false;
 	public float dist;
 	public Vector3 vectotarget;
 	public Vector3 vectoplayer;
@@ -56,6 +57,7 @@ public class AIDarkFairy : MonoBehaviour {
 			movementspeed=3.0f;
 			FaceTarget(currentlight);
 			MoveTowardsLight (currentlight);
+			StealLightDrop();
 		}
 		 
 	
@@ -69,21 +71,22 @@ public class AIDarkFairy : MonoBehaviour {
 
 	void RunAway()
 	{
-		Vector2 tempdir = (player.transform.position - transform.position).normalized;
-controller.Move(tempdir * Time.deltaTime *- movementspeed);
+		Vector2 tempdir = (player.transform.position - transform.position);
+	 if(tempdir.magnitude<2.5f)
+controller.Move(tempdir.normalized * Time.deltaTime *- movementspeed);
 	}
 
 	void StealLightDrop()
 	{
-		foreach (GameObject lightdrop in list)
-		{
-			if((transform.position-lightdrop.transform.position).magnitude<stealrange)
+	 
+			if((transform.position-currentlight.transform.position).magnitude<stealrange)
 			{
-				Destroy(lightdrop);
-				break;
+			list.Remove(currentlight);
+				Destroy(currentlight);
+
 			}
 			
-		}
+
 	 
 	}
 	void SpellCast()
@@ -123,15 +126,23 @@ controller.Move(tempdir * Time.deltaTime *- movementspeed);
 
 	void Reinforce()
 	{
-		stealrange *= 1.5f;
-		movementspeed *= 1.5f;
+		if (!isReinforced) 
+		{
+			stealrange *= 1.2f;
+			movementspeed *= 1.2f;
+			isReinforced=true;
+		}
 		
 	}
 	
 	void UnReinforce()
 	{
-		stealrange /= 1.5f;
-		movementspeed /= 1.5f;
+		if (isReinforced)
+		{
+			stealrange /= 1.2f;
+			movementspeed /= 1.2f;
+			isReinforced=false;
+		}
 		
 	}
 	void Slow()

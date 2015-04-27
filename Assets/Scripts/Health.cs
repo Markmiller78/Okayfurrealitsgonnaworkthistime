@@ -20,6 +20,7 @@ public class Health : MonoBehaviour
         healthPercent = currentHP / maxHP * 100;
 
         dungeon = GameObject.FindGameObjectWithTag("Dungeon");
+		if(dungeon!=null)
         generator = dungeon.GetComponent<RoomGeneration>();
 
         //LoseHealth(20); //Used for testing
@@ -58,7 +59,7 @@ public class Health : MonoBehaviour
         if (this.tag != "Player")
         {
             Destroy(gameObject);
-            --generator.finalRoomInfoArray[generator.currentRoom].numEnemies;
+            //--generator.finalRoomInfoArray[generator.currentRoom].numEnemies;
         }
     }
 }
