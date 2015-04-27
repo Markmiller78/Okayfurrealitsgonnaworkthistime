@@ -201,8 +201,11 @@ public class MainMenu : MonoBehaviour
                     }
                 case 4:
                     {
+#if UNITY_STANDALONE
                         Application.Quit();
+#elif UNITY_EDITOR
                         UnityEditor.EditorApplication.isPlaying = false;
+#endif
                         break;
                     }
             }
