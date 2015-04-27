@@ -8,11 +8,14 @@ public class ConsumeLight : MonoBehaviour {
     Vector2 waypoint;
     float distanceToShadow;
     bool doOnce;
+    public AudioSource playSounds;
+    public AudioClip GetHit;
 
     public GameObject theExplosion;
 	// Use this for initialization
 	void Start () 
     {
+        playSounds = gameObject.GetComponent<AudioSource>();
         shadow = GameObject.FindGameObjectWithTag("ShadowSpawn");
         theParts = gameObject.GetComponent<ParticleSystem>();
         distanceToShadow = 1;
@@ -34,6 +37,7 @@ public class ConsumeLight : MonoBehaviour {
             Destroy(gameObject);
         if(distanceToShadow < .1f && doOnce)
         {
+            playSounds.PlayOneShot(GetHit);
             doOnce = false;
             Instantiate(theExplosion,shadow.transform.position, shadow.transform.rotation);
             theParts.emissionRate = 0;

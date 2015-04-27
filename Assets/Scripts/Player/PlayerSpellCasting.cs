@@ -30,6 +30,7 @@ public class PlayerSpellCasting : MonoBehaviour
         //If the spell cast is not on cooldown
         if (!heroCooldowns.spellCooling && heroLight.currentLight >= heroLight.minLight)
         {
+            Camera.main.SendMessage("ScreenShake");
             heroLight.LoseLight(5);
             heroCooldowns.spellCooling = true;
             //If the orb of light is equipped, fire the orb of light ability

@@ -14,6 +14,11 @@ public class AIShadowSpawn : MonoBehaviour
     public Animator ghastAnimator;
     public GameObject Lightexplosion;
 
+    public AudioSource Playsounds;
+    public AudioClip SapLight;
+    public AudioClip GetScary;
+    bool EnragedSoundPlaying;
+
     Vector2 Moveto;
     Vector3 WayPoint;
 
@@ -22,7 +27,6 @@ public class AIShadowSpawn : MonoBehaviour
     public float speed = 1;
     float DistancetoPlayer;
     float DistancetoLight;
-    float DistancetoPrimary;
 
     float timer;
     float DmgTimer;
@@ -41,6 +45,8 @@ public class AIShadowSpawn : MonoBehaviour
 
     void Start()
     {
+        EnragedSoundPlaying = false;
+        Playsounds = gameObject.GetComponent<AudioSource>();
         Random.seed = 42;
         player = GameObject.FindGameObjectWithTag("Player");
         playerLight = player.GetComponent<PlayerLight>();
@@ -56,7 +62,6 @@ public class AIShadowSpawn : MonoBehaviour
         playerConsumeTimer = 1;
         newWayPoint = true;
         stuckCounter = 0;
-        DistancetoPrimary = 100;
         DistancetoLight = 100;
         DistancetoPlayer = 100;
         AnimTimer = 1;
@@ -69,7 +74,7 @@ public class AIShadowSpawn : MonoBehaviour
         //WorkPlease.SetInteger("AnimationNum", 0);
         timer -= Time.deltaTime;
         AnimTimer -= Time.deltaTime;
-        DistancetoPlayer = DistancetoLight = DistancetoPrimary = 100;
+        DistancetoPlayer = DistancetoLight = 100;
         //calculate distance to player.
         if (timer < 0)
         {
@@ -108,7 +113,7 @@ public class AIShadowSpawn : MonoBehaviour
         //    PrimaryThreat = player;
         //    DistancetoPrimary = DistancetoPlayer;
         //}
-        print(DistancetoPlayer);
+        //print(DistancetoPlayer);
         //Determine Which behavior to run
         if (playerLight.currentLight < 10)
         {
@@ -126,22 +131,31 @@ public class AIShadowSpawn : MonoBehaviour
         {
             CurrentState = State.SuperEvade;
         }
-        print(CurrentState);
+
+        if(playerLight.currentLight > 10 && EnragedSoundPlaying == true)
+        {
+            EnragedSoundPlaying = false;
+            Playsounds.Stop();
+        }
+        //print(CurrentState);
         //Call the Current behavior
         switch (CurrentState)
         {
             case State.Idle:
                 {
+                    EnragedSoundPlaying = false;
                     Idle();
                     break;
                 }
             case State.Evade:
                 {
+                    EnragedSoundPlaying = false;
                     Evade();
                     break;
                 }
             case State.SuperEvade:
                 {
+                    EnragedSoundPlaying = false;
                     SuperEvade();
                     break;
                 }
@@ -161,7 +175,7 @@ public class AIShadowSpawn : MonoBehaviour
             else
                 ghastAnimator.SetInteger("AnimationNum", 0);
 
-            print("did stuff");
+            //print("did stuff");
         }
 
 
@@ -207,7 +221,6 @@ public class AIShadowSpawn : MonoBehaviour
 
     void Evade()
     {
-
         if (timerCount > 1)
         {
             timerCount = 0;
@@ -247,6 +260,11 @@ public class AIShadowSpawn : MonoBehaviour
 
     void Enrage()
     {
+        if (EnragedSoundPlaying == false)
+        {
+            Playsounds.PlayOneShot(GetScary);
+            EnragedSoundPlaying = true;
+        }
         minSpeed = 2;
         maxSpeed = 3.5f;
         WayPoint = player.transform.position - transform.position;
@@ -259,7 +277,7 @@ public class AIShadowSpawn : MonoBehaviour
         Vector3 temp = player.transform.position;
         player.transform.position = transform.position;
         transform.position = temp;
-        print("JUMP!");
+        //print("JUMP!");
     }
 
     void ConsumeLight()
@@ -268,10 +286,14 @@ public class AIShadowSpawn : MonoBehaviour
         playerConsumeTimer -= Time.deltaTime;
         if (playerConsumeTimer <= 0)
         {
+            if (!Playsounds.isPlaying)
+            {
+                Playsounds.PlayOneShot(SapLight);
+            }
             playerConsumeTimer = 2;
             Instantiate(Lightexplosion, player.transform.position, player.transform.rotation);
             playerLight.currentLight -= 4;
-            ShadowHealth.currentHP -= 6;
+            ShadowHealth.currentHP -= 7;
             ShadowHealth.currentHP += 8;
 
         }
@@ -281,7 +303,7 @@ public class AIShadowSpawn : MonoBehaviour
         {
             
             DmgTimer = .5f;
-            print("GetLight");
+            //print("GetLight");
             //INSTANTIATE PARTICLES ON THE PLAYER HERE TO SIGNIFY STEALING LIGHT AND DAMAGING THE SPAWN
             Instantiate(Lightexplosion, NearestLightPickup.transform.position, NearestLightPickup.transform.rotation);
             //print(DistancetoPrimary);
@@ -289,11 +311,11 @@ public class AIShadowSpawn : MonoBehaviour
             //NearestLightPickup.GetComponent<LightID>();
             if(NearestLightPickup.GetComponent<LightID>().theID == lightID.Large)
             {
-                ShadowHealth.currentHP -= 7;
+                ShadowHealth.currentHP -= 12;
             }
             else if(NearestLightPickup.GetComponent<LightID>().theID == lightID.Small)
             {
-                ShadowHealth.currentHP -= 3;
+                ShadowHealth.currentHP -= 5;
             }
             Destroy(NearestLightPickup);
 
