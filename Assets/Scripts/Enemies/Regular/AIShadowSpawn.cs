@@ -10,6 +10,9 @@ public class AIShadowSpawn : MonoBehaviour
     PlayerLight playerLight;
     CharacterController controller;
     GameObject NearestLightPickup;
+    public Animation GetHurt;
+    public Animator ghastAnimator;
+    public GameObject Lightexplosion;
 
     Vector2 Moveto;
     Vector3 WayPoint;
@@ -21,13 +24,15 @@ public class AIShadowSpawn : MonoBehaviour
     float DistancetoLight;
     float DistancetoPrimary;
 
-    float timer = 1;
-    float DmgTimer = 1;
-    int timerCount = 1;
-    int stuckCounter = 1;
-    bool newWayPoint = true;
-    float minSpeed = 1;
-    float maxSpeed = 5;
+    float timer;
+    float DmgTimer;
+    float playerConsumeTimer;
+    int timerCount;
+    int stuckCounter;
+    bool newWayPoint;
+    float minSpeed;
+    float maxSpeed;
+    float AnimTimer;
 
     GameObject PrimaryThreat;
     GameObject SecondaryThreat;
@@ -47,18 +52,23 @@ public class AIShadowSpawn : MonoBehaviour
         DmgTimer = 1;
         minSpeed = 1;
         maxSpeed = 1;
+        timer = 1;
+        playerConsumeTimer = 1;
         newWayPoint = true;
         stuckCounter = 0;
         DistancetoPrimary = 100;
         DistancetoLight = 100;
         DistancetoPlayer = 100;
+        AnimTimer = 1;
 
     }
 
     // Update is called once per frame
     void Update()
     {
+        //WorkPlease.SetInteger("AnimationNum", 0);
         timer -= Time.deltaTime;
+        AnimTimer -= Time.deltaTime;
         DistancetoPlayer = DistancetoLight = DistancetoPrimary = 100;
         //calculate distance to player.
         if (timer < 0)
@@ -66,7 +76,7 @@ public class AIShadowSpawn : MonoBehaviour
             DistancetoPlayer = Vector3.Distance(transform.position, player.transform.position);
             timer = 1;
             //print(DistancetoPlayer);
-            print(CurrentState);
+
             timerCount += 1;
             stuckCounter--;
         }
@@ -83,27 +93,31 @@ public class AIShadowSpawn : MonoBehaviour
         //Locate Primary and 2ndary Threat
         //PrimaryThreat = findNearestWithTag(transform.position, "Player");
         //Locate Nearest Light Pickup
-        NearestLightPickup = findNearestWithTag(transform.position, "Light");
-        if(NearestLightPickup != null)
-        DistancetoLight = Vector3.Distance(transform.position, NearestLightPickup.transform.position);
-        if (DistancetoLight < DistancetoPlayer)
-        {
-            PrimaryThreat = NearestLightPickup;
-            DistancetoPrimary = DistancetoLight;
-        }
-        else
-        {
-            PrimaryThreat = player;
-            DistancetoPrimary = DistancetoPlayer;
-        }
+        NearestLightPickup = findNearestWithTag(transform.position, "LightDrop");
+        if (NearestLightPickup != null)
+            DistancetoLight = Vector3.Distance(transform.position, NearestLightPickup.transform.position);
 
+
+        //if (DistancetoLight < DistancetoPlayer)
+        //{
+        //    PrimaryThreat = NearestLightPickup;
+        //    DistancetoPrimary = DistancetoLight;
+        //}
+        //else
+        //{
+        //    PrimaryThreat = player;
+        //    DistancetoPrimary = DistancetoPlayer;
+        //}
+        print(DistancetoPlayer);
         //Determine Which behavior to run
         if (playerLight.currentLight < 10)
         {
             CurrentState = State.Enrage;
         }
-        if (DistancetoPlayer > 7)
+        else if (DistancetoPlayer > 7)
+        {
             CurrentState = State.Idle;
+        }
         else if (DistancetoPlayer < 7 && DistancetoPlayer > 3)
         {
             CurrentState = State.Evade;
@@ -112,7 +126,7 @@ public class AIShadowSpawn : MonoBehaviour
         {
             CurrentState = State.SuperEvade;
         }
-
+        print(CurrentState);
         //Call the Current behavior
         switch (CurrentState)
         {
@@ -137,8 +151,23 @@ public class AIShadowSpawn : MonoBehaviour
                     break;
                 }
         }
+
+        //Change Animations
+
+        if (AnimTimer < 0)
+        {
+            if (State.Enrage == CurrentState)
+                ghastAnimator.SetInteger("AnimationNum", 2);
+            else
+                ghastAnimator.SetInteger("AnimationNum", 0);
+
+            print("did stuff");
+        }
+
+
+
         Moveto.Normalize();
-        if (Physics.Raycast(transform.position, Moveto, .7f))
+        if (Physics.Raycast(transform.position, Moveto, .7f) && CurrentState != State.Enrage)
         {
             if (Moveto.x > 0)
                 Moveto.x = 1;
@@ -184,7 +213,7 @@ public class AIShadowSpawn : MonoBehaviour
             timerCount = 0;
 
             WayPoint = transform.position - player.transform.position;
-            Moveto = WayPoint;
+            Moveto = -WayPoint;
             newWayPoint = true;
         }
 
@@ -193,7 +222,7 @@ public class AIShadowSpawn : MonoBehaviour
     void SuperEvade()
     {
         minSpeed = 2;
-        maxSpeed = 5;
+        maxSpeed = 4;
 
         if (stuckCounter <= 0)
         {
@@ -208,8 +237,8 @@ public class AIShadowSpawn : MonoBehaviour
         {
             timerCount = 0;
 
-            WayPoint = player.transform.position - transform.position;
-            Moveto = WayPoint;
+            WayPoint = transform.position - player.transform.position;
+            Moveto = -WayPoint;
             newWayPoint = true;
 
         }
@@ -218,48 +247,59 @@ public class AIShadowSpawn : MonoBehaviour
 
     void Enrage()
     {
-        if (timerCount > 1)
-        {
-            timerCount = 0;
-
-            WayPoint = PrimaryThreat.transform.position - transform.position;
-            Moveto = WayPoint;
-            newWayPoint = true;
-
-        }
-
-
+        minSpeed = 2;
+        maxSpeed = 3.5f;
+        WayPoint = player.transform.position - transform.position;
+        Moveto = WayPoint;
+        newWayPoint = true;
     }
 
     void Jump()
     {
-
         Vector3 temp = player.transform.position;
         player.transform.position = transform.position;
         transform.position = temp;
-
         print("JUMP!");
-
     }
 
     void ConsumeLight()
     {
         DmgTimer -= Time.deltaTime;
-        if (DistancetoPrimary < 2 && DmgTimer <= 0)
+        playerConsumeTimer -= Time.deltaTime;
+        if (playerConsumeTimer <= 0)
         {
-            ShadowHealth.currentHP -= 10;
-            DmgTimer = .5f;
-            print(DistancetoPrimary);
-            if (PrimaryThreat == player)
-                playerLight.currentLight -= 10;
-            if (PrimaryThreat == NearestLightPickup)
-                Destroy(NearestLightPickup);
-            //INSTANTIATE PARTICLES ON THE PLAYER HERE TO SIGNIFY STEALING LIGHT AND DAMAGING THE SPAWN
-
-            //Destroy(NearestLightPickup);
+            playerConsumeTimer = 2;
+            Instantiate(Lightexplosion, player.transform.position, player.transform.rotation);
+            playerLight.currentLight -= 4;
+            ShadowHealth.currentHP -= 6;
+            ShadowHealth.currentHP += 8;
 
         }
 
+
+        if (DistancetoLight < 2 && DmgTimer <= 0)
+        {
+            
+            DmgTimer = .5f;
+            print("GetLight");
+            //INSTANTIATE PARTICLES ON THE PLAYER HERE TO SIGNIFY STEALING LIGHT AND DAMAGING THE SPAWN
+            Instantiate(Lightexplosion, NearestLightPickup.transform.position, NearestLightPickup.transform.rotation);
+            //print(DistancetoPrimary);
+
+            //NearestLightPickup.GetComponent<LightID>();
+            if(NearestLightPickup.GetComponent<LightID>().theID == lightID.Large)
+            {
+                ShadowHealth.currentHP -= 7;
+            }
+            else if(NearestLightPickup.GetComponent<LightID>().theID == lightID.Small)
+            {
+                ShadowHealth.currentHP -= 3;
+            }
+            Destroy(NearestLightPickup);
+
+            ghastAnimator.SetInteger("AnimationNum", 1);
+            AnimTimer = .3f;
+        }
 
         //DO Dead things
         if (ShadowHealth.currentHP <= 0)
