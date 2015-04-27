@@ -3,6 +3,7 @@ using System.Collections;
 
 public class EastDoor : MonoBehaviour
 {
+	public bool displaytooltips = false;
     public bool isLocked = true;
     public GameObject dungeon;
     RoomGeneration generator;
@@ -15,7 +16,7 @@ public class EastDoor : MonoBehaviour
         generator = dungeon.GetComponent<RoomGeneration>();
         isLocked = true;
     }
-
+ 
     void Update()
     {
         if (isLocked &&
@@ -55,14 +56,18 @@ public class EastDoor : MonoBehaviour
             && generator.currentRoom < 8)
         {
             ++generator.currentRoom;
-            generator.finalRoomInfoArray[generator.currentRoom].comingFromEntrance = true;
+            generator.finalRoomInfoArray[generator.currentRoom].comingFromEntrance = false;
             generator.Reset();
         }
         else if (other.gameObject == player && generator.currentRoom > 0)
         {
             --generator.currentRoom;
-            generator.finalRoomInfoArray[generator.currentRoom].comingFromEntrance = false;
+            generator.finalRoomInfoArray[generator.currentRoom].comingFromEntrance = true;
             generator.Reset();
         }
     }
+
+ 
+	
 }
+

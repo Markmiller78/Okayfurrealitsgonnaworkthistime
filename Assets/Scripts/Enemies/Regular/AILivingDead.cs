@@ -6,6 +6,7 @@ public class AILivingDead : MonoBehaviour
     GameObject player;
     //    Health playerHealth;
     //    Rigidbody2D rb2d;
+	public bool isReinforced=false;
     CharacterController controller;
     public float attackDamage;
     public float attackRange;
@@ -82,4 +83,23 @@ public class AILivingDead : MonoBehaviour
     {
         moveSpeed = moveSpeed * 2;
     }
+	void Reinforce()
+	{
+		if (!isReinforced) {
+			attackDamage *= 1.15f;
+			moveSpeed *= 1.15f;
+			isReinforced=true;
+		}
+		
+	}
+	
+	void UnReinforce()
+	{
+		if (isReinforced) {
+			attackDamage /= 1.15f;
+			moveSpeed /= 1.15f;
+		}
+		isReinforced = false;
+		
+	}
 }

@@ -13,6 +13,7 @@ public class AISkeletonArcher : MonoBehaviour
     public float moveSpeed;
     public float turnSpeed;
     float distanceToPlayer;
+	public bool isReinforced = false;
     public GameObject projectile;
     bool hasAttacked = false;
     CharacterController controller;
@@ -96,4 +97,30 @@ public class AISkeletonArcher : MonoBehaviour
     {
         isPaused = false;
     }
+
+	void Decoy()
+	{
+		player = GameObject.FindGameObjectWithTag ("Decoy");
+	}
+	
+	void UnDecoy()
+	{
+		player = GameObject.FindGameObjectWithTag("Player");
+	}
+	void Reinforce()
+	{
+		if (!isReinforced) 
+		{
+			attackMaxRange *= 1.5f;
+			moveSpeed *= 1.5f;
+		}
+		
+	}
+
+	void UnReinforce()
+	{
+		attackMaxRange /= 1.5f;
+		moveSpeed /= 1.5f;
+
+	}
 }
