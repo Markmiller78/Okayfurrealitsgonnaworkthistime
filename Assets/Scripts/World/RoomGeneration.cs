@@ -92,8 +92,8 @@ public class RoomGeneration : MonoBehaviour
         finalRoomInfoArray = new Room[9];
         FillDungeon();
 
-
         CreateRoom();
+        //Reset();
     }
 
     void CreateRoom()
@@ -192,7 +192,6 @@ public class RoomGeneration : MonoBehaviour
                 Instantiate(finalRoomInfoArray[currentRoom].floorTiles[0], new Vector3(0, -i, 0.0f), Quaternion.identity);
                 skip = true;
             }
-            // TODO: MAKE SEPARATE DOORS (NSEW) AND PUT THEM INTO ROOMS. GIVE THEM DIFFERENT SCRIPTS FOR BETTER ROOM TRANS.
             else if (!skip)
             {
                 Instantiate(finalRoomInfoArray[currentRoom].wallTiles[0], new Vector3(0, -i, -1.4f), Quaternion.identity);
@@ -232,6 +231,13 @@ public class RoomGeneration : MonoBehaviour
                 hasSkipped = true;
             }
         }
+        for (int x = 1; x < finalRoomInfoArray[currentRoom].width - 1; ++x)
+        {
+            for (int y = 1; y < finalRoomInfoArray[currentRoom].height - 1; ++y)
+            {
+                Instantiate(finalRoomInfoArray[currentRoom].floorTiles[0], new Vector3(x, -y, 0.0f), Quaternion.identity);
+            }
+        }
         for (int i = 0; i < finalRoomInfoArray[currentRoom].innerWallPositions.Length; i++)
         {
             Instantiate(finalRoomInfoArray[currentRoom].wallTiles[0], new Vector3(finalRoomInfoArray[currentRoom].innerWallPositions[i].x, -finalRoomInfoArray[currentRoom].innerWallPositions[i].y, -1.4f), Quaternion.identity);
@@ -257,7 +263,47 @@ public class RoomGeneration : MonoBehaviour
                 }
             }
         }
-        player.transform.position = new Vector3(finalRoomInfoArray[currentRoom].bottomPlayerSpawn.x, -finalRoomInfoArray[currentRoom].bottomPlayerSpawn.y, -1.0f);
+        if (finalRoomInfoArray[currentRoom].comingFromEntrance)
+        {
+            switch (finalRoomInfoArray[currentRoom].entranceDir)
+            {
+                case 0:
+                    player.transform.position = new Vector3(finalRoomInfoArray[currentRoom].bottomPlayerSpawn.x, -finalRoomInfoArray[currentRoom].bottomPlayerSpawn.y, -1.0f);
+                    break;
+                case 1:
+                    player.transform.position = new Vector3(finalRoomInfoArray[currentRoom].leftPlayerSpawn.x, -finalRoomInfoArray[currentRoom].leftPlayerSpawn.y, -1.0f);
+                    break;
+                case 2:
+                    player.transform.position = new Vector3(finalRoomInfoArray[currentRoom].topPlayerSpawn.x, -finalRoomInfoArray[currentRoom].topPlayerSpawn.y, -1.0f);
+                    break;
+                case 3:
+                    player.transform.position = new Vector3(finalRoomInfoArray[currentRoom].rightPlayerSpawn.x, -finalRoomInfoArray[currentRoom].rightPlayerSpawn.y, -1.0f);
+                    break;
+                default:
+                    break;
+            }
+        }
+        else if (!finalRoomInfoArray[currentRoom].comingFromEntrance)
+        {
+            switch (finalRoomInfoArray[currentRoom].exitDir)
+            {
+                case 0:
+                    player.transform.position = new Vector3(finalRoomInfoArray[currentRoom].bottomPlayerSpawn.x, -finalRoomInfoArray[currentRoom].bottomPlayerSpawn.y, -1.0f);
+                    break;
+                case 1:
+                    player.transform.position = new Vector3(finalRoomInfoArray[currentRoom].leftPlayerSpawn.x, -finalRoomInfoArray[currentRoom].leftPlayerSpawn.y, -1.0f);
+                    break;
+                case 2:
+                    player.transform.position = new Vector3(finalRoomInfoArray[currentRoom].topPlayerSpawn.x, -finalRoomInfoArray[currentRoom].topPlayerSpawn.y, -1.0f);
+                    break;
+                case 3:
+                    player.transform.position = new Vector3(finalRoomInfoArray[currentRoom].rightPlayerSpawn.x, -finalRoomInfoArray[currentRoom].rightPlayerSpawn.y, -1.0f);
+                    break;
+                default:
+                    break;
+            }
+        }
+        //player.transform.position = new Vector3(finalRoomInfoArray[currentRoom].bottomPlayerSpawn.x, -finalRoomInfoArray[currentRoom].bottomPlayerSpawn.y, -1.0f);
     }
 
     void FillDungeon()
@@ -453,5 +499,18 @@ public class RoomGeneration : MonoBehaviour
         {
             finalRoomInfoArray[8].exitDir = Random.Range(0, 3);
         } while (finalRoomInfoArray[8].exitDir == finalRoomInfoArray[8].entranceDir);
+    }
+
+    public void Reset()
+    {
+        GameObject[] objArray = GameObject.FindObjectsOfType<GameObject>();
+        foreach (GameObject obj in objArray)
+        {
+            if (obj.name.Contains("Wall") || obj.name.Contains("Floor") || obj.name.Contains("Hazard") || obj.name.Contains("Door"))
+            {
+                Destroy(obj);
+            }
+        }
+        CreateRoom();
     }
 }

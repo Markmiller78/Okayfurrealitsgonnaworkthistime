@@ -29,6 +29,7 @@ public class Room : MonoBehaviour
     [HideInInspector]
     public bool beenThere;
     public int numEnemies = 0;
+    public bool comingFromEntrance = true;
 
     // 0 = left, 1 = top, 2 = right, 3 = bottom
     [HideInInspector]

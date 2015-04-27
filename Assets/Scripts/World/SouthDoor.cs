@@ -18,7 +18,10 @@ public class SouthDoor : MonoBehaviour
 
     void Update()
     {
-        if (isLocked && generator.finalRoomInfoArray[generator.currentRoom].numEnemies == 0)
+        if (isLocked &&
+            ((generator.currentRoom > 0 && generator.finalRoomInfoArray[generator.currentRoom].entranceDir == 0)
+            || (generator.currentRoom < 8 && generator.finalRoomInfoArray[generator.currentRoom].exitDir == 0))
+            && generator.finalRoomInfoArray[generator.currentRoom].numEnemies == 0)
         {
             isLocked = false;
             Unlock();
@@ -47,9 +50,19 @@ public class SouthDoor : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == player)
+        if (other.gameObject == player
+            && generator.finalRoomInfoArray[generator.currentRoom].exitDir == 0
+            && generator.currentRoom < 8)
         {
-
+            ++generator.currentRoom;
+            generator.finalRoomInfoArray[generator.currentRoom].comingFromEntrance = false;
+            generator.Reset();
+        }
+        else if (other.gameObject == player && generator.currentRoom > 0)
+        {
+            --generator.currentRoom;
+            generator.finalRoomInfoArray[generator.currentRoom].comingFromEntrance = true;
+            generator.Reset();
         }
     }
 }
