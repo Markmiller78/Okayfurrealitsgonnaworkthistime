@@ -82,4 +82,17 @@ public class AILivingDead : MonoBehaviour
     {
         moveSpeed = moveSpeed * 2;
     }
+	void Reinforce()
+	{
+		attackDamage *= 1.5f;
+		moveSpeed *= 1.5f;
+		
+	}
+	
+	void UnReinforce()
+	{
+		attackDamage /= 1.5f;
+		moveSpeed /= 1.5f;
+		
+	}
 }

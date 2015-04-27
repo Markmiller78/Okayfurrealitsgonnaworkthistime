@@ -28,6 +28,7 @@ public class AICommander : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		FacePlayer ();
 		if (!isReinforcing) {
 			size = list.Length;
 
@@ -43,12 +44,16 @@ public class AICommander : MonoBehaviour {
 				if (dist < 2.5f) {
 					RunAway ();
 				}
+				else
+					isReinforcing=true;
 			}
 		} else
 		
 		{
-			GameObject[] allObjects = GameObject.FindObjectsOfType<GameObject>();
-			foreach (GameObject obj in allObjects)
+		 
+			list = GameObject.FindGameObjectsWithTag ("Enemy");
+			 
+			foreach (GameObject obj in  list)
 			{
 				obj.SendMessage("Reinforce", SendMessageOptions.DontRequireReceiver);
 			}
@@ -73,5 +78,25 @@ public class AICommander : MonoBehaviour {
 		transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime *2.5f);
 
 	}
- 
+
+	void Slow()
+	{
+		movementspeed = movementspeed * 0.5f;
+	}
+	
+	void Unslow()
+	{
+		movementspeed = movementspeed * 2;
+	}
+
+	void Decoy()
+	{
+		player = GameObject.FindGameObjectWithTag ("Decoy");
+	}
+	
+	void UnDecoy()
+	{
+		player = GameObject.FindGameObjectWithTag("Player");
+	}
+
 }
