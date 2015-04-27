@@ -15,15 +15,7 @@ public class NorthDoor : MonoBehaviour
         generator = dungeon.GetComponent<RoomGeneration>();
         isLocked = true;
     }
-	void OnGUI()
-	{
-		if (displaytooltips)
-		{
-			
-			GUI.Box (new Rect (0, 0, 100, 20), "Press E to open");
-		}
-		
-	}
+ 
 
     void Update()
     {
@@ -74,16 +66,7 @@ public class NorthDoor : MonoBehaviour
             generator.Reset();
         }
     }
-	void DisplayTooltip()
-	{
-		displaytooltips = true;
-		
-	}
-	
-	void DoNotDisplayTooltip()
-	{
-		displaytooltips = false;
-	}
+ 
 	
 }
 

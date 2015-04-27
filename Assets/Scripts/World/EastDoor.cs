@@ -16,15 +16,7 @@ public class EastDoor : MonoBehaviour
         generator = dungeon.GetComponent<RoomGeneration>();
         isLocked = true;
     }
-	void OnGUI()
-	{
-		if (displaytooltips)
-		{
-			
-			GUI.Box (new Rect (0, 0, 100, 20), "Press E to open");
-		}
-		
-	}
+ 
     void Update()
     {
         if (isLocked &&
@@ -75,16 +67,7 @@ public class EastDoor : MonoBehaviour
         }
     }
 
-	void DisplayTooltip()
-	{
-		displaytooltips = true;
-		
-	}
-	
-	void DoNotDisplayTooltip()
-	{
-		displaytooltips = false;
-	}
+ 
 	
 }
 
