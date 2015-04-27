@@ -11,10 +11,12 @@ public class Health : MonoBehaviour
 
     GameObject dungeon;
     RoomGeneration generator;
+    public GameObject lifeEmberSpawn;
+    GameObject player;
+    PlayerEquipment equipment;
 
     void Start()
     {
-        // maxHP = 100; Commented out because we don't want everything to have a starting health of 100
         if (this.tag == "Player")
             healthBar = GameObject.FindGameObjectWithTag("HealthBar");
         healthPercent = currentHP / maxHP * 100;
@@ -22,8 +24,9 @@ public class Health : MonoBehaviour
         dungeon = GameObject.FindGameObjectWithTag("Dungeon");
 		if(dungeon!=null)
         generator = dungeon.GetComponent<RoomGeneration>();
+        player = GameObject.FindGameObjectWithTag("Player");
+        equipment = player.GetComponent<PlayerEquipment>();
 
-        //LoseHealth(20); //Used for testing
     }
     public void GainHealth(float Amount)
     {
@@ -52,6 +55,12 @@ public class Health : MonoBehaviour
             healthPercent = currentHP / maxHP;
             healthBar.transform.localScale = new Vector3(1, healthPercent, 1);
         }
+        else if (equipment.equippedEmber == ember.Life)
+        {
+            GameObject instance = lifeEmberSpawn;
+            lifeEmberSpawn.GetComponent<LifeEmberStolenHealth>().gainAmount = Amount;
+            Instantiate(instance, transform.position, transform.rotation);
+        }
     }
 
     void Die()
@@ -59,7 +68,7 @@ public class Health : MonoBehaviour
         if (this.tag != "Player")
         {
             Destroy(gameObject);
-            //--generator.finalRoomInfoArray[generator.currentRoom].numEnemies;
+            --generator.finalRoomInfoArray[generator.currentRoom].numEnemies;
         }
     }
 }
