@@ -47,6 +47,7 @@ public class AIShadowSpawn : MonoBehaviour
         DmgTimer = 1;
         minSpeed = 1;
         maxSpeed = 1;
+        timer = 1;
         newWayPoint = true;
         stuckCounter = 0;
         DistancetoPrimary = 100;
@@ -66,7 +67,7 @@ public class AIShadowSpawn : MonoBehaviour
             DistancetoPlayer = Vector3.Distance(transform.position, player.transform.position);
             timer = 1;
             //print(DistancetoPlayer);
-            print(CurrentState);
+
             timerCount += 1;
             stuckCounter--;
         }
@@ -83,9 +84,9 @@ public class AIShadowSpawn : MonoBehaviour
         //Locate Primary and 2ndary Threat
         //PrimaryThreat = findNearestWithTag(transform.position, "Player");
         //Locate Nearest Light Pickup
-        NearestLightPickup = findNearestWithTag(transform.position, "Light");
-        if(NearestLightPickup != null)
-        DistancetoLight = Vector3.Distance(transform.position, NearestLightPickup.transform.position);
+        NearestLightPickup = findNearestWithTag(transform.position, "LightDrop");
+        if (NearestLightPickup != null)
+            DistancetoLight = Vector3.Distance(transform.position, NearestLightPickup.transform.position);
         if (DistancetoLight < DistancetoPlayer)
         {
             PrimaryThreat = NearestLightPickup;
@@ -96,14 +97,16 @@ public class AIShadowSpawn : MonoBehaviour
             PrimaryThreat = player;
             DistancetoPrimary = DistancetoPlayer;
         }
-
+        print(DistancetoPlayer);
         //Determine Which behavior to run
         if (playerLight.currentLight < 10)
         {
             CurrentState = State.Enrage;
         }
-        if (DistancetoPlayer > 7)
+        else if (DistancetoPlayer > 7)
+        {
             CurrentState = State.Idle;
+        }
         else if (DistancetoPlayer < 7 && DistancetoPlayer > 3)
         {
             CurrentState = State.Evade;
@@ -112,7 +115,7 @@ public class AIShadowSpawn : MonoBehaviour
         {
             CurrentState = State.SuperEvade;
         }
-
+        print(CurrentState);
         //Call the Current behavior
         switch (CurrentState)
         {
@@ -138,7 +141,7 @@ public class AIShadowSpawn : MonoBehaviour
                 }
         }
         Moveto.Normalize();
-        if (Physics.Raycast(transform.position, Moveto, .7f))
+        if (Physics.Raycast(transform.position, Moveto, .7f) && CurrentState != State.Enrage)
         {
             if (Moveto.x > 0)
                 Moveto.x = 1;
@@ -193,7 +196,7 @@ public class AIShadowSpawn : MonoBehaviour
     void SuperEvade()
     {
         minSpeed = 2;
-        maxSpeed = 5;
+        maxSpeed = 4;
 
         if (stuckCounter <= 0)
         {
@@ -208,7 +211,7 @@ public class AIShadowSpawn : MonoBehaviour
         {
             timerCount = 0;
 
-            WayPoint = player.transform.position - transform.position;
+            WayPoint = transform.position - player.transform.position;
             Moveto = WayPoint;
             newWayPoint = true;
 
@@ -218,17 +221,11 @@ public class AIShadowSpawn : MonoBehaviour
 
     void Enrage()
     {
-        if (timerCount > 1)
-        {
-            timerCount = 0;
-
-            WayPoint = PrimaryThreat.transform.position - transform.position;
-            Moveto = WayPoint;
-            newWayPoint = true;
-
-        }
-
-
+        minSpeed = 2;
+        maxSpeed = 3.5f;
+        WayPoint = player.transform.position - transform.position;
+        Moveto = WayPoint;
+        newWayPoint = true;
     }
 
     void Jump()
@@ -249,7 +246,7 @@ public class AIShadowSpawn : MonoBehaviour
         {
             ShadowHealth.currentHP -= 10;
             DmgTimer = .5f;
-            print(DistancetoPrimary);
+            //print(DistancetoPrimary);
             if (PrimaryThreat == player)
                 playerLight.currentLight -= 10;
             if (PrimaryThreat == NearestLightPickup)
