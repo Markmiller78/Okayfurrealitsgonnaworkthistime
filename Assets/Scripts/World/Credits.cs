@@ -13,7 +13,7 @@ public class Credits : MonoBehaviour {
  
 		creds = Canvas.FindObjectOfType<Canvas>();
 		creds.enabled = false;	 
-		Buttons[0] = GameObject.Find ("Save");
+	 
 		this.GetComponentInChildren<AudioSource> ().Stop ();
 	//	clip = (AudioClip)GameObject.FindGameObjectWithTag ("CreditMusic");
 
@@ -44,7 +44,7 @@ public class Credits : MonoBehaviour {
 
 		if ( GUI.Button (new Rect (10, 360, 100, 30), "Credits")) {
 			this.GetComponentInChildren<AudioSource>().Play();
-			scrolling.y=-400.0f;
+			scrolling.y=-300.0f;
 			creds.enabled=!creds.enabled;
  		}
  
