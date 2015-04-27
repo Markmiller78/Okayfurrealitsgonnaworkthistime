@@ -31,13 +31,16 @@ public class MainMenu : MonoBehaviour
     public GameObject Credits;
     public GameObject[] Credits4Highlight = new GameObject[] { };
 
+    public AudioClip changeSound;
+    public AudioClip selectSound;
+    AudioSource soundSource;
+
     float timer = 0;
 
     // Use this for initialization
     void Start()
     {
-
-
+        soundSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -52,6 +55,11 @@ public class MainMenu : MonoBehaviour
             else
                 currentSelection = maxchoices;
             AxisChanged = true;
+
+            if (soundSource.isPlaying)
+                soundSource.Stop();
+            soundSource.clip = changeSound;
+            soundSource.Play();
         }
         if ((Input.GetAxis("CLSVertical") < -0.7f || Input.GetAxis("KBVertical") < 0 || Input.GetAxis("CDPadVertical") < -0.7f) && AxisChanged == false && currentSelection < 8)
         {
@@ -61,6 +69,10 @@ public class MainMenu : MonoBehaviour
                 currentSelection = 0;
             AxisChanged = true;
 
+            if (soundSource.isPlaying)
+                soundSource.Stop();
+            soundSource.clip = changeSound;
+            soundSource.Play();
         }
         if ((Input.GetAxis("CLSVertical") == 0 && Input.GetAxis("KBVertical") == 0 && Input.GetAxis("CDPadVertical") == 0) && currentSelection < 8)
         {
@@ -173,6 +185,11 @@ public class MainMenu : MonoBehaviour
                 MainMenu4Highlight[i].SetActive(false);
             }
 
+            if (soundSource.isPlaying)
+                soundSource.Stop();
+            soundSource.clip = selectSound;
+            soundSource.Play();
+
             switch (currentSelection)
             {
                 case 0:
@@ -216,6 +233,11 @@ public class MainMenu : MonoBehaviour
         {
             timer = .1f;
             currentSelection = 4;
+
+            if (soundSource.isPlaying)
+                soundSource.Stop();
+            soundSource.clip = selectSound;
+            soundSource.Play();
 
         }
     }
@@ -300,6 +322,11 @@ public class MainMenu : MonoBehaviour
                 OptionsMenuText4Highlight[i].SetActive(false);
             }
 
+            if (soundSource.isPlaying)
+                soundSource.Stop();
+            soundSource.clip = selectSound;
+            soundSource.Play();
+
             switch (currentSelection)
             {
                 case 0:
@@ -345,6 +372,12 @@ public class MainMenu : MonoBehaviour
                 {
                     OptionsMenuText4Highlight[i].SetActive(false);
                 }
+
+                if (soundSource.isPlaying)
+                    soundSource.Stop();
+                soundSource.clip = selectSound;
+                soundSource.Play();
+
                 switch (currentSelection)
                 {
                     case 8:
@@ -431,6 +464,11 @@ public class MainMenu : MonoBehaviour
                 Credits4Highlight[i].SetActive(false);
             }
 
+            if (soundSource.isPlaying)
+                soundSource.Stop();
+            soundSource.clip = selectSound;
+            soundSource.Play();
+
             switch (currentSelection)
             {
                 case 0:
@@ -451,6 +489,12 @@ public class MainMenu : MonoBehaviour
             {
                 Credits4Highlight[i].SetActive(false);
             }
+
+            if (soundSource.isPlaying)
+                soundSource.Stop();
+            soundSource.clip = selectSound;
+            soundSource.Play();
+
             switch (currentSelection)
             {
                 default:
@@ -494,6 +538,12 @@ public class MainMenu : MonoBehaviour
                 Achievements4Highlight[i].SetActive(false);
             }
 
+            if (soundSource.isPlaying)
+                soundSource.Stop();
+            soundSource.clip = selectSound;
+            soundSource.Play();
+
+
             switch (currentSelection)
             {
                 case 0:
@@ -514,6 +564,12 @@ public class MainMenu : MonoBehaviour
             {
                 Achievements4Highlight[i].SetActive(false);
             }
+
+            if (soundSource.isPlaying)
+                soundSource.Stop();
+            soundSource.clip = selectSound;
+            soundSource.Play();
+
             switch (currentSelection)
             {
                 default:
@@ -576,6 +632,12 @@ public class MainMenu : MonoBehaviour
                 ContinueTextHighlight[i].SetActive(false);
             }
 
+            if (soundSource.isPlaying)
+                soundSource.Stop();
+            soundSource.clip = selectSound;
+            soundSource.Play();
+
+
             switch (currentSelection)
             {
                 case 0:
@@ -609,6 +671,12 @@ public class MainMenu : MonoBehaviour
             {
                 ContinueTextHighlight[i].SetActive(false);
             }
+
+            if (soundSource.isPlaying)
+                soundSource.Stop();
+            soundSource.clip = selectSound;
+            soundSource.Play();
+
             switch (currentSelection)
             {
                 default:
@@ -669,6 +737,11 @@ public class MainMenu : MonoBehaviour
                 SelectDifficulty4Highlight[i].SetActive(false);
             }
 
+            if (soundSource.isPlaying)
+                soundSource.Stop();
+            soundSource.clip = selectSound;
+            soundSource.Play();
+
             switch (currentSelection)
             {
                 case 0:
@@ -701,6 +774,12 @@ public class MainMenu : MonoBehaviour
             {
                 SelectDifficulty4Highlight[i].SetActive(false);
             }
+
+            if (soundSource.isPlaying)
+                soundSource.Stop();
+            soundSource.clip = selectSound;
+            soundSource.Play();
+
             switch (currentSelection)
             {
                 default:
