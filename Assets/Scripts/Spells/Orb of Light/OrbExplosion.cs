@@ -60,6 +60,11 @@ public class OrbExplosion : MonoBehaviour
                 GameObject tempObj = (GameObject)Instantiate(debuff, other.transform.position, other.transform.rotation);
                 tempObj.GetComponent<DebuffFrost>().target = other.gameObject;
             }
+            else if (heroEquipment.equippedEmber == ember.Wind)
+            {
+                other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
+                other.GetComponent<Health>().LoseHealth(5);
+            }
         }
     }
 }
