@@ -41,7 +41,7 @@ public class Knockback : MonoBehaviour
         }
     }
 
-    void GetWrecked()
+   public  void GetWrecked()
     {
         isGettingKnockedBack = true;
     }
