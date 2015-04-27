@@ -5,6 +5,7 @@ public enum equipmentType { Boot, Accessory, Ember };
 
 public class Pickup : MonoBehaviour
 {
+	public bool displaytooltips = false;
     public equipmentType typeOfEquipment;     // See above for enum.
     public int whichOneToEquip = 1;     // See PlayerEquipment script for these enums.
 
@@ -16,6 +17,27 @@ public class Pickup : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         equipment = player.GetComponent<PlayerEquipment>();
     }
+
+	void OnGUI()
+	{
+		if (displaytooltips)
+		{
+			
+			GUI.Box (new Rect (0, 0, 140, 20), "Press E to pick up");
+		}
+		
+	}
+	void DisplayTooltip()
+	{
+		displaytooltips = true;
+		
+	}
+	
+	void DoNotDisplayTooltip()
+	{
+		displaytooltips = false;
+	}
+	
 
     void OnTriggerStay(Collider other)
     {

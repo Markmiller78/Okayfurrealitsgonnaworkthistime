@@ -28,7 +28,7 @@ public class PlayerSpellCasting : MonoBehaviour
     void CastSpell()
     {
         //If the spell cast is not on cooldown
-        if (!heroCooldowns.spellCooling)
+        if (!heroCooldowns.spellCooling && heroLight.currentLight >= heroLight.minLight)
         {
             heroLight.LoseLight(5);
             heroCooldowns.spellCooling = true;

@@ -7,7 +7,7 @@ public class NorthDoor : MonoBehaviour
     public GameObject dungeon;
     RoomGeneration generator;
     GameObject player;
-
+	public bool displaytooltips = false;
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -15,6 +15,7 @@ public class NorthDoor : MonoBehaviour
         generator = dungeon.GetComponent<RoomGeneration>();
         isLocked = true;
     }
+ 
 
     void Update()
     {
@@ -65,4 +66,7 @@ public class NorthDoor : MonoBehaviour
             generator.Reset();
         }
     }
+ 
+	
 }
+

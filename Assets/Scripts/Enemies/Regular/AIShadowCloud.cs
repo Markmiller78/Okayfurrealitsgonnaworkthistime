@@ -71,4 +71,27 @@ public class AIShadowCloud : MonoBehaviour
     {
         moveSpeed = moveSpeed * 2;
     }
+	void Reinforce()
+	{
+		DamagePerSecond *= 1.2f;
+		moveSpeed *= 1.5f;
+		
+	}
+	void UnReinforce()
+	{
+		DamagePerSecond/= 1.2f;
+	moveSpeed /= 1.5f;
+		
+	}
+
+	void Decoy()
+	{
+		player = GameObject.FindGameObjectWithTag ("Decoy");
+	}
+	
+	void UnDecoy()
+	{
+		player = GameObject.FindGameObjectWithTag("Player");
+	}
+
 }
