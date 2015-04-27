@@ -150,8 +150,8 @@ public class InputManager : MonoBehaviour
                 if (Input.GetButtonDown("KBInteract"))
                 {
                     player.SendMessage("Interact", SendMessageOptions.DontRequireReceiver);
-                    GameObject chest = GameObject.FindGameObjectWithTag("Chest");
-                    chest.SendMessage("Interact");
+                    //GameObject chest = GameObject.FindGameObjectWithTag("Chest");
+                    //chest.SendMessage("Interact");
                 }
             }
             // Escape or P to pause
