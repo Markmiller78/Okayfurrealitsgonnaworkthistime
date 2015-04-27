@@ -40,7 +40,7 @@ public class PlayerDashing : MonoBehaviour
 
 			timeRemaining -= Time.deltaTime;
 
-			if (heroEquipment.equippedBoot != boot.Blink) {
+			if (heroEquipment.equippedBoot != boot.Blink&&heroEquipment.equippedBoot != boot.Whirlwind) {
 				//Set the dash direction to the direction the player is currently facing
 
 				//Check if the player is touching the joysticks
@@ -110,7 +110,7 @@ public class PlayerDashing : MonoBehaviour
 
             }
 
-            if (heroEquipment.equippedBoot == boot.Blink)
+			if (heroEquipment.equippedBoot == boot.Blink)
             {
                 Instantiate(BlinkEffect, transform.position, new Quaternion(0, 0, 0, 0));
 				Instantiate(lightRemains, transform.position, transform.rotation);  
@@ -120,6 +120,14 @@ public class PlayerDashing : MonoBehaviour
 
 		
             }
+			if (heroEquipment.equippedBoot == boot.Whirlwind)
+			{
+
+				float tempangle = 720.0f;
+				Quaternion rotation = Quaternion.AngleAxis(tempangle, Vector3.forward);
+				transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime *4.5f);
+
+			}
 
         }
     }
