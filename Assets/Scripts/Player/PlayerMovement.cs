@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     float speed;
     CharacterController controller;
     //Rigidbody2D rb2d;
+	PlayerEquipment heroEquipment;
     Vector2 MoveDirect;
     Vector2 CharRotate;
     Quaternion Rotation;
@@ -17,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
+		heroEquipment = gameObject.GetComponent<PlayerEquipment>();
         controller = gameObject.GetComponent<CharacterController>();
         //rb2d = GetComponent<Rigidbody2D>();
         fullSpeed = 3.1f;
@@ -125,7 +127,8 @@ public class PlayerMovement : MonoBehaviour
     }
     void MouseRotate()
     {
-
+		if (heroEquipment.equippedBoot!=boot.Whirlwind)
+		{
         // Rotate to face the mouse at all 
         // times if Mouse/keyboar is active
         Vector3 pos = Camera.main.WorldToScreenPoint(controller.transform.position);
@@ -133,6 +136,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 dir = Input.mousePosition - pos;
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90;
         controller.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        //rb2d.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-    }
+
+		}
+	}
 }
