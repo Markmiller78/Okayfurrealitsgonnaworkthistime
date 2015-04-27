@@ -16,7 +16,7 @@ public class BlinkParticle : MonoBehaviour {
 			if((transform.position-item.transform.position).magnitude<range)
 			{
 				item.GetComponent<Health>().LoseHealth(5);
-				item.GetComponent<Knockback>().GetWrecked();
+				item.GetComponent<Knockback>().SendMessage("GetWrecked",SendMessageOptions.DontRequireReceiver);
 			}
 			
 		}
