@@ -7,14 +7,21 @@ public class SpellLightMine : MonoBehaviour {
 
     bool active;
     float timer;
+    float betterTimer;
     void Start()
     {
         active = false;
         timer = 0;
+        betterTimer = 0;
     }
 
     void Update()
     {
+        betterTimer += Time.deltaTime;
+        if (betterTimer >= 6.5f)
+        {
+            active = true;
+        }
         if (active)
         {
             timer += Time.deltaTime;

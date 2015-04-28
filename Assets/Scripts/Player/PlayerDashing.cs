@@ -26,6 +26,12 @@ public class PlayerDashing : MonoBehaviour
     public GameObject LifeTrail;
     public HUDCooldowns UICD;
 
+    public GameObject FireCharge;
+    public GameObject LightCharge;
+    public GameObject WindCharge;
+    public GameObject IceCharge;
+    public GameObject LifeCharge;
+
     void Start()
     {
         controller = gameObject.GetComponent<CharacterController>();
@@ -89,7 +95,7 @@ public class PlayerDashing : MonoBehaviour
                             Instantiate(LightTrail, transform.position, new Quaternion(0, 0, 0, 0));
                         }
                         //Ice ember equipped
-                        if (heroEquipment.equippedEmber == ember.Ice)
+                        else if (heroEquipment.equippedEmber == ember.Ice)
                         {
                             Instantiate(IceTrail, transform.position, new Quaternion(0, 0, 0, 0));
                         }
@@ -109,10 +115,9 @@ public class PlayerDashing : MonoBehaviour
                             Instantiate(LifeTrail, transform.position, new Quaternion(0, 0, 0, 0));
                         }
                         trailBlazerDropTimer = 0.0f;
-                        
+
                     }
                 }
-
             }
         }
     }
@@ -130,10 +135,33 @@ public class PlayerDashing : MonoBehaviour
             //Set up the local variables
             trailBlazerDropTimer = 0.1f;
 
-            if (heroEquipment.equippedBoot == boot.Trailblazer)
+            if (heroEquipment.equippedBoot == boot.Charge)
             {
-                //  Instantiate(TrailBlazerExplosion, transform.position, new Quaternion(0, 0, 0, 0));
-
+                //No ember equipped
+                if (heroEquipment.equippedEmber == ember.None)
+                {
+                    Instantiate(LightCharge, transform.position, new Quaternion(0, 0, 0, 0));
+                }
+                //Ice ember equipped
+                else if (heroEquipment.equippedEmber == ember.Ice)
+                {
+                    Instantiate(IceCharge, transform.position, new Quaternion(0, 0, 0, 0));
+                }
+                //Fire ember equipped
+                else if (heroEquipment.equippedEmber == ember.Fire)
+                {
+                    Instantiate(FireCharge, transform.position, new Quaternion(0, 0, 0, 0));
+                }
+                //Wind ember equipped
+                else if (heroEquipment.equippedEmber == ember.Wind)
+                {
+                    Instantiate(WindCharge, transform.position, new Quaternion(0, 0, 0, 0));
+                }
+                //Life ember equipped
+                else if (heroEquipment.equippedEmber == ember.Life)
+                {
+                    Instantiate(LifeCharge, transform.position, new Quaternion(0, 0, 0, 0));
+                }
             }
 
             if (heroEquipment.equippedBoot == boot.Blink)
