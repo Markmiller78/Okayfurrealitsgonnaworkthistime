@@ -58,7 +58,7 @@ public class Health : MonoBehaviour
         if (this.tag == "Player")
         {
             healthPercent = currentHP / maxHP;
-            healthBar.transform.localScale = new Vector3(1, healthPercent, 1);
+            healthBar.transform.localScale = new Vector3(healthPercent, 1, 1);
         }
         else if (equipment.equippedEmber == ember.Life)
         {

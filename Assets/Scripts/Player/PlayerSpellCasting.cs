@@ -29,12 +29,14 @@ public class PlayerSpellCasting : MonoBehaviour
     PlayerEquipment heroEquipment;
     PlayerCooldowns heroCooldowns;
     PlayerLight heroLight;
+    public HUDCooldowns UICD;
 
     void Start()
     {
         heroEquipment = gameObject.GetComponent<PlayerEquipment>();
         heroCooldowns = gameObject.GetComponent<PlayerCooldowns>();
         heroLight = gameObject.GetComponent<PlayerLight>();
+        UICD = GameObject.Find("Spell").GetComponent<HUDCooldowns>();
     }
 
     void CastSpell()
@@ -45,6 +47,7 @@ public class PlayerSpellCasting : MonoBehaviour
             Camera.main.SendMessage("ScreenShake");
             heroLight.LoseLight(5);
             heroCooldowns.spellCooling = true;
+            UICD.CooldownTrigger(CooldownID.Spell);
             //If the orb of light is equipped, fire the orb of light ability
             if (heroEquipment.equippedAccessory == accessory.OrbOfLight)
             {
