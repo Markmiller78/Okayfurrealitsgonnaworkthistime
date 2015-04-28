@@ -39,7 +39,7 @@ public class RoomGeneration : MonoBehaviour
             floorOneRoomsInfo[i] = floorOneRooms[i].GetComponent<Room>();
             floorOneRoomsInfo[i].setUsed();
         }
-        Utilities.ArrayShuffle(floorOneMazes, 3);
+        Utilities.ArrayShuffle(floorOneMazes, 100);
         floorOneMazesInfo = new Room[floorOneMazes.Length];
         for (int i = 0; i < floorOneMazes.Length; i++)
         {
@@ -81,16 +81,14 @@ public class RoomGeneration : MonoBehaviour
         //morriusRoomInfo = morriusRoom.GetComponent<Room>();
         //morriusRoomInfo.setUsed();
 
-        // FOR TESTING PURPOSES ONLY, DON'T FORGET TO DELETE ME.
-        //floorOneRooms[0] = dethrosRoom;
-        //floorOneRoomsInfo[0] = dethrosRoomInfo;
-        //floorOneRooms[0] = floorOneMazes[1];
-        //floorOneRoomsInfo[0] = floorOneMazesInfo[1];
-        // THIS MARKS THE END OF THE TEST CODE
-
         finalRoomArray = new GameObject[9];
         finalRoomInfoArray = new Room[9];
         FillDungeon();
+
+        //TESTING
+        //finalRoomArray[0] = floorOneMazes[3];
+        //finalRoomInfoArray[0] = floorOneMazesInfo[3];
+        //ENDTESTING
 
         CreateRoom();
         //Reset();
@@ -510,7 +508,7 @@ public class RoomGeneration : MonoBehaviour
         GameObject[] objArray = GameObject.FindObjectsOfType<GameObject>();
         foreach (GameObject obj in objArray)
         {
-            if (obj.name.Contains("Wall") || obj.name.Contains("Floor") || obj.name.Contains("Hazard") || obj.name.Contains("Door"))
+            if (obj.name.Contains("Wall") || obj.name.Contains("Floor") || obj.name.Contains("Hazard") || obj.name.Contains("Door") || obj.tag.Contains("Drop") || obj.tag == "LightTrail")
             {
                 Destroy(obj);
             }
