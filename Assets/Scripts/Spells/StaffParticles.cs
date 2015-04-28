@@ -21,7 +21,6 @@ public class StaffParticles : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-
         checkTimer += Time.deltaTime;
         if (checkTimer >= 1.0f)
         {
