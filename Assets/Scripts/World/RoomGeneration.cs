@@ -96,39 +96,6 @@ public class RoomGeneration : MonoBehaviour
 
     void CreateRoom()
     {
-        //for (int y = 0; y < finalRoomInfoArray[currentRoom].height; y++)
-        //{
-        //    bool skip = false;
-        //    bool hasSkipped = false;
-        //    for (int x = 0; x < finalRoomInfoArray[currentRoom].width; x++)
-        //    {
-        //        if (x == 0 || x == finalRoomInfoArray[currentRoom].width - 1 || y == 0 || y == finalRoomInfoArray[currentRoom].height - 1)
-        //        {
-        //            if (x == finalRoomInfoArray[currentRoom].width / 2 - 1)
-        //            {
-        //                Instantiate(finalRoomInfoArray[currentRoom].door, new Vector3(x + .5f, -y, -1.4f), Quaternion.identity);
-        //                Instantiate(finalRoomInfoArray[currentRoom].floorTiles[0], new Vector3(x, -y, 0.0f), Quaternion.identity);
-        //                skip = true;
-        //            }
-        //            else if (!skip)
-        //                Instantiate(finalRoomInfoArray[currentRoom].wallTiles[0], new Vector3(x, -y, -1.4f), Quaternion.identity);
-        //        }
-        //        else
-        //        {
-        //            Instantiate(finalRoomInfoArray[currentRoom].floorTiles[0], new Vector3(x, -y, 0.0f), Quaternion.identity);
-        //        }
-        //        if (hasSkipped)
-        //        {
-        //            skip = false;
-        //            Instantiate(finalRoomInfoArray[currentRoom].floorTiles[0], new Vector3(x, -y, 0.0f), Quaternion.identity);
-        //        }
-        //        if (skip)
-        //        {
-        //            hasSkipped = true;
-        //        }
-        //    }
-        //}
-
         bool skip = false;
         bool hasSkipped = false;
         // Spawn north wall and possibly door

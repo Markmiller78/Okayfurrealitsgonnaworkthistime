@@ -18,6 +18,7 @@ public class PlayerSpellCasting : MonoBehaviour
     public GameObject fireBlast;
     public GameObject frostBlast;
     public GameObject windBlast;
+    public GameObject lifeBlast;
 
     PlayerEquipment heroEquipment;
     PlayerCooldowns heroCooldowns;
@@ -77,7 +78,6 @@ public class PlayerSpellCasting : MonoBehaviour
                 else if (heroEquipment.equippedEmber == ember.Ice)
                 {
                     Instantiate(frostSing, transform.position, transform.rotation);
-
                 }
             }
             else if (heroEquipment.equippedAccessory == accessory.BlastOfLight)
@@ -99,6 +99,10 @@ public class PlayerSpellCasting : MonoBehaviour
                 {
                     Instantiate(frostBlast, transform.position, transform.rotation);
 
+                }
+                else if (heroEquipment.equippedEmber == ember.Life)
+                {
+                    Instantiate(lifeBlast, transform.position, transform.rotation);
                 }
             }
         }
