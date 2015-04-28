@@ -56,13 +56,13 @@ public class SouthDoor : MonoBehaviour
             && generator.currentRoom < 8)
         {
             ++generator.currentRoom;
-            generator.finalRoomInfoArray[generator.currentRoom].comingFromEntrance = false;
+            generator.finalRoomInfoArray[generator.currentRoom].comingFromEntrance = true;
             generator.Reset();
         }
         else if (other.gameObject == player && generator.currentRoom > 0)
         {
             --generator.currentRoom;
-            generator.finalRoomInfoArray[generator.currentRoom].comingFromEntrance = true;
+            generator.finalRoomInfoArray[generator.currentRoom].comingFromEntrance = false;
             generator.Reset();
         }
     }
