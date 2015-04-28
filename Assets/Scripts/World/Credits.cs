@@ -8,12 +8,13 @@ public class Credits : MonoBehaviour {
 	public Canvas creds;
 	public GameObject[] Buttons= new GameObject[3];
 	public AudioClip clip;
+	public bool playing=false;
 	// Use this for initialization
 	void Start () {
  
 		creds = Canvas.FindObjectOfType<Canvas>();
 		creds.enabled = false;	 
-		Buttons[0] = GameObject.Find ("Save");
+	 
 		this.GetComponentInChildren<AudioSource> ().Stop ();
 	//	clip = (AudioClip)GameObject.FindGameObjectWithTag ("CreditMusic");
 
@@ -27,11 +28,11 @@ public class Credits : MonoBehaviour {
 		if (creds.enabled == true) 
 		{
 			creds.transform.Translate(scrolling);
-			scrolling.y+=1.5f;
+			scrolling.y+=0.9f;
 	 
-			if(creds.transform.position.y>=2084)
+			if(creds.transform.position.y>=2030)
 			{
-				scrolling.y=-400.0f;
+				scrolling.y=-430.0f;
 
 			}
 		}
@@ -41,10 +42,16 @@ public class Credits : MonoBehaviour {
 	}
 	void OnGUI()
 	{
+ 
 
-		if ( GUI.Button (new Rect (10, 360, 100, 30), "Credits")) {
+		if (GUI.Button (new Rect (10, 360, 100, 30), "Credits") ) {
+			if(!playing)
+			{
 			this.GetComponentInChildren<AudioSource>().Play();
-			scrolling.y=-400.0f;
+			}
+			else
+				this.GetComponentInChildren<AudioSource> ().Stop ();
+			scrolling.y=-430.0f;
 			creds.enabled=!creds.enabled;
  		}
  
