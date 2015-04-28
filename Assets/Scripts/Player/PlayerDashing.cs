@@ -23,6 +23,7 @@ public class PlayerDashing : MonoBehaviour
     public GameObject LightTrail;
     public GameObject WindTrail;
     public GameObject IceTrail;
+    public GameObject LifeTrail;
 
     void Start()
     {
@@ -99,6 +100,11 @@ public class PlayerDashing : MonoBehaviour
                         else if (heroEquipment.equippedEmber == ember.Wind)
                         {
                             Instantiate(WindTrail, transform.position, new Quaternion(0, 0, 0, 0));
+                        }
+                        //Life ember equipped
+                        else if (heroEquipment.equippedEmber == ember.Life)
+                        {
+                            Instantiate(LifeTrail, transform.position, new Quaternion(0, 0, 0, 0));
                         }
                         trailBlazerDropTimer = 0.0f;
                     }
