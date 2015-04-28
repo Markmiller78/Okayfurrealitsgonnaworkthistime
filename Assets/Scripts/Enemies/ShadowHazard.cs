@@ -22,6 +22,8 @@ public class ShadowHazard : MonoBehaviour {
         heroMovement = hero.GetComponent<PlayerMovement>();
         heroDash = hero.GetComponent<PlayerDashing>();
         audioPlayer = gameObject.GetComponent<AudioSource>();
+        if (gameObject.tag == "Temporary")
+            Destroy(gameObject, 5);
     }
 
     void OnTriggerEnter(Collider other)
