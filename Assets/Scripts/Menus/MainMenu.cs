@@ -643,7 +643,7 @@ public class MainMenu : MonoBehaviour
                 case 0:
                     {
                         //CONTINUE PREVIOUS GAME
-                        Application.LoadLevel("Game");
+                        Application.LoadLevel("TonyScene");
                         break;
                     }
                 case 1:
