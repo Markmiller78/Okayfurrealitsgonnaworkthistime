@@ -123,4 +123,14 @@ public class AISkeletonArcher : MonoBehaviour
 		moveSpeed /= 1.5f;
 
 	}
+
+    void Slow()
+    {
+        moveSpeed = moveSpeed * 0.5f;
+    }
+
+    void Unslow()
+    {
+        moveSpeed = moveSpeed * 2;
+    }
 }

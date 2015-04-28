@@ -149,5 +149,13 @@ public class AIWraith : MonoBehaviour
         }
     }
 
+    void Slow()
+    {
+        moveSpeed = moveSpeed * 0.5f;
+    }
 
+    void Unslow()
+    {
+        moveSpeed = moveSpeed * 2;
+    }
 }
