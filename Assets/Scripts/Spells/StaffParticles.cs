@@ -11,6 +11,7 @@ public class StaffParticles : MonoBehaviour {
     public GameObject iceParts;
     public GameObject lightParts;
     public GameObject windParts;
+    public GameObject lifeParts;
 
 	// Use this for initialization
 	void Start () {
@@ -30,6 +31,7 @@ public class StaffParticles : MonoBehaviour {
                 fireParts.SetActive(false);
                 iceParts.SetActive(false);
                 windParts.SetActive(false);
+                lifeParts.SetActive(false);
             }
             else if (playerEquipemnt.equippedEmber == ember.Fire)
             {
@@ -37,6 +39,7 @@ public class StaffParticles : MonoBehaviour {
                 fireParts.SetActive(true);
                 iceParts.SetActive(false);
                 windParts.SetActive(false);
+                lifeParts.SetActive(false);
             }
             else if (playerEquipemnt.equippedEmber == ember.Ice)
             {
@@ -44,6 +47,7 @@ public class StaffParticles : MonoBehaviour {
                 fireParts.SetActive(false);
                 iceParts.SetActive(true);
                 windParts.SetActive(false);
+                lifeParts.SetActive(false);
             }
             else if (playerEquipemnt.equippedEmber == ember.Wind)
             {
@@ -51,6 +55,15 @@ public class StaffParticles : MonoBehaviour {
                 fireParts.SetActive(false);
                 iceParts.SetActive(false);
                 windParts.SetActive(true);
+                lifeParts.SetActive(false);
+            }
+            else if (playerEquipemnt.equippedEmber == ember.Life)
+            {
+                lightParts.SetActive(false);
+                fireParts.SetActive(false);
+                iceParts.SetActive(false);
+                windParts.SetActive(false);
+                lifeParts.SetActive(true);
             }
 
 
