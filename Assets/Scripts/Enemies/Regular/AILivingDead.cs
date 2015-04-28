@@ -4,6 +4,8 @@ using System.Collections;
 public class AILivingDead : MonoBehaviour
 {
     GameObject player;
+    PlayerMovement playMove;
+    Health playerHealth;
     //    Health playerHealth;
     //    Rigidbody2D rb2d;
 	public bool isReinforced=false;
@@ -19,9 +21,14 @@ public class AILivingDead : MonoBehaviour
 
     void Start()
     {
+        moveSpeed = 1;
         player = GameObject.FindGameObjectWithTag("Player");
+        playMove = player.GetComponent<PlayerMovement>();
+        playerHealth = player.GetComponent<Health>();
         //playerHealth = player.GetComponent<Health>();
+        attackCooldownMax = 1;
         attackCooldown = attackCooldownMax;
+        attackRange = .8f;
         //rb2d = GetComponent<Rigidbody2D>();
         controller = GetComponent<CharacterController>();
     }
@@ -33,7 +40,7 @@ public class AILivingDead : MonoBehaviour
         {
             UpdateAttackCooldown();
         }
-        if (distanceToPlayer >= (attackRange / 2.0f))
+        if (distanceToPlayer >= attackRange)
             Move();
         Turn();
         if (distanceToPlayer <= attackRange && !attacking)
@@ -61,7 +68,8 @@ public class AILivingDead : MonoBehaviour
 
     void Attack()
     {
-
+        playMove.KnockBack(transform.position);
+        playerHealth.LoseHealth(7);
     }
 
     void UpdateAttackCooldown()

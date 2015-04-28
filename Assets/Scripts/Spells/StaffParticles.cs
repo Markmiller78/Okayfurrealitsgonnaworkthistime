@@ -57,12 +57,6 @@ public class StaffParticles : MonoBehaviour {
                 iceParts.SetActive(false);
                 windParts.SetActive(true);
             }
-
-
-
-
-
-
             checkTimer = 0;
         }
 	}
