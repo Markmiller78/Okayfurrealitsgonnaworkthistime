@@ -13,11 +13,18 @@ public class PlayerSpellCasting : MonoBehaviour
     public GameObject fireSing;
     public GameObject frostSing;
     public GameObject windSing;
+    public GameObject lifeSing;
 
     public GameObject lightBlast;
     public GameObject fireBlast;
     public GameObject frostBlast;
     public GameObject windBlast;
+    public GameObject lifeBlast;
+
+    public GameObject lightBolt;
+    public GameObject fireBolt;
+    public GameObject frostBolt;
+    public GameObject windBolt;
 
     PlayerEquipment heroEquipment;
     PlayerCooldowns heroCooldowns;
@@ -78,7 +85,10 @@ public class PlayerSpellCasting : MonoBehaviour
                 else if (heroEquipment.equippedEmber == ember.Ice)
                 {
                     Instantiate(frostSing, transform.position, transform.rotation);
-
+                }
+                else if (heroEquipment.equippedEmber == ember.Life)
+                {
+                    Instantiate(lifeSing, transform.position, transform.rotation);
                 }
             }
             else if (heroEquipment.equippedAccessory == accessory.BlastOfLight)
@@ -99,6 +109,31 @@ public class PlayerSpellCasting : MonoBehaviour
                 else if (heroEquipment.equippedEmber == ember.Ice)
                 {
                     Instantiate(frostBlast, transform.position, transform.rotation);
+
+                }
+                else if (heroEquipment.equippedEmber == ember.Life)
+                {
+                    Instantiate(lifeBlast, transform.position, transform.rotation);
+                }
+            }
+            else if (heroEquipment.equippedAccessory == accessory.BoltOfLight)
+            {
+                if (heroEquipment.equippedEmber == ember.None)
+                {
+                    Instantiate(lightBolt, transform.position, transform.rotation);
+                }
+                else if (heroEquipment.equippedEmber == ember.Fire)
+                {
+                    Instantiate(fireBolt, transform.position, transform.rotation);
+                }
+                else if (heroEquipment.equippedEmber == ember.Wind)
+                {
+                    Instantiate(windBolt, transform.position, transform.rotation);
+
+                }
+                else if (heroEquipment.equippedEmber == ember.Ice)
+                {
+                    Instantiate(frostBolt, transform.position, transform.rotation);
 
                 }
             }

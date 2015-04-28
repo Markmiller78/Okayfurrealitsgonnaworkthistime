@@ -24,7 +24,7 @@ public class Room : MonoBehaviour
     public Vector2 rightPlayerSpawn;
     public Vector2 topPlayerSpawn;
     public Vector2 leftPlayerSpawn;
-    public int entranceDir; // 0 = bottom, 1 = left, 2 = top, 3 = right
+    public int entranceDir; // 0 = bottom, 1 = left, 2 = top, 3 = right, 4 = TREASURE ROOM!!!
     public int exitDir;
     [HideInInspector]
     public bool beenThere;
