@@ -65,8 +65,8 @@ public class SingularityExplosion : MonoBehaviour {
             }
             else if (heroEquipment.equippedEmber == ember.Wind)
             {
+                other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);                
                 other.GetComponent<Health>().LoseHealth(10);
-                
             }
         }
     }

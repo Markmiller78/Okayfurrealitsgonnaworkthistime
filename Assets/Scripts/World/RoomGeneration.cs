@@ -499,6 +499,10 @@ public class RoomGeneration : MonoBehaviour
         {
             finalRoomInfoArray[8].exitDir = Random.Range(0, 3);
         } while (finalRoomInfoArray[8].exitDir == finalRoomInfoArray[8].entranceDir);
+        for (int i = 0; i < finalRoomInfoArray.Length; i++)
+        {
+            finalRoomInfoArray[i].comingFromEntrance = true;
+        }
     }
 
     public void Reset()

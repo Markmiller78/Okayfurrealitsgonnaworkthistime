@@ -31,18 +31,13 @@ public class Room : MonoBehaviour
     public int numEnemies = 0;
     public bool comingFromEntrance = true;
 
-    // 0 = left, 1 = top, 2 = right, 3 = bottom
-    [HideInInspector]
-    public int fromDir;
-    [HideInInspector]
-    public int toDir;
-
 
     public void setUsed()
     {
         enemySpawnPointUsed = new bool[enemySpawnPoints.Length];
         for (int i = 0; i < enemySpawnPoints.Length; i++)
         {
+            comingFromEntrance = true;
             enemySpawnPointUsed[i] = false;
         }
     }
