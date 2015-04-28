@@ -24,6 +24,7 @@ public class PlayerDashing : MonoBehaviour
     public GameObject WindTrail;
     public GameObject IceTrail;
     public GameObject LifeTrail;
+    public HUDCooldowns UICD;
 
     void Start()
     {
@@ -32,6 +33,7 @@ public class PlayerDashing : MonoBehaviour
         heroLight = gameObject.GetComponent<PlayerLight>();
         heroCooldowns = gameObject.GetComponent<PlayerCooldowns>();
         trailBlazerDropTimer = 0.0f;
+        UICD = GameObject.Find("Boot").GetComponent<HUDCooldowns>();
     }
 
     void Update()
@@ -107,6 +109,7 @@ public class PlayerDashing : MonoBehaviour
                             Instantiate(LifeTrail, transform.position, new Quaternion(0, 0, 0, 0));
                         }
                         trailBlazerDropTimer = 0.0f;
+                        
                     }
                 }
 
@@ -121,7 +124,7 @@ public class PlayerDashing : MonoBehaviour
             //Make the player spend light
             heroLight.LoseLight(5);
             heroCooldowns.dashCooling = true;
-
+            UICD.CooldownTrigger(CooldownID.Boot);
             timeRemaining = dashDuration;
 
             //Set up the local variables
