@@ -14,16 +14,31 @@ public class Knockback : MonoBehaviour
     float timerMax;
     float timerCurr;
 
+    PlayerEquipment heroEquipment;
+
+    bool once;
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        heroEquipment = player.GetComponent<PlayerEquipment>();
         controller = GetComponent<CharacterController>();
         timerMax = knockbackDistance / knockbackSpeed;
         timerCurr = timerMax;
+        once = true;
     }
 
     void Update()
     {
+        if (heroEquipment.equippedAccessory == accessory.BlastOfLight && heroEquipment.equippedEmber == ember.Wind)
+        {
+            if (once)
+            {
+                knockbackDistance *= 2;
+                once = false;
+            }
+        }
+
         if (!isGettingKnockedBack)
         {
             origin = transform.position;
@@ -33,6 +48,7 @@ public class Knockback : MonoBehaviour
         {
             timerCurr -= Time.deltaTime;
             controller.Move(dir * Time.deltaTime * knockbackSpeed);
+
             if (Vector3.Distance(transform.position, origin) >= knockbackDistance || timerCurr <= 0.0f)
             {
                 isGettingKnockedBack = false;
@@ -41,9 +57,10 @@ public class Knockback : MonoBehaviour
         }
     }
 
-  void GetWrecked()
+    void GetWrecked()
     {
         isGettingKnockedBack = true;
+        once = true;
     }
 
 }

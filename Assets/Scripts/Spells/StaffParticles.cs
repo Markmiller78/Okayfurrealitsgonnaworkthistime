@@ -15,10 +15,6 @@ public class StaffParticles : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         playerEquipemnt = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
-        //fireParts = GameObject.Find("StaffFireParticles");
-        //iceParts = GameObject.Find("StaffFrostParticles");
-        //windParts = GameObject.Find("StaffWindParticles");
-        //lightParts = GameObject.Find("StaffLightParticles");
         checkTimer = 1;
 	}
 	
@@ -27,7 +23,7 @@ public class StaffParticles : MonoBehaviour {
     {
 
         checkTimer += Time.deltaTime;
-        if (checkTimer > 1.0f)
+        if (checkTimer >= 1.0f)
         {
             if (playerEquipemnt.equippedEmber == ember.None)
             {

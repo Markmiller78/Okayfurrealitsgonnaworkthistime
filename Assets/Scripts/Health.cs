@@ -17,15 +17,20 @@ public class Health : MonoBehaviour
 
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
+        equipment = player.GetComponent<PlayerEquipment>();
         if (this.tag == "Player")
+        {
             healthBar = GameObject.FindGameObjectWithTag("HealthBar");
+        }
         healthPercent = currentHP / maxHP * 100;
 
         dungeon = GameObject.FindGameObjectWithTag("Dungeon");
-		if(dungeon!=null)
-        generator = dungeon.GetComponent<RoomGeneration>();
-        player = GameObject.FindGameObjectWithTag("Player");
-        equipment = player.GetComponent<PlayerEquipment>();
+        if (dungeon != null)
+        {
+            generator = dungeon.GetComponent<RoomGeneration>();
+        }
+
 
     }
     public void GainHealth(float Amount)
@@ -57,9 +62,9 @@ public class Health : MonoBehaviour
         }
         else if (equipment.equippedEmber == ember.Life)
         {
-            GameObject instance = lifeEmberSpawn;
-            lifeEmberSpawn.GetComponent<LifeEmberStolenHealth>().gainAmount = Amount;
-            Instantiate(instance, transform.position, transform.rotation);
+            GameObject instance = (GameObject)Instantiate(lifeEmberSpawn, transform.position, transform.rotation);
+            instance.GetComponent<LifeEmberStolenHealth>().gainAmount = Amount;
+
         }
     }
 
