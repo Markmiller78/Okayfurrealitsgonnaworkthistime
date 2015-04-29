@@ -11,7 +11,6 @@ public class DisplayEnmiesRemaining : MonoBehaviour
     void Start()
     {
         timer = 1;
-        
     }
 
     // Update is called once per frame
