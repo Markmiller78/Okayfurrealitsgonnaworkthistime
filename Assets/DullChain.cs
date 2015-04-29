@@ -1,35 +1,38 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SpellChainLightning : MonoBehaviour {
-
+public class DullChain : MonoBehaviour {
 
     public float speed;
     public float damage;
 
     public GameObject debuff;
-    public GameObject explosion;
-    public GameObject bolt;
 
     PlayerEquipment heroEquipment;
 
-    bool once;
+    public GameObject target;
+
 
     void Start()
     {
         transform.Rotate(270, 0, 0);
         heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
-        once = true;
     }
 
     void FixedUpdate()
     {
         if (heroEquipment.paused == false)
         {
+            if (target == null)
+            {
+                target = GameObject.FindGameObjectWithTag("Player");
+            }
+                Vector2 moveTo = (target.transform.position - transform.position).normalized;
+                moveTo = moveTo * Time.deltaTime * speed;
 
-
-            transform.position += transform.forward * speed * Time.deltaTime;
-        }
+                transform.position = new Vector3(moveTo.x + transform.position.x, moveTo.y + transform.position.y, -1.2f);
+            }
+        
     }
 
     void OnTriggerEnter(Collider other)
@@ -38,9 +41,12 @@ public class SpellChainLightning : MonoBehaviour {
         {
             Explode();
         }
+        else if (other.tag == "Player")
+        {
+            Explode();
+        }
         else if (other.tag == "Enemy")
         {
-
             if (heroEquipment.equippedEmber == ember.None)
             {
                 other.GetComponent<Health>().LoseHealth(damage);
@@ -62,18 +68,11 @@ public class SpellChainLightning : MonoBehaviour {
                 other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
                 other.GetComponent<Health>().LoseHealth(damage);
             }
-            if (once)
-            {
-                GameObject tempObj = (GameObject)Instantiate(bolt, other.transform.position, other.transform.rotation);
-                tempObj.GetComponent<DullChain>().target = GameObject.FindGameObjectWithTag("Enemy");
-                once = false;
-            }
         }
     }
 
     void Explode()
     {
-        Instantiate(explosion, transform.position, transform.rotation);
         Destroy(gameObject);
     }
 }

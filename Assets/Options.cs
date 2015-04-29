@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
+
 
 public class Options : MonoBehaviour {
 
@@ -15,6 +18,7 @@ public class Options : MonoBehaviour {
 
     void Start()
     {
+        Load();
         DontDestroyOnLoad(gameObject);
         sfxInt.text = sfxVolume.ToString();
         musicInt.text = musicVolume.ToString();
@@ -56,6 +60,7 @@ public class Options : MonoBehaviour {
         }
         musicInt.text = musicVolume.ToString();
         musicInt2.text = musicVolume.ToString();
+        Save();
     }
 
     public void musicDecrease()
@@ -67,7 +72,43 @@ public class Options : MonoBehaviour {
         }
         musicInt.text = musicVolume.ToString();
         musicInt2.text = musicVolume.ToString();
+        Save();
     }
+
+
+    public void Save()
+    {
+
+        BinaryFormatter bin = new BinaryFormatter();
+        FileStream file = File.Create(Application.persistentDataPath + "/optioninfo.dat");
+        OptionData data = new OptionData();
+        data.sfxVolume = sfxVolume;
+        data.musicVolume= musicVolume;
+        bin.Serialize(file, data);
+        file.Close();
+      
+    }
+    public void Load()
+    {
+
+        if (File.Exists(Application.persistentDataPath + "/optioninfo.dat"))
+        {
+            BinaryFormatter bin = new BinaryFormatter();
+            FileStream file = File.Open(Application.persistentDataPath + "/optioninfo.dat", FileMode.Open);
+            OptionData data = (OptionData)bin.Deserialize(file);
+            sfxVolume = data.sfxVolume;
+          musicVolume = data.musicVolume;
+            file.Close();
+
+        }
+    }
+}
+
+[System.Serializable]
+public class OptionData
+{
+    public int sfxVolume ;
+    public int musicVolume ;
 
 
 }
