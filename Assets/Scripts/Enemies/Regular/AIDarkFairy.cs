@@ -22,9 +22,15 @@ public class AIDarkFairy : MonoBehaviour {
 	public Vector3 vectotarget;
 	public Vector3 vectoplayer;
 	public int size;
+
+    float snaredSpeed;
+    float SnareTimer;
+    bool isSnared;
 	// Use this for initialization
 
-	void Start () {
+	void Start () 
+    {
+        isSnared = false;
 		player = GameObject.FindGameObjectWithTag ("Player");
         heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
         GameObject[] temp = GameObject.FindGameObjectsWithTag("LightDrop");
@@ -70,7 +76,16 @@ public class AIDarkFairy : MonoBehaviour {
                 MoveTowardsLight(currentlight);
                 StealLightDrop();
             }
+            if (isSnared)
+            {
+                SnareTimer -= Time.deltaTime;
 
+                if (SnareTimer < 0)
+                {
+                    Unsnare();
+                    isSnared = false;
+                }
+            }
             
         }
 	}
@@ -166,6 +181,17 @@ controller.Move(tempdir.normalized * Time.deltaTime *- movementspeed);
 	{
 		movementspeed = movementspeed * 2;
 	}
+    void Snare()
+    {
+        isSnared = true;
+        SnareTimer = 2;
+        snaredSpeed = movementspeed;
+        movementspeed = 0;
+    }
+    void Unsnare()
+    {
+        movementspeed = snaredSpeed;
+    }
 	void Decoy()
 	{
 		player = GameObject.FindGameObjectWithTag ("Decoy");

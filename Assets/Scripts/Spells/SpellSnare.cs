@@ -49,9 +49,9 @@ public class SpellSnare : MonoBehaviour {
 
         for (int i = 0; i < Enemies.Length; i++)
         {
-            if (Vector3.Distance(transform.position, Enemies[i].transform.position) < 4)
+            if (Vector3.Distance(transform.position, Enemies[i].transform.position) < 2.5f)
             {
-                Enemies[i].SendMessage("Slow");
+                Enemies[i].SendMessage("Snare");
                 Enemies[i].GetComponent<Health>().LoseHealth(5);
             }
         }

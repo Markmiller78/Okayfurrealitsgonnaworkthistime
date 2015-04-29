@@ -19,9 +19,13 @@ public class AICommander : MonoBehaviour {
     public float dist;
 	public Vector3 vectoplayer;
 	public int size;
-
+    float snaredSpeed;
+    float SnareTimer;
+    bool isSnared;
 	// Use this for initialization
-	void Start () {
+	void Start () 
+    {
+        isSnared = false;
 		player = GameObject.FindGameObjectWithTag ("Player");
 		list = GameObject.FindGameObjectsWithTag ("Enemy");
         heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
@@ -87,6 +91,17 @@ public class AICommander : MonoBehaviour {
                 }
 
             }
+
+            if (isSnared)
+            {
+                SnareTimer -= Time.deltaTime;
+
+                if (SnareTimer < 0)
+                {
+                    Unsnare();
+                    isSnared = false;
+                }
+            }
         }
     }
 	void RunAway()
@@ -131,7 +146,17 @@ public class AICommander : MonoBehaviour {
 	{
 		movementspeed = movementspeed * 2;
 	}
-
+    void Snare()
+    {
+        isSnared = true;
+        SnareTimer = 2;
+        snaredSpeed = movementspeed;
+        movementspeed = 0;
+    }
+    void Unsnare()
+    {
+        movementspeed = snaredSpeed;
+    }
 	void Decoy()
 	{
 		player = GameObject.FindGameObjectWithTag ("Decoy");
