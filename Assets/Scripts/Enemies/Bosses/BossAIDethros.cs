@@ -75,7 +75,11 @@ public class BossAIDethros : MonoBehaviour
                     break;
                 case state.aggravated:
                     {
-
+#if UNITY_STANDALONE
+                        Application.Quit();
+#elif UNITY_EDITOR
+                        UnityEditor.EditorApplication.isPlaying = false;
+#endif
 
                         if (myHealth.currentHP < myHealth.maxHP / 3f)
                             currState = state.intense;
