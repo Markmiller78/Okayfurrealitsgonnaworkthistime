@@ -72,6 +72,14 @@ public class PlayerDashing : MonoBehaviour
                     MoveDirect *= dashSpeed * Time.deltaTime;
                 }
 
+                if (heroEquipment.equippedBoot == boot.Whirlwind)
+                {
+
+                    float tempangle = 720.0f;
+                    Quaternion rotation = Quaternion.AngleAxis(tempangle, Vector3.forward);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 4.5f);
+
+                }
                 //Actually Move the player
                 controller.Move(MoveDirect);
 
@@ -137,14 +145,14 @@ public class PlayerDashing : MonoBehaviour
 
 
             }
-            if (heroEquipment.equippedBoot == boot.Whirlwind)
-            {
+            //if (heroEquipment.equippedBoot == boot.Whirlwind)
+            //{
 
-                float tempangle = 720.0f;
-                Quaternion rotation = Quaternion.AngleAxis(tempangle, Vector3.forward);
-                transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 4.5f);
+            //    float tempangle = 720.0f;
+            //    Quaternion rotation = Quaternion.AngleAxis(tempangle, Vector3.forward);
+            //    transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 4.5f);
 
-            }
+            //}
 
         }
     }

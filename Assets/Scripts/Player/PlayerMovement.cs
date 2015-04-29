@@ -127,8 +127,8 @@ public class PlayerMovement : MonoBehaviour
     }
     void MouseRotate()
     {
-		if (heroEquipment.equippedBoot!=boot.Whirlwind)
-		{
+        //if (heroEquipment.equippedBoot!=boot.Whirlwind)
+        //{
         // Rotate to face the mouse at all 
         // times if Mouse/keyboar is active
         Vector3 pos = Camera.main.WorldToScreenPoint(controller.transform.position);
@@ -137,6 +137,6 @@ public class PlayerMovement : MonoBehaviour
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90;
         controller.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
-		}
+		//}
 	}
 }

@@ -8,6 +8,7 @@ public class AICommander : MonoBehaviour {
 	GameObject player;
 	public GameObject[] list;
 	public bool isReinforcing=false;
+    public bool isAttacking = false;
 	CharacterController controller;
 	public float atkdmg;
 	public float atkrange;
@@ -29,11 +30,23 @@ public class AICommander : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (isAttacking)
+        {
+            atkcooldown -= Time.deltaTime;
+            if (atkcooldown <= 0.0f)
+            {
+                atkcooldown = atkcooldownref;
+                isAttacking = false;
+            }
+        }
 		vectoplayer = transform.position - player.transform.position;
 		dist = vectoplayer.magnitude;
 		FacePlayer ();
+        size = list.Length;
+        if (size == 1)
+            isReinforcing = false;
 		if (!isReinforcing) {
-			size = list.Length;
+			
 
 			distance = new float[size];
 			if (size > 1) {
@@ -57,7 +70,7 @@ public class AICommander : MonoBehaviour {
 		} else
 		
 		{
-		 
+        
 			list = GameObject.FindGameObjectsWithTag ("Enemy");
 			if(dist<1.75f)
 				
@@ -69,10 +82,12 @@ public class AICommander : MonoBehaviour {
 			}
 			 else
 			{
-			foreach (GameObject obj in  list)
-			{
-				obj.SendMessage("Reinforce", SendMessageOptions.DontRequireReceiver);
-			}
+             
+                    foreach (GameObject obj in list)
+                    {
+                        obj.SendMessage("Reinforce", SendMessageOptions.DontRequireReceiver);
+                    }
+                
 			}
 		
 		}
@@ -103,9 +118,10 @@ public class AICommander : MonoBehaviour {
 	}
 	void AttackPlayer()
 	{
-		if (dist < atkrange)
+		if (dist < atkrange&&!isAttacking)
 		{
 			player.GetComponent<Health>().LoseHealth(atkdmg);
+            isAttacking = true;
 		}
 
 
