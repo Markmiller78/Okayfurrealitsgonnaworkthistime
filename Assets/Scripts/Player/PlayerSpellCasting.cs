@@ -208,19 +208,19 @@ public class PlayerSpellCasting : MonoBehaviour
                     }
                     else if (heroEquipment.equippedEmber == ember.Fire)
                     {
-
+                        Instantiate(fireSnare, transform.position, transform.rotation);
                     }
                     else if (heroEquipment.equippedEmber == ember.Wind)
                     {
-                        Instantiate(lightSnare, transform.position, transform.rotation);
+                        Instantiate(windSnare, transform.position, transform.rotation);
                     }
                     else if (heroEquipment.equippedEmber == ember.Ice)
                     {
-
+                        Instantiate(frostSnare, transform.position, transform.rotation);
                     }
                     else if (heroEquipment.equippedEmber == ember.Life)
                     {
-
+                        Instantiate(lifeSnare, transform.position, transform.rotation);
                     }
                 }
                 else if (heroEquipment.equippedAccessory == accessory.ChainLightning)
