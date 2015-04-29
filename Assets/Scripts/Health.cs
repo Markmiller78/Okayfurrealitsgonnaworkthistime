@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using UnityEngine.UI;
 public class Health : MonoBehaviour
 {
 
@@ -14,9 +14,13 @@ public class Health : MonoBehaviour
     public GameObject lifeEmberSpawn;
     GameObject player;
     PlayerEquipment equipment;
-
+    public Text YouLoseText;
+    float deathTimer;
+    bool playerDead;
     void Start()
     {
+        playerDead = false;
+        deathTimer = 5;
         player = GameObject.FindGameObjectWithTag("Player");
         equipment = player.GetComponent<PlayerEquipment>();
         if (this.tag == "Player")
@@ -33,6 +37,19 @@ public class Health : MonoBehaviour
 
 
     }
+
+    void Update()
+    {
+        if (playerDead)
+        {
+            deathTimer -= Time.deltaTime;
+            Die();
+        }
+
+
+
+
+    }
     public void GainHealth(float Amount)
     {
         if (equipment.paused == false)
@@ -45,7 +62,7 @@ public class Health : MonoBehaviour
             {
                 healthPercent = currentHP / maxHP;
                 healthBar.transform.localScale = new Vector3(1, healthPercent, 1);
-            } 
+            }
         }
     }
 
@@ -84,8 +101,15 @@ public class Health : MonoBehaviour
         }
         else
         {
+            playerDead = true;
+            YouLoseText.text = "You Lose!";
+            equipment.paused = true;
 #if UNITY_STANDALONE
-            Application.Quit();
+            if (deathTimer < 0)
+            {
+                YouLoseText.text = " ";
+                Application.Quit();
+            }
 #elif UNITY_EDITOR
                         UnityEditor.EditorApplication.isPlaying = false;
 #endif
