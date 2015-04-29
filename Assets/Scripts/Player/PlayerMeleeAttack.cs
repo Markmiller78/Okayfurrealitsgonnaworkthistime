@@ -26,8 +26,6 @@ public class PlayerMeleeAttack : MonoBehaviour
     {
         if (heroEqp.paused == false)
         {
-
-
             if (attacking)
             {
                 hasRotated += 90.0f * Time.deltaTime * speed;
