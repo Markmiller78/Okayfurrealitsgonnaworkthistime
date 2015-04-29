@@ -20,17 +20,19 @@ public class AIWraith : MonoBehaviour
     public float moveSpeed;
     public float turnSpeed;
     bool attacking;
-    public bool isInfected = false;
-    public bool isReinforced = false;
     float wayPointTimer, timer;
 
     float AttackTimer;
     bool AttackCD;
 
+    float snaredSpeed;
+    float SnareTimer;
+    bool isSnared;
 
     // Use this for initialization
     void Start()
     {
+        isSnared = false;
         player = GameObject.FindGameObjectWithTag("Player");
         controller = GetComponent<CharacterController>();
         Random.seed = 8675309;
@@ -43,6 +45,8 @@ public class AIWraith : MonoBehaviour
         SouthDoorY = GameObject.FindGameObjectWithTag("SouthDoor").transform.position.y;
         EastDoorX = GameObject.FindGameObjectWithTag("EastDoor").transform.position.x;
         WestDoorX = GameObject.FindGameObjectWithTag("WestDoor").transform.position.x;
+        NorthDoorY = GameObject.FindGameObjectWithTag("NorthDoor").transform.position.x;
+
 
     }
 
@@ -81,7 +85,18 @@ public class AIWraith : MonoBehaviour
             else
                 Attack();
 
-            Turn(); 
+            Turn();
+
+            if (isSnared)
+            {
+                SnareTimer -= Time.deltaTime;
+
+                if (SnareTimer < 0)
+                {
+                    Unsnare();
+                    isSnared = false;
+                }
+            }
         }
     }
 
@@ -166,25 +181,15 @@ public class AIWraith : MonoBehaviour
     {
         moveSpeed = moveSpeed * 2;
     }
-    void Reinforce()
+    void Snare()
     {
-        if (!isReinforced)
-        {
-            
-            moveSpeed *= 1.5f;
-            isReinforced = true;
-        }
-
+        isSnared = true;
+        SnareTimer = 2;
+        snaredSpeed = moveSpeed;
+        moveSpeed = 0;
     }
-
-    void UnReinforce()
+    void Unsnare()
     {
-        if (isReinforced)
-        {
-            moveSpeed /= 1.5f;
-            isReinforced=false
-        }
-
+        moveSpeed = snaredSpeed;
     }
-
 }
