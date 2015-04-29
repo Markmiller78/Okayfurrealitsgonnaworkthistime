@@ -98,6 +98,7 @@ public class RoomGeneration : MonoBehaviour
     {
         bool skip = false;
         bool hasSkipped = false;
+
         // Spawn north wall and possibly door
         for (int i = 0; i < finalRoomInfoArray[currentRoom].width; i++)
         {
