@@ -28,126 +28,164 @@ public class PlayerSpellCasting : MonoBehaviour
     public GameObject windBolt;
     public GameObject lifeBolt;
 
+    public GameObject lightMine;
+    public GameObject fireMine;
+    public GameObject frostMine;
+    public GameObject windMine;
+    public GameObject lifeMine;
+
     PlayerEquipment heroEquipment;
     PlayerCooldowns heroCooldowns;
     PlayerLight heroLight;
+    public HUDCooldowns UICD;
 
     void Start()
     {
         heroEquipment = gameObject.GetComponent<PlayerEquipment>();
         heroCooldowns = gameObject.GetComponent<PlayerCooldowns>();
         heroLight = gameObject.GetComponent<PlayerLight>();
+        UICD = GameObject.Find("Spell").GetComponent<HUDCooldowns>();
     }
 
     void CastSpell()
     {
-        //If the spell cast is not on cooldown
-        if (!heroCooldowns.spellCooling && heroLight.currentLight >= heroLight.minLight)
+        if (heroEquipment.paused == false)
         {
-            Camera.main.SendMessage("ScreenShake");
-            heroLight.LoseLight(5);
-            heroCooldowns.spellCooling = true;
-            //If the orb of light is equipped, fire the orb of light ability
-            if (heroEquipment.equippedAccessory == accessory.OrbOfLight)
+            //If the spell cast is not on cooldown
+            if (!heroCooldowns.spellCooling && heroLight.currentLight >= heroLight.minLight)
             {
-                if (heroEquipment.equippedEmber == ember.None)
+                Camera.main.SendMessage("ScreenShake");
+                heroLight.LoseLight(5);
+                heroCooldowns.spellCooling = true;
+                UICD.CooldownTrigger(CooldownID.Spell);
+                //If the orb of light is equipped, fire the orb of light ability
+                if (heroEquipment.equippedAccessory == accessory.OrbOfLight)
                 {
-                    Instantiate(lightOrb, transform.position, transform.rotation);
-                }
-                else if (heroEquipment.equippedEmber == ember.Fire)
-                {
-                    Instantiate(fireOrb, transform.position, transform.rotation);
-                }
-                else if (heroEquipment.equippedEmber == ember.Wind)
-                {
-                    Instantiate(windOrb, transform.position, transform.rotation);
+                    if (heroEquipment.equippedEmber == ember.None)
+                    {
+                        Instantiate(lightOrb, transform.position, transform.rotation);
+                    }
+                    else if (heroEquipment.equippedEmber == ember.Fire)
+                    {
+                        Instantiate(fireOrb, transform.position, transform.rotation);
+                    }
+                    else if (heroEquipment.equippedEmber == ember.Wind)
+                    {
+                        Instantiate(windOrb, transform.position, transform.rotation);
 
-                }
-                else if (heroEquipment.equippedEmber == ember.Ice)
-                {
-                    Instantiate(frostOrb, transform.position, transform.rotation);
+                    }
+                    else if (heroEquipment.equippedEmber == ember.Ice)
+                    {
+                        Instantiate(frostOrb, transform.position, transform.rotation);
 
-                }
-                else if (heroEquipment.equippedEmber == ember.Life)
-                {
-                    Instantiate(lifeOrb, transform.position, transform.rotation);
+                    }
+                    else if (heroEquipment.equippedEmber == ember.Life)
+                    {
+                        Instantiate(lifeOrb, transform.position, transform.rotation);
 
+                    }
                 }
-            }
-            else if (heroEquipment.equippedAccessory == accessory.Singularity)
-            {
-                if (heroEquipment.equippedEmber == ember.None)
+                else if (heroEquipment.equippedAccessory == accessory.Singularity)
                 {
-                    Instantiate(lightSing, transform.position, transform.rotation);
-                }
-                else if (heroEquipment.equippedEmber == ember.Fire)
-                {
-                    Instantiate(fireSing, transform.position, transform.rotation);
-                }
-                else if (heroEquipment.equippedEmber == ember.Wind)
-                {
-                    Instantiate(windSing, transform.position, transform.rotation);
+                    if (heroEquipment.equippedEmber == ember.None)
+                    {
+                        Instantiate(lightSing, transform.position, transform.rotation);
+                    }
+                    else if (heroEquipment.equippedEmber == ember.Fire)
+                    {
+                        Instantiate(fireSing, transform.position, transform.rotation);
+                    }
+                    else if (heroEquipment.equippedEmber == ember.Wind)
+                    {
+                        Instantiate(windSing, transform.position, transform.rotation);
 
+                    }
+                    else if (heroEquipment.equippedEmber == ember.Ice)
+                    {
+                        Instantiate(frostSing, transform.position, transform.rotation);
+                    }
+                    else if (heroEquipment.equippedEmber == ember.Life)
+                    {
+                        Instantiate(lifeSing, transform.position, transform.rotation);
+                    }
                 }
-                else if (heroEquipment.equippedEmber == ember.Ice)
+                else if (heroEquipment.equippedAccessory == accessory.BlastOfLight)
                 {
-                    Instantiate(frostSing, transform.position, transform.rotation);
-                }
-                else if (heroEquipment.equippedEmber == ember.Life)
-                {
-                    Instantiate(lifeSing, transform.position, transform.rotation);
-                }
-            }
-            else if (heroEquipment.equippedAccessory == accessory.BlastOfLight)
-            {
-                if (heroEquipment.equippedEmber == ember.None)
-                {
-                    Instantiate(lightBlast, transform.position, transform.rotation);
-                }
-                else if (heroEquipment.equippedEmber == ember.Fire)
-                {
-                    Instantiate(fireBlast, transform.position, transform.rotation);
-                }
-                else if (heroEquipment.equippedEmber == ember.Wind)
-                {
-                    Instantiate(windBlast, transform.position, transform.rotation);
+                    if (heroEquipment.equippedEmber == ember.None)
+                    {
+                        Instantiate(lightBlast, transform.position, transform.rotation);
+                    }
+                    else if (heroEquipment.equippedEmber == ember.Fire)
+                    {
+                        Instantiate(fireBlast, transform.position, transform.rotation);
+                    }
+                    else if (heroEquipment.equippedEmber == ember.Wind)
+                    {
+                        Instantiate(windBlast, transform.position, transform.rotation);
 
-                }
-                else if (heroEquipment.equippedEmber == ember.Ice)
-                {
-                    Instantiate(frostBlast, transform.position, transform.rotation);
+                    }
+                    else if (heroEquipment.equippedEmber == ember.Ice)
+                    {
+                        Instantiate(frostBlast, transform.position, transform.rotation);
 
+                    }
+                    else if (heroEquipment.equippedEmber == ember.Life)
+                    {
+                        Instantiate(lifeBlast, transform.position, transform.rotation);
+                    }
                 }
-                else if (heroEquipment.equippedEmber == ember.Life)
+                else if (heroEquipment.equippedAccessory == accessory.BoltOfLight)
                 {
-                    Instantiate(lifeBlast, transform.position, transform.rotation);
-                }
-            }
-            else if (heroEquipment.equippedAccessory == accessory.BoltOfLight)
-            {
-                if (heroEquipment.equippedEmber == ember.None)
-                {
-                    Instantiate(lightBolt, transform.position, transform.rotation);
-                }
-                else if (heroEquipment.equippedEmber == ember.Fire)
-                {
-                    Instantiate(fireBolt, transform.position, transform.rotation);
-                }
-                else if (heroEquipment.equippedEmber == ember.Wind)
-                {
-                    Instantiate(windBolt, transform.position, transform.rotation);
+                    if (heroEquipment.equippedEmber == ember.None)
+                    {
+                        Instantiate(lightBolt, transform.position, transform.rotation);
+                    }
+                    else if (heroEquipment.equippedEmber == ember.Fire)
+                    {
+                        Instantiate(fireBolt, transform.position, transform.rotation);
+                    }
+                    else if (heroEquipment.equippedEmber == ember.Wind)
+                    {
+                        Instantiate(windBolt, transform.position, transform.rotation);
 
-                }
-                else if (heroEquipment.equippedEmber == ember.Ice)
-                {
-                    Instantiate(frostBolt, transform.position, transform.rotation);
+                    }
+                    else if (heroEquipment.equippedEmber == ember.Ice)
+                    {
+                        Instantiate(frostBolt, transform.position, transform.rotation);
 
-                }
-                else if (heroEquipment.equippedEmber == ember.Life)
-                {
-                    Instantiate(lifeBolt, transform.position, transform.rotation);
+                    }
+                    else if (heroEquipment.equippedEmber == ember.Life)
+                    {
+                        Instantiate(lifeBolt, transform.position, transform.rotation);
 
+                    }
                 }
+                else if (heroEquipment.equippedAccessory == accessory.LightMine)
+                {
+                    if (heroEquipment.equippedEmber == ember.None)
+                    {
+                        Instantiate(lightMine, transform.position, transform.rotation);
+                    }
+                    else if (heroEquipment.equippedEmber == ember.Fire)
+                    {
+                        Instantiate(fireMine, transform.position, transform.rotation);
+                    }
+                    else if (heroEquipment.equippedEmber == ember.Wind)
+                    {
+                        Instantiate(windMine, transform.position, transform.rotation);
+
+                    }
+                    else if (heroEquipment.equippedEmber == ember.Ice)
+                    {
+                        Instantiate(frostMine, transform.position, transform.rotation);
+
+                    }
+                    else if (heroEquipment.equippedEmber == ember.Life)
+                    {
+                        Instantiate(lifeMine, transform.position, transform.rotation);
+
+                    }
+                } 
             }
         }
 

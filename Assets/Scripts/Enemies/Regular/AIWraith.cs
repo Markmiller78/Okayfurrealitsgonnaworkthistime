@@ -8,6 +8,7 @@ public class AIWraith : MonoBehaviour
 
     //Need this for knockback maybe? remove if wraith doesnt knock back
     PlayerMovement playMove;
+    PlayerEquipment heroEquipment;
 
     Health playerHealth;
     CharacterController controller;
@@ -24,6 +25,7 @@ public class AIWraith : MonoBehaviour
     float AttackTimer;
     bool AttackCD;
 
+
     // Use this for initialization
     void Start()
     {
@@ -31,6 +33,7 @@ public class AIWraith : MonoBehaviour
         controller = GetComponent<CharacterController>();
         Random.seed = 8675309;
         attacking = false;
+        heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
         wayPointTimer = 8;
         timer = .5f;
         AttackTimer = 2;
@@ -39,42 +42,46 @@ public class AIWraith : MonoBehaviour
         SouthDoorY = GameObject.FindGameObjectWithTag("SouthDoor").transform.position.y;
         EastDoorX = GameObject.FindGameObjectWithTag("EastDoor").transform.position.x;
         WestDoorX = GameObject.FindGameObjectWithTag("WestDoor").transform.position.x;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        wayPointTimer -= Time.deltaTime;
-        timer -= Time.deltaTime;
-
-        if (wayPointTimer < 0)
+        if (heroEquipment.paused == false)
         {
-            wayPointTimer = 8;
-            NewWayPoint();
+            wayPointTimer -= Time.deltaTime;
+            timer -= Time.deltaTime;
+
+            if (wayPointTimer < 0)
+            {
+                wayPointTimer = 8;
+                NewWayPoint();
+            }
+
+            if (timer <= 0)
+            {
+                timer = .5f;
+                DistanceToWayPoint = Vector3.Distance(transform.position, WayPoint);
+                //print(DistanceToWayPoint);
+            }
+
+
+            if (DistanceToWayPoint < 1.5f)
+            {
+                attacking = true;
+            }
+            else
+                attacking = false;
+
+
+            if (!attacking)
+                Move();
+            else
+                Attack();
+
+            Turn(); 
         }
-
-        if (timer <= 0)
-        {
-            timer = .5f;
-            DistanceToWayPoint = Vector3.Distance(transform.position, WayPoint);
-            //print(DistanceToWayPoint);
-        }
-
-
-        if (DistanceToWayPoint < 1.5f)
-        {
-            attacking = true;
-        }
-        else
-            attacking = false;
-
-
-        if (!attacking)
-            Move();
-        else
-            Attack();
-
-        Turn();
     }
 
     void Move()
@@ -149,5 +156,14 @@ public class AIWraith : MonoBehaviour
         }
     }
 
+    void Slow()
+    {
+        moveSpeed = moveSpeed * 0.5f;
+    }
+
+    void Unslow()
+    {
+        moveSpeed = moveSpeed * 2;
+    }
 
 }
