@@ -82,5 +82,13 @@ public class Health : MonoBehaviour
             Destroy(gameObject);
             --generator.finalRoomInfoArray[generator.currentRoom].numEnemies;
         }
+        else
+        {
+#if UNITY_STANDALONE
+            Application.Quit();
+#elif UNITY_EDITOR
+                        UnityEditor.EditorApplication.isPlaying = false;
+#endif
+        }
     }
 }

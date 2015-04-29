@@ -9,6 +9,7 @@ public class BossAIDethros : MonoBehaviour
     public float spellMinRange;
     public float spellMaxRange;
     public float moveSpeed;
+    public float turnSpeed;
     CharacterController controller;
     Health myHealth;
     PlayerEquipment heroEquipment;
@@ -55,6 +56,7 @@ public class BossAIDethros : MonoBehaviour
                         if (retreatTimer == 0.0f)
                         {
                             MoveTowardPlayer();
+                            Turn();
                             if (distanceToPlayer <= 2f)
                             {
                                 MeleeAttack();
@@ -64,6 +66,7 @@ public class BossAIDethros : MonoBehaviour
                         else
                         {
                             MoveAwayFromPlayer();
+                            Turn();
                         }
 
                         if (myHealth.currentHP < myHealth.maxHP * 2f / 3f)
@@ -72,7 +75,11 @@ public class BossAIDethros : MonoBehaviour
                     break;
                 case state.aggravated:
                     {
-
+#if UNITY_STANDALONE
+                        Application.Quit();
+#elif UNITY_EDITOR
+                        UnityEditor.EditorApplication.isPlaying = false;
+#endif
 
                         if (myHealth.currentHP < myHealth.maxHP / 3f)
                             currState = state.intense;
@@ -109,6 +116,15 @@ public class BossAIDethros : MonoBehaviour
     {
         meleeAttackObject.SetActive(true);
         meleeScript.attacking = true;
+    }
+
+    void Turn()
+    {
+        Vector3 vectorToPlayer = player.transform.position - transform.position;
+        float angle = Mathf.Atan2(vectorToPlayer.y, vectorToPlayer.x) * Mathf.Rad2Deg;
+        angle += 90.0f;
+        Quaternion rot = Quaternion.AngleAxis(angle, Vector3.forward);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rot, Time.deltaTime * turnSpeed);
     }
 
     void SpellAttack()
