@@ -9,42 +9,56 @@ public class PlayerSpellCasting : MonoBehaviour
     public GameObject frostOrb;
     public GameObject windOrb;
     public GameObject lifeOrb;
+    public GameObject deathOrb;
+    public GameObject earthOrb;
 
     public GameObject lightSing;
     public GameObject fireSing;
     public GameObject frostSing;
     public GameObject windSing;
     public GameObject lifeSing;
+    public GameObject deathSing;
+    public GameObject earthSing;
 
     public GameObject lightBlast;
     public GameObject fireBlast;
     public GameObject frostBlast;
     public GameObject windBlast;
     public GameObject lifeBlast;
+    public GameObject deathBlast;
+    public GameObject earthBlast;
 
     public GameObject lightBolt;
     public GameObject fireBolt;
     public GameObject frostBolt;
     public GameObject windBolt;
     public GameObject lifeBolt;
+    public GameObject deathBolt;
+    public GameObject earthBolt;
 
     public GameObject lightMine;
     public GameObject fireMine;
     public GameObject frostMine;
     public GameObject windMine;
     public GameObject lifeMine;
+    public GameObject deathMine;
+    public GameObject earthMine;
 
     public GameObject lightChain;
     public GameObject fireChain;
     public GameObject frostChain;
     public GameObject windChain;
     public GameObject lifeChain;
+    public GameObject deathChain;
+    public GameObject earthChain;
 
     public GameObject lightSnare;
     public GameObject fireSnare;
     public GameObject frostSnare;
     public GameObject windSnare;
     public GameObject lifeSnare;
+    public GameObject deathSnare;
+    public GameObject earthSnare;
 
 
     PlayerEquipment heroEquipment;
@@ -121,6 +135,16 @@ public class PlayerSpellCasting : MonoBehaviour
                     {
                         Instantiate(lifeSing, transform.position, transform.rotation);
                     }
+                    else if (heroEquipment.equippedEmber == ember.Death)
+                    {
+                        Instantiate(deathSnare, transform.position, transform.rotation);
+
+                    }
+                    else if (heroEquipment.equippedEmber == ember.Earth)
+                    {
+                        Instantiate(earthSnare, transform.position, transform.rotation);
+
+                    }
                 }
                 else if (heroEquipment.equippedAccessory == accessory.BlastOfLight)
                 {
@@ -146,6 +170,16 @@ public class PlayerSpellCasting : MonoBehaviour
                     {
                         Instantiate(lifeBlast, transform.position, transform.rotation);
                     }
+                    else if (heroEquipment.equippedEmber == ember.Death)
+                    {
+                        Instantiate(deathBlast, transform.position, transform.rotation);
+
+                    }
+                    else if (heroEquipment.equippedEmber == ember.Earth)
+                    {
+                        Instantiate(earthBlast, transform.position, transform.rotation);
+
+                    }
                 }
                 else if (heroEquipment.equippedAccessory == accessory.BoltOfLight)
                 {
@@ -170,6 +204,16 @@ public class PlayerSpellCasting : MonoBehaviour
                     else if (heroEquipment.equippedEmber == ember.Life)
                     {
                         Instantiate(lifeBolt, transform.position, transform.rotation);
+
+                    }
+                    else if (heroEquipment.equippedEmber == ember.Death)
+                    {
+                        Instantiate(deathBolt, transform.position, transform.rotation);
+
+                    }
+                    else if (heroEquipment.equippedEmber == ember.Earth)
+                    {
+                        Instantiate(earthBolt, transform.position, transform.rotation);
 
                     }
                 }
@@ -198,6 +242,17 @@ public class PlayerSpellCasting : MonoBehaviour
                         Instantiate(lifeMine, transform.position, transform.rotation);
 
                     }
+                    else if (heroEquipment.equippedEmber == ember.Death)
+                    {
+                        Instantiate(deathMine, transform.position, transform.rotation);
+
+                    }
+                    else if (heroEquipment.equippedEmber == ember.Earth)
+                    {
+                        Instantiate(earthMine, transform.position, transform.rotation);
+
+                    }
+
                 }
 
                 else if (heroEquipment.equippedAccessory == accessory.Snare)
@@ -221,6 +276,16 @@ public class PlayerSpellCasting : MonoBehaviour
                     else if (heroEquipment.equippedEmber == ember.Life)
                     {
                         Instantiate(lifeSnare, transform.position, transform.rotation);
+                    }
+                    else if (heroEquipment.equippedEmber == ember.Death)
+                    {
+                        Instantiate(deathSnare, transform.position, transform.rotation);
+
+                    }
+                    else if (heroEquipment.equippedEmber == ember.Earth)
+                    {
+                        Instantiate(earthSnare, transform.position, transform.rotation);
+
                     }
                 }
                 else if (heroEquipment.equippedAccessory == accessory.ChainLightning)
@@ -246,6 +311,16 @@ public class PlayerSpellCasting : MonoBehaviour
                     else if (heroEquipment.equippedEmber == ember.Life)
                     {
                         Instantiate(lifeChain, transform.position, transform.rotation);
+
+                    }
+                    else if (heroEquipment.equippedEmber == ember.Death)
+                    {
+                        Instantiate(deathChain, transform.position, transform.rotation);
+
+                    }
+                    else if (heroEquipment.equippedEmber == ember.Earth)
+                    {
+                        Instantiate(earthChain, transform.position, transform.rotation);
 
                     }
                 }
