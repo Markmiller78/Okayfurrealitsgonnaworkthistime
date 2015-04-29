@@ -20,12 +20,8 @@ public class AISkeletonArcher : MonoBehaviour
     bool hasAttacked = false;
     CharacterController controller;
 
-    float snaredSpeed;
-    float SnareTimer;
-    bool isSnared;
     void Start()
     {
-        isSnared = false;
         heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
         player = GameObject.FindGameObjectWithTag("Player");
         attackCooldown = attackCooldownMax;
@@ -54,16 +50,6 @@ public class AISkeletonArcher : MonoBehaviour
             {
                 Attack();
                 hasAttacked = true;
-            }
-            if (isSnared)
-            {
-                SnareTimer -= Time.deltaTime;
-
-                if (SnareTimer < 0)
-                {
-                    Unsnare();
-                    isSnared = false;
-                }
             }
         }
     }
@@ -145,15 +131,8 @@ public class AISkeletonArcher : MonoBehaviour
     {
         moveSpeed = moveSpeed * 2;
     }
-    void Snare()
+    void GetInfected()
     {
-        isSnared = true;
-        SnareTimer = 2;
-        snaredSpeed = moveSpeed;
-        moveSpeed = 0;
-    }
-    void Unsnare()
-    {
-        moveSpeed = snaredSpeed;
+        isInfected = true;
     }
 }

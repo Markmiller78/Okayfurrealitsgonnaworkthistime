@@ -10,6 +10,7 @@ public class AICommander : MonoBehaviour
     public GameObject[] list;
     public bool isReinforcing = false;
     public bool isAttacking = false;
+    public bool isInfected = false;
     CharacterController controller;
     public float atkdmg;
     public float atkrange;
@@ -186,5 +187,8 @@ public class AICommander : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
     }
-
+    void GetInfected()
+    {
+        isInfected = true;
+    }
 }
