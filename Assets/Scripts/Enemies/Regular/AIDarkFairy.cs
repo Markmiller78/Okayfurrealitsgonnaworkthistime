@@ -14,7 +14,8 @@ public class AIDarkFairy : MonoBehaviour {
 	public float atkcooldown;
 	public float atkcooldownref;
 	public float stealrange = 0.2f;
-	public float movementspeed;
+    PlayerEquipment heroEquipment;
+    public float movementspeed;
 	public float[] distance;
 	public bool isReinforced=false;
 	public float dist;
@@ -22,9 +23,11 @@ public class AIDarkFairy : MonoBehaviour {
 	public Vector3 vectoplayer;
 	public int size;
 	// Use this for initialization
+
 	void Start () {
 		player = GameObject.FindGameObjectWithTag ("Player");
-		GameObject[] temp = GameObject.FindGameObjectsWithTag ("LightDrop");
+        heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
+        GameObject[] temp = GameObject.FindGameObjectsWithTag("LightDrop");
 
 		for (int i = 0; i < temp.Length; i++) {
 			list.Add(temp[i]);
@@ -35,32 +38,41 @@ public class AIDarkFairy : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
-		SpellCast ();
-		if (currentlight == null) {
-			FaceTarget(player);
-			movementspeed=2.0f;
-			RunAway ();
-			if (list.Count > 0) {
-				float tempdist = 10000000.0f;
-				foreach (GameObject lightdrop in list) {
-					if ((transform.position - lightdrop.transform.position).magnitude < tempdist) {
-						tempdist = (transform.position - lightdrop.transform.position).magnitude;
-						currentlight = lightdrop;
-				 
-					}
-				
-			
-				}
-			}
-		} else {
-			movementspeed=3.0f;
-			FaceTarget(currentlight);
-			MoveTowardsLight (currentlight);
-			StealLightDrop();
-		}
-		 
-	
+
+        if (heroEquipment.paused == false)
+        {
+            SpellCast();
+            if (currentlight == null)
+            {
+                FaceTarget(player);
+                movementspeed = 2.0f;
+                RunAway();
+                if (list.Count > 0)
+                {
+                    float tempdist = 10000000.0f;
+                    foreach (GameObject lightdrop in list)
+                    {
+                        if ((transform.position - lightdrop.transform.position).magnitude < tempdist)
+                        {
+                            tempdist = (transform.position - lightdrop.transform.position).magnitude;
+                            currentlight = lightdrop;
+
+                        }
+
+
+                    }
+                }
+            }
+            else
+            {
+                movementspeed = 3.0f;
+                FaceTarget(currentlight);
+                MoveTowardsLight(currentlight);
+                StealLightDrop();
+            }
+
+            
+        }
 	}
 
 	void MoveTowardsLight(GameObject lightdrop )
@@ -163,5 +175,6 @@ controller.Move(tempdir.normalized * Time.deltaTime *- movementspeed);
 	{
 		player = GameObject.FindGameObjectWithTag("Player");
 	}
+
 
 }

@@ -18,6 +18,7 @@ public class AIShadowSpawn : MonoBehaviour
     public AudioClip SapLight;
     public AudioClip GetScary;
     bool EnragedSoundPlaying;
+    PlayerEquipment heroEquipment;
 
     Vector2 Moveto;
     Vector3 WayPoint;
@@ -42,10 +43,10 @@ public class AIShadowSpawn : MonoBehaviour
     GameObject SecondaryThreat;
     public enum State { Idle = 0, Evade, SuperEvade, Enrage }
     State CurrentState = State.Idle;
-
     void Start()
     {
         EnragedSoundPlaying = false;
+        heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
         Playsounds = gameObject.GetComponent<AudioSource>();
         Random.seed = 42;
         player = GameObject.FindGameObjectWithTag("Player");
@@ -65,140 +66,142 @@ public class AIShadowSpawn : MonoBehaviour
         DistancetoLight = 100;
         DistancetoPlayer = 100;
         AnimTimer = 1;
-
     }
 
     // Update is called once per frame
     void Update()
     {
-        //WorkPlease.SetInteger("AnimationNum", 0);
-        timer -= Time.deltaTime;
-        AnimTimer -= Time.deltaTime;
-        DistancetoPlayer = DistancetoLight = 100;
-        //calculate distance to player.
-        if (timer < 0)
+        if (heroEquipment.paused == false)
         {
-            DistancetoPlayer = Vector3.Distance(transform.position, player.transform.position);
-            timer = 1;
+            //WorkPlease.SetInteger("AnimationNum", 0);
+            timer -= Time.deltaTime;
+            AnimTimer -= Time.deltaTime;
+            DistancetoPlayer = DistancetoLight = 100;
+            //calculate distance to player.
+            if (timer < 0)
+            {
+                DistancetoPlayer = Vector3.Distance(transform.position, player.transform.position);
+                timer = 1;
+                //print(DistancetoPlayer);
+
+                timerCount += 1;
+                stuckCounter--;
+            }
+
+            //"Animated" Movement
+            if (newWayPoint)
+            {
+                speed = maxSpeed;
+                newWayPoint = false;
+            }
+            if (speed > 0)
+                speed -= 2 * Time.deltaTime;
+
+            //Locate Primary and 2ndary Threat
+            //PrimaryThreat = findNearestWithTag(transform.position, "Player");
+            //Locate Nearest Light Pickup
+            NearestLightPickup = findNearestWithTag(transform.position, "LightDrop");
+            if (NearestLightPickup != null)
+                DistancetoLight = Vector3.Distance(transform.position, NearestLightPickup.transform.position);
+
+
+            //if (DistancetoLight < DistancetoPlayer)
+            //{
+            //    PrimaryThreat = NearestLightPickup;
+            //    DistancetoPrimary = DistancetoLight;
+            //}
+            //else
+            //{
+            //    PrimaryThreat = player;
+            //    DistancetoPrimary = DistancetoPlayer;
+            //}
             //print(DistancetoPlayer);
+            //Determine Which behavior to run
+            if (playerLight.currentLight < 10)
+            {
+                CurrentState = State.Enrage;
+            }
+            else if (DistancetoPlayer > 7)
+            {
+                CurrentState = State.Idle;
+            }
+            else if (DistancetoPlayer < 7 && DistancetoPlayer > 3)
+            {
+                CurrentState = State.Evade;
+            }
+            else if (DistancetoPlayer < 3)
+            {
+                CurrentState = State.SuperEvade;
+            }
 
-            timerCount += 1;
-            stuckCounter--;
+            if (playerLight.currentLight > 10 && EnragedSoundPlaying == true)
+            {
+                EnragedSoundPlaying = false;
+                Playsounds.Stop();
+            }
+            //print(CurrentState);
+            //Call the Current behavior
+            switch (CurrentState)
+            {
+                case State.Idle:
+                    {
+                        EnragedSoundPlaying = false;
+                        Idle();
+                        break;
+                    }
+                case State.Evade:
+                    {
+                        EnragedSoundPlaying = false;
+                        Evade();
+                        break;
+                    }
+                case State.SuperEvade:
+                    {
+                        EnragedSoundPlaying = false;
+                        SuperEvade();
+                        break;
+                    }
+                case State.Enrage:
+                    {
+                        Enrage();
+                        break;
+                    }
+            }
+
+            //Change Animations
+
+            if (AnimTimer < 0)
+            {
+                if (State.Enrage == CurrentState)
+                    ghastAnimator.SetInteger("AnimationNum", 2);
+                else
+                    ghastAnimator.SetInteger("AnimationNum", 0);
+
+                //print("did stuff");
+            }
+
+
+
+            Moveto.Normalize();
+            if (Physics.Raycast(transform.position, Moveto, .7f) && CurrentState != State.Enrage)
+            {
+                if (Moveto.x > 0)
+                    Moveto.x = 1;
+                else
+                    Moveto.x = -1;
+                if (Moveto.y > 0)
+                    Moveto.y = 1;
+                else
+                    Moveto.y = -1;
+                //print(Moveto);
+            }
+            // speed = 2;
+            Moveto *= speed * Time.deltaTime;
+
+            ConsumeLight();
+            if (speed > 1)
+                controller.Move(Moveto); 
         }
-
-        //"Animated" Movement
-        if (newWayPoint)
-        {
-            speed = maxSpeed;
-            newWayPoint = false;
-        }
-        if (speed > 0)
-            speed -= 2 * Time.deltaTime;
-
-        //Locate Primary and 2ndary Threat
-        //PrimaryThreat = findNearestWithTag(transform.position, "Player");
-        //Locate Nearest Light Pickup
-        NearestLightPickup = findNearestWithTag(transform.position, "LightDrop");
-        if (NearestLightPickup != null)
-            DistancetoLight = Vector3.Distance(transform.position, NearestLightPickup.transform.position);
-
-
-        //if (DistancetoLight < DistancetoPlayer)
-        //{
-        //    PrimaryThreat = NearestLightPickup;
-        //    DistancetoPrimary = DistancetoLight;
-        //}
-        //else
-        //{
-        //    PrimaryThreat = player;
-        //    DistancetoPrimary = DistancetoPlayer;
-        //}
-        //print(DistancetoPlayer);
-        //Determine Which behavior to run
-        if (playerLight.currentLight < 10)
-        {
-            CurrentState = State.Enrage;
-        }
-        else if (DistancetoPlayer > 7)
-        {
-            CurrentState = State.Idle;
-        }
-        else if (DistancetoPlayer < 7 && DistancetoPlayer > 3)
-        {
-            CurrentState = State.Evade;
-        }
-        else if (DistancetoPlayer < 3)
-        {
-            CurrentState = State.SuperEvade;
-        }
-
-        if(playerLight.currentLight > 10 && EnragedSoundPlaying == true)
-        {
-            EnragedSoundPlaying = false;
-            Playsounds.Stop();
-        }
-        //print(CurrentState);
-        //Call the Current behavior
-        switch (CurrentState)
-        {
-            case State.Idle:
-                {
-                    EnragedSoundPlaying = false;
-                    Idle();
-                    break;
-                }
-            case State.Evade:
-                {
-                    EnragedSoundPlaying = false;
-                    Evade();
-                    break;
-                }
-            case State.SuperEvade:
-                {
-                    EnragedSoundPlaying = false;
-                    SuperEvade();
-                    break;
-                }
-            case State.Enrage:
-                {
-                    Enrage();
-                    break;
-                }
-        }
-
-        //Change Animations
-
-        if (AnimTimer < 0)
-        {
-            if (State.Enrage == CurrentState)
-                ghastAnimator.SetInteger("AnimationNum", 2);
-            else
-                ghastAnimator.SetInteger("AnimationNum", 0);
-
-            //print("did stuff");
-        }
-
-
-
-        Moveto.Normalize();
-        if (Physics.Raycast(transform.position, Moveto, .7f) && CurrentState != State.Enrage)
-        {
-            if (Moveto.x > 0)
-                Moveto.x = 1;
-            else
-                Moveto.x = -1;
-            if (Moveto.y > 0)
-                Moveto.y = 1;
-            else
-                Moveto.y = -1;
-            //print(Moveto);
-        }
-        // speed = 2;
-        Moveto *= speed * Time.deltaTime;
-
-        ConsumeLight();
-        if (speed > 1)
-            controller.Move(Moveto);
     }
 
     void Idle()
@@ -356,5 +359,6 @@ public class AIShadowSpawn : MonoBehaviour
 
         return closest;
     }
+
 
 }

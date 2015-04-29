@@ -13,4 +13,12 @@ public class PlayerEquipment : MonoBehaviour
     public boot equippedBoot;
     public accessory equippedAccessory;
     public ember equippedEmber;
+
+    public bool paused;
+
+    void Start()
+    {
+        paused = false;
+    }
+
 }

@@ -21,7 +21,12 @@ public class SpellLightBolt : MonoBehaviour {
 
     void FixedUpdate()
     {
-        transform.position += transform.forward * speed * Time.deltaTime;
+        if (heroEquipment.paused == false)
+        {
+
+
+            transform.position += transform.forward * speed * Time.deltaTime;
+        }
     }
 
     void OnTriggerEnter(Collider other)

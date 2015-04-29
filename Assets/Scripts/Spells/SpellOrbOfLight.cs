@@ -6,6 +6,7 @@ public class SpellOrbOfLight : MonoBehaviour {
     public float speed;
     public float damage;
     public float range;
+    PlayerEquipment heroEquipment;
 
     float distanceTraveled;
 
@@ -15,17 +16,21 @@ public class SpellOrbOfLight : MonoBehaviour {
 
     void Start()
     {
+        heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
         distanceTraveled = 0;
     }
 
 	void FixedUpdate ()
     {
-        transform.position += transform.up * speed * Time.deltaTime;
-        distanceTraveled += speed * Time.deltaTime;
-
-        if (distanceTraveled >= range)
+        if (heroEquipment.paused == false)
         {
-            Explode();
+            transform.position += transform.up * speed * Time.deltaTime;
+            distanceTraveled += speed * Time.deltaTime;
+
+            if (distanceTraveled >= range)
+            {
+                Explode();
+            }
         }
 	}
 

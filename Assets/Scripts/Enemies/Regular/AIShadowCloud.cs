@@ -3,6 +3,7 @@ using System.Collections;
 
 public class AIShadowCloud : MonoBehaviour
 {
+    PlayerEquipment heroEquipment;
 
     public GameObject target;
     public GameObject player;
@@ -17,6 +18,7 @@ public class AIShadowCloud : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
         target = player;
         heroHP = target.GetComponent<Health>();
         heroLight = target.GetComponentInChildren<Light>();
@@ -25,16 +27,19 @@ public class AIShadowCloud : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (target == null)
+        if (heroEquipment.paused == false)
         {
-            target = GameObject.FindGameObjectWithTag("Player");
+            if (target == null)
+            {
+                target = GameObject.FindGameObjectWithTag("Player");
 
+            }
+
+            Vector2 moveTo = (target.transform.position - transform.position).normalized;
+            moveTo = moveTo * Time.deltaTime * moveSpeed;
+
+            transform.position = new Vector3(moveTo.x + transform.position.x, moveTo.y + transform.position.y, -1.2f); 
         }
-
-        Vector2 moveTo = (target.transform.position - transform.position).normalized;
-        moveTo = moveTo * Time.deltaTime * moveSpeed;
-
-        transform.position = new Vector3(moveTo.x + transform.position.x, moveTo.y + transform.position.y, -1.2f);
 
     }
 
@@ -93,5 +98,7 @@ public class AIShadowCloud : MonoBehaviour
 	{
 		player = GameObject.FindGameObjectWithTag("Player");
 	}
+
+
 
 }

@@ -12,6 +12,8 @@ public class TrailProjectile : MonoBehaviour
 
     public GameObject TrailLightRemains;
 
+    PlayerEquipment eqp;
+
     bool once;
     public bool isWindEmber;
 
@@ -30,29 +32,34 @@ public class TrailProjectile : MonoBehaviour
         }
         particleLight = gameObject.GetComponent<Light>();
         once = true;
+
+        eqp = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
     }
     void Update()
     {
-        timeAlive += Time.deltaTime;
-
-        //Turn off the particles early to make deletion look more smooth
-        if (timeAlive >= (MaxTimeActive - 0.7))
+        if (eqp.paused == false)
         {
-            particles.emissionRate = 0;
+            timeAlive += Time.deltaTime;
 
-            if (once)
+            //Turn off the particles early to make deletion look more smooth
+            if (timeAlive >= (MaxTimeActive - 0.7))
             {
-                Instantiate(TrailLightRemains, transform.position, new Quaternion(0, 0, 0, 0));
-                once = false;
+                particles.emissionRate = 0;
+
+                if (once)
+                {
+                    Instantiate(TrailLightRemains, transform.position, new Quaternion(0, 0, 0, 0));
+                    once = false;
+                }
+
+                particleLight.range -= Time.deltaTime;
             }
 
-            particleLight.range -= Time.deltaTime;
-        }
-
-        if (timeAlive > MaxTimeActive)
-        {
-            //Spawn the trail light remains and destory the gameobject
-            Destroy(gameObject);
+            if (timeAlive > MaxTimeActive)
+            {
+                //Spawn the trail light remains and destory the gameobject
+                Destroy(gameObject);
+            } 
         }
     }
 

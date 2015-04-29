@@ -8,11 +8,13 @@ public class PauseMenu : MonoBehaviour
     int currOption = 0;
     int numOptions = 3;
     public GameObject arrow;
+    PlayerEquipment heroEquipment;
     bool axisChanged = false;
 
     void Start()
     {
         pauseCanvas = GameObject.FindGameObjectWithTag("PauseCanvas");
+        heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
         pauseCanvas.SetActive(false);
         isPaused = false;
     }
@@ -116,11 +118,13 @@ public class PauseMenu : MonoBehaviour
     {
         isPaused = true;
         pauseCanvas.SetActive(true);
+        heroEquipment.paused = true;
     }
 
     void UnPause()
     {
         isPaused = false;
         pauseCanvas.SetActive(false);
+        heroEquipment.paused = false;
     }
 }

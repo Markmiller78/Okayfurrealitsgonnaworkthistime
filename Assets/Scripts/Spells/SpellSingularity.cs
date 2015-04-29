@@ -4,6 +4,7 @@ using System.Collections;
 public class SpellSingularity : MonoBehaviour
 {
 
+    PlayerEquipment heroEquipment;
 
     float lifeTimer;
 
@@ -17,23 +18,27 @@ public class SpellSingularity : MonoBehaviour
     {
         lifeTimer = 0;
         theLight = gameObject.GetComponent<Light>();
+        heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
         //player = GameObject.FindGameObjectWithTag("Player");
     }
     void Update()
     {
-        //transform.position = player.transform.position;
-        transform.Rotate(new Vector3(0, 0, 150f * Time.deltaTime));
-
-        lifeTimer += Time.deltaTime;
-        if (lifeTimer >= 1.5)
+        if (heroEquipment.paused == false)
         {
-            theLight.range -= Time.deltaTime * 2;
-        }
+            //transform.position = player.transform.position;
+            transform.Rotate(new Vector3(0, 0, 150f * Time.deltaTime));
 
-        if (lifeTimer >= 2.5)
-        {
-            Instantiate(theExplosion, transform.position, new Quaternion(0, 0, 0, 0));
-            Destroy(gameObject);
+            lifeTimer += Time.deltaTime;
+            if (lifeTimer >= 1.5)
+            {
+                theLight.range -= Time.deltaTime * 2;
+            }
+
+            if (lifeTimer >= 2.5)
+            {
+                Instantiate(theExplosion, transform.position, new Quaternion(0, 0, 0, 0));
+                Destroy(gameObject);
+            }
         }
     }
 

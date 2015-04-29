@@ -12,25 +12,33 @@ public class PlayerMeleeAttack : MonoBehaviour
     float rotationDelta = 0.0f;
     public float speed = 3.0f;
 
+    PlayerEquipment heroEqp;
+
     void Start()
     {
         player = transform.parent.gameObject;
         playerStats = player.GetComponent<PlayerStats>();
         rotationDelta = player.transform.rotation.z;
+        heroEqp = player.GetComponent<PlayerEquipment>();
     }
 
     void Update()
     {
-        if (attacking)
+        if (heroEqp.paused == false)
         {
-            hasRotated += 90.0f * Time.deltaTime * speed;
-            transform.Rotate(Vector3.forward, 90.0f * Time.deltaTime * speed - rotationDelta);
-            rotationDelta = player.transform.rotation.z - rotationDelta;
-            if (hasRotated >= toRotate)
+
+
+            if (attacking)
             {
-                hasRotated = 0.0f;
-                attacking = false;
-                transform.rotation = player.transform.rotation;
+                hasRotated += 90.0f * Time.deltaTime * speed;
+                transform.Rotate(Vector3.forward, 90.0f * Time.deltaTime * speed - rotationDelta);
+                rotationDelta = player.transform.rotation.z - rotationDelta;
+                if (hasRotated >= toRotate)
+                {
+                    hasRotated = 0.0f;
+                    attacking = false;
+                    transform.rotation = player.transform.rotation;
+                }
             }
         }
     }

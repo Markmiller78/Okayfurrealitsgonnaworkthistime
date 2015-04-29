@@ -7,23 +7,38 @@ public class SpellLightMine : MonoBehaviour {
 
     bool active;
     float timer;
+    float betterTimer;
+    PlayerEquipment heroEquipment;
+
+
     void Start()
     {
         active = false;
         timer = 0;
+        betterTimer = 0;
+        heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
+
     }
 
     void Update()
     {
-        if (active)
+        if (heroEquipment.paused == false)
         {
-            timer += Time.deltaTime;
-            if (timer >= 0.5f)
+            betterTimer += Time.deltaTime;
+            if (betterTimer >= 6.5f)
             {
-                Explode();
+                active = true;
             }
+            if (active)
+            {
+                timer += Time.deltaTime;
+                if (timer >= 0.5f)
+                {
+                    Explode();
+                }
+            }
+            
         }
-
     }
 
     void OnTriggerEnter(Collider other)
@@ -39,4 +54,6 @@ public class SpellLightMine : MonoBehaviour {
         Instantiate(explosion, transform.position, transform.rotation);
         Destroy(gameObject);
     }
+
+
 }
