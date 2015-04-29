@@ -62,7 +62,7 @@ public class AIShadowCloud : MonoBehaviour
         }
     }
 
-    void Slow()
+    public void Slow()
     {
         moveSpeed = moveSpeed * 0.5f;
     }

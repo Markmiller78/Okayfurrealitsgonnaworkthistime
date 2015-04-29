@@ -34,6 +34,13 @@ public class PlayerSpellCasting : MonoBehaviour
     public GameObject windMine;
     public GameObject lifeMine;
 
+    public GameObject lightSnare;
+    public GameObject fireSnare;
+    public GameObject frostSnare;
+    public GameObject windSnare;
+    public GameObject lifeSnare;
+
+
     PlayerEquipment heroEquipment;
     PlayerCooldowns heroCooldowns;
     PlayerLight heroLight;
@@ -183,6 +190,32 @@ public class PlayerSpellCasting : MonoBehaviour
                     Instantiate(lifeMine, transform.position, transform.rotation);
 
                 }
+            }
+            else if (heroEquipment.equippedAccessory == accessory.Snare)
+            {
+                if (heroEquipment.equippedEmber == ember.None)
+                {
+                    Instantiate(lightSnare, transform.position, transform.rotation);
+                }
+                else if (heroEquipment.equippedEmber == ember.Fire)
+                {
+
+                }
+                else if (heroEquipment.equippedEmber == ember.Wind)
+                {
+                    Instantiate(lightSnare, transform.position, transform.rotation);
+                }
+                else if (heroEquipment.equippedEmber == ember.Ice)
+                {
+
+                }
+                else if (heroEquipment.equippedEmber == ember.Life)
+                {
+
+                }
+
+
+
             }
         }
 

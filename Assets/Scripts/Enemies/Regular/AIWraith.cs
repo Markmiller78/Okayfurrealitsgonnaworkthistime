@@ -35,7 +35,6 @@ public class AIWraith : MonoBehaviour
         timer = .5f;
         AttackTimer = 2;
 
-        NorthDoorY = GameObject.FindGameObjectWithTag("NorthDoor").transform.position.y;
         SouthDoorY = GameObject.FindGameObjectWithTag("SouthDoor").transform.position.y;
         EastDoorX = GameObject.FindGameObjectWithTag("EastDoor").transform.position.x;
         WestDoorX = GameObject.FindGameObjectWithTag("WestDoor").transform.position.x;

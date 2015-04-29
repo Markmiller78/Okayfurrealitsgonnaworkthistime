@@ -38,8 +38,6 @@ public class SpellOrbOfLight : MonoBehaviour {
         else if (other.tag == "Enemy")
         {
             other.GetComponent<Health>().LoseHealth(5);
-
-
             Explode();
         }
     }
