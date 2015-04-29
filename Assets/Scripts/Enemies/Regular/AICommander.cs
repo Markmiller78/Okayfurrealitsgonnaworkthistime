@@ -8,6 +8,7 @@ public class AICommander : MonoBehaviour {
 	GameObject player;
 	public GameObject[] list;
 	public bool isReinforcing=false;
+    public bool isAttacking = false;
 	CharacterController controller;
 	public float atkdmg;
 	public float atkrange;
@@ -34,18 +35,37 @@ public class AICommander : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-    void Update()
-    {
-        if (heroEquipment.paused == false)
+    
+	void Update () {
+        if (isAttacking)
         {
-
+            atkcooldown -= Time.deltaTime;
+    if (heroEquipment.paused == false)
+        {
+	vectoplayer = transform.position - player.transform.position;
+		dist = vectoplayer.magnitude;
+		FacePlayer ();
+	 
+			size = list.Length;
+            if (atkcooldown <= 0.0f)
+            {
+                atkcooldown = atkcooldownref;
+                isAttacking = false;
+            }
+        }
+		vectoplayer = transform.position - player.transform.position;
+		dist = vectoplayer.magnitude;
+		FacePlayer ();
+        size = list.Length;
+        if (size == 1)
+            isReinforcing = false; 
             vectoplayer = transform.position - player.transform.position;
             dist = vectoplayer.magnitude;
             FacePlayer();
             if (!isReinforcing)
             {
                 size = list.Length;
-
+ 
                 distance = new float[size];
                 if (size > 1)
                 {
@@ -54,6 +74,41 @@ public class AICommander : MonoBehaviour {
                         distance[i] = (transform.position - list[i].transform.position).magnitude;
                     }
 
+				if (dist < 3.5f) {
+					RunAway ();
+				}
+				else
+					isReinforcing=true;
+			}
+			else{
+				MoveTowardsPlayer();
+				AttackPlayer();
+			}
+		} else
+		
+		{
+        
+			list = GameObject.FindGameObjectsWithTag ("Enemy");
+			if(dist<1.75f)
+				
+			{		foreach (GameObject obj in  list)
+				{
+					obj.SendMessage("UnReinforce", SendMessageOptions.DontRequireReceiver);
+				}
+				isReinforcing=false;
+			}
+			 else
+			{
+             
+                    foreach (GameObject obj in list)
+                    {
+                        obj.SendMessage("Reinforce", SendMessageOptions.DontRequireReceiver);
+                    }
+                
+			}
+		
+		}
+	}
 
                     FacePlayer();
 
@@ -129,9 +184,11 @@ public class AICommander : MonoBehaviour {
 	}
 	void AttackPlayer()
 	{
-		if (dist < atkrange)
+ 
+		if (dist < atkrange&&!isAttacking)
 		{
 			player.GetComponent<Health>().LoseHealth(atkdmg);
+            isAttacking = true;
 		}
 
 
@@ -166,6 +223,5 @@ public class AICommander : MonoBehaviour {
 	{
 		player = GameObject.FindGameObjectWithTag("Player");
 	}
-
 
 }

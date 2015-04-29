@@ -18,19 +18,25 @@ public class AIDarkFairy : MonoBehaviour {
     public float movementspeed;
 	public float[] distance;
 	public bool isReinforced=false;
+    public bool isCasting = false;
 	public float dist;
 	public Vector3 vectotarget;
 	public Vector3 vectoplayer;
+    public Vector3 IdleVec;
 	public int size;
 
     float snaredSpeed;
     float SnareTimer;
     bool isSnared;
+    public float timer;
+    public GameObject darkOrb;
 	// Use this for initialization
 
 	void Start () 
     {
         isSnared = false;
+        IdleVec = new Vector3(1, 1, 0);
+        timer = 0.0f;
 		player = GameObject.FindGameObjectWithTag ("Player");
         heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
         GameObject[] temp = GameObject.FindGameObjectsWithTag("LightDrop");
@@ -44,32 +50,50 @@ public class AIDarkFairy : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
-        if (heroEquipment.paused == false)
+  if (heroEquipment.paused == false)
+        {
+        {
+            atkcooldown -= Time.deltaTime;
+            if (atkcooldown <= 0.0f)
+            {
+                atkcooldown = atkcooldownref;
+                isCasting = false;
+            }
+        }
+        if (!isCasting)
         {
             SpellCast();
-            if (currentlight == null)
-            {
-                FaceTarget(player);
-                movementspeed = 2.0f;
+        }
+	
+		if (currentlight == null) {
+			FaceTarget(player);
+          
+
+			movementspeed=2.0f;
+            if (vectoplayer.magnitude < 3.0f)
                 RunAway();
-                if (list.Count > 0)
-                {
-                    float tempdist = 10000000.0f;
-                    foreach (GameObject lightdrop in list)
-                    {
-                        if ((transform.position - lightdrop.transform.position).magnitude < tempdist)
-                        {
-                            tempdist = (transform.position - lightdrop.transform.position).magnitude;
-                            currentlight = lightdrop;
-
-                        }
-
-
-                    }
-                }
-            }
             else
+                Idle();
+			if (list.Count > 0) {
+				float tempdist = 10000000.0f;
+				foreach (GameObject lightdrop in list) {
+					if ((transform.position - lightdrop.transform.position).magnitude < tempdist) {
+						tempdist = (transform.position - lightdrop.transform.position).magnitude;
+						currentlight = lightdrop;
+				 
+					}
+				
+			
+				}
+			}
+		} else {
+			movementspeed=3.0f;
+			FaceTarget(currentlight);
+			MoveTowardsLight (currentlight);
+			StealLightDrop();
+		}
+		 
+	
             {
                 movementspeed = 3.0f;
                 FaceTarget(currentlight);
@@ -99,7 +123,7 @@ public class AIDarkFairy : MonoBehaviour {
 	void RunAway()
 	{
 		Vector2 tempdir = (player.transform.position - transform.position);
-	 if(tempdir.magnitude<2.5f)
+	
 controller.Move(tempdir.normalized * Time.deltaTime *- movementspeed);
 	}
 
@@ -120,9 +144,39 @@ controller.Move(tempdir.normalized * Time.deltaTime *- movementspeed);
 	{
 		vectoplayer=transform.position-player.transform.position;
 
+        if (!Physics.Raycast(transform.position, vectoplayer.normalized, atkrange))
+        {
+            if (Random.value > 0.5f)
+            {
+                Instantiate(darkOrb, transform.position, transform.rotation);
+                isCasting = true;
+            }
+        }
+        
+
 	
 
 	}
+
+    void Idle()
+    {
+
+      
+        timer -= Time.deltaTime;
+        if (timer <= 0.0f)
+        {
+
+            IdleVec.x = Random.value;
+            if (Random.value > 0.5f)
+                IdleVec.x = -IdleVec.x;
+            IdleVec.y = Random.value;
+            if (Random.value > 0.5f)
+                IdleVec.y = -IdleVec.y;
+            timer = 2.0f;
+        }
+        controller.Move(IdleVec.normalized * Time.deltaTime * movementspeed);
+    
+    }
 	void FaceTarget(GameObject target)
 	{
 		//float tempangle=Vector3.Angle (transform.up,disttoplayer);
