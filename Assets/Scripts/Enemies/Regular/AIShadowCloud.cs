@@ -10,6 +10,7 @@ public class AIShadowCloud : MonoBehaviour
     public float moveSpeed;
     public Texture HazardCookie;
     public float DamagePerSecond;
+    public bool isInfected = false;
 
 
     Health heroHP;
@@ -78,14 +79,18 @@ public class AIShadowCloud : MonoBehaviour
     }
 	void Reinforce()
 	{
-		DamagePerSecond *= 1.2f;
-		moveSpeed *= 1.5f;
+       
+            DamagePerSecond *= 1.2f;
+            moveSpeed *= 1.5f;
+       
 		
 	}
 	void UnReinforce()
 	{
-		DamagePerSecond/= 1.2f;
-	moveSpeed /= 1.5f;
+ 
+            DamagePerSecond /= 1.2f;
+            moveSpeed /= 1.5f;
+       
 		
 	}
 

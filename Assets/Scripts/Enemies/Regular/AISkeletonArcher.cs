@@ -15,6 +15,7 @@ public class AISkeletonArcher : MonoBehaviour
     public float turnSpeed;
     float distanceToPlayer;
 	public bool isReinforced = false;
+    public bool isInfected = false;
     public GameObject projectile;
     bool hasAttacked = false;
     CharacterController controller;
@@ -105,14 +106,19 @@ public class AISkeletonArcher : MonoBehaviour
 		{
 			attackMaxRange *= 1.5f;
 			moveSpeed *= 1.5f;
+            isReinforced = true;
 		}
 		
 	}
 
 	void UnReinforce()
 	{
-		attackMaxRange /= 1.5f;
-		moveSpeed /= 1.5f;
+        if (isReinforced)
+        {
+            attackMaxRange /= 1.5f;
+            moveSpeed /= 1.5f;
+            isReinforced = false;
+        }
 
 	}
 

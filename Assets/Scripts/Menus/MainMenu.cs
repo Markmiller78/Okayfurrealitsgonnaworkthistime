@@ -1,10 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 
 public class MainMenu : MonoBehaviour
 {
+    GameObject player;
     Options theOptions;
-
+    public Text playerhealth;
+    public Text playerlight;
+    public int health;
+    public int light;
     public float[] choices = new float[] { };
     int maxchoices = 4;
 
@@ -34,12 +41,21 @@ public class MainMenu : MonoBehaviour
     public AudioClip changeSound;
     public AudioClip selectSound;
     AudioSource soundSource;
+   
 
     float timer = 0;
 
     // Use this for initialization
     void Start()
     {
+       // Load();
+
+
+ 
+        health = 50; light = 0;
+        Save();
+     //   playerhealth.text = health.ToString();
+   //     playerlight.text = light.ToString();
         soundSource = GetComponent<AudioSource>();
         theOptions = GameObject.Find("TheOptions").GetComponent<Options>();
     }
@@ -657,6 +673,7 @@ public class MainMenu : MonoBehaviour
                 case 0:
                     {
                         //CONTINUE PREVIOUS GAME
+                        LoadStats();
                         Application.LoadLevel("TonyScene");
                         break;
                     }
@@ -806,6 +823,62 @@ public class MainMenu : MonoBehaviour
             }
         }
     }
+
+
+    public void LoadStats()
+    {
+        playerhealth.text = "100";
+
+    
+        if (File.Exists(Application.persistentDataPath + "/playerinfo.dat"))
+        {
+            BinaryFormatter bin = new BinaryFormatter();
+            FileStream file = File.Open(Application.persistentDataPath + "/playerinfo.dat", FileMode.Open);
+            PlayerData data = (PlayerData)bin.Deserialize(file);
+            playerhealth.text = data.health.ToString();
+            playerlight.text = data.light.ToString();
+            file.Close();
+       
+
+        }
+
+    }
+
+    public void LoadOptions()
+    {
+
+        if (File.Exists(Application.persistentDataPath + "/optioninfo.dat"))
+        {
+            BinaryFormatter bin = new BinaryFormatter();
+            FileStream file = File.Open(Application.persistentDataPath + "/optioninfo.dat", FileMode.Open);
+            OptionData data = (OptionData)bin.Deserialize(file);
+            theOptions.sfxVolume = data.sfxVolume;
+            theOptions.musicVolume = data.musicVolume;
+            file.Close();
+
+        }
+    }
+    public void Save()
+    {
+
+        BinaryFormatter bin = new BinaryFormatter();
+        FileStream file = File.Create(Application.persistentDataPath + "/playerinfo.dat");
+        PlayerData data = new PlayerData();
+        data.health =health;
+       data.light =  light;
+        bin.Serialize(file, data);
+        file.Close();
+       
+    }
 }
 
+
+[System.Serializable]
+class PlayerData
+{
+    public int health;
+    public int light;
+
+
+}
 

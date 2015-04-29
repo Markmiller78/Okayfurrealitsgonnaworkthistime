@@ -20,6 +20,8 @@ public class AIWraith : MonoBehaviour
     public float moveSpeed;
     public float turnSpeed;
     bool attacking;
+    public bool isInfected = false;
+    public bool isReinforced = false;
     float wayPointTimer, timer;
 
     float AttackTimer;
@@ -163,6 +165,26 @@ public class AIWraith : MonoBehaviour
     void Unslow()
     {
         moveSpeed = moveSpeed * 2;
+    }
+    void Reinforce()
+    {
+        if (!isReinforced)
+        {
+            
+            moveSpeed *= 1.5f;
+            isReinforced = true;
+        }
+
+    }
+
+    void UnReinforce()
+    {
+        if (isReinforced)
+        {
+            moveSpeed /= 1.5f;
+            isReinforced=false
+        }
+
     }
 
 }

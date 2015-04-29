@@ -19,6 +19,7 @@ public class AIDarkFairy : MonoBehaviour {
 	public float[] distance;
 	public bool isReinforced=false;
     public bool isCasting = false;
+    public bool isInfected = false;
 	public float dist;
 	public Vector3 vectotarget;
 	public Vector3 vectoplayer;
@@ -43,52 +44,60 @@ public class AIDarkFairy : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-  if (heroEquipment.paused == false)
+    void Update()
+    {
+        if (heroEquipment.paused == false)
         {
-        {
-            atkcooldown -= Time.deltaTime;
-            if (atkcooldown <= 0.0f)
             {
-                atkcooldown = atkcooldownref;
-                isCasting = false;
+                atkcooldown -= Time.deltaTime;
+                if (atkcooldown <= 0.0f)
+                {
+                    atkcooldown = atkcooldownref;
+                    isCasting = false;
+                }
             }
-        }
-        if (!isCasting)
-        {
-            SpellCast();
-        }
-	
-		if (currentlight == null) {
-			FaceTarget(player);
-          
+            if (!isCasting)
+            {
+                SpellCast();
+            }
 
-			movementspeed=2.0f;
-            if (vectoplayer.magnitude < 3.0f)
-                RunAway();
+            if (currentlight == null)
+            {
+                FaceTarget(player);
+
+
+                movementspeed = 2.0f;
+                if (vectoplayer.magnitude < 3.0f)
+                    RunAway();
+                else
+                    Idle();
+                if (list.Count > 0)
+                {
+                    float tempdist = 10000000.0f;
+                    foreach (GameObject lightdrop in list)
+                    {
+                        if ((transform.position - lightdrop.transform.position).magnitude < tempdist)
+                        {
+                            tempdist = (transform.position - lightdrop.transform.position).magnitude;
+                            currentlight = lightdrop;
+
+                        }
+
+
+                    }
+                }
+            }
             else
-                Idle();
-			if (list.Count > 0) {
-				float tempdist = 10000000.0f;
-				foreach (GameObject lightdrop in list) {
-					if ((transform.position - lightdrop.transform.position).magnitude < tempdist) {
-						tempdist = (transform.position - lightdrop.transform.position).magnitude;
-						currentlight = lightdrop;
-				 
-					}
-				
-			
-				}
-			}
-		} else {
-			movementspeed=3.0f;
-			FaceTarget(currentlight);
-			MoveTowardsLight (currentlight);
-			StealLightDrop();
-		}
-		 
-	
-	}
+            {
+                movementspeed = 3.0f;
+                FaceTarget(currentlight);
+                MoveTowardsLight(currentlight);
+                StealLightDrop();
+            }
+
+
+        }
+    }
 
 	void MoveTowardsLight(GameObject lightdrop )
 	{
