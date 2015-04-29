@@ -24,6 +24,9 @@ public class PlayerDashing : MonoBehaviour
     public GameObject WindTrail;
     public GameObject IceTrail;
     public GameObject LifeTrail;
+    public GameObject EarthTrail;
+    public GameObject DeathTrail;
+
     public HUDCooldowns UICD;
 
     public GameObject FireCharge;
@@ -31,7 +34,8 @@ public class PlayerDashing : MonoBehaviour
     public GameObject WindCharge;
     public GameObject IceCharge;
     public GameObject LifeCharge;
-
+    public GameObject EarthCharge;
+    public GameObject DeathCharge;
     void Start()
     {
         controller = gameObject.GetComponent<CharacterController>();
@@ -111,10 +115,20 @@ public class PlayerDashing : MonoBehaviour
                             {
                                 Instantiate(WindTrail, transform.position, new Quaternion(0, 0, 0, 0));
                             }
+                            //Earth ember equipped
+                            else if (heroEquipment.equippedEmber == ember.Earth)
+                            {
+                                Instantiate(EarthTrail, transform.position, new Quaternion(0, 0, 0, 0));
+                            }
                             //Life ember equipped
                             else if (heroEquipment.equippedEmber == ember.Life)
                             {
                                 Instantiate(LifeTrail, transform.position, new Quaternion(0, 0, 0, 0));
+                            }
+                            //Death ember equipped
+                            else if (heroEquipment.equippedEmber == ember.Death)
+                            {
+                                Instantiate(DeathTrail, transform.position, new Quaternion(0, 0, 0, 0));
                             }
                             trailBlazerDropTimer = 0.0f;
 
