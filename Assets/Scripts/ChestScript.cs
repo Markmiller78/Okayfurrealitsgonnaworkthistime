@@ -23,7 +23,6 @@ public class ChestScript : MonoBehaviour {
 	{
 		if (displaytooltips)
 		{
-		
 			GUI.Box (new Rect (0, 0, 100, 20), "Press E to open");
 		}
 
@@ -34,8 +33,8 @@ public class ChestScript : MonoBehaviour {
 		Vector3 dist = transform.position - player.transform.position;
 		if (dist.magnitude < 1.0f) {
 			heroLight.LoseLight (5);
-		
-			Instantiate (loot, transform.position, new Quaternion (0, 0, 0, 0));
+            gameObject.GetComponent<GenerateLoot>().Generateloot();
+			//Instantiate (loot, transform.position, new Quaternion (0, 0, 0, 0));
 			Destroy (this.gameObject);
 		}
 

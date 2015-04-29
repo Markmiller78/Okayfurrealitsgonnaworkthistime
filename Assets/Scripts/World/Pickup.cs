@@ -20,6 +20,7 @@ public class Pickup : MonoBehaviour
     public GameObject chargeBootPickup;
     public GameObject decoyBootPickup;
     public GameObject blinkBootPickup;
+    public string theName;
 
     GameObject player;
     PlayerEquipment equipment;
@@ -194,5 +195,11 @@ public class Pickup : MonoBehaviour
             }
             Destroy(gameObject);
         }
+    }
+
+    void SetName(string aName)
+    {
+        print("CHANGENAME");
+        theName = aName;
     }
 }

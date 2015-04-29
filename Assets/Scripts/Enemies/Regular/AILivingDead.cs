@@ -20,8 +20,13 @@ public class AILivingDead : MonoBehaviour
     public float moveSpeed;
     public float turnSpeed;
     float distanceToPlayer;
+    float snaredSpeed;
+    float SnareTimer;
+    bool isSnared;
+
     void Start()
     {
+        isSnared = false;
         moveSpeed = 1;
         player = GameObject.FindGameObjectWithTag("Player");
         playMove = player.GetComponent<PlayerMovement>();
@@ -52,6 +57,16 @@ public class AILivingDead : MonoBehaviour
                 Attack();
                 attacking = true;
             } 
+            if(isSnared)
+            {
+                SnareTimer -= Time.deltaTime;
+
+                if(SnareTimer < 0)
+                {
+                    Unsnare();
+                    isSnared = false;
+                }
+            }
         }
     }
 
@@ -95,6 +110,18 @@ public class AILivingDead : MonoBehaviour
     void Unslow()
     {
         moveSpeed = moveSpeed * 2;
+    }
+
+    void Snare()
+    {
+        isSnared = true;
+        SnareTimer = 2;
+        snaredSpeed = moveSpeed;
+        moveSpeed = 0;
+    }
+    void Unsnare()
+    {
+        moveSpeed = snaredSpeed;
     }
 	void Reinforce()
 	{

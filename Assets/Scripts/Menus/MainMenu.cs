@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+    
 public class MainMenu : MonoBehaviour
 {
-
+    Options theOptions;
 
     public float[] choices = new float[] { };
     int maxchoices = 4;
@@ -41,6 +41,7 @@ public class MainMenu : MonoBehaviour
     void Start()
     {
         soundSource = GetComponent<AudioSource>();
+        theOptions = GameObject.Find("TheOptions").GetComponent<Options>();
     }
 
     // Update is called once per frame
@@ -344,6 +345,9 @@ public class MainMenu : MonoBehaviour
                         //OptionsMenuText.SetActive(false);
                         //CurrMenu = Menu.Main;
                         //currentSelection = 1;
+
+                        Screen.fullScreen = !Screen.fullScreen;
+
                         break;
                     }
                 case 3:
@@ -402,12 +406,22 @@ public class MainMenu : MonoBehaviour
             //Sound Fx Volume up/down
             if ((Input.GetAxis("CLSVertical") > .7f || Input.GetAxis("KBVertical") > 0 || Input.GetAxis("CDPadVertical") > .7f) && AxisChanged == false && currentSelection == 8)
             {
-
+                theOptions.sfxIncrease();
+                soundSource.volume = theOptions.sfxVolume * 0.01f;
+                if (soundSource.isPlaying)
+                    soundSource.Stop();
+                soundSource.clip = selectSound;
+                soundSource.Play();
                 AxisChanged = true;
             }
             if ((Input.GetAxis("CLSVertical") < -0.7f || Input.GetAxis("KBVertical") < 0 || Input.GetAxis("CDPadVertical") < -0.7f) && AxisChanged == false && currentSelection == 8)
             {
-
+                theOptions.sfxDecrease();
+                soundSource.volume = theOptions.sfxVolume * 0.01f;
+                if (soundSource.isPlaying)
+                    soundSource.Stop();
+                soundSource.clip = selectSound;
+                soundSource.Play();
                 AxisChanged = true;
 
             }
@@ -420,12 +434,12 @@ public class MainMenu : MonoBehaviour
             //Music Volume up/down
             if ((Input.GetAxis("CLSVertical") > .7f || Input.GetAxis("KBVertical") > 0 || Input.GetAxis("CDPadVertical") > .7f) && AxisChanged == false && currentSelection == 9)
             {
-
+                theOptions.musicIncrease();
                 AxisChanged = true;
             }
             if ((Input.GetAxis("CLSVertical") < -0.7f || Input.GetAxis("KBVertical") < 0 || Input.GetAxis("CDPadVertical") < -0.7f) && AxisChanged == false && currentSelection == 9)
             {
-
+                theOptions.musicDecrease();
                 AxisChanged = true;
 
             }

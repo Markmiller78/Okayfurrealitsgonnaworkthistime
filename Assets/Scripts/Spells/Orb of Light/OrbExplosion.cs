@@ -9,14 +9,17 @@ public class OrbExplosion : MonoBehaviour
 
     public GameObject debuff;
 
+    GameObject player;
+
     float maxLife;
 
     // Use this for initialization
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
+        heroEquipment = player.GetComponent<PlayerEquipment>();
         timeAlive = 0;
         theLight = gameObject.GetComponent<Light>();
-        heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
         Camera.main.SendMessage("ScreenShake");
         if (heroEquipment.equippedEmber == ember.Ice)
         {
