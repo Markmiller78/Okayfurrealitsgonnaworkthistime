@@ -10,8 +10,10 @@ public class BossAIDethros : MonoBehaviour
     public float spellMaxRange;
     public float moveSpeed;
     CharacterController controller;
-    PlayerEquipment heroEquipment;
+Health myHealth;PlayerEquipment heroEquipment;
     bool paused;
+    enum state { casual, aggravated, intense};
+    state currState = state.casual;
 
     void Start()
     {
@@ -24,11 +26,21 @@ public class BossAIDethros : MonoBehaviour
 
     void Update()
     {
-        if (heroEquipment.paused == false)
+if (heroEquipment.paused == false)
+        {distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);switch (currState)
         {
-            distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
-            MoveTowardPlayer();
-
+            case state.casual:
+                {
+                    
+                }
+                break;
+            case state.aggravated:
+                break;
+            case state.intense:
+                break;
+            default:
+                break;
+        }
             transform.position = new Vector3(transform.position.x, transform.position.y, -1f); 
         }
     }
