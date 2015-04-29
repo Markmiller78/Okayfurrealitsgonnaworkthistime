@@ -11,41 +11,47 @@ public class DebuffFire : MonoBehaviour
     Health targetHealth;
     ParticleSystem particles;
     Light theLight;
+    PlayerEquipment eqp;
+
     void Start()
     {
         timer = 0;
         targetHealth = target.GetComponent<Health>();
         particles = gameObject.GetComponent<ParticleSystem>();
         theLight = gameObject.GetComponent<Light>();
+        eqp = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
+
     }
 
     void Update()
     {
-
-        if (target == null)
+        if (eqp.paused == false)
         {
-            Destroy(gameObject);
-        }
-        else
-        {
-            transform.position = target.transform.position + new Vector3(0, 0, -0.5f);
-            timer += Time.deltaTime;
-
-
-
-            if (timer < 3.0f)
+            if (target == null)
             {
-                targetHealth.LoseHealth(dps * Time.deltaTime);
+                Destroy(gameObject);
             }
             else
             {
-                particles.emissionRate = 0;
-                theLight.range -= Time.deltaTime;
-            }
+                transform.position = target.transform.position + new Vector3(0, 0, -0.5f);
+                timer += Time.deltaTime;
 
-            if (timer > 4.0f)
-            {
-                Destroy(gameObject);
+
+
+                if (timer < 3.0f)
+                {
+                    targetHealth.LoseHealth(dps * Time.deltaTime);
+                }
+                else
+                {
+                    particles.emissionRate = 0;
+                    theLight.range -= Time.deltaTime;
+                }
+
+                if (timer > 4.0f)
+                {
+                    Destroy(gameObject);
+                }
             }
         }
     }

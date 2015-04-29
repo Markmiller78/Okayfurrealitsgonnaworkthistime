@@ -12,21 +12,26 @@ public class DarkOrbOfLight : MonoBehaviour {
 
     public GameObject explosion;
     public GameObject hazard;
-
+    public GameObject eqp;
+    PlayerEquipment heroEquipment;
 
     void Start()
     {
+        heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
         distanceTraveled = 0;
     }
 
     void FixedUpdate()
     {
-        transform.position += transform.up * speed * Time.deltaTime;
-        distanceTraveled += speed * Time.deltaTime;
-
-        if (distanceTraveled >= range)
+        if (heroEquipment.paused == false)
         {
-            Explode();
+            transform.position += transform.up * speed * Time.deltaTime;
+            distanceTraveled += speed * Time.deltaTime;
+
+            if (distanceTraveled >= range)
+            {
+                Explode();
+            }
         }
     }
 

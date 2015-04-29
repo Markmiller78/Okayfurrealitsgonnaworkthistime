@@ -33,14 +33,18 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        knockbackTimer -= Time.deltaTime;
-        transform.position = new Vector3(transform.position.x, transform.position.y, -1f);
-
-        if(knockbackTimer > 0)
+        if (heroEquipment.paused == false)
         {
-            controller.Move(KnockbackVec * 9 * Time.deltaTime);  
+
+
+            knockbackTimer -= Time.deltaTime;
+            transform.position = new Vector3(transform.position.x, transform.position.y, -1f);
+
+            if (knockbackTimer > 0)
+            {
+                controller.Move(KnockbackVec * 9 * Time.deltaTime);
+            }
         }
-        
     }
 
     void CMove()

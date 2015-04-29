@@ -34,12 +34,15 @@ public class SingularityExplosion : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        timeAlive += Time.deltaTime;
-        theLight.range -= Time.deltaTime * 4;
-        if (timeAlive >= maxLife)
+        if (heroEquipment.paused == false)
         {
-            Instantiate(lightRemains, transform.position, transform.rotation); 
-            Destroy(gameObject);
+            timeAlive += Time.deltaTime;
+            theLight.range -= Time.deltaTime * 4;
+            if (timeAlive >= maxLife)
+            {
+                Instantiate(lightRemains, transform.position, transform.rotation);
+                Destroy(gameObject);
+            }
         }
     }
 

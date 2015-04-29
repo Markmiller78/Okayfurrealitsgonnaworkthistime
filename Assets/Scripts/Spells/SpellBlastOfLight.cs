@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SpellBlastOfLight : MonoBehaviour {
+public class SpellBlastOfLight : MonoBehaviour
+{
 
 
     Light theLight;
@@ -34,12 +35,15 @@ public class SpellBlastOfLight : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        timeAlive += Time.deltaTime;
-        theLight.range -= Time.deltaTime * 4;
-        if (timeAlive >= maxLife)
+        if (heroEquipment.paused == false)
         {
-            Instantiate(remains, transform.position, transform.rotation);
-            Destroy(gameObject);
+            timeAlive += Time.deltaTime;
+            theLight.range -= Time.deltaTime * 4;
+            if (timeAlive >= maxLife)
+            {
+                Instantiate(remains, transform.position, transform.rotation);
+                Destroy(gameObject);
+            }
         }
     }
 

@@ -32,11 +32,16 @@ public class OrbExplosion : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timeAlive += Time.deltaTime;
-        theLight.range -= Time.deltaTime * 4;
-        if (timeAlive >= maxLife)
+        if (heroEquipment.paused == false)
         {
-            Destroy(gameObject);
+
+
+            timeAlive += Time.deltaTime;
+            theLight.range -= Time.deltaTime * 4;
+            if (timeAlive >= maxLife)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 

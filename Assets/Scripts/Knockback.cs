@@ -30,30 +30,34 @@ public class Knockback : MonoBehaviour
 
     void Update()
     {
-        if (heroEquipment.equippedAccessory == accessory.BlastOfLight && heroEquipment.equippedEmber == ember.Wind)
+        if (heroEquipment.paused == false)
         {
-            if (once)
-            {
-                knockbackDistance *= 2;
-                once = false;
-            }
-        }
 
-        if (!isGettingKnockedBack)
-        {
-            origin = transform.position;
-            dir = (transform.position - player.transform.position);
-        }
-        else if (isGettingKnockedBack)
-        {
-            timerCurr -= Time.deltaTime;
-            controller.Move(dir * Time.deltaTime * knockbackSpeed);
-
-            if (Vector3.Distance(transform.position, origin) >= knockbackDistance || timerCurr <= 0.0f)
+            if (heroEquipment.equippedAccessory == accessory.BlastOfLight && heroEquipment.equippedEmber == ember.Wind)
             {
-                isGettingKnockedBack = false;
-                timerCurr = timerMax;
+                if (once)
+                {
+                    knockbackDistance *= 2;
+                    once = false;
+                }
             }
+
+            if (!isGettingKnockedBack)
+            {
+                origin = transform.position;
+                dir = (transform.position - player.transform.position);
+            }
+            else if (isGettingKnockedBack)
+            {
+                timerCurr -= Time.deltaTime;
+                controller.Move(dir * Time.deltaTime * knockbackSpeed);
+
+                if (Vector3.Distance(transform.position, origin) >= knockbackDistance || timerCurr <= 0.0f)
+                {
+                    isGettingKnockedBack = false;
+                    timerCurr = timerMax;
+                }
+            } 
         }
     }
 

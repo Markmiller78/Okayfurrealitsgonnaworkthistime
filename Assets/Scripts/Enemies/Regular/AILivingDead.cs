@@ -3,6 +3,8 @@ using System.Collections;
 
 public class AILivingDead : MonoBehaviour
 {
+    PlayerEquipment heroEquipment;
+
     GameObject player;
     PlayerMovement playMove;
     Health playerHealth;
@@ -18,13 +20,13 @@ public class AILivingDead : MonoBehaviour
     public float moveSpeed;
     public float turnSpeed;
     float distanceToPlayer;
-
     void Start()
     {
         moveSpeed = 1;
         player = GameObject.FindGameObjectWithTag("Player");
         playMove = player.GetComponent<PlayerMovement>();
         playerHealth = player.GetComponent<Health>();
+        heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
         //playerHealth = player.GetComponent<Health>();
         attackCooldownMax = 1;
         attackCooldown = attackCooldownMax;
@@ -35,18 +37,21 @@ public class AILivingDead : MonoBehaviour
 
     void Update()
     {
-        distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
-        if (attacking)
+        if (heroEquipment.paused == false)
         {
-            UpdateAttackCooldown();
-        }
-        if (distanceToPlayer >= attackRange)
-            Move();
-        Turn();
-        if (distanceToPlayer <= attackRange && !attacking)
-        {
-            Attack();
-            attacking = true;
+            distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
+            if (attacking)
+            {
+                UpdateAttackCooldown();
+            }
+            if (distanceToPlayer >= attackRange)
+                Move();
+            Turn();
+            if (distanceToPlayer <= attackRange && !attacking)
+            {
+                Attack();
+                attacking = true;
+            } 
         }
     }
 
@@ -110,4 +115,5 @@ public class AILivingDead : MonoBehaviour
 		isReinforced = false;
 		
 	}
+
 }

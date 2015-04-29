@@ -5,6 +5,7 @@ public class AISkeletonArcher : MonoBehaviour
 {
 
     GameObject player;
+    PlayerEquipment heroEquipment;
 
     public float attackCooldownMax;
     float attackCooldown;
@@ -17,10 +18,10 @@ public class AISkeletonArcher : MonoBehaviour
     public GameObject projectile;
     bool hasAttacked = false;
     CharacterController controller;
-    bool isPaused = false;
 
     void Start()
     {
+        heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
         player = GameObject.FindGameObjectWithTag("Player");
         attackCooldown = attackCooldownMax;
         controller = GetComponent<CharacterController>();
@@ -28,7 +29,7 @@ public class AISkeletonArcher : MonoBehaviour
 
     void Update()
     {
-        if (!isPaused)
+        if (heroEquipment.paused == false)
         {
             if (hasAttacked)
             {
@@ -88,15 +89,6 @@ public class AISkeletonArcher : MonoBehaviour
         }
     }
 
-    void Pause()
-    {
-        isPaused = true;
-    }
-
-    void UnPause()
-    {
-        isPaused = false;
-    }
 
 	void Decoy()
 	{
