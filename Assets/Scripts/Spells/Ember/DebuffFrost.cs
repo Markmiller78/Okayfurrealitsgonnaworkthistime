@@ -11,6 +11,8 @@ public class DebuffFrost : MonoBehaviour {
 
     bool once;
 
+    PlayerEquipment eqp;
+
 
     void Start()
     {
@@ -18,39 +20,43 @@ public class DebuffFrost : MonoBehaviour {
         particles = gameObject.GetComponent<ParticleSystem>();
         theLight = gameObject.GetComponent<Light>();
         once = true;
+        eqp = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
     }
 
     void Update()
     {
-
-        if (target == null)
+        if (eqp.paused == false)
         {
-            Destroy(gameObject);
-        }
-        else
-        {
-            transform.position = target.transform.position + new Vector3(0, 0, -0.5f);
-            if (timer == 0)
-            {
-                target.SendMessage("Slow");                
-            }
-            timer += Time.deltaTime;
 
-            if (timer > 3.0f)
-            {
-                if (once)
-                {
-                    target.SendMessage("Unslow");
-                    once = false;
-                }
-                particles.emissionRate = 0;
-                theLight.range -= Time.deltaTime;
-            }
-
-            if (timer > 4.0f)
+            if (target == null)
             {
                 Destroy(gameObject);
             }
+            else
+            {
+                transform.position = target.transform.position + new Vector3(0, 0, -0.5f);
+                if (timer == 0)
+                {
+                    target.SendMessage("Slow");
+                }
+                timer += Time.deltaTime;
+
+                if (timer > 3.0f)
+                {
+                    if (once)
+                    {
+                        target.SendMessage("Unslow");
+                        once = false;
+                    }
+                    particles.emissionRate = 0;
+                    theLight.range -= Time.deltaTime;
+                }
+
+                if (timer > 4.0f)
+                {
+                    Destroy(gameObject);
+                }
+            } 
         }
     }
 }

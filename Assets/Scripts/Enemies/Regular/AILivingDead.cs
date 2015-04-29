@@ -3,7 +3,11 @@ using System.Collections;
 
 public class AILivingDead : MonoBehaviour
 {
+    PlayerEquipment heroEquipment;
+
     GameObject player;
+    PlayerMovement playMove;
+    Health playerHealth;
     //    Health playerHealth;
     //    Rigidbody2D rb2d;
 	public bool isReinforced=false;
@@ -16,30 +20,38 @@ public class AILivingDead : MonoBehaviour
     public float moveSpeed;
     public float turnSpeed;
     float distanceToPlayer;
-
     void Start()
     {
+        moveSpeed = 1;
         player = GameObject.FindGameObjectWithTag("Player");
+        playMove = player.GetComponent<PlayerMovement>();
+        playerHealth = player.GetComponent<Health>();
+        heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
         //playerHealth = player.GetComponent<Health>();
+        attackCooldownMax = 1;
         attackCooldown = attackCooldownMax;
+        attackRange = .8f;
         //rb2d = GetComponent<Rigidbody2D>();
         controller = GetComponent<CharacterController>();
     }
 
     void Update()
     {
-        distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
-        if (attacking)
+        if (heroEquipment.paused == false)
         {
-            UpdateAttackCooldown();
-        }
-        if (distanceToPlayer >= (attackRange / 2.0f))
-            Move();
-        Turn();
-        if (distanceToPlayer <= attackRange && !attacking)
-        {
-            Attack();
-            attacking = true;
+            distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
+            if (attacking)
+            {
+                UpdateAttackCooldown();
+            }
+            if (distanceToPlayer >= attackRange)
+                Move();
+            Turn();
+            if (distanceToPlayer <= attackRange && !attacking)
+            {
+                Attack();
+                attacking = true;
+            } 
         }
     }
 
@@ -61,7 +73,8 @@ public class AILivingDead : MonoBehaviour
 
     void Attack()
     {
-
+        playMove.KnockBack(transform.position);
+        playerHealth.LoseHealth(7);
     }
 
     void UpdateAttackCooldown()
@@ -102,4 +115,5 @@ public class AILivingDead : MonoBehaviour
 		isReinforced = false;
 		
 	}
+
 }

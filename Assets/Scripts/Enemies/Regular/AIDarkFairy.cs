@@ -14,7 +14,8 @@ public class AIDarkFairy : MonoBehaviour {
 	public float atkcooldown;
 	public float atkcooldownref;
 	public float stealrange = 0.2f;
-	public float movementspeed;
+    PlayerEquipment heroEquipment;
+    public float movementspeed;
 	public float[] distance;
 	public bool isReinforced=false;
     public bool isCasting = false;
@@ -26,11 +27,13 @@ public class AIDarkFairy : MonoBehaviour {
     public float timer;
     public GameObject darkOrb;
 	// Use this for initialization
+
 	void Start () {
         IdleVec = new Vector3(1, 1, 0);
         timer = 0.0f;
 		player = GameObject.FindGameObjectWithTag ("Player");
-		GameObject[] temp = GameObject.FindGameObjectsWithTag ("LightDrop");
+        heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
+        GameObject[] temp = GameObject.FindGameObjectsWithTag("LightDrop");
 
 		for (int i = 0; i < temp.Length; i++) {
 			list.Add(temp[i]);
@@ -41,7 +44,8 @@ public class AIDarkFairy : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (isCasting)
+  if (heroEquipment.paused == false)
+        {
         {
             atkcooldown -= Time.deltaTime;
             if (atkcooldown <= 0.0f)
@@ -216,5 +220,6 @@ controller.Move(tempdir.normalized * Time.deltaTime *- movementspeed);
 	{
 		player = GameObject.FindGameObjectWithTag("Player");
 	}
+
 
 }

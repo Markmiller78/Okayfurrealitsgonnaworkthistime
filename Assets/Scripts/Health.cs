@@ -35,36 +35,42 @@ public class Health : MonoBehaviour
     }
     public void GainHealth(float Amount)
     {
-        currentHP += Amount;
-        if (currentHP > maxHP)
-            currentHP = maxHP;
-
-        if (this.tag == "Player")
+        if (equipment.paused == false)
         {
-            healthPercent = currentHP / maxHP;
-            healthBar.transform.localScale = new Vector3(1, healthPercent, 1);
+            currentHP += Amount;
+            if (currentHP > maxHP)
+                currentHP = maxHP;
+
+            if (this.tag == "Player")
+            {
+                healthPercent = currentHP / maxHP;
+                healthBar.transform.localScale = new Vector3(1, healthPercent, 1);
+            } 
         }
     }
 
     public void LoseHealth(float Amount)
     {
-        currentHP -= Amount;
-        if (currentHP <= 0)
+        if (equipment.paused == false)
         {
-            currentHP = 0;
-            Die();
-        }
+            currentHP -= Amount;
+            if (currentHP <= 0)
+            {
+                currentHP = 0;
+                Die();
+            }
 
-        if (this.tag == "Player")
-        {
-            healthPercent = currentHP / maxHP;
-            healthBar.transform.localScale = new Vector3(1, healthPercent, 1);
-        }
-        else if (equipment.equippedEmber == ember.Life)
-        {
-            GameObject instance = (GameObject)Instantiate(lifeEmberSpawn, transform.position, transform.rotation);
-            instance.GetComponent<LifeEmberStolenHealth>().gainAmount = Amount;
+            if (this.tag == "Player")
+            {
+                healthPercent = currentHP / maxHP;
+                healthBar.transform.localScale = new Vector3(healthPercent, 1, 1);
+            }
+            else if (equipment.equippedEmber == ember.Life)
+            {
+                GameObject instance = (GameObject)Instantiate(lifeEmberSpawn, transform.position, transform.rotation);
+                instance.GetComponent<LifeEmberStolenHealth>().gainAmount = Amount;
 
+            }
         }
     }
 

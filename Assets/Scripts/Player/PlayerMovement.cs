@@ -8,6 +8,9 @@ public class PlayerMovement : MonoBehaviour
     public float fullSpeed;
     public float halfSpeed;
     float speed;
+    float knockbackTimer;
+
+
     CharacterController controller;
     //Rigidbody2D rb2d;
 	PlayerEquipment heroEquipment;
@@ -15,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
     Vector2 CharRotate;
     Quaternion Rotation;
     Vector3 Rotate3d;
+    Vector3 KnockbackVec;
 
     void Start()
     {
@@ -23,12 +27,24 @@ public class PlayerMovement : MonoBehaviour
         //rb2d = GetComponent<Rigidbody2D>();
         fullSpeed = 3.1f;
         halfSpeed = 1.6f;
+        knockbackTimer = 0;
 
     }
 
     void Update()
     {
-        transform.position = new Vector3(transform.position.x, transform.position.y, -1f);
+        if (heroEquipment.paused == false)
+        {
+
+
+            knockbackTimer -= Time.deltaTime;
+            transform.position = new Vector3(transform.position.x, transform.position.y, -1f);
+
+            if (knockbackTimer > 0)
+            {
+                controller.Move(KnockbackVec * 9 * Time.deltaTime);
+            }
+        }
     }
 
     void CMove()
@@ -139,4 +155,11 @@ public class PlayerMovement : MonoBehaviour
 
 		//}
 	}
+
+    public void KnockBack(Vector3 Direction)
+    {
+        knockbackTimer = .1f;
+        KnockbackVec = transform.position - Direction;
+        KnockbackVec.Normalize();
+    }
 }

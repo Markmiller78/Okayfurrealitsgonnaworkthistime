@@ -16,23 +16,33 @@ public class AICommander : MonoBehaviour {
 	public float atkcooldownref;
 	public float movementspeed=3.0f;
 	public float[] distance;
-	public float dist;
+    PlayerEquipment heroEquipment;
+    public float dist;
 	public Vector3 vectoplayer;
 	public int size;
+
 	// Use this for initialization
 	void Start () {
 		player = GameObject.FindGameObjectWithTag ("Player");
 		list = GameObject.FindGameObjectsWithTag ("Enemy");
-		controller = GetComponent<CharacterController>();
+        heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
+        controller = GetComponent<CharacterController>();
 		movementspeed=3.0f;
-
 	}
 	
 	// Update is called once per frame
+    
 	void Update () {
         if (isAttacking)
         {
             atkcooldown -= Time.deltaTime;
+    if (heroEquipment.paused == false)
+        {
+	vectoplayer = transform.position - player.transform.position;
+		dist = vectoplayer.magnitude;
+		FacePlayer ();
+	 
+			size = list.Length;
             if (atkcooldown <= 0.0f)
             {
                 atkcooldown = atkcooldownref;
@@ -44,18 +54,21 @@ public class AICommander : MonoBehaviour {
 		FacePlayer ();
         size = list.Length;
         if (size == 1)
-            isReinforcing = false;
-		if (!isReinforcing) {
-			
-
-			distance = new float[size];
-			if (size > 1) {
-				for (int i = 0; i < size; i++) {
-					distance [i] = (transform.position - list [i].transform.position).magnitude;
-				}
-
-		
-				FacePlayer ();
+            isReinforcing = false; 
+            vectoplayer = transform.position - player.transform.position;
+            dist = vectoplayer.magnitude;
+            FacePlayer();
+            if (!isReinforcing)
+            {
+                size = list.Length;
+ 
+                distance = new float[size];
+                if (size > 1)
+                {
+                    for (int i = 0; i < size; i++)
+                    {
+                        distance[i] = (transform.position - list[i].transform.position).magnitude;
+                    }
 
 				if (dist < 3.5f) {
 					RunAway ();
@@ -93,6 +106,44 @@ public class AICommander : MonoBehaviour {
 		}
 	}
 
+                    FacePlayer();
+
+                    if (dist < 3.5f)
+                    {
+                        RunAway();
+                    }
+                    else
+                        isReinforcing = true;
+                }
+                else
+                {
+                    MoveTowardsPlayer();
+                    AttackPlayer();
+                }
+            }
+            else
+            {
+
+                list = GameObject.FindGameObjectsWithTag("Enemy");
+                if (dist < 1.75f)
+                {
+                    foreach (GameObject obj in list)
+                    {
+                        obj.SendMessage("UnReinforce", SendMessageOptions.DontRequireReceiver);
+                    }
+                    isReinforcing = false;
+                }
+                else
+                {
+                    foreach (GameObject obj in list)
+                    {
+                        obj.SendMessage("Reinforce", SendMessageOptions.DontRequireReceiver);
+                    }
+                }
+
+            }
+        }
+    }
 	void RunAway()
 	{
 	 
@@ -118,6 +169,7 @@ public class AICommander : MonoBehaviour {
 	}
 	void AttackPlayer()
 	{
+ 
 		if (dist < atkrange&&!isAttacking)
 		{
 			player.GetComponent<Health>().LoseHealth(atkdmg);

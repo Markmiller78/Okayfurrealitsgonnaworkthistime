@@ -6,16 +6,23 @@ public class LifeEmberStolenHealth : MonoBehaviour
     GameObject player;
     Health pHealth;
     public float gainAmount;
+    PlayerEquipment eqp;
 
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         pHealth = player.GetComponent<Health>();
+        eqp = player.GetComponent<PlayerEquipment>();
     }
 
     void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position, player.transform.position, Time.deltaTime * 5f);
+        if (eqp.paused == false)
+        {
+
+
+            transform.position = Vector3.MoveTowards(transform.position, player.transform.position, Time.deltaTime * 5f);
+        }
     }
 
     void OnTriggerEnter(Collider other)

@@ -9,15 +9,18 @@ public class OrbExplosion : MonoBehaviour
 
     public GameObject debuff;
 
+    GameObject player;
+
     float maxLife;
 
     // Use this for initialization
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
+        heroEquipment = player.GetComponent<PlayerEquipment>();
         timeAlive = 0;
         theLight = gameObject.GetComponent<Light>();
-        heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
-
+        Camera.main.SendMessage("ScreenShake");
         if (heroEquipment.equippedEmber == ember.Ice)
         {
             maxLife = 1.1f;
@@ -32,16 +35,20 @@ public class OrbExplosion : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timeAlive += Time.deltaTime;
-        theLight.range -= Time.deltaTime * 4;
-        if (timeAlive >= maxLife)
+        if (heroEquipment.paused == false)
         {
-            Destroy(gameObject);
+            timeAlive += Time.deltaTime;
+            theLight.range -= Time.deltaTime * 4;
+            if (timeAlive >= maxLife)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 
     void OnTriggerEnter(Collider other)
     {
+        heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
         if (other.tag == "Enemy")
         {
             if (heroEquipment.equippedEmber == ember.None)
