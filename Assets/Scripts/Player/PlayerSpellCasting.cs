@@ -34,6 +34,12 @@ public class PlayerSpellCasting : MonoBehaviour
     public GameObject windMine;
     public GameObject lifeMine;
 
+    public GameObject lightChain;
+    public GameObject fireChain;
+    public GameObject frostChain;
+    public GameObject windChain;
+    public GameObject lifeChain;
+
     public GameObject lightSnare;
     public GameObject fireSnare;
     public GameObject frostSnare;
@@ -214,6 +220,32 @@ public class PlayerSpellCasting : MonoBehaviour
                     }
                     else if (heroEquipment.equippedEmber == ember.Life)
                     {
+
+                    }
+                }
+                else if (heroEquipment.equippedAccessory == accessory.ChainLightning)
+                {
+                    if (heroEquipment.equippedEmber == ember.None)
+                    {
+                        Instantiate(lightChain, transform.position, transform.rotation);
+                    }
+                    else if (heroEquipment.equippedEmber == ember.Fire)
+                    {
+                        Instantiate(fireChain, transform.position, transform.rotation);
+                    }
+                    else if (heroEquipment.equippedEmber == ember.Wind)
+                    {
+                        Instantiate(windChain, transform.position, transform.rotation);
+
+                    }
+                    else if (heroEquipment.equippedEmber == ember.Ice)
+                    {
+                        Instantiate(frostChain, transform.position, transform.rotation);
+
+                    }
+                    else if (heroEquipment.equippedEmber == ember.Life)
+                    {
+                        Instantiate(lifeChain, transform.position, transform.rotation);
 
                     }
                 }
