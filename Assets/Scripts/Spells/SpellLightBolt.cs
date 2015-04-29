@@ -62,6 +62,18 @@ public class SpellLightBolt : MonoBehaviour {
                 other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
                 other.GetComponent<Health>().LoseHealth(damage);
             }
+            else if (heroEquipment.equippedEmber == ember.Earth)
+            {
+                Instantiate(poke, other.transform.position, other.transform.rotation);
+                other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
+                other.GetComponent<Health>().LoseHealth(damage);
+            }
+            else if (heroEquipment.equippedEmber == ember.Death)
+            {
+                Instantiate(poke, other.transform.position, other.transform.rotation);
+                other.SendMessage("GetInfected", SendMessageOptions.DontRequireReceiver);
+                other.GetComponent<Health>().LoseHealth(damage);
+            }
         }
     }
 

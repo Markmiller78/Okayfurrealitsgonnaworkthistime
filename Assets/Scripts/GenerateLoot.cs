@@ -149,7 +149,47 @@ public class GenerateLoot : MonoBehaviour {
     string DetermineName(int randNum, int Attribute1, int Attribute2)
     {
         // WORK HERE FRANSWEA
-        return "Heyo";
+        string theName="";
+
+        string[] embers = new string[10];
+        embers[0] = "Scorching Ember of ";
+        embers[1] = "Quake Emberof ";
+        embers[2] = "Frost Ember of ";
+        embers[3] = "Gale Ember of ";
+        embers[4] = "Rejuvenating Ember of";
+        embers[5] = "Doom Ember of ";
+
+       
+        string[] accessories = new string[3];
+        accessories[0] = "Ring of ";
+        accessories[1] = "Bracelet of ";
+        accessories[2] = "Necklace of ";
+
+        string[] attribute1 = new string[2];
+        attribute1[0] = "Awesome";
+        attribute1[1] = "Stengthening";
+
+        string[] attribute2 = new string[2];
+        attribute2[0] = "Destruction";
+        attribute2[1] = "Syphoning";
+
+        if (randNum > 4)
+        {
+            theName += accessories[Random.Range(0, 2)];
+
+        }
+        else
+            theName += embers[Random.Range(0, 5)];
+        if(Random.value>0.5f)
+        {
+
+            theName += attribute1[Random.Range(0, 1)];
+        }
+        else
+            theName += attribute2[Random.Range(0, 1)];
+
+
+        return theName;
     }
 }
 

@@ -20,6 +20,7 @@ public class AIDarkFairy : MonoBehaviour
     public float[] distance;
     public bool isReinforced = false;
     public bool isCasting = false;
+    public bool isInfected = false;
     public float dist;
     public Vector3 vectotarget;
     public Vector3 vectoplayer;
@@ -264,6 +265,9 @@ public class AIDarkFairy : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
     }
-
+    void GetInfected()
+    {
+        isInfected = true;
+    }
 
 }

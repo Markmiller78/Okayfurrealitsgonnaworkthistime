@@ -14,6 +14,7 @@ public class AILivingDead : MonoBehaviour
     CharacterController controller;
     public float attackDamage;
     public float attackRange;
+    public bool isInfected=false;
     float attackCooldown;
     bool attacking;
     public float attackCooldownMax;
@@ -138,9 +139,13 @@ public class AILivingDead : MonoBehaviour
 		if (isReinforced) {
 			attackDamage /= 1.15f;
 			moveSpeed /= 1.15f;
+            isReinforced = false;
 		}
-		isReinforced = false;
+	
 		
 	}
-
+    void GetInfected()
+    {
+        isInfected = true;
+    }
 }
