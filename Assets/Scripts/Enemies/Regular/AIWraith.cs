@@ -45,6 +45,8 @@ public class AIWraith : MonoBehaviour
         SouthDoorY = GameObject.FindGameObjectWithTag("SouthDoor").transform.position.y;
         EastDoorX = GameObject.FindGameObjectWithTag("EastDoor").transform.position.x;
         WestDoorX = GameObject.FindGameObjectWithTag("WestDoor").transform.position.x;
+        NorthDoorY = GameObject.FindGameObjectWithTag("NorthDoor").transform.position.x;
+
 
     }
 

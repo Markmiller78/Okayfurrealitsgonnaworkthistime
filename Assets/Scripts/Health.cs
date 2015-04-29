@@ -78,6 +78,7 @@ public class Health : MonoBehaviour
     {
         if (this.tag != "Player")
         {
+            gameObject.GetComponent<GenerateLoot>().Generateloot();
             Destroy(gameObject);
             --generator.finalRoomInfoArray[generator.currentRoom].numEnemies;
         }
