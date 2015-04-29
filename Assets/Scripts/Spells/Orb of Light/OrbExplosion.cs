@@ -34,8 +34,6 @@ public class OrbExplosion : MonoBehaviour
     {
         if (heroEquipment.paused == false)
         {
-
-
             timeAlive += Time.deltaTime;
             theLight.range -= Time.deltaTime * 4;
             if (timeAlive >= maxLife)
@@ -47,6 +45,7 @@ public class OrbExplosion : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
         if (other.tag == "Enemy")
         {
             if (heroEquipment.equippedEmber == ember.None)

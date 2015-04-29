@@ -11,22 +11,26 @@ public class SpellSnare : MonoBehaviour {
 
     public GameObject explosion;
     public GameObject lightRemains;
+    PlayerEquipment heroEquipment;
 
     void Start()
     {
+        heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
         distanceTraveled = 0;
     }
 
     void FixedUpdate()
     {
-
+        if (heroEquipment.paused == false)
+        {
         transform.localScale += new Vector3(growthRate * Time.deltaTime, growthRate * Time.deltaTime, growthRate * Time.deltaTime);
         transform.position += transform.up * speed * Time.deltaTime;
         distanceTraveled += speed * Time.deltaTime;
 
-        if (distanceTraveled >= range)
-        {
-            Explode();
+            if (distanceTraveled >= range)
+            {
+                Explode();
+            }
         }
     }
 
@@ -43,11 +47,11 @@ public class SpellSnare : MonoBehaviour {
 
         GameObject[] Enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
-        for (int i = 0; i < Enemies.Length; i++ )
+        for (int i = 0; i < Enemies.Length; i++)
         {
             if (Vector3.Distance(transform.position, Enemies[i].transform.position) < 4)
             {
-                //Enemies[i].SendMessage("Slow");
+                Enemies[i].SendMessage("Slow");
                 Enemies[i].GetComponent<Health>().LoseHealth(5);
             }
         }
@@ -55,8 +59,9 @@ public class SpellSnare : MonoBehaviour {
         Instantiate(explosion, transform.position, transform.rotation);
         Instantiate(lightRemains, transform.position, transform.rotation);
         Destroy(gameObject);
-        
     }
 }
 
 
+
+        

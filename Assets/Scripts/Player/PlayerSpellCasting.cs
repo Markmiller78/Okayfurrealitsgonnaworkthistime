@@ -192,33 +192,31 @@ public class PlayerSpellCasting : MonoBehaviour
                         Instantiate(lifeMine, transform.position, transform.rotation);
 
                     }
-                } 
-            }
-            else if (heroEquipment.equippedAccessory == accessory.Snare)
-            {
-                if (heroEquipment.equippedEmber == ember.None)
-                {
-                    Instantiate(lightSnare, transform.position, transform.rotation);
-                }
-                else if (heroEquipment.equippedEmber == ember.Fire)
-                {
-
-                }
-                else if (heroEquipment.equippedEmber == ember.Wind)
-                {
-                    Instantiate(lightSnare, transform.position, transform.rotation);
-                }
-                else if (heroEquipment.equippedEmber == ember.Ice)
-                {
-
-                }
-                else if (heroEquipment.equippedEmber == ember.Life)
-                {
-
                 }
 
+                else if (heroEquipment.equippedAccessory == accessory.Snare)
+                {
+                    if (heroEquipment.equippedEmber == ember.None)
+                    {
+                        Instantiate(lightSnare, transform.position, transform.rotation);
+                    }
+                    else if (heroEquipment.equippedEmber == ember.Fire)
+                    {
 
+                    }
+                    else if (heroEquipment.equippedEmber == ember.Wind)
+                    {
+                        Instantiate(lightSnare, transform.position, transform.rotation);
+                    }
+                    else if (heroEquipment.equippedEmber == ember.Ice)
+                    {
 
+                    }
+                    else if (heroEquipment.equippedEmber == ember.Life)
+                    {
+
+                    }
+                }
             }
         }
 
