@@ -8,6 +8,8 @@ public class NorthDoor : MonoBehaviour
     RoomGeneration generator;
     GameObject player;
 	public bool displaytooltips = false;
+    int enemyCount;
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -15,14 +17,14 @@ public class NorthDoor : MonoBehaviour
         generator = dungeon.GetComponent<RoomGeneration>();
         isLocked = true;
     }
- 
 
     void Update()
     {
+        enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length + GameObject.FindGameObjectsWithTag("ShadowSpawn").Length;
         if (isLocked &&
             ((generator.currentRoom > 0 && generator.finalRoomInfoArray[generator.currentRoom].entranceDir == 2)
             || (generator.currentRoom < 8 && generator.finalRoomInfoArray[generator.currentRoom].exitDir == 2))
-            && generator.finalRoomInfoArray[generator.currentRoom].numEnemies == 0)
+            && enemyCount == 0)
         {
             isLocked = false;
             Unlock();
@@ -45,7 +47,6 @@ public class NorthDoor : MonoBehaviour
                 box.enabled = false;
             }
         }
-        //GetComponentInChildren<BoxCollider>().enabled = false;
         GetComponentInChildren<SpriteRenderer>().enabled = false;
     }
 

@@ -8,6 +8,8 @@ public class SouthDoor : MonoBehaviour
     RoomGeneration generator;
     GameObject player;
 	public bool displaytooltips = false;
+    int enemyCount;
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -16,13 +18,13 @@ public class SouthDoor : MonoBehaviour
         isLocked = true;
     }
 
-
     void Update()
     {
+        enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length + GameObject.FindGameObjectsWithTag("ShadowSpawn").Length;
         if (isLocked &&
             ((generator.currentRoom > 0 && generator.finalRoomInfoArray[generator.currentRoom].entranceDir == 0)
             || (generator.currentRoom < 8 && generator.finalRoomInfoArray[generator.currentRoom].exitDir == 0))
-            && generator.finalRoomInfoArray[generator.currentRoom].numEnemies == 0)
+            && enemyCount == 0)
         {
             isLocked = false;
             Unlock();
@@ -45,7 +47,6 @@ public class SouthDoor : MonoBehaviour
                 box.enabled = false;
             }
         }
-        //GetComponentInChildren<BoxCollider>().enabled = false;
         GetComponentInChildren<SpriteRenderer>().enabled = false;
     }
 

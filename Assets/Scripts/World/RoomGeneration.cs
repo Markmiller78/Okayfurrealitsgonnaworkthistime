@@ -27,6 +27,8 @@ public class RoomGeneration : MonoBehaviour
     public Room[] finalRoomInfoArray;
     //public int currentFloor = 1;
     public int currentRoom = 0;
+    //public GameObject treasureRoom;
+    //Room treasureRoomInfo;
 
     void Start()
     {
@@ -80,6 +82,8 @@ public class RoomGeneration : MonoBehaviour
         //}
         //morriusRoomInfo = morriusRoom.GetComponent<Room>();
         //morriusRoomInfo.setUsed();
+
+        //treasureRoomInfo = treasureRoom.GetComponent<Room>();
 
         finalRoomArray = new GameObject[9];
         finalRoomInfoArray = new Room[9];
