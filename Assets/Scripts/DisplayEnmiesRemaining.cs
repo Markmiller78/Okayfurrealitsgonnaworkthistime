@@ -21,7 +21,7 @@ public class DisplayEnmiesRemaining : MonoBehaviour
         if (timer <= 0)
         {
             timer = 1;
-            int count = GameObject.FindGameObjectsWithTag("Enemy").Length;
+            int count = GameObject.FindGameObjectsWithTag("Enemy").Length + GameObject.FindGameObjectsWithTag("ShadowSpawn").Length;
             theText.text = count.ToString();
         }
     }
