@@ -19,6 +19,7 @@ public class AISkeletonArcher : MonoBehaviour
     public GameObject projectile;
     bool hasAttacked = false;
     CharacterController controller;
+    Utilities.ppList<GameObject> usedWaypoints;
 
     void Start()
     {
@@ -26,6 +27,18 @@ public class AISkeletonArcher : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         attackCooldown = attackCooldownMax;
         controller = GetComponent<CharacterController>();
+        usedWaypoints = new Utilities.ppList<GameObject>();
+
+        //
+        usedWaypoints.pushBack(new GameObject("One"));
+        usedWaypoints.pushBack(new GameObject("Two"));
+        usedWaypoints.pushBack(new GameObject("Three"));
+        usedWaypoints.pushBack(new GameObject("Four"));
+        usedWaypoints.pushBack(new GameObject("Five"));
+        usedWaypoints.pushBack(new GameObject("TheRealSlimShady"));
+        usedWaypoints.popFront();
+        GameObject test = usedWaypoints.popFront();
+        //
     }
 
     void Update()

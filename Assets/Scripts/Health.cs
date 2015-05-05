@@ -35,7 +35,6 @@ public class Health : MonoBehaviour
             generator = dungeon.GetComponent<RoomGeneration>();
         }
 
-
     }
 
     void Update()
@@ -45,10 +44,6 @@ public class Health : MonoBehaviour
             deathTimer -= Time.deltaTime;
             Die();
         }
-
-
-
-
     }
     public void GainHealth(float Amount)
     {
@@ -102,7 +97,7 @@ public class Health : MonoBehaviour
         else
         {
             playerDead = true;
-            YouLoseText.text = "You Lose!";
+            YouLoseText.enabled = true;
             equipment.paused = true;
 #if UNITY_STANDALONE
             if (deathTimer < 0)

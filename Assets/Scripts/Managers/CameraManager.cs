@@ -61,7 +61,6 @@ public class CameraManager : MonoBehaviour
         }
         else
             transform.position = new Vector3(transform.position.x, transform.position.y, -20.0f);
-
     }
 
     public void ScreenShake()

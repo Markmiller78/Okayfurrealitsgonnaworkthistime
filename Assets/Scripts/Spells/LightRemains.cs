@@ -13,7 +13,8 @@ public class LightRemains : MonoBehaviour
     SpriteRenderer sprite;
     bool once;
 
-    public GameObject endParticles;
+   // public GameObject endParticles;
+    public GameObject missile;
 
     void Start()
     {
@@ -39,8 +40,7 @@ public class LightRemains : MonoBehaviour
         {
             if (other.tag == "Player")
             {
-                heroLight.GainLight(5);
-                active = false;
+                PickUp();
             }
         }
 
@@ -57,7 +57,7 @@ public class LightRemains : MonoBehaviour
 
             if (once)
             {
-                Instantiate(endParticles, transform.position, new Quaternion(0, 0, 0, 0));
+               // Instantiate(endParticles, transform.position, new Quaternion(0, 0, 0, 0));
                 once = false;
 				allObjects = GameObject.FindObjectsOfType<GameObject>();
 				foreach (GameObject obj in allObjects)
@@ -75,5 +75,12 @@ public class LightRemains : MonoBehaviour
                 Destroy(gameObject);
             }
         }
+    }
+
+    void PickUp()
+    {
+        Instantiate(missile, transform.position, transform.rotation);
+        heroLight.GainLight(5);
+        active = false;
     }
 }

@@ -8,6 +8,7 @@ public class EastDoor : MonoBehaviour
     public GameObject dungeon;
     RoomGeneration generator;
     GameObject player;
+    int enemyCount;
 
     void Start()
     {
@@ -19,10 +20,11 @@ public class EastDoor : MonoBehaviour
  
     void Update()
     {
+        enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length + GameObject.FindGameObjectsWithTag("ShadowSpawn").Length;
         if (isLocked &&
             ((generator.currentRoom > 0 && generator.finalRoomInfoArray[generator.currentRoom].entranceDir == 3)
             || (generator.currentRoom < 8 && generator.finalRoomInfoArray[generator.currentRoom].exitDir == 3))
-            && generator.finalRoomInfoArray[generator.currentRoom].numEnemies == 0)
+            && enemyCount == 0)
         {
             isLocked = false;
             Unlock();
@@ -45,7 +47,6 @@ public class EastDoor : MonoBehaviour
                 box.enabled = false;
             }
         }
-        //GetComponentInChildren<BoxCollider>().enabled = false;
         GetComponentInChildren<SpriteRenderer>().enabled = false;
     }
 
@@ -66,8 +67,5 @@ public class EastDoor : MonoBehaviour
             generator.Reset();
         }
     }
-
- 
-	
 }
 
