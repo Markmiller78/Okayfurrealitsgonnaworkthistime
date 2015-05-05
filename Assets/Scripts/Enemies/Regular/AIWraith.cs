@@ -33,7 +33,7 @@ public class AIWraith : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
         controller = GetComponent<CharacterController>();
-        Random.seed = 8675309;
+        //Random.seed = 8675309;
         attacking = false;
         heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
         wayPointTimer = 8;

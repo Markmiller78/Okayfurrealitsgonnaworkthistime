@@ -31,20 +31,11 @@ public class Utilities
             maxLength = _maxLength;
         }
 
-        public int Length()
-        {
-            return arr.Length;
-        }
+        public int Length() { return arr.Length; }
 
-        public int MaxLength()
-        {
-            return maxLength;
-        }
+        public int MaxLength() { return maxLength; }
 
-        public void MaxLength(int _length)
-        {
-            maxLength = _length;
-        }
+        public void MaxLength(int _length) { maxLength = _length; }
 
         public T popFront()
         {
