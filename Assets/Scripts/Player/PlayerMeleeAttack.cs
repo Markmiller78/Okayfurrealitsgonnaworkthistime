@@ -8,11 +8,14 @@ public class PlayerMeleeAttack : MonoBehaviour
     public float attackDamage = 5.0f;
     bool attacking = false;
     float hasRotated = 0.0f;
-    float toRotate = 90.0f;
+    float toRotate = 120.0f;
     float rotationDelta = 0.0f;
     public float speed = 3.0f;
 
     PlayerEquipment heroEqp;
+
+    public GameObject fireDebuff;
+    public GameObject frostDebuff;
 
     void Start()
     {
@@ -20,6 +23,7 @@ public class PlayerMeleeAttack : MonoBehaviour
         playerStats = player.GetComponent<PlayerStats>();
         rotationDelta = player.transform.rotation.z;
         heroEqp = player.GetComponent<PlayerEquipment>();
+
     }
 
     void Update()
@@ -28,14 +32,17 @@ public class PlayerMeleeAttack : MonoBehaviour
         {
             if (attacking)
             {
-                hasRotated += 90.0f * Time.deltaTime * speed;
-                transform.Rotate(Vector3.forward, 90.0f * Time.deltaTime * speed - rotationDelta);
+                hasRotated += 120.0f * Time.deltaTime * speed;
+                transform.Rotate(Vector3.forward, 120.0f * Time.deltaTime * speed - rotationDelta);
                 rotationDelta = player.transform.rotation.z - rotationDelta;
                 if (hasRotated >= toRotate)
                 {
                     hasRotated = 0.0f;
                     attacking = false;
+                    gameObject.GetComponentInChildren<SpriteRenderer>().enabled = false;
+                    gameObject.GetComponentInChildren<ParticleSystem>().enableEmission = false;
                     transform.rotation = player.transform.rotation;
+                    transform.Rotate(new Vector3(0, 0, 30));
                 }
             }
         }
@@ -45,13 +52,44 @@ public class PlayerMeleeAttack : MonoBehaviour
     {
         if (attacking && other.gameObject != player && other.gameObject.GetComponent<Health>() != null)
         {
-            other.gameObject.GetComponent<Health>().LoseHealth(attackDamage + playerStats.meleeModifier);
-            other.SendMessage("GetWrecked");
+            other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
+
+            if (heroEqp.equippedEmber == ember.None)
+            {
+                other.gameObject.GetComponent<Health>().LoseHealth(attackDamage + playerStats.meleeModifier);
+
+            }
+            else if (heroEqp.equippedEmber == ember.Fire)
+            {
+                other.gameObject.GetComponent<Health>().LoseHealth(attackDamage + playerStats.meleeModifier);
+
+                GameObject tempObj = (GameObject)Instantiate(fireDebuff, other.transform.position, other.transform.rotation);
+                tempObj.GetComponent<DebuffFire>().target = other.gameObject;
+            }
+            else if (heroEqp.equippedEmber == ember.Ice)
+            {
+                other.gameObject.GetComponent<Health>().LoseHealth(attackDamage + playerStats.meleeModifier);
+
+                GameObject tempObj = (GameObject)Instantiate(frostDebuff, other.transform.position, other.transform.rotation);
+                tempObj.GetComponent<DebuffFrost>().target = other.gameObject;
+            }
+            else if (heroEqp.equippedEmber == ember.Wind)
+            {
+                other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
+                other.gameObject.GetComponent<Health>().LoseHealth(attackDamage + playerStats.meleeModifier);
+            }
+            else if (heroEqp.equippedEmber == ember.Life)
+            {
+                other.gameObject.GetComponent<Health>().LoseHealth(attackDamage + playerStats.meleeModifier);
+
+            }
         }
     }
 
     void Melee()
     {
         attacking = true;
+        gameObject.GetComponentInChildren<SpriteRenderer>().enabled = true;
+        gameObject.GetComponentInChildren<ParticleSystem>().enableEmission = true;
     }
 }

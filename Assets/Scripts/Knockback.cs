@@ -15,28 +15,33 @@ public class Knockback : MonoBehaviour
     float timerCurr;
 
     PlayerEquipment heroEquipment;
+    PlayerCooldowns heroCds;
 
     bool once;
+    bool wasMeleeing;
 
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         heroEquipment = player.GetComponent<PlayerEquipment>();
+        heroCds = player.GetComponent<PlayerCooldowns>();
         controller = GetComponent<CharacterController>();
         timerMax = knockbackDistance / knockbackSpeed;
         timerCurr = timerMax;
         once = true;
+        wasMeleeing = false;
     }
 
     void Update()
     {
         if (heroEquipment.paused == false)
         {
-
-            if (heroEquipment.equippedAccessory == accessory.BlastOfLight && heroEquipment.equippedEmber == ember.Wind)
+            //Knockback extra far
+            if (heroEquipment.equippedAccessory == accessory.BlastOfLight || heroCds.meleeCooling && heroEquipment.equippedEmber == ember.Wind)
             {
                 if (once)
                 {
+                    wasMeleeing = heroCds.meleeCooling;
                     knockbackDistance *= 2;
                     once = false;
                 }
@@ -54,10 +59,16 @@ public class Knockback : MonoBehaviour
 
                 if (Vector3.Distance(transform.position, origin) >= knockbackDistance || timerCurr <= 0.0f)
                 {
+                    //Set the distance back to what it was originally
+                    if (heroEquipment.equippedAccessory == accessory.BlastOfLight || wasMeleeing && heroEquipment.equippedEmber == ember.Wind)
+                    {
+                        knockbackDistance *= 0.5f;
+                        wasMeleeing = false;
+                    }
                     isGettingKnockedBack = false;
                     timerCurr = timerMax;
                 }
-            } 
+            }
         }
     }
 
@@ -65,6 +76,7 @@ public class Knockback : MonoBehaviour
     {
         isGettingKnockedBack = true;
         once = true;
+        wasMeleeing = false;
     }
 
 }
