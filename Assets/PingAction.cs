@@ -1,12 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEditor;
 
 public class PingAction : MonoBehaviour
 {
     public GameObject pingMissle;
     SphereCollider collis;
-   // SerializedObject particles;
     GameObject player;
 
     PlayerEquipment heroEquipment;
@@ -15,7 +13,6 @@ public class PingAction : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
         collis = gameObject.GetComponent<SphereCollider>();
-        //particles = new SerializedObject(GetComponent<ParticleSystem>());
         heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
         Destroy(gameObject, 0.6f);
 
@@ -25,13 +22,9 @@ public class PingAction : MonoBehaviour
     {
         if (heroEquipment.paused == false)
         {
-           // transform.Rotate(new Vector3(0, 0, 50f * Time.deltaTime));
-
             transform.position = new Vector3(player.transform.position.x, player.transform.position.y, -3);
             collis.radius -= 80 * Time.deltaTime;
 
-            //particles.FindProperty("ShapeModule.radius").floatValue -= 80 * Time.deltaTime;
-            //particles.ApplyModifiedProperties();
         }
     }
 
