@@ -11,7 +11,7 @@ public class OrbExplosion : MonoBehaviour
     public GameObject debuff;
 
     GameObject player;
-     public Vector3 vectoplayer;
+    public Vector3 vectoplayer;
     public Vector3 playerpos;
 
 
@@ -56,102 +56,106 @@ public class OrbExplosion : MonoBehaviour
         heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
         if (other.tag == "Enemy")
         {
-<<<<<<< .mine
-            vectoplayer = playerpos - other.transform.position;
 
-        //    if (!Physics.Raycast(playerpos, vectoplayer.normalized, 100))
-           // {
-                if (heroEquipment.equippedEmber == ember.None)
-                {
-                    other.GetComponent<Health>().LoseHealth(5);
-                }
-                else if (heroEquipment.equippedEmber == ember.Fire)
-                {
-                    other.GetComponent<Health>().LoseHealth(5);
-                    GameObject tempObj = (GameObject)Instantiate(debuff, other.transform.position, other.transform.rotation);
-                    tempObj.GetComponent<DebuffFire>().target = other.gameObject;
-                }
-                else if (heroEquipment.equippedEmber == ember.Ice)
-                {
-                    other.GetComponent<Health>().LoseHealth(5);
-                    GameObject tempObj = (GameObject)Instantiate(debuff, other.transform.position, other.transform.rotation);
-                    tempObj.GetComponent<DebuffFrost>().target = other.gameObject;
-                }
-                else if (heroEquipment.equippedEmber == ember.Wind)
-                {
-                    other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
-                    other.GetComponent<Health>().LoseHealth(5);
-                }
-                else if (heroEquipment.equippedEmber == ember.Wind)
-                {
-                    other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
-                    other.GetComponent<Health>().LoseHealth(5);
-                }
-                else if (heroEquipment.equippedEmber == ember.Earth)
-                {
-                    other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
-                    other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
-                    other.GetComponent<Health>().LoseHealth(5);
-                }
-                else if (heroEquipment.equippedEmber == ember.Death)
-                {
-                    other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
-                    other.GetComponent<Health>().LoseHealth(5);
-                }
-                else if (heroEquipment.equippedEmber == ember.Life)
-                {
-                    other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
-                    other.GetComponent<Health>().LoseHealth(5);
-                }
-=======
+
             Instantiate(hpPickup, other.transform.position, other.transform.rotation);
 
-            if (heroEquipment.equippedEmber == ember.None)
+            vectoplayer = playerpos - other.transform.position;
+
+            RaycastHit hitInfo;
+            if (Physics.Raycast(playerpos, vectoplayer.normalized, out hitInfo, vectoplayer.magnitude))
             {
-                other.GetComponent<Health>().LoseHealth(5);                            
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
->>>>>>> .theirs
+                if (hitInfo.collider.GetInstanceID() == other.GetInstanceID())
+                {
+                    if (heroEquipment.equippedEmber == ember.None)
+                    {
+                        other.GetComponent<Health>().LoseHealth(5);
+                    }
+                    else if (heroEquipment.equippedEmber == ember.Fire)
+                    {
+                        other.GetComponent<Health>().LoseHealth(5);
+                        GameObject tempObj = (GameObject)Instantiate(debuff, other.transform.position, other.transform.rotation);
+                        tempObj.GetComponent<DebuffFire>().target = other.gameObject;
+                    }
+                    else if (heroEquipment.equippedEmber == ember.Ice)
+                    {
+                        other.GetComponent<Health>().LoseHealth(5);
+                        GameObject tempObj = (GameObject)Instantiate(debuff, other.transform.position, other.transform.rotation);
+                        tempObj.GetComponent<DebuffFrost>().target = other.gameObject;
+                    }
+                    else if (heroEquipment.equippedEmber == ember.Wind)
+                    {
+                        other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
+                        other.GetComponent<Health>().LoseHealth(5);
+                    }
+                    else if (heroEquipment.equippedEmber == ember.Wind)
+                    {
+                        other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
+                        other.GetComponent<Health>().LoseHealth(5);
+                    }
+                    else if (heroEquipment.equippedEmber == ember.Earth)
+                    {
+                        other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
+                        other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
+                        other.GetComponent<Health>().LoseHealth(5);
+                    }
+                    else if (heroEquipment.equippedEmber == ember.Death)
+                    {
+                        other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
+                        other.GetComponent<Health>().LoseHealth(5);
+                    }
+                    else if (heroEquipment.equippedEmber == ember.Life)
+                    {
+                        other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
+                        other.GetComponent<Health>().LoseHealth(5);
+                    }
+                }
             }
-       // }
+        }
     }
+
 }
+
+      
+
+
+
+
+         
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 

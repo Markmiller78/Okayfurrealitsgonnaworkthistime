@@ -38,9 +38,9 @@ public class SaveTest : MonoBehaviour {
 
 		BinaryFormatter bin = new BinaryFormatter ();
 		FileStream file = File.Create (Application.persistentDataPath + "/playerinfo.dat");
-		PlayerData data= new PlayerData();
+		PlayerDatas data= new PlayerDatas();
 		data.health= 15;
-		data.lights= 20;
+		data.theLight= 20;
 		bin.Serialize(file,data);
 		file.Close();
 		Debug.Log ("Saved!");
