@@ -11,6 +11,7 @@ public class AILivingDead : MonoBehaviour
     //    Health playerHealth;
     //    Rigidbody2D rb2d;
 	public bool isReinforced=false;
+ 
     CharacterController controller;
     public float attackDamage;
     public float attackRange;
@@ -24,9 +25,12 @@ public class AILivingDead : MonoBehaviour
     float snaredSpeed;
     float SnareTimer;
     bool isSnared;
+    public float infectRange;
+    public float infecttimer;
 
     void Start()
     {
+        infecttimer = 3.0f;
         isSnared = false;
         moveSpeed = 1;
         player = GameObject.FindGameObjectWithTag("Player");
@@ -70,7 +74,7 @@ public class AILivingDead : MonoBehaviour
             }
         }
     }
-
+  
     void Move()
     {
         //rb2d.MovePosition(Vector2.MoveTowards(transform.position, player.transform.position, Time.deltaTime * moveSpeed));
@@ -89,8 +93,9 @@ public class AILivingDead : MonoBehaviour
 
     void Attack()
     {
+        if(playMove!=null)
         playMove.KnockBack(transform.position);
-        playerHealth.LoseHealth(7);
+        player.GetComponent<Health>().LoseHealth(7);
     }
 
     void UpdateAttackCooldown()
@@ -147,5 +152,30 @@ public class AILivingDead : MonoBehaviour
     void GetInfected()
     {
         isInfected = true;
+    }
+
+    void Decoy(GameObject decoy)
+    {
+        player = decoy;
+        playMove = decoy.GetComponent<PlayerMovement>();
+    }
+    void UnDecoy(GameObject decoy)
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+        playMove = player.GetComponent<PlayerMovement>();
+    }
+
+    void Infect()
+    {
+        GameObject[] allObjects = GameObject.FindObjectsOfType<GameObject>();
+
+        foreach (var obj in allObjects)
+        {
+            Vector3 dist = transform.position - obj.transform.position;
+            if (obj.tag == "Enemy" && dist.magnitude < infectRange)
+                obj.SendMessage("GetInfected", SendMessageOptions.DontRequireReceiver);
+
+        }
+
     }
 }

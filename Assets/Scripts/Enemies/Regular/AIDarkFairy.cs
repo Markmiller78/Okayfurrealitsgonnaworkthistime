@@ -26,6 +26,8 @@ public class AIDarkFairy : MonoBehaviour
     public Vector3 vectoplayer;
     public Vector3 IdleVec;
     public int size;
+    public float infectRange;
+    public float infecttimer;
 
     float snaredSpeed;
     float SnareTimer;
@@ -36,12 +38,14 @@ public class AIDarkFairy : MonoBehaviour
 
     void Start()
     {
+        infecttimer = 3.0f;
         isSnared = false;
         IdleVec = new Vector3(1, 1, 0);
         timer = 0.0f;
         player = GameObject.FindGameObjectWithTag("Player");
         heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
         GameObject[] temp = GameObject.FindGameObjectsWithTag("LightDrop");
+        currentlight = null;
 
         for (int i = 0; i < temp.Length; i++)
         {
@@ -56,6 +60,7 @@ public class AIDarkFairy : MonoBehaviour
     {
         if (heroEquipment.paused == false)
         {
+            if(isCasting)
             {
                 atkcooldown -= Time.deltaTime;
                 if (atkcooldown <= 0.0f)
@@ -103,13 +108,6 @@ public class AIDarkFairy : MonoBehaviour
                 StealLightDrop();
             }
 
-
-            {
-                movementspeed = 3.0f;
-                FaceTarget(currentlight);
-                MoveTowardsLight(currentlight);
-                StealLightDrop();
-            }
             if (isSnared)
             {
                 SnareTimer -= Time.deltaTime;
@@ -144,6 +142,7 @@ public class AIDarkFairy : MonoBehaviour
         {
             list.Remove(currentlight);
             Destroy(currentlight);
+            currentlight = null;
 
         }
 
@@ -256,18 +255,32 @@ public class AIDarkFairy : MonoBehaviour
     {
         movementspeed = snaredSpeed;
     }
-    void Decoy()
+    void Decoy(GameObject decoy)
     {
-        player = GameObject.FindGameObjectWithTag("Decoy");
+        player = decoy;
+       // playMove = decoy.GetComponent<PlayerMovement>();
     }
-
-    void UnDecoy()
+    void UnDecoy(GameObject decoy)
     {
         player = GameObject.FindGameObjectWithTag("Player");
+      //  playMove = player.GetComponent<PlayerMovement>();
     }
     void GetInfected()
     {
         isInfected = true;
+    }
+    void Infect()
+    {
+        GameObject[] allObjects = GameObject.FindObjectsOfType<GameObject>();
+
+        foreach (var obj in allObjects)
+        {
+            Vector3 dist = transform.position - obj.transform.position;
+            if (obj.tag == "Enemy" && dist.magnitude < infectRange)
+                obj.SendMessage("GetInfected", SendMessageOptions.DontRequireReceiver);
+
+        }
+
     }
 
 }

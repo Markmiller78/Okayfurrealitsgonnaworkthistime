@@ -111,6 +111,16 @@ public class PlayerSpellCasting : MonoBehaviour
                         Instantiate(lifeOrb, transform.position, transform.rotation);
 
                     }
+                    else if (heroEquipment.equippedEmber == ember.Death)
+                    {
+                        Instantiate(deathOrb, transform.position, transform.rotation);
+
+                    }
+                    else if (heroEquipment.equippedEmber == ember.Earth)
+                    {
+                        Instantiate(earthOrb, transform.position, transform.rotation);
+
+                    }
                 }
                 else if (heroEquipment.equippedAccessory == accessory.Singularity)
                 {
@@ -137,12 +147,12 @@ public class PlayerSpellCasting : MonoBehaviour
                     }
                     else if (heroEquipment.equippedEmber == ember.Death)
                     {
-                        Instantiate(deathSnare, transform.position, transform.rotation);
+                        Instantiate(deathSing, transform.position, transform.rotation);
 
                     }
                     else if (heroEquipment.equippedEmber == ember.Earth)
                     {
-                        Instantiate(earthSnare, transform.position, transform.rotation);
+                        Instantiate(earthSing, transform.position, transform.rotation);
 
                     }
                 }

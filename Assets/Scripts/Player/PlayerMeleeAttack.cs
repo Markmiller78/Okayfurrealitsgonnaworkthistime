@@ -12,10 +12,12 @@ public class PlayerMeleeAttack : MonoBehaviour
     float rotationDelta = 0.0f;
     public float speed = 3.0f;
 
+
     PlayerEquipment heroEqp;
 
     void Start()
     {
+       
         player = transform.parent.gameObject;
         playerStats = player.GetComponent<PlayerStats>();
         rotationDelta = player.transform.rotation.z;

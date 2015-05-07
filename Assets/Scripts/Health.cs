@@ -7,12 +7,15 @@ public class Health : MonoBehaviour
     public float maxHP;
     public float currentHP;
     public float healthPercent;
+    public bool isInfected = false;
     GameObject healthBar;
 
     GameObject dungeon;
     RoomGeneration generator;
     public GameObject lifeEmberSpawn;
     GameObject player;
+   public  GameObject explosion;
+   public  GameObject lightRemains;
     PlayerEquipment equipment;
     public Text YouLoseText;
     float deathTimer;
@@ -96,7 +99,12 @@ public class Health : MonoBehaviour
         if (this.tag != "Player")
         {
             gameObject.GetComponent<GenerateLoot>().Generateloot();
+            if (isInfected)
+            {
+                Explode();
+            }
             Destroy(gameObject);
+   
             --generator.finalRoomInfoArray[generator.currentRoom].numEnemies;
         }
         else
@@ -114,5 +122,17 @@ public class Health : MonoBehaviour
                         UnityEditor.EditorApplication.isPlaying = false;
 #endif
         }
+    }
+    void GetInfected()
+    {
+        isInfected = true;
+    }
+    void Explode()
+    {
+
+        Instantiate(explosion, transform.position, transform.rotation);
+        Instantiate(lightRemains, transform.position, transform.rotation);
+        
+    
     }
 }

@@ -12,7 +12,9 @@ public class SkeletonProjectile : MonoBehaviour
 
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.FindGameObjectWithTag("Decoy");
+        if(player==null)
+            player = GameObject.FindGameObjectWithTag("Player");
         playerHealth = player.GetComponent<Health>();
     }
 

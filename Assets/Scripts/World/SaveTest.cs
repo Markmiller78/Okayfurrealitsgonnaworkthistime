@@ -40,7 +40,7 @@ public class SaveTest : MonoBehaviour {
 		FileStream file = File.Create (Application.persistentDataPath + "/playerinfo.dat");
 		PlayerData data= new PlayerData();
 		data.health= 15;
-		data.light= 20;
+		data.lights= 20;
 		bin.Serialize(file,data);
 		file.Close();
 		Debug.Log ("Saved!");
