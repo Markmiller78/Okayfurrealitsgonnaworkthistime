@@ -7,6 +7,7 @@ public class SpellLightBolt : MonoBehaviour {
 
     public GameObject expPlacer;
     public GameObject debuff;
+    public GameObject hpPickup;
 
     public GameObject poke;
 
@@ -50,6 +51,7 @@ public class SpellLightBolt : MonoBehaviour {
         }
         else if (other.tag == "Enemy")
         {
+            Instantiate(hpPickup, other.transform.position, other.transform.rotation);
             if (heroEquipment.equippedEmber == ember.None)
             {
                 other.GetComponent<Health>().LoseHealth(damage);

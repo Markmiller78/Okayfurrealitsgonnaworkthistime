@@ -37,7 +37,7 @@ public class DebuffFrost : MonoBehaviour {
                 transform.position = target.transform.position + new Vector3(0, 0, -0.5f);
                 if (timer == 0)
                 {
-                    target.SendMessage("Slow");
+                    target.SendMessage("Slow", SendMessageOptions.DontRequireReceiver);
                 }
                 timer += Time.deltaTime;
 
@@ -45,7 +45,7 @@ public class DebuffFrost : MonoBehaviour {
                 {
                     if (once)
                     {
-                        target.SendMessage("Unslow");
+                        target.SendMessage("Unslow", SendMessageOptions.DontRequireReceiver);
                         once = false;
                     }
                     particles.emissionRate = 0;

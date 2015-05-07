@@ -11,6 +11,7 @@ public class SpellBlastOfLight : MonoBehaviour
 
     public GameObject debuff;
     public GameObject remains;
+    public GameObject hpPickup;
 
     float maxLife;
 
@@ -51,6 +52,8 @@ public class SpellBlastOfLight : MonoBehaviour
     {
         if (other.tag == "Enemy")
         {
+            Instantiate(hpPickup, other.transform.position, other.transform.rotation);
+
             if (heroEquipment.equippedEmber == ember.None)
             {
                 other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);

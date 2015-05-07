@@ -13,6 +13,7 @@ public class StaffParticles : MonoBehaviour {
     public GameObject windParts;
     public GameObject lifeParts;
 
+
 	// Use this for initialization
 	void Start () {
         playerEquipemnt = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();

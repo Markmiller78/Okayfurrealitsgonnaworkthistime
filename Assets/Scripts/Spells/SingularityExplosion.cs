@@ -11,6 +11,7 @@ public class SingularityExplosion : MonoBehaviour {
     GameObject player;
     float maxLife;
     public GameObject lightRemains;
+    public GameObject hpPickup;
 
     // Use this for initialization
     void Start()
@@ -50,6 +51,7 @@ public class SingularityExplosion : MonoBehaviour {
     {
         if (other.tag == "Enemy")
         {
+            Instantiate(hpPickup, other.transform.position, other.transform.rotation);
             if (heroEquipment.equippedEmber == ember.None)
             {
                 other.GetComponent<Health>().LoseHealth(10);
