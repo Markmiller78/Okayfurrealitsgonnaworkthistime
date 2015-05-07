@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEngine.UI;
 public class Health : MonoBehaviour
 {
 
@@ -14,7 +13,7 @@ public class Health : MonoBehaviour
     public GameObject lifeEmberSpawn;
     GameObject player;
     PlayerEquipment equipment;
-    public Text YouLoseText;
+    public GameObject LoseText;
     float deathTimer;
     bool playerDead;
     void Start()
@@ -97,17 +96,18 @@ public class Health : MonoBehaviour
         else
         {
             playerDead = true;
-            YouLoseText.enabled = true;
+            Instantiate(LoseText);
             equipment.paused = true;
-#if UNITY_STANDALONE
+
             if (deathTimer < 0)
             {
-                YouLoseText.text = " ";
+#if UNITY_STANDALONE
                 Application.Quit();
-            }
-#elif UNITY_EDITOR
-                        UnityEditor.EditorApplication.isPlaying = false;
 #endif
+#if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+#endif
+            }
         }
     }
 }
