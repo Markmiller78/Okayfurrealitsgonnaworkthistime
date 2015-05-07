@@ -153,7 +153,7 @@ public class GenerateLoot : MonoBehaviour {
 
         string[] embers = new string[10];
         embers[0] = "Scorching Ember of ";
-        embers[1] = "Quake Emberof ";
+        embers[1] = "Quake Ember of ";
         embers[2] = "Frost Ember of ";
         embers[3] = "Gale Ember of ";
         embers[4] = "Rejuvenating Ember of";

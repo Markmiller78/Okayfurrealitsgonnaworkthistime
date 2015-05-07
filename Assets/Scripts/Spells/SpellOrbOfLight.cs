@@ -51,12 +51,10 @@ public class SpellOrbOfLight : MonoBehaviour {
         }
         else if (other.tag == "Enemy")
         {
-            vectoplayer = playerpos - other.transform.position;
-
-            if (!Physics.Raycast(playerpos, vectoplayer.normalized, range))
-            {
-             //   other.GetComponent<Health>().LoseHealth(5);
-            }
+           
+   
+                other.GetComponent<Health>().LoseHealth(5);
+          
     
             Explode();
         }

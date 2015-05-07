@@ -149,10 +149,7 @@ public class AILivingDead : MonoBehaviour
 	
 		
 	}
-    void GetInfected()
-    {
-        isInfected = true;
-    }
+ 
 
     void Decoy(GameObject decoy)
     {
@@ -165,17 +162,5 @@ public class AILivingDead : MonoBehaviour
         playMove = player.GetComponent<PlayerMovement>();
     }
 
-    void Infect()
-    {
-        GameObject[] allObjects = GameObject.FindObjectsOfType<GameObject>();
-
-        foreach (var obj in allObjects)
-        {
-            Vector3 dist = transform.position - obj.transform.position;
-            if (obj.tag == "Enemy" && dist.magnitude < infectRange)
-                obj.SendMessage("GetInfected", SendMessageOptions.DontRequireReceiver);
-
-        }
-
-    }
+ 
 }

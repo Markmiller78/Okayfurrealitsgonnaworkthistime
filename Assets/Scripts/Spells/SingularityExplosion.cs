@@ -55,18 +55,23 @@ public class SingularityExplosion : MonoBehaviour {
     {
         if (other.tag == "Enemy")
         {
-            
-Instantiate(hpPickup, other.transform.position, other.transform.rotation);
-vectoplayer = playerpos - other.transform.position;
+
+
+            vectoplayer = other.transform.position - playerpos;
 
             RaycastHit hitInfo;
-            if (Physics.Raycast(playerpos, vectoplayer.normalized, out hitInfo, vectoplayer.magnitude))
+            if (Physics.Raycast(playerpos, vectoplayer.normalized, out hitInfo, vectoplayer.magnitude + 1))
             {
-                if (hitInfo.collider.GetInstanceID() == other.GetInstanceID())
+
+                Debug.Log(hitInfo.collider.gameObject.tag);
+                if (hitInfo.collider.gameObject == other.gameObject)
                 {
-                other.GetComponent<Health>().LoseHealth(10);
+                    Instantiate(hpPickup, other.transform.position, other.transform.rotation); 
+                   
+              
                     if (heroEquipment.equippedEmber == ember.None)
                     {
+                      
                         other.GetComponent<Health>().LoseHealth(10);
                     }
                     else if (heroEquipment.equippedEmber == ember.Fire)
