@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEditor;
+//using UnityEditor;
 
 public class ExpPlacer : MonoBehaviour
 {
@@ -25,9 +25,9 @@ public class ExpPlacer : MonoBehaviour
         GameObject temp = (GameObject)Instantiate(boltExp, transform.position, transform.rotation);
         temp.GetComponent<ParticleSystem>().emissionRate = timer * 4000;
 
-        SerializedObject ohYeah = new SerializedObject(temp.GetComponent<ParticleSystem>());
-        ohYeah.FindProperty("ShapeModule.boxZ").floatValue = timer * 50f;
-        ohYeah.ApplyModifiedProperties();
+       // SerializedObject ohYeah = new SerializedObject(temp.GetComponent<ParticleSystem>());
+        //ohYeah.FindProperty("ShapeModule.boxZ").floatValue = timer * 50f;
+        //ohYeah.ApplyModifiedProperties();
 
         Destroy(gameObject);
     }

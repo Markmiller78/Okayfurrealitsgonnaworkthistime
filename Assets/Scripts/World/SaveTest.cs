@@ -55,7 +55,7 @@ public class SaveTest : MonoBehaviour {
 			FileStream file= File.Open(Application.persistentDataPath+"/playerinfo.dat", FileMode.Open);
 			PlayerDatas data= (PlayerDatas)bin.Deserialize(file);
 			life= data.health;
-			lightss=data.light;
+			lightss=data.theLight;
 			file.Close();
 			Debug.Log ("Loaded!");
 
@@ -66,7 +66,7 @@ public class SaveTest : MonoBehaviour {
 class PlayerDatas
 {
 	public float health;
-	public float light;
+    public float theLight;
 
 
 }
