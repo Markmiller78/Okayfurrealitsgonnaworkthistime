@@ -11,7 +11,7 @@ public class MainMenu : MonoBehaviour
     public Text playerhealth;
     public Text playerlight;
     public int health;
-    public int light;
+    public int theLight;
     public float[] choices = new float[] { };
     int maxchoices = 4;
 
@@ -40,23 +40,27 @@ public class MainMenu : MonoBehaviour
 
     public AudioClip changeSound;
     public AudioClip selectSound;
-    AudioSource soundSource;
-   
+    public AudioSource soundSource;
+
 
     float timer = 0;
 
     // Use this for initialization
     void Start()
     {
-       // Load();
+        // Load();
 
 
- 
-        health = 50; light = 0;
+
+        health = 50; 
+        theLight = 0; 
+
+#if UNITY_STANDALONE
         Save();
-     //   playerhealth.text = health.ToString();
-   //     playerlight.text = light.ToString();
-        soundSource = GetComponent<AudioSource>();
+#endif
+        //   playerhealth.text = health.ToString();
+        //     playerlight.text = light.ToString();
+        //soundSource = GetComponent<AudioSource>();
         theOptions = GameObject.Find("TheOptions").GetComponent<Options>();
     }
 
@@ -259,7 +263,7 @@ public class MainMenu : MonoBehaviour
         }
     }
 
-    void OptionsMenu()
+   void OptionsMenu()
     {
         maxchoices = 3;
         choices[0] = 1.8f;
@@ -385,85 +389,85 @@ public class MainMenu : MonoBehaviour
                     }
             }
         }
-            if ((Input.GetButtonDown("CMenuCancel") || Input.GetButtonDown("KBPause")) && timer < 0)
+        if ((Input.GetButtonDown("CMenuCancel") || Input.GetButtonDown("KBPause")) && timer < 0)
+        {
+            timer = .5f;
+            for (int i = 0; i < 4; i++)
             {
-                timer = .5f;
-                for (int i = 0; i < 4; i++)
-                {
-                    OptionsMenuText4Highlight[i].SetActive(false);
-                }
-
-                if (soundSource.isPlaying)
-                    soundSource.Stop();
-                soundSource.clip = selectSound;
-                soundSource.Play();
-
-                switch (currentSelection)
-                {
-                    case 8:
-                        {
-                            currentSelection = 0;
-                            break;
-                        }
-                    case 9:
-                        {
-                            currentSelection = 1;
-                            break;
-                        }
-                    default:
-                        {
-                            OptionsMenuText.SetActive(false);
-                            CurrMenu = Menu.Main;
-                            currentSelection = 1;
-                            break;
-                        }
-                }
-            }
-            //Sound Fx Volume up/down
-            if ((Input.GetAxis("CLSVertical") > .7f || Input.GetAxis("KBVertical") > 0 || Input.GetAxis("CDPadVertical") > .7f) && AxisChanged == false && currentSelection == 8)
-            {
-                theOptions.sfxIncrease();
-                soundSource.volume = theOptions.sfxVolume * 0.01f;
-                if (soundSource.isPlaying)
-                    soundSource.Stop();
-                soundSource.clip = selectSound;
-                soundSource.Play();
-                AxisChanged = true;
-            }
-            if ((Input.GetAxis("CLSVertical") < -0.7f || Input.GetAxis("KBVertical") < 0 || Input.GetAxis("CDPadVertical") < -0.7f) && AxisChanged == false && currentSelection == 8)
-            {
-                theOptions.sfxDecrease();
-                soundSource.volume = theOptions.sfxVolume * 0.01f;
-                if (soundSource.isPlaying)
-                    soundSource.Stop();
-                soundSource.clip = selectSound;
-                soundSource.Play();
-                AxisChanged = true;
-
-            }
-            if ((Input.GetAxis("CLSVertical") == 0 && Input.GetAxis("KBVertical") == 0 && Input.GetAxis("CDPadVertical")== 0) && currentSelection == 8)
-            {
-                AxisChanged = false;
+                OptionsMenuText4Highlight[i].SetActive(false);
             }
 
+            if (soundSource.isPlaying)
+                soundSource.Stop();
+            soundSource.clip = selectSound;
+            soundSource.Play();
 
-            //Music Volume up/down
-            if ((Input.GetAxis("CLSVertical") > .7f || Input.GetAxis("KBVertical") > 0 || Input.GetAxis("CDPadVertical") > .7f) && AxisChanged == false && currentSelection == 9)
+            switch (currentSelection)
             {
-                theOptions.musicIncrease();
-                AxisChanged = true;
-            }
-            if ((Input.GetAxis("CLSVertical") < -0.7f || Input.GetAxis("KBVertical") < 0 || Input.GetAxis("CDPadVertical") < -0.7f) && AxisChanged == false && currentSelection == 9)
-            {
-                theOptions.musicDecrease();
-                AxisChanged = true;
-
-            }
-            if ((Input.GetAxis("CLSVertical") == 0 && Input.GetAxis("KBVertical") == 0 && Input.GetAxis("CDPadVertical") == 0 )&& currentSelection == 9)
-            {
-                AxisChanged = false;
+                case 8:
+                    {
+                        currentSelection = 0;
+                        break;
+                    }
+                case 9:
+                    {
+                        currentSelection = 1;
+                        break;
+                    }
+                default:
+                    {
+                        OptionsMenuText.SetActive(false);
+                        CurrMenu = Menu.Main;
+                        currentSelection = 1;
+                        break;
+                    }
             }
         }
+        //Sound Fx Volume up/down
+        if ((Input.GetAxis("CLSVertical") > .7f || Input.GetAxis("KBVertical") > 0 || Input.GetAxis("CDPadVertical") > .7f) && AxisChanged == false && currentSelection == 8)
+        {
+            theOptions.sfxIncrease();
+            soundSource.volume = theOptions.sfxVolume * 0.01f;
+            if (soundSource.isPlaying)
+                soundSource.Stop();
+            soundSource.clip = selectSound;
+            soundSource.Play();
+            AxisChanged = true;
+        }
+        if ((Input.GetAxis("CLSVertical") < -0.7f || Input.GetAxis("KBVertical") < 0 || Input.GetAxis("CDPadVertical") < -0.7f) && AxisChanged == false && currentSelection == 8)
+        {
+            theOptions.sfxDecrease();
+            soundSource.volume = theOptions.sfxVolume * 0.01f;
+            if (soundSource.isPlaying)
+                soundSource.Stop();
+            soundSource.clip = selectSound;
+            soundSource.Play();
+            AxisChanged = true;
+
+        }
+        if ((Input.GetAxis("CLSVertical") == 0 && Input.GetAxis("KBVertical") == 0 && Input.GetAxis("CDPadVertical") == 0) && currentSelection == 8)
+        {
+            AxisChanged = false;
+        }
+
+
+        //Music Volume up/down
+        if ((Input.GetAxis("CLSVertical") > .7f || Input.GetAxis("KBVertical") > 0 || Input.GetAxis("CDPadVertical") > .7f) && AxisChanged == false && currentSelection == 9)
+        {
+            theOptions.musicIncrease();
+            AxisChanged = true;
+        }
+        if ((Input.GetAxis("CLSVertical") < -0.7f || Input.GetAxis("KBVertical") < 0 || Input.GetAxis("CDPadVertical") < -0.7f) && AxisChanged == false && currentSelection == 9)
+        {
+            theOptions.musicDecrease();
+            AxisChanged = true;
+
+        }
+        if ((Input.GetAxis("CLSVertical") == 0 && Input.GetAxis("KBVertical") == 0 && Input.GetAxis("CDPadVertical") == 0) && currentSelection == 9)
+        {
+            AxisChanged = false;
+        }
+    }
 
     void CreditsMenu()
     {
@@ -778,13 +782,13 @@ public class MainMenu : MonoBehaviour
                 case 0:
                     {
                         //HARD DIFFICULTY
-                        Application.LoadLevel("Game");
+                        LevelManager.Load("Game");
                         break;
                     }
                 case 1:
                     {
                         //NORMAL DIFFICULTY
-                        Application.LoadLevel("Game");
+                        LevelManager.Load("Game");
                         break;
                     }
                 case 2:
@@ -825,11 +829,11 @@ public class MainMenu : MonoBehaviour
     }
 
 
-    public void LoadStats()
+    void LoadStats()
     {
         playerhealth.text = "100";
 
-    
+
         if (File.Exists(Application.persistentDataPath + "/playerinfo.dat"))
         {
             BinaryFormatter bin = new BinaryFormatter();
@@ -838,13 +842,13 @@ public class MainMenu : MonoBehaviour
             playerhealth.text = data.health.ToString();
             playerlight.text = data.light.ToString();
             file.Close();
-       
+
 
         }
 
     }
 
-    public void LoadOptions()
+    void LoadOptions()
     {
 
         if (File.Exists(Application.persistentDataPath + "/optioninfo.dat"))
@@ -858,17 +862,17 @@ public class MainMenu : MonoBehaviour
 
         }
     }
-    public void Save()
+    void Save()
     {
 
         BinaryFormatter bin = new BinaryFormatter();
         FileStream file = File.Create(Application.persistentDataPath + "/playerinfo.dat");
         PlayerData data = new PlayerData();
-        data.health =health;
-       data.light =  light;
+        data.health = health;
+        data.light = theLight;
         bin.Serialize(file, data);
         file.Close();
-       
+
     }
 }
 
@@ -878,7 +882,5 @@ class PlayerData
 {
     public int health;
     public int light;
-
-
 }
 

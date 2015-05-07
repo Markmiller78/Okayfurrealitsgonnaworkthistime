@@ -13,16 +13,22 @@ public class AISkeletonArcher : MonoBehaviour
     public float attackMinRange;
     public float moveSpeed;
     public float turnSpeed;
+    public float infectRange;
+    public float infecttimer;
     float distanceToPlayer;
 	public bool isReinforced = false;
     public bool isInfected = false;
     public GameObject projectile;
     bool hasAttacked = false;
+    
     CharacterController controller;
     Utilities.ppList<GameObject> usedWaypoints;
 
     void Start()
     {
+        infectRange = 1.5f;
+
+        infecttimer = 3.0f; 
         heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
         player = GameObject.FindGameObjectWithTag("Player");
         attackCooldown = attackCooldownMax;
@@ -37,7 +43,7 @@ public class AISkeletonArcher : MonoBehaviour
         usedWaypoints.pushBack(new GameObject("Five"));
         usedWaypoints.pushBack(new GameObject("TheRealSlimShady"));
         usedWaypoints.popFront();
-        GameObject test = usedWaypoints.popFront();
+      //  GameObject test = usedWaypoints.popFront();
         //
     }
 
@@ -45,6 +51,8 @@ public class AISkeletonArcher : MonoBehaviour
     {
         if (heroEquipment.paused == false)
         {
+            if(isInfected)
+            Infect();
             if (hasAttacked)
             {
                 UpdateAttackCooldown();
@@ -73,6 +81,19 @@ public class AISkeletonArcher : MonoBehaviour
         controller.Move(moveTo * Time.deltaTime * moveSpeed);
     }
 
+    void Infect()
+    {
+        GameObject[] allObjects = GameObject.FindObjectsOfType<GameObject>();
+
+        foreach (var obj in allObjects)
+        {
+            Vector3 dist = transform.position - obj.transform.position;
+            if (obj.tag == "Enemy"&&dist.magnitude<infectRange)
+                obj.SendMessage("GetInfected", SendMessageOptions.DontRequireReceiver);
+
+        }
+    
+    }
     void MoveAway()
     {
         Vector2 moveTo = (player.transform.position - transform.position).normalized;
@@ -104,15 +125,16 @@ public class AISkeletonArcher : MonoBehaviour
     }
 
 
-	void Decoy()
-	{
-		player = GameObject.FindGameObjectWithTag ("Decoy");
-	}
-	
-	void UnDecoy()
-	{
-		player = GameObject.FindGameObjectWithTag("Player");
-	}
+    void Decoy(GameObject decoy)
+    {
+        player = decoy;
+       // playMove = decoy.GetComponent<PlayerMovement>();
+    }
+    void UnDecoy(GameObject decoy)
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+     //   playMove = player.GetComponent<PlayerMovement>();
+    }
 	void Reinforce()
 	{
 		if (!isReinforced) 

@@ -25,9 +25,12 @@ public class AICommander : MonoBehaviour
     float snaredSpeed;
     float SnareTimer;
     bool isSnared;
+    public float infectRange;
+    public float infecttimer;
     // Use this for initialization
     void Start()
     {
+        infecttimer = 3.0f;
         isSnared = false;
         player = GameObject.FindGameObjectWithTag("Player");
         list = GameObject.FindGameObjectsWithTag("Enemy");
@@ -42,6 +45,8 @@ public class AICommander : MonoBehaviour
     {
         if (heroEquipment.paused == false)
         {
+            if (isInfected)
+                Infect();
             if (isAttacking)
             {
                 atkcooldown -= Time.deltaTime;
@@ -152,6 +157,8 @@ public class AICommander : MonoBehaviour
         if (dist < atkrange && !isAttacking)
         {
             player.GetComponent<Health>().LoseHealth(atkdmg);
+            player.GetComponent<Knockback>().SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
+
             isAttacking = true;
         }
 
@@ -178,17 +185,32 @@ public class AICommander : MonoBehaviour
     {
         movementspeed = snaredSpeed;
     }
-    void Decoy()
+    void Decoy(GameObject decoy)
     {
-        player = GameObject.FindGameObjectWithTag("Decoy");
+        player = decoy;
+        // playMove = decoy.GetComponent<PlayerMovement>();
     }
-
-    void UnDecoy()
+    void UnDecoy(GameObject decoy)
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        //  playMove = player.GetComponent<PlayerMovement>();
     }
     void GetInfected()
     {
         isInfected = true;
+    }
+    void Infect()
+    {
+
+        GameObject[] allObjects = GameObject.FindObjectsOfType<GameObject>();
+
+        foreach (var obj in allObjects)
+        {
+            Vector3 dist = transform.position - obj.transform.position;
+            if (obj.tag == "Enemy" && dist.magnitude < infectRange)
+                obj.SendMessage("GetInfected", SendMessageOptions.DontRequireReceiver);
+
+        }
+
     }
 }

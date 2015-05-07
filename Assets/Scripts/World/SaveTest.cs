@@ -38,9 +38,9 @@ public class SaveTest : MonoBehaviour {
 
 		BinaryFormatter bin = new BinaryFormatter ();
 		FileStream file = File.Create (Application.persistentDataPath + "/playerinfo.dat");
-		PlayerData data= new PlayerData();
+		PlayerDatas data= new PlayerDatas();
 		data.health= 15;
-		data.light= 20;
+		data.theLight= 20;
 		bin.Serialize(file,data);
 		file.Close();
 		Debug.Log ("Saved!");
@@ -55,7 +55,7 @@ public class SaveTest : MonoBehaviour {
 			FileStream file= File.Open(Application.persistentDataPath+"/playerinfo.dat", FileMode.Open);
 			PlayerDatas data= (PlayerDatas)bin.Deserialize(file);
 			life= data.health;
-			lightss=data.light;
+			lightss=data.theLight;
 			file.Close();
 			Debug.Log ("Loaded!");
 
@@ -66,7 +66,7 @@ public class SaveTest : MonoBehaviour {
 class PlayerDatas
 {
 	public float health;
-	public float light;
+    public float theLight;
 
 
 }

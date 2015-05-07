@@ -6,13 +6,19 @@ public class Decoy : MonoBehaviour {
 
 	public GameObject lightRemains;
 	public float timer=5.0f;
+    public float damage;
+    public float range;
+    public GameObject explosion;
+    public GameObject[] allObjects;
 	// Use this for initialization
 	void Start ()  {
+        range = 2.0f;
+        damage = 8.0f;
 		GameObject[] allObjects;
 		allObjects = GameObject.FindObjectsOfType<GameObject>();
 		foreach (GameObject obj in allObjects)
 		{
-			obj.SendMessage("Decoy", SendMessageOptions.DontRequireReceiver);
+			obj.SendMessage("Decoy", this.gameObject, SendMessageOptions.DontRequireReceiver);
 		}
 	
 	}
@@ -21,19 +27,37 @@ public class Decoy : MonoBehaviour {
 	void Update () {
 		timer -= Time.deltaTime;
 		if (timer <= 0.0f)
-		{
-			GameObject[] allObjects;
+	 
+        {
 			allObjects = GameObject.FindObjectsOfType<GameObject>();
 			foreach (GameObject obj in allObjects)
-			{
-				obj.SendMessage("UnDecoy", SendMessageOptions.DontRequireReceiver);
+            {
+                if (obj.tag != "Player")
+                {
+                    Vector3 temp = transform.position - obj.transform.position;
+                    if (temp.magnitude < range)
+                    {
+                        if (obj.GetComponent<Health>() != null)
+                        {
+                            obj.GetComponent<Health>().LoseHealth(damage);
+                            obj.GetComponent<Knockback>().SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
+                        }
+                    }
+                    obj.SendMessage("UnDecoy",this.gameObject, SendMessageOptions.DontRequireReceiver);
+                }
 			}
-			Instantiate(lightRemains, transform.position, transform.rotation);  
-			Destroy (this.gameObject);
+ 
+            Explode();
+			Destroy (gameObject);
 
 		}
 	
 	}
-
+    void Explode()
+    {
+        Instantiate(explosion, transform.position, transform.rotation);
+        Instantiate(lightRemains, transform.position, transform.rotation);
+        Destroy(gameObject);
+    }
 
 }
