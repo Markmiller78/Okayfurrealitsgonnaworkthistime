@@ -32,7 +32,7 @@ public class RoomGeneration : MonoBehaviour
 
     void Start()
     {
-        DontDestroyOnLoad(this);
+        //DontDestroyOnLoad(this);
         player = GameObject.FindGameObjectWithTag("Player");
         Utilities.ArrayShuffle(floorOneRooms);
         floorOneRoomsInfo = new Room[floorOneRooms.Length];

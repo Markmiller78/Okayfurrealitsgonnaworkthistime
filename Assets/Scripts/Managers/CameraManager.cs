@@ -29,7 +29,7 @@ public class CameraManager : MonoBehaviour
 
     void Update()
     {
-        if (player != null)
+        if (player != null && generator != null)
         {
             transform.position = new Vector3(player.transform.position.x, player.transform.position.y, -20.0f);
             if (player.transform.position.x < 7.75f)
