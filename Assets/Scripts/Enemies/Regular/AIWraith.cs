@@ -16,7 +16,8 @@ public class AIWraith : MonoBehaviour
 
     Vector3 WayPoint;
     float DistanceToWayPoint;
-    float randX, randY, EastDoorX, WestDoorX, SouthDoorY, NorthDoorY; // used for Waypoints
+    float randX, randY;
+    // EastDoorX, WestDoorX, SouthDoorY, NorthDoorY; // used for Waypoints
     public float moveSpeed;
     public float turnSpeed;
     bool attacking;
@@ -40,9 +41,9 @@ public class AIWraith : MonoBehaviour
         timer = .5f;
         AttackTimer = 2;
 
-        SouthDoorY = GameObject.FindGameObjectWithTag("SouthDoor").transform.position.y;
-        EastDoorX = GameObject.FindGameObjectWithTag("EastDoor").transform.position.x;
-        WestDoorX = GameObject.FindGameObjectWithTag("WestDoor").transform.position.x;
+        //SouthDoorY = GameObject.FindGameObjectWithTag("SouthDoor").transform.position.y;
+        //EastDoorX = GameObject.FindGameObjectWithTag("EastDoor").transform.position.x;
+        //WestDoorX = GameObject.FindGameObjectWithTag("WestDoor").transform.position.x;
 
     }
 
@@ -127,9 +128,9 @@ public class AIWraith : MonoBehaviour
             if (i == 90)
                 print("I reached 90");
 
-            if (WayPoint.x < EastDoorX && WayPoint.x > WestDoorX && WayPoint.y < NorthDoorY && WayPoint.y > SouthDoorY)
-                return;
-
+            //if (WayPoint.x < EastDoorX && WayPoint.x > WestDoorX && WayPoint.y < NorthDoorY && WayPoint.y > SouthDoorY)
+                //return;
+            return;
         }
 
         print("Wraith: RETURNED BAD WAYPOINT!");
