@@ -6,7 +6,7 @@ public class PlayerDashing : MonoBehaviour
 
     public float dashSpeed;
     public float dashDuration;
-    public int earthtrailtime;
+    public float earthtrailtime;
 
     float timeRemaining;
 
@@ -144,12 +144,12 @@ public class PlayerDashing : MonoBehaviour
                             }
                             else if (heroEquipment.equippedEmber == ember.Earth)
                             {
-                                ++earthtrailtime;
-                                Debug.Log(earthtrailtime);
-                                if (earthtrailtime >= 10000000)
+                               earthtrailtime+=Time.deltaTime;
+                            
+                                if (earthtrailtime >= 3.0f)
                                 {
-                                   // Instantiate(EarthTrail, transform.position, new Quaternion(0, 0, 0, 0));
-                                    earthtrailtime = 0;
+                                   Instantiate(EarthTrail, transform.position, new Quaternion(0, 0, 0, 0));
+                                    earthtrailtime = 0.0f;
                                 }
                             }
                             trailBlazerDropTimer = 0.0f;

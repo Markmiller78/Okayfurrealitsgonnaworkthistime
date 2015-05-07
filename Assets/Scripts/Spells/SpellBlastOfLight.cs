@@ -59,14 +59,14 @@ public class SpellBlastOfLight : MonoBehaviour
         if (other.tag == "Enemy")
         {
 
-            vectoplayer = other.transform.position - transform.position;
+            //vectoplayer = other.transform.position - transform.position;
 
-            RaycastHit hitInfo;
-            if (Physics.Raycast(transform.position, vectoplayer.normalized, out hitInfo, vectoplayer.magnitude + 1))
-            {
+            //RaycastHit hitInfo;
+            //if (Physics.Raycast(transform.position, vectoplayer.normalized, out hitInfo, vectoplayer.magnitude + 1))
+            //{
 
-                Debug.Log(hitInfo.collider.gameObject.tag);
-                if (hitInfo.collider.gameObject == other.gameObject)
+                //Debug.Log(hitInfo.collider.gameObject.tag);
+                //if (hitInfo.collider.gameObject == other.gameObject)
                 {
                     Instantiate(hpPickup, other.transform.position, other.transform.rotation); 
                     if (heroEquipment.equippedEmber == ember.None)
@@ -116,6 +116,6 @@ public class SpellBlastOfLight : MonoBehaviour
                     }
                 }
             
-        }
+       // }
     }
 
