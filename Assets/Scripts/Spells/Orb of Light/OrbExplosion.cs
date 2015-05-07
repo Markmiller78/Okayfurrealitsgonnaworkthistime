@@ -62,11 +62,8 @@ public class OrbExplosion : MonoBehaviour
 
             vectoplayer = playerpos - other.transform.position;
 
-            RaycastHit hitInfo;
-            if (Physics.Raycast(playerpos, vectoplayer.normalized, out hitInfo, vectoplayer.magnitude))
-            {
-                if (hitInfo.collider.GetInstanceID() == other.GetInstanceID())
-                {
+          
+              
                     if (heroEquipment.equippedEmber == ember.None)
                     {
                         other.GetComponent<Health>().LoseHealth(5);
@@ -112,9 +109,9 @@ public class OrbExplosion : MonoBehaviour
                 }
             }
         }
-    }
+    
 
-}
+
 
       
 
