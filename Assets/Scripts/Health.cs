@@ -92,13 +92,15 @@ public class Health : MonoBehaviour
     {
         if (this.tag != "Player")
         {
+            Instantiate(lightRemains, transform.position, transform.rotation);
             gameObject.GetComponent<GenerateLoot>().Generateloot();
-          if (isInfected)
-          {
-              Explode();
-          }
-         Instantiate(lightRemains, transform.position, transform.rotation);
-            Destroy(this.gameObject); 
+     // if (isInfected)
+     // {
+     //     Explode();
+     // }
+
+
+            Destroy(this.gameObject);
             --generator.finalRoomInfoArray[generator.currentRoom].numEnemies;
         }
         else
@@ -117,6 +119,9 @@ public class Health : MonoBehaviour
 #endif
             }
         }
+       
+      
+
     }
     void GetInfected()
     {

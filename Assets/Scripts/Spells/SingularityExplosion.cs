@@ -64,7 +64,7 @@ public class SingularityExplosion : MonoBehaviour {
             {
 
                 Debug.Log(hitInfo.collider.gameObject.tag);
-                if (hitInfo.collider.gameObject == other.gameObject)
+                if (hitInfo.collider.gameObject.tag == other.gameObject.tag)
                 {
                     Instantiate(hpPickup, other.transform.position, other.transform.rotation); 
                    
