@@ -85,6 +85,16 @@ public class PlayerMeleeAttack : MonoBehaviour
                 other.gameObject.GetComponent<Health>().LoseHealth(attackDamage + playerStats.meleeModifier);
 
             }
+            else if (heroEqp.equippedEmber == ember.Death)
+            {
+                other.gameObject.GetComponent<Health>().LoseHealth(attackDamage + playerStats.meleeModifier);
+
+            }
+            else if (heroEqp.equippedEmber == ember.Earth)
+            {
+                other.gameObject.GetComponent<Health>().LoseHealth(attackDamage + playerStats.meleeModifier);
+
+            }
         }
     }
 

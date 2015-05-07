@@ -69,7 +69,7 @@ public class SpellBlastOfLight : MonoBehaviour
             RaycastHit hitInfo;
             if (Physics.Raycast(playerpos, vectoplayer.normalized, out hitInfo, vectoplayer.magnitude))
             {
-                if (hitInfo.collider.GetInstanceID() == other.GetInstanceID())
+                if (hitInfo.collider.tag== "Enemy")
                 {             
                             if (heroEquipment.equippedEmber == ember.None)
                             {
