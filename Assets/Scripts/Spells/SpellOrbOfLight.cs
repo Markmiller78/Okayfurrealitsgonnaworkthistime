@@ -51,7 +51,7 @@ public class SpellOrbOfLight : MonoBehaviour {
         }
         else if (other.tag == "Enemy")
         {
-            vectoplayer = playerpos - other.transform.position;
+           
    
                 other.GetComponent<Health>().LoseHealth(5);
           
