@@ -9,7 +9,8 @@ public class EarthEmber : MonoBehaviour {
     public float distance;
     public float range=1.0f;
     public float damage = 7.0f;
-	void Start () {
+	void Start () 
+    {
         timer = 1.0f;
         Camera.main.SendMessage("ScreenShake");
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
@@ -27,9 +28,12 @@ public class EarthEmber : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        timer -= Time.deltaTime;
+         timer -= Time.deltaTime;
         if (timer <= 0.0f)
             Destroy(this.gameObject);
 
 	}
 }
+
+
+ 
