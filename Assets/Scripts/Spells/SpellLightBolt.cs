@@ -12,7 +12,7 @@ public class SpellLightBolt : MonoBehaviour {
     public GameObject poke;
 
     PlayerEquipment heroEquipment;
-    ParticleSystem particles;
+    //ParticleSystem particles;
 
     GameObject kaboom;
     GameObject player;
@@ -24,7 +24,7 @@ public class SpellLightBolt : MonoBehaviour {
         transform.Rotate(270, 0, 0);
         player = GameObject.FindGameObjectWithTag("Player");
         heroEquipment = player.GetComponent<PlayerEquipment>();
-        particles = gameObject.GetComponent<ParticleSystem>();
+        //particles = gameObject.GetComponent<ParticleSystem>();
         kaboom = (GameObject)Instantiate(expPlacer, transform.position, transform.rotation);
         timer = 0;
     }

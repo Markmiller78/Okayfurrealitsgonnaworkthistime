@@ -37,7 +37,7 @@ public class AISkeletonArcher : MonoBehaviour
         usedWaypoints.pushBack(new GameObject("Five"));
         usedWaypoints.pushBack(new GameObject("TheRealSlimShady"));
         usedWaypoints.popFront();
-        GameObject test = usedWaypoints.popFront();
+      //  GameObject test = usedWaypoints.popFront();
         //
     }
 

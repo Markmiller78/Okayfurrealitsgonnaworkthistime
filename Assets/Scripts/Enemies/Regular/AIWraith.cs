@@ -118,23 +118,21 @@ public class AIWraith : MonoBehaviour
     void NewWayPoint()
     {
 
-        for (int i = 0; i < 100; i++)
-        {
+        //for (int i = 0; i < 100; i++)
+        //{
 
             randX = Random.Range(-3, 3);
             randY = Random.Range(-3, 3);
             WayPoint = new Vector3(player.transform.position.x + randX, player.transform.position.y + randY);
 
-            if (i == 90)
-                print("I reached 90");
+           // if (i == 90)
+            //    print("I reached 90");
 
-            //if (WayPoint.x < EastDoorX && WayPoint.x > WestDoorX && WayPoint.y < NorthDoorY && WayPoint.y > SouthDoorY)
-                //return;
             return;
-        }
+       // }
 
-        print("Wraith: RETURNED BAD WAYPOINT!");
-        return;
+      //  print("Wraith: RETURNED BAD WAYPOINT!");
+       // return;
     }
 
     void Turn()

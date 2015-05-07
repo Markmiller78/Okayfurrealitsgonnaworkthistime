@@ -4,13 +4,13 @@ using System.Collections;
 public class SmalllightExplosionScript : MonoBehaviour {
 
 
-    ParticleSystem theParts;
+    //ParticleSystem theParts;
     Light thelight;
     float timer;
 	// Use this for initialization
 	void Start () 
     {
-        theParts = gameObject.GetComponent<ParticleSystem>();
+        //theParts = gameObject.GetComponent<ParticleSystem>();
         thelight = gameObject.GetComponent<Light>();
 	}
 	
