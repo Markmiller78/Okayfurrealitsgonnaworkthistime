@@ -35,7 +35,6 @@ public class AIShadowSpawn : MonoBehaviour
     int timerCount;
     int stuckCounter;
     bool newWayPoint;
-    float minSpeed;
     float maxSpeed;
     float AnimTimer;
 
@@ -57,7 +56,6 @@ public class AIShadowSpawn : MonoBehaviour
         speed = 1;
         timerCount = 1;
         DmgTimer = 1;
-        minSpeed = 1;
         maxSpeed = 1;
         timer = 1;
         playerConsumeTimer = 1;
@@ -206,7 +204,6 @@ public class AIShadowSpawn : MonoBehaviour
 
     void Idle()
     {
-        minSpeed = 0;
         maxSpeed = 3;
 
         //Change Idle Waypoint every 2 seconds.
@@ -237,7 +234,6 @@ public class AIShadowSpawn : MonoBehaviour
 
     void SuperEvade()
     {
-        minSpeed = 2;
         maxSpeed = 4;
 
         if (stuckCounter <= 0)
@@ -268,7 +264,6 @@ public class AIShadowSpawn : MonoBehaviour
             Playsounds.PlayOneShot(GetScary);
             EnragedSoundPlaying = true;
         }
-        minSpeed = 2;
         maxSpeed = 3.5f;
         WayPoint = player.transform.position - transform.position;
         Moveto = WayPoint;
