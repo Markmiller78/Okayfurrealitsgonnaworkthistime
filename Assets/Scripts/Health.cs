@@ -97,6 +97,7 @@ public class Health : MonoBehaviour
             {
                 Explode();
             }
+            Instantiate(lightRemains, transform.position, transform.rotation);
             Destroy(gameObject);
    
             --generator.finalRoomInfoArray[generator.currentRoom].numEnemies;
@@ -126,7 +127,7 @@ public class Health : MonoBehaviour
     {
 
         Instantiate(explosion, transform.position, transform.rotation);
-        Instantiate(lightRemains, transform.position, transform.rotation);
+
         
     
     }

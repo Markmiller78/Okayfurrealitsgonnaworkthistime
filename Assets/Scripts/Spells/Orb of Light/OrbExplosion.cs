@@ -58,12 +58,18 @@ public class OrbExplosion : MonoBehaviour
         {
 
 
-            Instantiate(hpPickup, other.transform.position, other.transform.rotation);
+       
+            vectoplayer = other.transform.position - playerpos;
 
-            vectoplayer = playerpos - other.transform.position;
+            RaycastHit hitInfo;
+            if (Physics.Raycast(playerpos, vectoplayer.normalized, out hitInfo))
+            {
 
-          
-              
+                Debug.Log(hitInfo.collider.gameObject.tag);
+                if (hitInfo.collider.gameObject == other.gameObject)
+                {
+                    Instantiate(hpPickup, other.transform.position, other.transform.rotation);
+
                     if (heroEquipment.equippedEmber == ember.None)
                     {
                         other.GetComponent<Health>().LoseHealth(5);
@@ -85,7 +91,7 @@ public class OrbExplosion : MonoBehaviour
                         other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
                         other.GetComponent<Health>().LoseHealth(5);
                     }
-             
+
                     else if (heroEquipment.equippedEmber == ember.Earth)
                     {
                         other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
@@ -112,6 +118,8 @@ public class OrbExplosion : MonoBehaviour
                 }
             }
         }
+    }
+}
     
 
 
