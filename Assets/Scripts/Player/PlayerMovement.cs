@@ -9,11 +9,12 @@ public class PlayerMovement : MonoBehaviour
     public float halfSpeed;
     float speed;
     float knockbackTimer;
-
+    GameObject player;
 
     CharacterController controller;
     //Rigidbody2D rb2d;
 	PlayerEquipment heroEquipment;
+    PlayerCooldowns heroCooldowns;
     Vector2 MoveDirect;
     Vector2 CharRotate;
     Quaternion Rotation;
@@ -22,8 +23,10 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
 		heroEquipment = gameObject.GetComponent<PlayerEquipment>();
         controller = gameObject.GetComponent<CharacterController>();
+        heroCooldowns = gameObject.GetComponent<PlayerCooldowns>();
         //rb2d = GetComponent<Rigidbody2D>();
         fullSpeed = 3.1f;
         halfSpeed = 1.6f;
@@ -154,7 +157,7 @@ public class PlayerMovement : MonoBehaviour
     }
     void MouseRotate()
     {
-        if (heroEquipment.paused == false)
+        if (heroEquipment.paused == false||( heroCooldowns.dashCooling==true&&heroEquipment.equippedBoot==boot.Whirlwind))
         {
 
             //if (heroEquipment.equippedBoot!=boot.Whirlwind)

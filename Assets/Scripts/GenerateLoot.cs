@@ -179,7 +179,7 @@ public class GenerateLoot : MonoBehaviour {
 
         }
         else
-            theName += embers[Random.Range(0, 5)];
+            theName += embers[randNum];
         if(Random.value>0.5f)
         {
 

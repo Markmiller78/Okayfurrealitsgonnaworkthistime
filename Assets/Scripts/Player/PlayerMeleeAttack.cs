@@ -12,6 +12,7 @@ public class PlayerMeleeAttack : MonoBehaviour
     float rotationDelta = 0.0f;
     public float speed = 3.0f;
 
+
     PlayerEquipment heroEqp;
 
     public GameObject fireDebuff;
@@ -19,6 +20,7 @@ public class PlayerMeleeAttack : MonoBehaviour
 
     void Start()
     {
+       
         player = transform.parent.gameObject;
         playerStats = player.GetComponent<PlayerStats>();
         rotationDelta = player.transform.rotation.z;
@@ -79,6 +81,16 @@ public class PlayerMeleeAttack : MonoBehaviour
                 other.gameObject.GetComponent<Health>().LoseHealth(attackDamage + playerStats.meleeModifier);
             }
             else if (heroEqp.equippedEmber == ember.Life)
+            {
+                other.gameObject.GetComponent<Health>().LoseHealth(attackDamage + playerStats.meleeModifier);
+
+            }
+            else if (heroEqp.equippedEmber == ember.Death)
+            {
+                other.gameObject.GetComponent<Health>().LoseHealth(attackDamage + playerStats.meleeModifier);
+
+            }
+            else if (heroEqp.equippedEmber == ember.Earth)
             {
                 other.gameObject.GetComponent<Health>().LoseHealth(attackDamage + playerStats.meleeModifier);
 

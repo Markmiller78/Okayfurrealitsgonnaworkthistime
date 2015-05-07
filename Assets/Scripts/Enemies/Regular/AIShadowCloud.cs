@@ -11,6 +11,8 @@ public class AIShadowCloud : MonoBehaviour
     public Texture HazardCookie;
     public float DamagePerSecond;
     public bool isInfected = false;
+    public float infectRange;
+    public float infecttimer;
 
 
     Health heroHP;
@@ -18,6 +20,7 @@ public class AIShadowCloud : MonoBehaviour
 
     void Start()
     {
+        infecttimer = 3.0f;
         player = GameObject.FindGameObjectWithTag("Player");
         heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
         target = player;
@@ -30,6 +33,8 @@ public class AIShadowCloud : MonoBehaviour
     {
         if (heroEquipment.paused == false)
         {
+            if(isInfected)
+            Infect();
             if (target == null)
             {
                 target = GameObject.FindGameObjectWithTag("Player");
@@ -93,20 +98,32 @@ public class AIShadowCloud : MonoBehaviour
        
 		
 	}
-
-	void Decoy()
-	{
-		player = GameObject.FindGameObjectWithTag ("Decoy");
-	}
-	
-	void UnDecoy()
-	{
-		player = GameObject.FindGameObjectWithTag("Player");
-	}
-
+    void Decoy(GameObject decoy)
+    {
+        player = decoy;
+      //  playMove = decoy.GetComponent<PlayerMovement>();
+    }
+    void UnDecoy(GameObject decoy)
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+     //   playMove = player.GetComponent<PlayerMovement>();
+    }
 
     void GetInfected()
     {
         isInfected = true;
+    }
+    void Infect()
+    {
+        GameObject[] allObjects = GameObject.FindObjectsOfType<GameObject>();
+
+        foreach (var obj in allObjects)
+        {
+            Vector3 dist = transform.position - obj.transform.position;
+            if (obj.tag == "Enemy" && dist.magnitude < infectRange)
+                obj.SendMessage("GetInfected", SendMessageOptions.DontRequireReceiver);
+
+        }
+
     }
 }

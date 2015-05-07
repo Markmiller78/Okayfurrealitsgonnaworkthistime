@@ -160,7 +160,14 @@ public class AIWraith : MonoBehaviour
     {
         moveSpeed = moveSpeed * 0.5f;
     }
-
+    void Decoy(GameObject decoy)
+    {
+        player = decoy;
+    }
+    void UnDecoy(GameObject decoy)
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+    }
     void Unslow()
     {
         moveSpeed = moveSpeed * 2;

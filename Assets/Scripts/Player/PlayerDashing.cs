@@ -6,6 +6,7 @@ public class PlayerDashing : MonoBehaviour
 
     public float dashSpeed;
     public float dashDuration;
+    public int earthtrailtime;
 
     float timeRemaining;
 
@@ -27,6 +28,15 @@ public class PlayerDashing : MonoBehaviour
     public GameObject EarthTrail;
     public GameObject DeathTrail;
 
+
+    public GameObject lightDecoy;
+    public GameObject fireDecoy; 
+    public GameObject iceDecoy; 
+    public GameObject windDecoy; 
+    public GameObject earthDecoy; 
+    public GameObject lifeDecoy;
+    public GameObject deathDecoy; 
+
     public HUDCooldowns UICD;
 
     public GameObject FireCharge;
@@ -38,6 +48,8 @@ public class PlayerDashing : MonoBehaviour
     public GameObject DeathCharge;
     void Start()
     {
+        earthtrailtime = 0;
+   
         controller = gameObject.GetComponent<CharacterController>();
         heroEquipment = gameObject.GetComponent<PlayerEquipment>();
         heroLight = gameObject.GetComponent<PlayerLight>();
@@ -57,7 +69,7 @@ public class PlayerDashing : MonoBehaviour
 
                 timeRemaining -= Time.deltaTime;
 
-                if (heroEquipment.equippedBoot != boot.Blink && heroEquipment.equippedBoot != boot.Whirlwind)
+                if (heroEquipment.equippedBoot != boot.Blink)
                 {
                     //Set the dash direction to the direction the player is currently facing
 
@@ -130,8 +142,25 @@ public class PlayerDashing : MonoBehaviour
                             {
                                 Instantiate(DeathTrail, transform.position, new Quaternion(0, 0, 0, 0));
                             }
+                            else if (heroEquipment.equippedEmber == ember.Earth)
+                            {
+                                ++earthtrailtime;
+                                Debug.Log(earthtrailtime);
+                                if (earthtrailtime >= 10000000)
+                                {
+                                   // Instantiate(EarthTrail, transform.position, new Quaternion(0, 0, 0, 0));
+                                    earthtrailtime = 0;
+                                }
+                            }
                             trailBlazerDropTimer = 0.0f;
 
+                        }
+                        if(heroEquipment.equippedBoot==boot.Whirlwind)
+                        {
+                            float tempangle = 180.0f;
+
+                            Quaternion rotation = Quaternion.AngleAxis(tempangle, Vector3.forward);
+                            GetComponent<SpriteRenderer>().transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 4.5f);
                         }
                     }
                 } 
@@ -179,27 +208,141 @@ public class PlayerDashing : MonoBehaviour
                 {
                     Instantiate(LifeCharge, transform.position, new Quaternion(0, 0, 0, 0));
                 }
+                else if (heroEquipment.equippedEmber == ember.Death)
+                {
+                    Instantiate(DeathCharge, transform.position, new Quaternion(0, 0, 0, 0));
+                }
+                else if (heroEquipment.equippedEmber == ember.Earth)
+                {
+                    Instantiate(EarthCharge, transform.position, new Quaternion(0, 0, 0, 0));
+                }
             }
 
             if (heroEquipment.equippedBoot == boot.Blink)
             {
-                Instantiate(BlinkEffect, transform.position, new Quaternion(0, 0, 0, 0));
-                Instantiate(lightRemains, transform.position, transform.rotation);
-                // blinkdropTimer = 0.0f;
+                //No ember equipped
+                if (heroEquipment.equippedEmber == ember.None)
+                {
+                    Instantiate(BlinkEffect, transform.position, new Quaternion(0, 0, 0, 0));
+                    Instantiate(lightRemains, transform.position, transform.rotation);
+                  
+                }
+                //Ice ember equipped
+                else if (heroEquipment.equippedEmber == ember.Ice)
+                {
+           
+                }
+                //Fire ember equipped
+                else if (heroEquipment.equippedEmber == ember.Fire)
+                {
+                   
+                }
+                //Wind ember equipped
+                else if (heroEquipment.equippedEmber == ember.Wind)
+                {
+                 
+                }
+                //Life ember equipped
+                else if (heroEquipment.equippedEmber == ember.Life)
+                {
+                   
+                }
+                else if (heroEquipment.equippedEmber == ember.Death)
+                {
+                }
+                else if (heroEquipment.equippedEmber == ember.Earth)
+                {
+                }
                 Vector3 temp = transform.TransformDirection(Vector3.up.normalized);
                 transform.position += temp * 3.0f;
-
 
             }
             if (heroEquipment.equippedBoot == boot.Whirlwind)
             {
+                //No ember equipped
+                if (heroEquipment.equippedEmber == ember.None)
+                {
+                    
 
-                float tempangle = 720.0f;
-                Quaternion rotation = Quaternion.AngleAxis(tempangle, Vector3.forward);
-                transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 4.5f);
+                }
+                //Ice ember equipped
+                else if (heroEquipment.equippedEmber == ember.Ice)
+                {
+
+                }
+                //Fire ember equipped
+                else if (heroEquipment.equippedEmber == ember.Fire)
+                {
+
+                }
+                //Wind ember equipped
+                else if (heroEquipment.equippedEmber == ember.Wind)
+                {
+
+                }
+                //Life ember equipped
+                else if (heroEquipment.equippedEmber == ember.Life)
+                {
+
+                }
+                //Death ember equipped
+                else if (heroEquipment.equippedEmber == ember.Death)
+                {
+
+                }
+                //Earth ember equipped
+                else if (heroEquipment.equippedEmber == ember.Earth)
+                {
+
+                }
+              
 
             }
+            if (heroEquipment.equippedBoot == boot.Decoy)
+            {
+             
 
+                 
+                //No ember equipped
+                if (heroEquipment.equippedEmber == ember.None)
+                {
+                    Instantiate(lightDecoy, transform.position, new Quaternion(0, 0, 0, 0));
+
+                }
+                //Ice ember equipped
+                else if (heroEquipment.equippedEmber == ember.Ice)
+                {
+                    Instantiate(iceDecoy, transform.position, new Quaternion(0, 0, 0, 0));
+                }
+                //Fire ember equipped
+                else if (heroEquipment.equippedEmber == ember.Fire)
+                {
+                    Instantiate(fireDecoy, transform.position, new Quaternion(0, 0, 0, 0));
+                }
+                //Wind ember equipped
+                else if (heroEquipment.equippedEmber == ember.Wind)
+                {
+                    Instantiate(windDecoy, transform.position, new Quaternion(0, 0, 0, 0));
+                }
+                //Life ember equipped
+                else if (heroEquipment.equippedEmber == ember.Life)
+                {
+                    Instantiate(lifeDecoy, transform.position, new Quaternion(0, 0, 0, 0));
+                }
+                //Death ember equipped
+                else if (heroEquipment.equippedEmber == ember.Death)
+                {
+                    Instantiate(deathDecoy, transform.position, new Quaternion(0, 0, 0, 0));
+                }
+                //Earth ember equipped
+                else if (heroEquipment.equippedEmber == ember.Earth)
+                {
+                    Instantiate(earthDecoy, transform.position, new Quaternion(0, 0, 0, 0));
+                }
+
+
+                
+            }
         }
     }
 

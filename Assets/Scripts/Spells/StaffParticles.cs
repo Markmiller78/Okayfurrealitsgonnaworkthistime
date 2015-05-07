@@ -12,6 +12,8 @@ public class StaffParticles : MonoBehaviour {
     public GameObject lightParts;
     public GameObject windParts;
     public GameObject lifeParts;
+    public GameObject deathParts;
+    public GameObject earthParts;
 
 
 	// Use this for initialization
@@ -33,6 +35,8 @@ public class StaffParticles : MonoBehaviour {
                 iceParts.SetActive(false);
                 windParts.SetActive(false);
                 lifeParts.SetActive(false);
+                deathParts.SetActive(false);
+                earthParts.SetActive(false);
             }
             else if (playerEquipemnt.equippedEmber == ember.Fire)
             {
@@ -41,6 +45,8 @@ public class StaffParticles : MonoBehaviour {
                 iceParts.SetActive(false);
                 windParts.SetActive(false);
                 lifeParts.SetActive(false);
+                deathParts.SetActive(false);
+                earthParts.SetActive(false);
             }
             else if (playerEquipemnt.equippedEmber == ember.Ice)
             {
@@ -49,6 +55,8 @@ public class StaffParticles : MonoBehaviour {
                 iceParts.SetActive(true);
                 windParts.SetActive(false);
                 lifeParts.SetActive(false);
+                deathParts.SetActive(false);
+                earthParts.SetActive(false);
             }
             else if (playerEquipemnt.equippedEmber == ember.Wind)
             {
@@ -57,6 +65,8 @@ public class StaffParticles : MonoBehaviour {
                 iceParts.SetActive(false);
                 windParts.SetActive(true);
                 lifeParts.SetActive(false);
+                deathParts.SetActive(false);
+                earthParts.SetActive(false);
             }
             else if (playerEquipemnt.equippedEmber == ember.Life)
             {
@@ -65,6 +75,32 @@ public class StaffParticles : MonoBehaviour {
                 iceParts.SetActive(false);
                 windParts.SetActive(false);
                 lifeParts.SetActive(true);
+                deathParts.SetActive(false);
+                earthParts.SetActive(false);
+            }
+            else if (playerEquipemnt.equippedEmber == ember.Death)
+            {
+
+                lightParts.SetActive(false);
+                fireParts.SetActive(false);
+                iceParts.SetActive(false);
+                windParts.SetActive(false);
+                lifeParts.SetActive(false);
+                deathParts.SetActive(true);
+                earthParts.SetActive(false);
+            
+            }
+            else if (playerEquipemnt.equippedEmber == ember.Earth)
+            {
+
+                lightParts.SetActive(false);
+                fireParts.SetActive(false);
+                iceParts.SetActive(false);
+                windParts.SetActive(false);
+                lifeParts.SetActive(false);
+                deathParts.SetActive(false);
+                earthParts.SetActive(true);
+
             }
             checkTimer = 0;
         }
