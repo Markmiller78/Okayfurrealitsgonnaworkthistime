@@ -85,11 +85,7 @@ public class OrbExplosion : MonoBehaviour
                         other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
                         other.GetComponent<Health>().LoseHealth(5);
                     }
-                    else if (heroEquipment.equippedEmber == ember.Wind)
-                    {
-                        other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
-                        other.GetComponent<Health>().LoseHealth(5);
-                    }
+             
                     else if (heroEquipment.equippedEmber == ember.Earth)
                     {
                         other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
@@ -100,6 +96,13 @@ public class OrbExplosion : MonoBehaviour
                     {
                         other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
                         other.GetComponent<Health>().LoseHealth(5);
+                        GameObject[] allObjects = GameObject.FindObjectsOfType<GameObject>();
+                        foreach (var obj in allObjects)
+                        {
+                            Vector3 dist = transform.position - obj.transform.position;
+                            if (obj.tag == "Enemy" && dist.magnitude < 2.0)
+                                obj.SendMessage("GetInfected", SendMessageOptions.DontRequireReceiver);
+                        }
                     }
                     else if (heroEquipment.equippedEmber == ember.Life)
                     {
