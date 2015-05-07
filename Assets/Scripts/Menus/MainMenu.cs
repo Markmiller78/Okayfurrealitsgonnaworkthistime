@@ -11,7 +11,7 @@ public class MainMenu : MonoBehaviour
     public Text playerhealth;
     public Text playerlight;
     public int health;
-    public int light;
+    public int lights;
     public float[] choices = new float[] { };
     int maxchoices = 4;
 
@@ -52,7 +52,7 @@ public class MainMenu : MonoBehaviour
 
 
  
-        health = 50; light = 0;
+        health = 50; lights = 0;
         Save();
      //   playerhealth.text = health.ToString();
    //     playerlight.text = light.ToString();
@@ -827,7 +827,7 @@ public class MainMenu : MonoBehaviour
 
     public void LoadStats()
     {
-        playerhealth.text = "100";
+      //  playerhealth.text = "100";
 
     
         if (File.Exists(Application.persistentDataPath + "/playerinfo.dat"))
@@ -836,7 +836,7 @@ public class MainMenu : MonoBehaviour
             FileStream file = File.Open(Application.persistentDataPath + "/playerinfo.dat", FileMode.Open);
             PlayerData data = (PlayerData)bin.Deserialize(file);
             playerhealth.text = data.health.ToString();
-            playerlight.text = data.light.ToString();
+            playerlight.text = data.lights.ToString();
             file.Close();
        
 
@@ -865,7 +865,8 @@ public class MainMenu : MonoBehaviour
         FileStream file = File.Create(Application.persistentDataPath + "/playerinfo.dat");
         PlayerData data = new PlayerData();
         data.health =health;
-       data.light =  light;
+       data.lights =  lights;
+       
         bin.Serialize(file, data);
         file.Close();
        
@@ -877,8 +878,6 @@ public class MainMenu : MonoBehaviour
 class PlayerData
 {
     public int health;
-    public int light;
-
-
+    public int lights;
 }
 

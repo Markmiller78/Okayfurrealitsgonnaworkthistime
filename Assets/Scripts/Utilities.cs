@@ -19,4 +19,53 @@ public class Utilities
             ArraySwap(arr, 0, b);
         }
     }
+
+    public class ppList<T>
+    {
+        int maxLength = 5;
+        T[] arr;
+
+        public ppList(int _maxLength = 5)
+        {
+            arr = new T[0];
+            maxLength = _maxLength;
+        }
+
+        public int Length() { return arr.Length; }
+
+        public int MaxLength() { return maxLength; }
+
+        public void MaxLength(int _length) { maxLength = _length; }
+
+        public T popFront()
+        {
+            T ret = arr[0];
+            T[] temp = new T[arr.Length - 1];
+
+            for (int i = 1; i < arr.Length; i++)
+            {
+                temp[i - 1] = arr[i];
+            }
+
+            arr = temp;
+
+            return ret;
+        }
+
+        public void pushBack(T item)
+        {
+            if (arr.Length == maxLength)
+            {
+                popFront();
+            }
+            T[] temp = new T[arr.Length + 1];
+
+            for (int i = 0; i < arr.Length; i++)
+            {
+                temp[i] = arr[i];
+            }
+            temp[arr.Length] = item;
+            arr = temp;
+        }
+    }
 }

@@ -11,6 +11,7 @@ public class SingularityExplosion : MonoBehaviour {
     GameObject player;
     float maxLife;
     public GameObject lightRemains;
+    public GameObject hpPickup;
  
     public Vector3 vectoplayer;
     public Vector3 playerpos;
@@ -54,13 +55,16 @@ public class SingularityExplosion : MonoBehaviour {
     {
         if (other.tag == "Enemy")
         {
-            vectoplayer = playerpos - other.transform.position;
+            
+Instantiate(hpPickup, other.transform.position, other.transform.rotation);
+vectoplayer = playerpos - other.transform.position;
 
             RaycastHit hitInfo;
             if (Physics.Raycast(playerpos, vectoplayer.normalized, out hitInfo, vectoplayer.magnitude))
             {
                 if (hitInfo.collider.GetInstanceID() == other.GetInstanceID())
                 {
+                other.GetComponent<Health>().LoseHealth(10);
                     if (heroEquipment.equippedEmber == ember.None)
                     {
                         other.GetComponent<Health>().LoseHealth(10);
@@ -101,6 +105,7 @@ public class SingularityExplosion : MonoBehaviour {
 
                 }
             }
+           
         }
     }
 }

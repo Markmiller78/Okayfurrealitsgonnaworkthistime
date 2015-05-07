@@ -11,9 +11,13 @@ public class SpellBlastOfLight : MonoBehaviour
     
     public GameObject debuff;
     public GameObject remains;
-    public GameObject player;
+   public GameObject hpPickup; public GameObject player;
     public Vector3 vectoplayer;
+    public Vector3 playerpos;<<<<<<< .mine
     public Vector3 playerpos;
+=======
+
+>>>>>>> .theirs
 
     float maxLife;
 
@@ -56,7 +60,19 @@ public class SpellBlastOfLight : MonoBehaviour
     {
         if (other.tag == "Enemy")
         {
+<<<<<<< .mine
                 vectoplayer =  playerpos- other.transform.position;
+
+
+
+
+=======
+            Instantiate(hpPickup, other.transform.position, other.transform.rotation);
+
+            if (heroEquipment.equippedEmber == ember.None)
+            {
+                other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
+>>>>>>> .theirs
 
                 if (!Physics.Raycast(playerpos, vectoplayer.normalized, 100))
                 {

@@ -6,6 +6,7 @@ public class OrbExplosion : MonoBehaviour
     Light theLight;
     PlayerEquipment heroEquipment;
     float timeAlive;
+    public GameObject hpPickup;
 
     public GameObject debuff;
 
@@ -55,6 +56,7 @@ public class OrbExplosion : MonoBehaviour
         heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
         if (other.tag == "Enemy")
         {
+<<<<<<< .mine
             vectoplayer = playerpos - other.transform.position;
 
         //    if (!Physics.Raycast(playerpos, vectoplayer.normalized, 100))
@@ -101,6 +103,54 @@ public class OrbExplosion : MonoBehaviour
                     other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
                     other.GetComponent<Health>().LoseHealth(5);
                 }
+=======
+            Instantiate(hpPickup, other.transform.position, other.transform.rotation);
+
+            if (heroEquipment.equippedEmber == ember.None)
+            {
+                other.GetComponent<Health>().LoseHealth(5);                            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+>>>>>>> .theirs
             }
        // }
     }

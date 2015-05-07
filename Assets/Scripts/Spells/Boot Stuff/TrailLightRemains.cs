@@ -32,9 +32,7 @@ public class TrailLightRemains : MonoBehaviour
         {
             if (other.tag == "Player")
             {
-                //The dash currently spawns 11 of these as of 4/22/15
-                heroLight.GainLight(1);
-                active = false;
+                PickUp();
             }
         }
 
@@ -62,5 +60,12 @@ public class TrailLightRemains : MonoBehaviour
                 Destroy(gameObject);
             }
         }
+    }
+
+    void PickUp()
+    {
+        //The dash currently spawns 11 of these as of 4/22/15
+        heroLight.GainLight(1);
+        active = false;
     }
 }

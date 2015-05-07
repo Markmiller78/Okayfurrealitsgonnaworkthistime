@@ -48,7 +48,7 @@ public class AIShadowSpawn : MonoBehaviour
         EnragedSoundPlaying = false;
         heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
         Playsounds = gameObject.GetComponent<AudioSource>();
-        Random.seed = 42;
+        //Random.seed = 42;
         player = GameObject.FindGameObjectWithTag("Player");
         playerLight = player.GetComponent<PlayerLight>();
         ShadowHealth = GetComponent<Health>();

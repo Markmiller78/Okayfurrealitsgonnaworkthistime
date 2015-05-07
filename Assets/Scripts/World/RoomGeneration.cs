@@ -27,6 +27,8 @@ public class RoomGeneration : MonoBehaviour
     public Room[] finalRoomInfoArray;
     //public int currentFloor = 1;
     public int currentRoom = 0;
+    //public GameObject treasureRoom;
+    //Room treasureRoomInfo;
 
     void Start()
     {
@@ -80,6 +82,8 @@ public class RoomGeneration : MonoBehaviour
         //}
         //morriusRoomInfo = morriusRoom.GetComponent<Room>();
         //morriusRoomInfo.setUsed();
+
+        //treasureRoomInfo = treasureRoom.GetComponent<Room>();
 
         finalRoomArray = new GameObject[9];
         finalRoomInfoArray = new Room[9];
@@ -197,6 +201,7 @@ public class RoomGeneration : MonoBehaviour
                 hasSkipped = true;
             }
         }
+        // Spawn the floor
         for (int x = 1; x < finalRoomInfoArray[currentRoom].width - 1; ++x)
         {
             for (int y = 1; y < finalRoomInfoArray[currentRoom].height - 1; ++y)
@@ -204,6 +209,7 @@ public class RoomGeneration : MonoBehaviour
                 Instantiate(finalRoomInfoArray[currentRoom].floorTiles[0], new Vector3(x, -y, 0.0f), Quaternion.identity);
             }
         }
+        //
         for (int i = 0; i < finalRoomInfoArray[currentRoom].innerWallPositions.Length; i++)
         {
             Instantiate(finalRoomInfoArray[currentRoom].wallTiles[0], new Vector3(finalRoomInfoArray[currentRoom].innerWallPositions[i].x, -finalRoomInfoArray[currentRoom].innerWallPositions[i].y, -1.4f), Quaternion.identity);
@@ -212,6 +218,7 @@ public class RoomGeneration : MonoBehaviour
         {
             Instantiate(finalRoomInfoArray[currentRoom].hazard, new Vector3(finalRoomInfoArray[currentRoom].hazardSpawnPoints[i].x, -finalRoomInfoArray[currentRoom].hazardSpawnPoints[i].y, -1), Quaternion.identity);
         }
+        // Spawn enemies
         finalRoomInfoArray[currentRoom].numEnemies = Random.Range(finalRoomInfoArray[currentRoom].minEnemies, finalRoomInfoArray[currentRoom].maxEnemies);
         int enemiesSpawned = 0;
         while (enemiesSpawned < finalRoomInfoArray[currentRoom].numEnemies)
