@@ -13,8 +13,8 @@ public class Health : MonoBehaviour
     RoomGeneration generator;
     public GameObject lifeEmberSpawn;
     GameObject player;
-   public  GameObject explosion;
-   public  GameObject lightRemains;
+    public GameObject explosion;
+    public GameObject lightRemains;
     PlayerEquipment equipment;
     public GameObject LoseText;
     float deathTimer;
@@ -93,12 +93,12 @@ public class Health : MonoBehaviour
         if (this.tag != "Player")
         {
             gameObject.GetComponent<GenerateLoot>().Generateloot();
-          if (isInfected)
-          {
-              Explode();
-          }
-         Instantiate(lightRemains, transform.position, transform.rotation);
-            Destroy(this.gameObject); 
+            if (isInfected)
+            {
+                Explode();
+            }
+            Instantiate(lightRemains, transform.position, transform.rotation);
+            Destroy(this.gameObject);
             --generator.finalRoomInfoArray[generator.currentRoom].numEnemies;
         }
         else
@@ -124,6 +124,6 @@ public class Health : MonoBehaviour
     }
     void Explode()
     {
-        Instantiate(explosion, transform.position, transform.rotation);  
+        Instantiate(explosion, transform.position, transform.rotation);
     }
 }

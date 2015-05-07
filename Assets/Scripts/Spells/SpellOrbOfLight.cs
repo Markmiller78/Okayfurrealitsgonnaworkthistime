@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SpellOrbOfLight : MonoBehaviour {
+public class SpellOrbOfLight : MonoBehaviour
+{
 
     public float speed;
     public float damage;
@@ -25,11 +26,11 @@ public class SpellOrbOfLight : MonoBehaviour {
         heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
         distanceTraveled = 0;
 
-    
+
 
     }
 
-	void FixedUpdate ()
+    void FixedUpdate()
     {
         if (heroEquipment.paused == false)
         {
@@ -41,7 +42,7 @@ public class SpellOrbOfLight : MonoBehaviour {
                 Explode();
             }
         }
-	}
+    }
 
     void OnTriggerEnter(Collider other)
     {
@@ -51,11 +52,10 @@ public class SpellOrbOfLight : MonoBehaviour {
         }
         else if (other.tag == "Enemy")
         {
-           
-   
-                other.GetComponent<Health>().LoseHealth(5);
-          
-    
+
+            other.GetComponent<Health>().LoseHealth(5);
+
+
             Explode();
         }
     }
@@ -63,7 +63,7 @@ public class SpellOrbOfLight : MonoBehaviour {
     void Explode()
     {
         Instantiate(explosion, transform.position, transform.rotation);
-        Instantiate(lightRemains, transform.position, transform.rotation);            
+        Instantiate(lightRemains, transform.position, transform.rotation);
         Destroy(gameObject);
     }
 }

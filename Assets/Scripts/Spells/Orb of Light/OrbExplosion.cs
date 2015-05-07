@@ -57,79 +57,58 @@ public class OrbExplosion : MonoBehaviour
         if (other.tag == "Enemy")
         {
 
+            Instantiate(hpPickup, other.transform.position, other.transform.rotation);
 
-       
-            vectoplayer = other.transform.position - playerpos;
-
-            RaycastHit hitInfo;
-            if (Physics.Raycast(playerpos, vectoplayer.normalized, out hitInfo))
+            if (heroEquipment.equippedEmber == ember.None)
             {
+                other.GetComponent<Health>().LoseHealth(5);
+            }
+            else if (heroEquipment.equippedEmber == ember.Fire)
+            {
+                other.GetComponent<Health>().LoseHealth(5);
+                GameObject tempObj = (GameObject)Instantiate(debuff, other.transform.position, other.transform.rotation);
+                tempObj.GetComponent<DebuffFire>().target = other.gameObject;
+            }
+            else if (heroEquipment.equippedEmber == ember.Ice)
+            {
+                other.GetComponent<Health>().LoseHealth(5);
+                GameObject tempObj = (GameObject)Instantiate(debuff, other.transform.position, other.transform.rotation);
+                tempObj.GetComponent<DebuffFrost>().target = other.gameObject;
+            }
+            else if (heroEquipment.equippedEmber == ember.Wind)
+            {
+                other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
+                other.GetComponent<Health>().LoseHealth(5);
+            }
 
-                Debug.Log(hitInfo.collider.gameObject.tag);
-                if (hitInfo.collider.gameObject == other.gameObject)
+            else if (heroEquipment.equippedEmber == ember.Earth)
+            {
+                other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
+                other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
+                other.GetComponent<Health>().LoseHealth(5);
+            }
+            else if (heroEquipment.equippedEmber == ember.Death)
+            {
+                other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
+                other.GetComponent<Health>().LoseHealth(5);
+                GameObject[] allObjects = GameObject.FindObjectsOfType<GameObject>();
+                foreach (var obj in allObjects)
                 {
-                    Instantiate(hpPickup, other.transform.position, other.transform.rotation);
-
-                    if (heroEquipment.equippedEmber == ember.None)
-                    {
-                        other.GetComponent<Health>().LoseHealth(5);
-                    }
-                    else if (heroEquipment.equippedEmber == ember.Fire)
-                    {
-                        other.GetComponent<Health>().LoseHealth(5);
-                        GameObject tempObj = (GameObject)Instantiate(debuff, other.transform.position, other.transform.rotation);
-                        tempObj.GetComponent<DebuffFire>().target = other.gameObject;
-                    }
-                    else if (heroEquipment.equippedEmber == ember.Ice)
-                    {
-                        other.GetComponent<Health>().LoseHealth(5);
-                        GameObject tempObj = (GameObject)Instantiate(debuff, other.transform.position, other.transform.rotation);
-                        tempObj.GetComponent<DebuffFrost>().target = other.gameObject;
-                    }
-                    else if (heroEquipment.equippedEmber == ember.Wind)
-                    {
-                        other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
-                        other.GetComponent<Health>().LoseHealth(5);
-                    }
-
-                    else if (heroEquipment.equippedEmber == ember.Earth)
-                    {
-                        other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
-                        other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
-                        other.GetComponent<Health>().LoseHealth(5);
-                    }
-                    else if (heroEquipment.equippedEmber == ember.Death)
-                    {
-                        other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
-                        other.GetComponent<Health>().LoseHealth(5);
-                        GameObject[] allObjects = GameObject.FindObjectsOfType<GameObject>();
-                        foreach (var obj in allObjects)
-                        {
-                            Vector3 dist = transform.position - obj.transform.position;
-                            if (obj.tag == "Enemy" && dist.magnitude < 2.0)
-                                obj.SendMessage("GetInfected", SendMessageOptions.DontRequireReceiver);
-                        }
-                    }
-                    else if (heroEquipment.equippedEmber == ember.Life)
-                    {
-                        other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
-                        other.GetComponent<Health>().LoseHealth(5);
-                    }
+                    Vector3 dist = transform.position - obj.transform.position;
+                    if (obj.tag == "Enemy" && dist.magnitude < 2.0)
+                        obj.SendMessage("GetInfected", SendMessageOptions.DontRequireReceiver);
                 }
             }
+            else if (heroEquipment.equippedEmber == ember.Life)
+            {
+                other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
+                other.GetComponent<Health>().LoseHealth(5);
+            }
+
+
         }
     }
 }
-    
-
-
-
-      
-
-
-
-
-         
 
 
 
@@ -166,4 +145,13 @@ public class OrbExplosion : MonoBehaviour
 
 
 
- 
+
+
+
+
+
+
+
+
+
+
