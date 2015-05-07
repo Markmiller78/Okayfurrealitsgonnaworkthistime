@@ -58,15 +58,18 @@ public class OrbExplosion : MonoBehaviour
         {
 
 
-            Instantiate(hpPickup, other.transform.position, other.transform.rotation);
-
-            vectoplayer = playerpos - other.transform.position;
+       
+            vectoplayer = other.transform.position - playerpos;
 
             RaycastHit hitInfo;
-            if (Physics.Raycast(playerpos, vectoplayer.normalized, out hitInfo, vectoplayer.magnitude))
+            if (Physics.Raycast(playerpos, vectoplayer.normalized, out hitInfo))
             {
-                if (hitInfo.collider.GetInstanceID() == other.GetInstanceID())
+
+                Debug.Log(hitInfo.collider.gameObject.tag);
+                if (hitInfo.collider.gameObject == other.gameObject)
                 {
+                    Instantiate(hpPickup, other.transform.position, other.transform.rotation);
+
                     if (heroEquipment.equippedEmber == ember.None)
                     {
                         other.GetComponent<Health>().LoseHealth(5);
@@ -88,11 +91,7 @@ public class OrbExplosion : MonoBehaviour
                         other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
                         other.GetComponent<Health>().LoseHealth(5);
                     }
-                    else if (heroEquipment.equippedEmber == ember.Wind)
-                    {
-                        other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
-                        other.GetComponent<Health>().LoseHealth(5);
-                    }
+
                     else if (heroEquipment.equippedEmber == ember.Earth)
                     {
                         other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
@@ -103,6 +102,13 @@ public class OrbExplosion : MonoBehaviour
                     {
                         other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
                         other.GetComponent<Health>().LoseHealth(5);
+                        GameObject[] allObjects = GameObject.FindObjectsOfType<GameObject>();
+                        foreach (var obj in allObjects)
+                        {
+                            Vector3 dist = transform.position - obj.transform.position;
+                            if (obj.tag == "Enemy" && dist.magnitude < 2.0)
+                                obj.SendMessage("GetInfected", SendMessageOptions.DontRequireReceiver);
+                        }
                     }
                     else if (heroEquipment.equippedEmber == ember.Life)
                     {
@@ -113,8 +119,10 @@ public class OrbExplosion : MonoBehaviour
             }
         }
     }
-
 }
+    
+
+
 
       
 

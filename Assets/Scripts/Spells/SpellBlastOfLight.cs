@@ -59,19 +59,17 @@ public class SpellBlastOfLight : MonoBehaviour
         if (other.tag == "Enemy")
         {
 
-            vectoplayer = playerpos - other.transform.position;
+            //vectoplayer = other.transform.position - transform.position;
 
+            //RaycastHit hitInfo;
+            //if (Physics.Raycast(transform.position, vectoplayer.normalized, out hitInfo, vectoplayer.magnitude + 1))
+            //{
 
-
-
-
-            Instantiate(hpPickup, other.transform.position, other.transform.rotation);
-            RaycastHit hitInfo;
-            if (Physics.Raycast(playerpos, vectoplayer.normalized, out hitInfo, vectoplayer.magnitude))
-            {
-                if (hitInfo.collider.tag== "Enemy")
-                {             
-                            if (heroEquipment.equippedEmber == ember.None)
+                //Debug.Log(hitInfo.collider.gameObject.tag);
+                //if (hitInfo.collider.gameObject == other.gameObject)
+                {
+                    Instantiate(hpPickup, other.transform.position, other.transform.rotation); 
+                    if (heroEquipment.equippedEmber == ember.None)
                             {
                                 other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
 
@@ -118,6 +116,6 @@ public class SpellBlastOfLight : MonoBehaviour
                     }
                 }
             
-        }
+       // }
     }
 
