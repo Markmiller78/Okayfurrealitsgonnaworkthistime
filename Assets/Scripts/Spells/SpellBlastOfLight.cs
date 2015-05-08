@@ -12,10 +12,7 @@ public class SpellBlastOfLight : MonoBehaviour
     public GameObject debuff;
     public GameObject remains;
     public GameObject hpPickup;
-    public GameObject player;
-    public Vector3 vectoplayer;
-    public Vector3 playerpos;
-
+    GameObject player;
 
     float maxLife;
 
@@ -23,7 +20,6 @@ public class SpellBlastOfLight : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        playerpos = player.transform.position;
         timeAlive = 0;
         theLight = gameObject.GetComponent<Light>();
         heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
@@ -59,63 +55,45 @@ public class SpellBlastOfLight : MonoBehaviour
         if (other.tag == "Enemy")
         {
 
-            //vectoplayer = other.transform.position - transform.position;
 
-            //RaycastHit hitInfo;
-            //if (Physics.Raycast(transform.position, vectoplayer.normalized, out hitInfo, vectoplayer.magnitude + 1))
-            //{
+            if (heroEquipment.equippedEmber == ember.None)
+            {
 
-                //Debug.Log(hitInfo.collider.gameObject.tag);
-                //if (hitInfo.collider.gameObject == other.gameObject)
-                {
-                    Instantiate(hpPickup, other.transform.position, other.transform.rotation); 
-                    if (heroEquipment.equippedEmber == ember.None)
-                            {
-                                other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
+            }
+            else if (heroEquipment.equippedEmber == ember.Fire)
+            {
 
-                                other.GetComponent<Health>().LoseHealth(10);
-                            }
-                            else if (heroEquipment.equippedEmber == ember.Fire)
-                            {
-                                other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
+                GameObject tempObj = (GameObject)Instantiate(debuff, other.transform.position, other.transform.rotation);
+                tempObj.GetComponent<DebuffFire>().target = other.gameObject;
+            }
+            else if (heroEquipment.equippedEmber == ember.Ice)
+            {
 
-                                other.GetComponent<Health>().LoseHealth(10);
-                                GameObject tempObj = (GameObject)Instantiate(debuff, other.transform.position, other.transform.rotation);
-                                tempObj.GetComponent<DebuffFire>().target = other.gameObject;
-                            }
-                            else if (heroEquipment.equippedEmber == ember.Ice)
-                            {
-                                other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
+                GameObject tempObj = (GameObject)Instantiate(debuff, other.transform.position, other.transform.rotation);
+                tempObj.GetComponent<DebuffFrost>().target = other.gameObject;
+            }
+            else if (heroEquipment.equippedEmber == ember.Wind)
+            {
+                //Handles itself
+            }
+            else if (heroEquipment.equippedEmber == ember.Life)
+            {
+                //Handles itself
+            }
+            else if (heroEquipment.equippedEmber == ember.Death)
+            {
+                other.SendMessage("GetInfected", SendMessageOptions.DontRequireReceiver);
+            }
+            else if (heroEquipment.equippedEmber == ember.Earth)
+            {
 
-                                other.GetComponent<Health>().LoseHealth(10);
-                                GameObject tempObj = (GameObject)Instantiate(debuff, other.transform.position, other.transform.rotation);
-                                tempObj.GetComponent<DebuffFrost>().target = other.gameObject;
-                            }
-                            else if (heroEquipment.equippedEmber == ember.Wind)
-                            {
-                                other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
-                                other.GetComponent<Health>().LoseHealth(10);
+            }
 
-                            }
-                            else if (heroEquipment.equippedEmber == ember.Life)
-                            {
-                                other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
-                                other.GetComponent<Health>().LoseHealth(10);
-                            }
-                            else if (heroEquipment.equippedEmber == ember.Death)
-                            {
-                                other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
-                                other.GetComponent<Health>().LoseHealth(10);
-                            }
-                            else if (heroEquipment.equippedEmber == ember.Earth)
-                            {
-                                other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
-                                other.GetComponent<Health>().LoseHealth(10);
-                            }
-                        }
-                    }
-                }
-            
-       // }
+            Instantiate(hpPickup, other.transform.position, other.transform.rotation);
+            other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
+            other.GetComponent<Health>().LoseHealth(10);
+        }
+
     }
+}
 
