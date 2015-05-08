@@ -9,7 +9,6 @@ public class YouLoseMenu : MonoBehaviour
     public int currentSelection;
     public GameObject SelectIcon;
     int maxchoices;
-    int selectMenu;
     bool AxisChanged;
     public float[] theChoices = new float[] { };
     public GameObject MainMenuText;
@@ -20,7 +19,6 @@ public class YouLoseMenu : MonoBehaviour
     {
         currentSelection = 0;
         maxchoices = 1;
-        selectMenu = 0;
         AxisChanged = false;
     }
 
