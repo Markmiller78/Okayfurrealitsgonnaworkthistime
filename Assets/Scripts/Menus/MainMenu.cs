@@ -17,6 +17,9 @@ public class MainMenu : MonoBehaviour
 
     public int currentSelection = 0;
     public GameObject SelectIcon;
+    public Text ControlsText;
+    public Text ControlsTextW;
+    bool ControllerOptionToggle;
     bool AxisChanged = false;
     public enum Menu { Main = 0, Options, Achievements, Credits, Continue, AreYouSure, SelectDifficulty };
     Menu CurrMenu = Menu.Main;
@@ -51,7 +54,7 @@ public class MainMenu : MonoBehaviour
         // Load();
 
 
-
+        ControllerOptionToggle = false;
         health = 50; 
         theLight = 0; 
 
@@ -68,7 +71,7 @@ public class MainMenu : MonoBehaviour
     void Update()
     {
         timer -= Time.deltaTime;
-        SelectIcon.transform.position = new Vector3(-1.0f, choices[currentSelection], -5);
+        SelectIcon.transform.position = new Vector3(-2.2f, choices[currentSelection], -5);
         if ((Input.GetAxis("CLSVertical") > .7f || Input.GetAxis("KBVertical") > 0 || Input.GetAxis("CDPadVertical") > .7f) && AxisChanged == false && currentSelection < 8)
         {
             if (currentSelection > 0)
@@ -140,11 +143,11 @@ public class MainMenu : MonoBehaviour
     void MainMenuSelect()
     {
         maxchoices = 4;
-        choices[0] = 1.8f;
-        choices[1] = 1.1f;
-        choices[2] = 0.4f;
-        choices[3] = -0.3f;
-        choices[4] = -1.7f;
+        choices[0] = 2.93f;
+        choices[1] = 1.95f;
+        choices[2] = 0.96f;
+        choices[3] = 0;
+        choices[4] = -2.72f;
         MainMenuText.SetActive(true);
 
         switch (currentSelection)
@@ -265,13 +268,14 @@ public class MainMenu : MonoBehaviour
 
    void OptionsMenu()
     {
-        maxchoices = 3;
-        choices[0] = 1.8f;
-        choices[1] = 1.1f;
-        choices[2] = 0.4f;
-        choices[3] = -1.7f;
-        choices[8] = 1.8f;
-        choices[9] = 1.1f;
+        maxchoices = 4;
+        choices[0] = 2.9f;
+        choices[1] = 1.9f;
+        choices[2] = 1f;
+        choices[3] = 0f;
+        choices[4] = -2.72f;
+        choices[8] = 2.9f;
+        choices[9] = 1.9f;
         OptionsMenuText.SetActive(true);
 
 
@@ -281,7 +285,7 @@ public class MainMenu : MonoBehaviour
             //This is used for Highlighting the currently selected menu option
             case 0:
                 {
-                    for (int i = 0; i < 6; i++)
+                    for (int i = 0; i < 7; i++)
                     {
                         OptionsMenuText4Highlight[i].SetActive(false);
                     }
@@ -290,7 +294,7 @@ public class MainMenu : MonoBehaviour
                 }
             case 1:
                 {
-                    for (int i = 0; i < 6; i++)
+                    for (int i = 0; i < 7; i++)
                     {
                         OptionsMenuText4Highlight[i].SetActive(false);
                     }
@@ -299,7 +303,7 @@ public class MainMenu : MonoBehaviour
                 }
             case 2:
                 {
-                    for (int i = 0; i < 6; i++)
+                    for (int i = 0; i < 7; i++)
                     {
                         OptionsMenuText4Highlight[i].SetActive(false);
                     }
@@ -308,29 +312,38 @@ public class MainMenu : MonoBehaviour
                 }
             case 3:
                 {
-                    for (int i = 0; i < 6; i++)
+                    for (int i = 0; i < 7; i++)
                     {
                         OptionsMenuText4Highlight[i].SetActive(false);
                     }
                     OptionsMenuText4Highlight[3].SetActive(true);
                     break;
                 }
-            case 8:
+            case 4:
                 {
-                    for (int i = 0; i < 6; i++)
+                    for (int i = 0; i < 7; i++)
                     {
                         OptionsMenuText4Highlight[i].SetActive(false);
                     }
                     OptionsMenuText4Highlight[4].SetActive(true);
                     break;
                 }
-            case 9:
+            case 8:
                 {
-                    for (int i = 0; i < 6; i++)
+                    for (int i = 0; i < 7; i++)
                     {
                         OptionsMenuText4Highlight[i].SetActive(false);
                     }
                     OptionsMenuText4Highlight[5].SetActive(true);
+                    break;
+                }
+            case 9:
+                {
+                    for (int i = 0; i < 7; i++)
+                    {
+                        OptionsMenuText4Highlight[i].SetActive(false);
+                    }
+                    OptionsMenuText4Highlight[6].SetActive(true);
                     break;
                 }
         }
@@ -338,7 +351,7 @@ public class MainMenu : MonoBehaviour
         if ((Input.GetButtonDown("CMenuAccept") || Input.GetButtonDown("KBMenuAccept")) && timer < 0)
         {
             timer = .5f;
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 5; i++)
             {
                 OptionsMenuText4Highlight[i].SetActive(false);
             }
@@ -362,15 +375,30 @@ public class MainMenu : MonoBehaviour
                     }
                 case 2:
                     {
-                        //OptionsMenuText.SetActive(false);
-                        //CurrMenu = Menu.Main;
-                        //currentSelection = 1;
-
                         Screen.fullScreen = !Screen.fullScreen;
-
                         break;
                     }
                 case 3:
+                    {
+                        //CHANGE CONTROLS FROM KB/MOUSE to CONTROLLER
+
+                        //CHANGE TEXT TO REFLECT CHANGE
+                        if (ControllerOptionToggle)
+                        {
+                            ControlsText.text = "Controls: KB/Mouse";
+                            ControlsTextW.text = "Controls: KB/Mouse";
+                            ControllerOptionToggle = false;
+                        }
+                        else
+                        {
+                            ControlsText.text = "Controls: Controller";
+                            ControlsTextW.text = "Controls: Controller";
+
+                            ControllerOptionToggle = true;
+                        }
+                        break;
+                    }
+                case 4:
                     {
                         OptionsMenuText.SetActive(false);
                         CurrMenu = Menu.Main;
@@ -622,9 +650,9 @@ public class MainMenu : MonoBehaviour
     void ContinueMenu()
     {
         maxchoices = 2;
-        choices[0] = 1.8f;
-        choices[1] = 1.1f;
-        choices[2] = -1.7f;
+        choices[0] = 1.9f;
+        choices[1] = 1f;
+        choices[2] = -2.72f;
         ContinueText.SetActive(true);
 
         switch (currentSelection)
@@ -728,9 +756,9 @@ public class MainMenu : MonoBehaviour
     void SelectDifficultyMenu()
     {
         maxchoices = 2;
-        choices[0] = 1.8f;
-        choices[1] = 1.1f;
-        choices[2] = -1.7f;
+        choices[0] = 1.9f;
+        choices[1] = 1f;
+        choices[2] = -2.72f;
         SelectDifficulty.SetActive(true);
 
         switch (currentSelection)
