@@ -10,8 +10,8 @@ public class RoomGeneration : MonoBehaviour
     Room[] floorOneMazesInfo;
     public GameObject dethrosRoom;
     Room dethrosRoomInfo;
-    //public GameObject[] floorTwoRooms;
-    //Room[] floorTwoRoomsInfo;
+    public GameObject[] floorTwoRooms;
+    Room[] floorTwoRoomsInfo;
     //public GameObject[] floorTwoMazes;
     //Room[] floorTwoMazesInfo;
     //public GameObject lorneRoom;
@@ -51,12 +51,12 @@ public class RoomGeneration : MonoBehaviour
         dethrosRoomInfo = dethrosRoom.GetComponent<Room>();
         dethrosRoomInfo.setUsed();
         //Utilities.ArrayShuffle(floorTwoRooms);
-        //floorTwoRoomsInfo = new Room[floorTwoRooms.Length];
-        //for (int i = 0; i < floorTwoRooms.Length; i++)
-        //{
-        //    floorTwoRoomsInfo[i] = floorTwoRooms[i].GetComponent<Room>();
-        //    floorTwoRoomsInfo[i].setUsed();
-        //}
+        floorTwoRoomsInfo = new Room[floorTwoRooms.Length];
+        for (int i = 0; i < floorTwoRooms.Length; i++)
+        {
+            floorTwoRoomsInfo[i] = floorTwoRooms[i].GetComponent<Room>();
+            floorTwoRoomsInfo[i].setUsed();
+        }
         //Utilities.ArrayShuffle(floorTwoMazes);
         //floorTwoMazesInfo = new Room[floorTwoMazes.Length];
         //for (int i = 0; i < floorTwoMazes.Length; i++)
@@ -90,8 +90,8 @@ public class RoomGeneration : MonoBehaviour
         FillDungeon();
 
         //TESTING
-        //finalRoomArray[0] = floorOneMazes[3];
-        //finalRoomInfoArray[0] = floorOneMazesInfo[3];
+        finalRoomArray[0] = floorTwoRooms[3];
+        finalRoomInfoArray[0] = floorTwoRoomsInfo[3];
         //ENDTESTING
 
         CreateRoom();
