@@ -13,16 +13,14 @@ public class Health : MonoBehaviour
     RoomGeneration generator;
     public GameObject lifeEmberSpawn;
     GameObject player;
-   public  GameObject explosion;
-   public  GameObject lightRemains;
+    public GameObject explosion;
+    public GameObject lightRemains;
     PlayerEquipment equipment;
     public GameObject LoseText;
-    float deathTimer;
     bool playerDead;
     void Start()
     {
         playerDead = false;
-        deathTimer = 5;
         player = GameObject.FindGameObjectWithTag("Player");
         equipment = player.GetComponent<PlayerEquipment>();
         if (this.tag == "Player")
@@ -43,7 +41,6 @@ public class Health : MonoBehaviour
     {
         if (playerDead)
         {
-            deathTimer -= Time.deltaTime;
             Die();
         }
     }
@@ -58,7 +55,7 @@ public class Health : MonoBehaviour
             if (this.tag == "Player")
             {
                 healthPercent = currentHP / maxHP;
-                healthBar.transform.localScale = new Vector3(1, healthPercent, 1);
+                healthBar.transform.localScale = new Vector3(healthPercent, 1, 1);
             }
         }
     }
@@ -73,7 +70,6 @@ public class Health : MonoBehaviour
                 currentHP = 0;
                 Die();
             }
-
             if (this.tag == "Player")
             {
                 healthPercent = currentHP / maxHP;
@@ -94,30 +90,32 @@ public class Health : MonoBehaviour
         {
             Instantiate(lightRemains, transform.position, transform.rotation);
             gameObject.GetComponent<GenerateLoot>().Generateloot();
-     // if (isInfected)
-     // {
-     //     Explode();
-     // }
-
-
-            Destroy(this.gameObject);
-            --generator.finalRoomInfoArray[generator.currentRoom].numEnemies;
+            if (isInfected)
+            {
+                Explode();
+            }
+            Destroy(gameObject);
+            if (generator != null)
+                --generator.finalRoomInfoArray[generator.currentRoom].numEnemies;
         }
         else
         {
-            playerDead = true;
-            Instantiate(LoseText);
-            equipment.paused = true;
-
-            if (deathTimer < 0)
+            if (playerDead == false)
             {
-#if UNITY_STANDALONE
-                Application.Quit();
-#endif
-#if UNITY_EDITOR
-                UnityEditor.EditorApplication.isPlaying = false;
-#endif
+                playerDead = true;
+                Instantiate(LoseText);
+                equipment.paused = true;
             }
+
+            //            if (deathTimer < 0)
+            //            {
+            //#if UNITY_STANDALONE
+            //                Application.Quit();
+            //#endif
+            //#if UNITY_EDITOR
+            //                UnityEditor.EditorApplication.isPlaying = false;
+            //#endif
+            //            }
         }
        
       
