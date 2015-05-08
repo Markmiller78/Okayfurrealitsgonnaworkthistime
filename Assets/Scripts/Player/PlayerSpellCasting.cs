@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PlayerSpellCasting : MonoBehaviour
 {
-
+    [Header("Orb of Light")]
     public GameObject lightOrb;
     public GameObject fireOrb;
     public GameObject frostOrb;
@@ -12,6 +12,7 @@ public class PlayerSpellCasting : MonoBehaviour
     public GameObject deathOrb;
     public GameObject earthOrb;
 
+    [Header("Singularity")]
     public GameObject lightSing;
     public GameObject fireSing;
     public GameObject frostSing;
@@ -20,6 +21,7 @@ public class PlayerSpellCasting : MonoBehaviour
     public GameObject deathSing;
     public GameObject earthSing;
 
+    [Header("Blast of Light")]
     public GameObject lightBlast;
     public GameObject fireBlast;
     public GameObject frostBlast;
@@ -28,6 +30,7 @@ public class PlayerSpellCasting : MonoBehaviour
     public GameObject deathBlast;
     public GameObject earthBlast;
 
+    [Header("Bolt of Light")]
     public GameObject lightBolt;
     public GameObject fireBolt;
     public GameObject frostBolt;
@@ -36,6 +39,7 @@ public class PlayerSpellCasting : MonoBehaviour
     public GameObject deathBolt;
     public GameObject earthBolt;
 
+    [Header("Light Mine")]
     public GameObject lightMine;
     public GameObject fireMine;
     public GameObject frostMine;
@@ -44,6 +48,7 @@ public class PlayerSpellCasting : MonoBehaviour
     public GameObject deathMine;
     public GameObject earthMine;
 
+    [Header("Chain Lightning")]
     public GameObject lightChain;
     public GameObject fireChain;
     public GameObject frostChain;
@@ -52,6 +57,7 @@ public class PlayerSpellCasting : MonoBehaviour
     public GameObject deathChain;
     public GameObject earthChain;
 
+    [Header("Ensnare")]
     public GameObject lightSnare;
     public GameObject fireSnare;
     public GameObject frostSnare;

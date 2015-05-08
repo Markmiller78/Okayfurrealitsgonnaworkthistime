@@ -87,6 +87,7 @@ public class PlayerMeleeAttack : MonoBehaviour
             }
             else if (heroEqp.equippedEmber == ember.Death)
             {
+                other.SendMessage("GetInfected", SendMessageOptions.DontRequireReceiver);
                 other.gameObject.GetComponent<Health>().LoseHealth(attackDamage + playerStats.meleeModifier);
 
             }

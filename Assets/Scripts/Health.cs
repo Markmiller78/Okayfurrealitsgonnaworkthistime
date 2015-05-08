@@ -13,17 +13,21 @@ public class Health : MonoBehaviour
     RoomGeneration generator;
     public GameObject lifeEmberSpawn;
     GameObject player;
-    public GameObject explosion;
-    public GameObject lightRemains;
+   public  GameObject explosion;
+   public  GameObject lightRemains;
     PlayerEquipment equipment;
     public GameObject LoseText;
     float deathTimer;
     bool playerDead;
+
+    Health playerHealth;
+
     void Start()
     {
         playerDead = false;
         deathTimer = 5;
         player = GameObject.FindGameObjectWithTag("Player");
+        playerHealth = player.GetComponent<Health>();
         equipment = player.GetComponent<PlayerEquipment>();
         if (this.tag == "Player")
         {
@@ -82,7 +86,7 @@ public class Health : MonoBehaviour
             else if (equipment.equippedEmber == ember.Life)
             {
                 GameObject instance = (GameObject)Instantiate(lifeEmberSpawn, transform.position, transform.rotation);
-                instance.GetComponent<LifeEmberStolenHealth>().gainAmount = Amount;
+                playerHealth.GainHealth(Amount);
 
             }
         }
@@ -92,12 +96,14 @@ public class Health : MonoBehaviour
     {
         if (this.tag != "Player")
         {
+            Instantiate(lightRemains, transform.position, transform.rotation);
             gameObject.GetComponent<GenerateLoot>().Generateloot();
             if (isInfected)
             {
                 Explode();
             }
-            Instantiate(lightRemains, transform.position, transform.rotation);
+
+
             Destroy(this.gameObject);
             --generator.finalRoomInfoArray[generator.currentRoom].numEnemies;
         }
@@ -117,6 +123,9 @@ public class Health : MonoBehaviour
 #endif
             }
         }
+       
+      
+
     }
     void GetInfected()
     {
@@ -124,6 +133,6 @@ public class Health : MonoBehaviour
     }
     void Explode()
     {
-        Instantiate(explosion, transform.position, transform.rotation);
+        Instantiate(explosion, transform.position, transform.rotation);  
     }
 }
