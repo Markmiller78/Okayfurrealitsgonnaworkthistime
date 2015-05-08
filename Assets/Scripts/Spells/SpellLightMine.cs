@@ -25,7 +25,7 @@ public class SpellLightMine : MonoBehaviour {
         if (heroEquipment.paused == false)
         {
             betterTimer += Time.deltaTime;
-            if (betterTimer >= 6.5f)
+            if (betterTimer >= 2.5f)
             {
                 active = true;
             }

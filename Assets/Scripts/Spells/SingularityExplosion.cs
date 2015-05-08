@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SingularityExplosion : MonoBehaviour {
+public class SingularityExplosion : MonoBehaviour
+{
 
     Light theLight;
     PlayerEquipment heroEquipment;
@@ -12,7 +13,7 @@ public class SingularityExplosion : MonoBehaviour {
     float maxLife;
     public GameObject lightRemains;
     public GameObject hpPickup;
- 
+
     public Vector3 vectoplayer;
     public Vector3 playerpos;
 
@@ -55,62 +56,47 @@ public class SingularityExplosion : MonoBehaviour {
     {
         if (other.tag == "Enemy")
         {
+            Instantiate(hpPickup, other.transform.position, other.transform.rotation);
 
 
-            vectoplayer = other.transform.position - playerpos;
-
-            RaycastHit hitInfo;
-            if (Physics.Raycast(playerpos, vectoplayer.normalized, out hitInfo, vectoplayer.magnitude + 1))
+            if (heroEquipment.equippedEmber == ember.None)
             {
 
-                Debug.Log(hitInfo.collider.gameObject.tag);
-                if (hitInfo.collider.gameObject.tag == other.gameObject.tag)
-                {
-                    Instantiate(hpPickup, other.transform.position, other.transform.rotation); 
-                   
-              
-                    if (heroEquipment.equippedEmber == ember.None)
-                    {
-                      
-                        other.GetComponent<Health>().LoseHealth(10);
-                    }
-                    else if (heroEquipment.equippedEmber == ember.Fire)
-                    {
-                        other.GetComponent<Health>().LoseHealth(10);
-                        GameObject tempObj = (GameObject)Instantiate(debuff, other.transform.position, other.transform.rotation);
-                        tempObj.GetComponent<DebuffFire>().target = other.gameObject;
-                    }
-                    else if (heroEquipment.equippedEmber == ember.Ice)
-                    {
-                        other.GetComponent<Health>().LoseHealth(10);
-                        GameObject tempObj = (GameObject)Instantiate(debuff, other.transform.position, other.transform.rotation);
-                        tempObj.GetComponent<DebuffFrost>().target = other.gameObject;
-                    }
-                    else if (heroEquipment.equippedEmber == ember.Wind)
-                    {
-                        other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
-                        other.GetComponent<Health>().LoseHealth(10);
-                    }
-                    else if (heroEquipment.equippedEmber == ember.Life)
-                    {
-                        other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
-                        other.GetComponent<Health>().LoseHealth(10);
-                    }
-                    else if (heroEquipment.equippedEmber == ember.Death)
-                    {
-                        other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
-                        other.GetComponent<Health>().LoseHealth(10);
-                    }
-                    else if (heroEquipment.equippedEmber == ember.Earth)
-                    {
-                        other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
-                        other.GetComponent<Health>().LoseHealth(10);
-                    }
-
-
-                }
+                other.GetComponent<Health>().LoseHealth(10);
             }
-           
+            else if (heroEquipment.equippedEmber == ember.Fire)
+            {
+                other.GetComponent<Health>().LoseHealth(10);
+                GameObject tempObj = (GameObject)Instantiate(debuff, other.transform.position, other.transform.rotation);
+                tempObj.GetComponent<DebuffFire>().target = other.gameObject;
+            }
+            else if (heroEquipment.equippedEmber == ember.Ice)
+            {
+                other.GetComponent<Health>().LoseHealth(10);
+                GameObject tempObj = (GameObject)Instantiate(debuff, other.transform.position, other.transform.rotation);
+                tempObj.GetComponent<DebuffFrost>().target = other.gameObject;
+            }
+            else if (heroEquipment.equippedEmber == ember.Wind)
+            {
+                other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
+                other.GetComponent<Health>().LoseHealth(10);
+            }
+            else if (heroEquipment.equippedEmber == ember.Life)
+            {
+                other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
+                other.GetComponent<Health>().LoseHealth(10);
+            }
+            else if (heroEquipment.equippedEmber == ember.Death)
+            {
+                other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
+                other.GetComponent<Health>().LoseHealth(10);
+            }
+            else if (heroEquipment.equippedEmber == ember.Earth)
+            {
+                other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
+                other.GetComponent<Health>().LoseHealth(10);
+            }
+
         }
     }
 }
