@@ -90,8 +90,8 @@ public class RoomGeneration : MonoBehaviour
         FillDungeon();
 
         //TESTING
-        finalRoomArray[0] = floorTwoRooms[0];
-        finalRoomInfoArray[0] = floorTwoRoomsInfo[0];
+        finalRoomArray[0] = floorTwoRooms[3];
+        finalRoomInfoArray[0] = floorTwoRoomsInfo[3];
         //ENDTESTING
 
         CreateRoom();
