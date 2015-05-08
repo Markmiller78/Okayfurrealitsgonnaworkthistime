@@ -13,6 +13,7 @@ public class AIShadowCloud : MonoBehaviour
     public bool isInfected = false;
     public float infectRange;
     public float infecttimer;
+    public bool isReinforced = false;
 
 
     Health heroHP;
@@ -82,22 +83,28 @@ public class AIShadowCloud : MonoBehaviour
     {
         moveSpeed = moveSpeed * 2;
     }
-	void Reinforce()
-	{
-       
-            DamagePerSecond *= 1.2f;
+    void Reinforce()
+    {
+        if (!isReinforced)
+        {
+            DamagePerSecond *= 1.1f;
             moveSpeed *= 1.5f;
-       
-		
-	}
-	void UnReinforce()
-	{
- 
-            DamagePerSecond /= 1.2f;
+            isReinforced = true;
+        }
+
+    }
+
+    void UnReinforce()
+    {
+        if (isReinforced)
+        {
+            DamagePerSecond/= 1.5f;
             moveSpeed /= 1.5f;
-       
-		
-	}
+            isReinforced = false;
+        }
+
+    }
+
     void Decoy(GameObject decoy)
     {
         player = decoy;
