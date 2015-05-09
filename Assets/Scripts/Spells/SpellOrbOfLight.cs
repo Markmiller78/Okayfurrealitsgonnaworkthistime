@@ -33,6 +33,7 @@ public class SpellOrbOfLight : MonoBehaviour
 
         playerequip = player.GetComponent<PlayerEquipment>();
 
+
     }
 
     void FixedUpdate()

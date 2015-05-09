@@ -13,15 +13,19 @@ public class Health : MonoBehaviour
     RoomGeneration generator;
     public GameObject lifeEmberSpawn;
     GameObject player;
-    public GameObject explosion;
-    public GameObject lightRemains;
+   public  GameObject explosion;
+   public  GameObject lightRemains;
     PlayerEquipment equipment;
     public GameObject LoseText;
     bool playerDead;
+
+    Health playerHealth;
+
     void Start()
     {
         playerDead = false;
         player = GameObject.FindGameObjectWithTag("Player");
+        playerHealth = player.GetComponent<Health>();
         equipment = player.GetComponent<PlayerEquipment>();
         if (this.tag == "Player")
         {
@@ -39,10 +43,8 @@ public class Health : MonoBehaviour
 
     void Update()
     {
-        if (playerDead)
-        {
-            Die();
-        }
+
+
     }
     public void GainHealth(float Amount)
     {
@@ -68,8 +70,10 @@ public class Health : MonoBehaviour
             if (currentHP <= 0)
             {
                 currentHP = 0;
+                playerDead = true;
                 Die();
             }
+
             if (this.tag == "Player")
             {
                 healthPercent = currentHP / maxHP;
@@ -78,7 +82,7 @@ public class Health : MonoBehaviour
             else if (equipment.equippedEmber == ember.Life)
             {
                 GameObject instance = (GameObject)Instantiate(lifeEmberSpawn, transform.position, transform.rotation);
-                instance.GetComponent<LifeEmberStolenHealth>().gainAmount = Amount;
+                playerHealth.GainHealth(Amount);
 
             }
         }
@@ -94,28 +98,19 @@ public class Health : MonoBehaviour
             {
                 Explode();
             }
-            Destroy(gameObject);
-            if (generator != null)
-                --generator.finalRoomInfoArray[generator.currentRoom].numEnemies;
+
+
+            Destroy(this.gameObject);
+            --generator.finalRoomInfoArray[generator.currentRoom].numEnemies;
         }
         else
         {
-            if (playerDead == false)
+            if (playerDead)
             {
+                equipment.paused = true;
                 playerDead = true;
                 Instantiate(LoseText);
-                equipment.paused = true;
             }
-
-            //            if (deathTimer < 0)
-            //            {
-            //#if UNITY_STANDALONE
-            //                Application.Quit();
-            //#endif
-            //#if UNITY_EDITOR
-            //                UnityEditor.EditorApplication.isPlaying = false;
-            //#endif
-            //            }
         }
        
       

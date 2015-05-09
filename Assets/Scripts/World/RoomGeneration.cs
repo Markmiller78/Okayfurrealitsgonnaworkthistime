@@ -10,8 +10,8 @@ public class RoomGeneration : MonoBehaviour
     Room[] floorOneMazesInfo;
     public GameObject dethrosRoom;
     Room dethrosRoomInfo;
-    //public GameObject[] floorTwoRooms;
-    //Room[] floorTwoRoomsInfo;
+    public GameObject[] floorTwoRooms;
+    Room[] floorTwoRoomsInfo;
     //public GameObject[] floorTwoMazes;
     //Room[] floorTwoMazesInfo;
     //public GameObject lorneRoom;
@@ -29,6 +29,7 @@ public class RoomGeneration : MonoBehaviour
     public int currentRoom = 0;
     //public GameObject treasureRoom;
     //Room treasureRoomInfo;
+    public GameObject waypoint;
 
     void Start()
     {
@@ -50,13 +51,13 @@ public class RoomGeneration : MonoBehaviour
         }
         dethrosRoomInfo = dethrosRoom.GetComponent<Room>();
         dethrosRoomInfo.setUsed();
-        //Utilities.ArrayShuffle(floorTwoRooms);
-        //floorTwoRoomsInfo = new Room[floorTwoRooms.Length];
-        //for (int i = 0; i < floorTwoRooms.Length; i++)
-        //{
-        //    floorTwoRoomsInfo[i] = floorTwoRooms[i].GetComponent<Room>();
-        //    floorTwoRoomsInfo[i].setUsed();
-        //}
+        Utilities.ArrayShuffle(floorTwoRooms);
+        floorTwoRoomsInfo = new Room[floorTwoRooms.Length];
+        for (int i = 0; i < floorTwoRooms.Length; i++)
+        {
+            floorTwoRoomsInfo[i] = floorTwoRooms[i].GetComponent<Room>();
+            floorTwoRoomsInfo[i].setUsed();
+        }
         //Utilities.ArrayShuffle(floorTwoMazes);
         //floorTwoMazesInfo = new Room[floorTwoMazes.Length];
         //for (int i = 0; i < floorTwoMazes.Length; i++)
@@ -90,8 +91,8 @@ public class RoomGeneration : MonoBehaviour
         FillDungeon();
 
         //TESTING
-        //finalRoomArray[0] = floorOneMazes[3];
-        //finalRoomInfoArray[0] = floorOneMazesInfo[3];
+        //finalRoomArray[0] = floorTwoRooms[9];
+        //finalRoomInfoArray[0] = floorTwoRoomsInfo[9];
         //ENDTESTING
 
         CreateRoom();
@@ -235,6 +236,11 @@ public class RoomGeneration : MonoBehaviour
                         break;
                 }
             }
+        }
+        //Spawn Waypoints
+        for (int i = 0; i < finalRoomInfoArray[currentRoom].waypointLocations.Length; i++)
+        {
+            Instantiate(waypoint, new Vector3(finalRoomInfoArray[currentRoom].waypointLocations[i].x, -finalRoomInfoArray[currentRoom].waypointLocations[i].y, -1.0f), Quaternion.identity);
         }
         if (finalRoomInfoArray[currentRoom].comingFromEntrance)
         {

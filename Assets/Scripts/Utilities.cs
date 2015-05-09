@@ -67,5 +67,17 @@ public class Utilities
             temp[arr.Length] = item;
             arr = temp;
         }
+
+        public void Forget()
+        {
+            while (arr.Length > 0)
+            {
+                popFront();
+            }
+        }
+        public T Index(int index)
+        {
+            return arr[index];
+        }
     }
 }
