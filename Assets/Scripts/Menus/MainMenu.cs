@@ -21,6 +21,7 @@ public class MainMenu : MonoBehaviour
     public Text ControlsTextW;
     bool ControllerOptionToggle;
     bool AxisChanged = false;
+    
     public enum Menu { Main = 0, Options, Achievements, Credits, Continue, AreYouSure, SelectDifficulty };
     Menu CurrMenu = Menu.Main;
     public GameObject MainMenuText;
@@ -381,7 +382,7 @@ public class MainMenu : MonoBehaviour
                 case 3:
                     {
                         //CHANGE CONTROLS FROM KB/MOUSE to CONTROLLER
-
+                        InputManager.controller = !InputManager.controller;
                         //CHANGE TEXT TO REFLECT CHANGE
                         if (ControllerOptionToggle)
                         {

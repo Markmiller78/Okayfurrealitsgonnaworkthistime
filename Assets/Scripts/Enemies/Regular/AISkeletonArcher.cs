@@ -24,8 +24,9 @@ public class AISkeletonArcher : MonoBehaviour
     CharacterController controller;
     [HideInInspector]
     public Utilities.ppList<GameObject> usedWaypoints;
-    GameObject currentWaypoint;
+    //GameObject currentWaypoint;
     Vector3 vectorToPlayer;
+    float forgetTimer = 0.0f;
 
     void Start()
     {
@@ -43,6 +44,11 @@ public class AISkeletonArcher : MonoBehaviour
     {
         if (heroEquipment.paused == false)
         {
+            if (forgetTimer >= 10.0f)
+            {
+                usedWaypoints.Forget();
+                forgetTimer = 0.0f;
+            }
             if (isInfected)
                 Infect();
             if (hasAttacked)
@@ -66,6 +72,7 @@ public class AISkeletonArcher : MonoBehaviour
                 Attack();
                 hasAttacked = true;
             }
+            forgetTimer += Time.deltaTime;
         }
     }
 
@@ -182,12 +189,20 @@ public class AISkeletonArcher : MonoBehaviour
         // Find all waypoints
         GameObject[] waypoints = GameObject.FindGameObjectsWithTag("Waypoint");
         // Starting at [0], find the closest one
-        float leastDistance = Vector3.Distance(waypoints[0].transform.position, transform.position);
-        float toPlayer = Vector3.Distance(waypoints[0].transform.position, player.transform.position);
-        GameObject toReturn = waypoints[0];
-        for (int i = 1; i < waypoints.Length; i++)
+        int x = 0;
+
+        float leastDistance = Vector3.Distance(waypoints[x].transform.position, transform.position);
+        float toPlayer = Vector3.Distance(waypoints[x].transform.position, player.transform.position);
+        GameObject toReturn = waypoints[x];
+        while (true)
         {
-            bool used = false;
+            if (LookForWaypoint(waypoints[x]) || x == waypoints.Length - 1)
+                break;
+            x++;
+        }
+        bool used = false;
+        for (int i = x + 1; i < waypoints.Length; i++)
+        {
             for (int index = 0; index < usedWaypoints.Length(); index++)
             {
                 if (waypoints[i] == usedWaypoints.Index(index))
@@ -198,8 +213,8 @@ public class AISkeletonArcher : MonoBehaviour
             }
             if (used)
                 break;
-            if (Vector3.Distance(waypoints[i].transform.position, transform.position) < leastDistance
-                && Vector3.Distance(waypoints[i].transform.position, player.transform.position) < toPlayer)
+            if (/*Vector3.Distance(waypoints[i].transform.position, transform.position) < leastDistance
+                &&*/ Vector3.Distance(waypoints[i].transform.position, player.transform.position) < toPlayer)
             {
                 leastDistance = Vector3.Distance(waypoints[i].transform.position, transform.position);
                 toPlayer = Vector3.Distance(waypoints[i].transform.position, player.transform.position);
@@ -207,7 +222,8 @@ public class AISkeletonArcher : MonoBehaviour
         }
         for (int i = 0; i < waypoints.Length; i++)
         {
-            if (leastDistance == Vector3.Distance(waypoints[i].transform.position, transform.position))
+            if (leastDistance == Vector3.Distance(waypoints[i].transform.position, transform.position)
+                && toPlayer == Vector3.Distance(waypoints[i].transform.position, player.transform.position))
             {
                 toReturn = waypoints[i];
                 break;
@@ -216,8 +232,19 @@ public class AISkeletonArcher : MonoBehaviour
         return toReturn;
     }
 
-    void LookForWaypoint()
+    bool LookForWaypoint(GameObject wp)
     {
-        
+        Vector3 vectorToWP = transform.position - wp.transform.position;
+        float distance = Vector3.Distance(transform.position, wp.transform.position);
+        RaycastHit[] hits = Physics.RaycastAll(transform.position, vectorToWP, distance);
+        for (int i = 0; i < hits.Length; i++)
+        {
+            if (hits[i].transform.gameObject.tag == "Wall")
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
