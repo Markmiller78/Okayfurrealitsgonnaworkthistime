@@ -65,7 +65,8 @@ public class AISkeletonArcher : MonoBehaviour
             {
                 MoveAway();
             }
-            else MoveTowards(NearestWaypoint());
+            else if (!LookForPlayer())
+                MoveTowards(NearestWaypoint());
             Turn();
             if (LookForPlayer() && !hasAttacked && distanceToPlayer <= attackMaxRange && distanceToPlayer >= attackMinRange)
             {
@@ -192,12 +193,14 @@ public class AISkeletonArcher : MonoBehaviour
         int x = 0;
 
         float leastDistance = Vector3.Distance(waypoints[x].transform.position, transform.position);
-        float toPlayer = Vector3.Distance(waypoints[x].transform.position, player.transform.position);
+        //float toPlayer = Vector3.Distance(waypoints[x].transform.position, player.transform.position);
         GameObject toReturn = waypoints[x];
         while (true)
         {
             if (LookForWaypoint(waypoints[x]) || x == waypoints.Length - 1)
+            {
                 break;
+            }
             x++;
         }
         bool used = false;
@@ -213,17 +216,17 @@ public class AISkeletonArcher : MonoBehaviour
             }
             if (used)
                 break;
-            if (/*Vector3.Distance(waypoints[i].transform.position, transform.position) < leastDistance
-                &&*/ Vector3.Distance(waypoints[i].transform.position, player.transform.position) < toPlayer)
+            if (Vector3.Distance(waypoints[i].transform.position, transform.position) < leastDistance/*
+                && Vector3.Distance(waypoints[i].transform.position, player.transform.position) < toPlayer*/)
             {
                 leastDistance = Vector3.Distance(waypoints[i].transform.position, transform.position);
-                toPlayer = Vector3.Distance(waypoints[i].transform.position, player.transform.position);
+                //toPlayer = Vector3.Distance(waypoints[i].transform.position, player.transform.position);
             }
         }
         for (int i = 0; i < waypoints.Length; i++)
         {
-            if (leastDistance == Vector3.Distance(waypoints[i].transform.position, transform.position)
-                && toPlayer == Vector3.Distance(waypoints[i].transform.position, player.transform.position))
+            if (leastDistance == Vector3.Distance(waypoints[i].transform.position, transform.position)/*
+                && toPlayer == Vector3.Distance(waypoints[i].transform.position, player.transform.position)*/)
             {
                 toReturn = waypoints[i];
                 break;
