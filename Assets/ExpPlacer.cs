@@ -7,7 +7,9 @@ public class ExpPlacer : MonoBehaviour
 {
     float timer;
 
-    public GameObject boltExp;
+    public GameObject smlExp;
+    public GameObject medExp;
+    public GameObject lrgExp;
 
     bool once;
 
@@ -30,13 +32,20 @@ public class ExpPlacer : MonoBehaviour
         if (once)
         {
 
+            if (timer <= 0.05f)
+            {
+                Instantiate(smlExp, transform.position, transform.rotation);
+            }
+            else if (timer <= 0.1f)
+            {
+                Instantiate(medExp, transform.position, transform.rotation);
 
-            GameObject temp = (GameObject)Instantiate(boltExp, transform.position, transform.rotation);
-            temp.GetComponent<ParticleSystem>().emissionRate = timer * 4000;
+            }
+            else
+            {
+                Instantiate(lrgExp, transform.position, transform.rotation);
 
-           // SerializedObject ohYeah = new SerializedObject(temp.GetComponent<ParticleSystem>());
-            //ohYeah.FindProperty("ShapeModule.boxZ").floatValue = timer * 50f;
-            //ohYeah.ApplyModifiedProperties();
+            }
 
             once = false;
             Destroy(gameObject);

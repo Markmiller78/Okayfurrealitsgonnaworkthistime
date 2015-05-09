@@ -86,7 +86,7 @@ public class SpellBlastOfLight : MonoBehaviour
             }
             else if (heroEquipment.equippedEmber == ember.Earth)
             {
-
+                other.GetComponent<Health>().LoseHealth(3);
             }
 
             Instantiate(hpPickup, other.transform.position, other.transform.rotation);

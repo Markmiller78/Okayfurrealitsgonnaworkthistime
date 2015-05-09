@@ -73,6 +73,7 @@ public class OrbExplosion : MonoBehaviour
 
             else if (heroEquipment.equippedEmber == ember.Earth)
             {
+                other.GetComponent<Health>().LoseHealth(3);
             }
             else if (heroEquipment.equippedEmber == ember.Death)
             {
