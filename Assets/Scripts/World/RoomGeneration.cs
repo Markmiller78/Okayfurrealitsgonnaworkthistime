@@ -29,6 +29,7 @@ public class RoomGeneration : MonoBehaviour
     public int currentRoom = 0;
     //public GameObject treasureRoom;
     //Room treasureRoomInfo;
+    public GameObject waypoint;
 
     void Start()
     {
@@ -235,6 +236,11 @@ public class RoomGeneration : MonoBehaviour
                         break;
                 }
             }
+        }
+        //Spawn Waypoints
+        for (int i = 0; i < finalRoomInfoArray[currentRoom].waypointLocations.Length; i++)
+        {
+            Instantiate(waypoint, new Vector3(finalRoomInfoArray[currentRoom].waypointLocations[i].x, -finalRoomInfoArray[currentRoom].waypointLocations[i].y, -1.0f), Quaternion.identity);
         }
         if (finalRoomInfoArray[currentRoom].comingFromEntrance)
         {

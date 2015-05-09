@@ -75,5 +75,9 @@ public class Utilities
                 popFront();
             }
         }
+        public T Index(int index)
+        {
+            return arr[index];
+        }
     }
 }
