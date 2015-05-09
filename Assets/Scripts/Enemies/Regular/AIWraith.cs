@@ -80,9 +80,12 @@ public class AIWraith : MonoBehaviour
             if (!attacking)
                 Move();
             else
+            {
                 Attack();
+            }
 
-            Turn(); 
+
+            Turn();
         }
     }
 
@@ -101,13 +104,28 @@ public class AIWraith : MonoBehaviour
         }
         AttackTimer -= Time.deltaTime;
 
-        if(AttackCD == false && AttackTimer < 0)
+        if (AttackCD == false && AttackTimer < 0)
         {
-            
+            AttackTimer = 1.2f;
+            float DistanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
+            Vector3 Target = player.transform.position - transform.position;
+            RaycastHit[] things = Physics.RaycastAll(transform.position, Target, DistanceToPlayer);
+            for(int i = 0; i < things.Length; i++)
+            {
+                if (things[i].collider.gameObject.tag == "Wall")
+                {
+                    NewWayPoint(); 
+                    return;
+                }
+            }
             Instantiate(DarkOrb, transform.position, transform.rotation);
-            //print("Wraith: I attacked!");
-
+            AttackTimer = 1.2f;
             AttackCD = true;
+
+
+            
+
+
         }
 
 
@@ -121,18 +139,18 @@ public class AIWraith : MonoBehaviour
         //for (int i = 0; i < 100; i++)
         //{
 
-            randX = Random.Range(-3, 3);
-            randY = Random.Range(-3, 3);
-            WayPoint = new Vector3(player.transform.position.x + randX, player.transform.position.y + randY);
+        randX = Random.Range(-3, 3);
+        randY = Random.Range(-3, 3);
+        WayPoint = new Vector3(player.transform.position.x + randX, player.transform.position.y + randY);
 
-           // if (i == 90)
-            //    print("I reached 90");
+        // if (i == 90)
+        //    print("I reached 90");
 
-            return;
-       // }
+        return;
+        // }
 
-      //  print("Wraith: RETURNED BAD WAYPOINT!");
-       // return;
+        //  print("Wraith: RETURNED BAD WAYPOINT!");
+        // return;
     }
 
     void Turn()
@@ -176,7 +194,7 @@ public class AIWraith : MonoBehaviour
     {
         if (!isReinforced)
         {
-            
+
             moveSpeed *= 1.5f;
             isReinforced = true;
         }
