@@ -44,7 +44,7 @@ public class SpellOrbOfLight : MonoBehaviour
             {
                 float tempangle = change * Mathf.Rad2Deg;
                 tempangle += 90.0f;
-                change += 0.1f;
+                change += 0.3f;
                 Quaternion rotation = Quaternion.AngleAxis(tempangle, Vector3.forward);
                 transform.rotation = Quaternion.Slerp(this.gameObject.transform.rotation, rotation, Time.deltaTime * 42.5f);
             }
