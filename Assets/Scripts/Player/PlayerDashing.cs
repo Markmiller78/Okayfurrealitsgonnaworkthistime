@@ -18,6 +18,8 @@ public class PlayerDashing : MonoBehaviour
     PlayerCooldowns heroCooldowns;
     float trailBlazerDropTimer;
 
+    Animator anim;
+
     public GameObject lightRemains;
     public GameObject BlinkEffect;
     public GameObject FireTrail;
@@ -49,7 +51,7 @@ public class PlayerDashing : MonoBehaviour
     void Start()
     {
         earthtrailtime = 0;
-   
+        anim = gameObject.GetComponent<Animator>();
         controller = gameObject.GetComponent<CharacterController>();
         heroEquipment = gameObject.GetComponent<PlayerEquipment>();
         heroLight = gameObject.GetComponent<PlayerLight>();
@@ -177,7 +179,8 @@ public class PlayerDashing : MonoBehaviour
             heroCooldowns.dashCooling = true;
             UICD.CooldownTrigger(CooldownID.Boot);
             timeRemaining = dashDuration;
-
+            //Change the animation state into dashing
+            anim.CrossFade("PlayerDashing", 0.01f);
             //Set up the local variables
             trailBlazerDropTimer = 0.1f;
 

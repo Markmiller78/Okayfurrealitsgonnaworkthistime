@@ -892,14 +892,22 @@ public class MainMenu : MonoBehaviour
     }
     void Save()
     {
+        if (Application.platform == RuntimePlatform.OSXWebPlayer
+           || Application.platform == RuntimePlatform.WindowsWebPlayer)
+        {
 
-        BinaryFormatter bin = new BinaryFormatter();
-        FileStream file = File.Create(Application.persistentDataPath + "/playerinfo.dat");
-        PlayerData data = new PlayerData();
-        data.health = health;
-        data.light = theLight;
-        bin.Serialize(file, data);
-        file.Close();
+
+        }
+        else
+        {
+            BinaryFormatter bin = new BinaryFormatter();
+            FileStream file = File.Create(Application.persistentDataPath + "/playerinfo.dat");
+            PlayerData data = new PlayerData();
+            data.health = health;
+            data.light = theLight;
+            bin.Serialize(file, data);
+            file.Close();
+        }
 
     }
 }
