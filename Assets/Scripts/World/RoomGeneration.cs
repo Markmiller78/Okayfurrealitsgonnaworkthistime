@@ -50,7 +50,7 @@ public class RoomGeneration : MonoBehaviour
         }
         dethrosRoomInfo = dethrosRoom.GetComponent<Room>();
         dethrosRoomInfo.setUsed();
-        //Utilities.ArrayShuffle(floorTwoRooms);
+        Utilities.ArrayShuffle(floorTwoRooms);
         floorTwoRoomsInfo = new Room[floorTwoRooms.Length];
         for (int i = 0; i < floorTwoRooms.Length; i++)
         {
@@ -90,8 +90,8 @@ public class RoomGeneration : MonoBehaviour
         FillDungeon();
 
         //TESTING
-        finalRoomArray[0] = floorTwoRooms[8];
-        finalRoomInfoArray[0] = floorTwoRoomsInfo[8];
+        //finalRoomArray[0] = floorTwoRooms[9];
+        //finalRoomInfoArray[0] = floorTwoRoomsInfo[9];
         //ENDTESTING
 
         CreateRoom();
