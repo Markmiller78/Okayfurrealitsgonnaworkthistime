@@ -12,7 +12,7 @@ public class SaveTest : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	//player= 
+        player = GameObject.FindGameObjectWithTag("Player"); 
 	}
 	
 	// Update is called once per frame
@@ -33,18 +33,27 @@ public class SaveTest : MonoBehaviour {
 			Load ();
 		}
 	}
-	public void Save()
-	{
+   public void Save()
+    {
+        if (Application.platform == RuntimePlatform.OSXWebPlayer
+           || Application.platform == RuntimePlatform.WindowsWebPlayer)
+        {
 
-		BinaryFormatter bin = new BinaryFormatter ();
-		FileStream file = File.Create (Application.persistentDataPath + "/playerinfo.dat");
-		PlayerDatas data= new PlayerDatas();
-		data.health= 15;
-		data.theLight= 20;
-		bin.Serialize(file,data);
-		file.Close();
-		Debug.Log ("Saved!");
-	}
+
+        }
+        else
+        {
+            BinaryFormatter bin = new BinaryFormatter();
+            FileStream file = File.Create(Application.persistentDataPath + "/playerinfo.dat");
+            PlayerData data = new PlayerData();
+            //data.health = health;
+           // data.light = theLight;
+            bin.Serialize(file, data);
+            file.Close();
+        }
+
+    }
+
 
 	public void Load()
 	{
