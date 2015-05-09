@@ -16,58 +16,52 @@ public class AISkeletonArcher : MonoBehaviour
     public float infectRange;
     public float infecttimer;
     float distanceToPlayer;
-	public bool isReinforced = false;
+    public bool isReinforced = false;
     public bool isInfected = false;
     public GameObject projectile;
     bool hasAttacked = false;
-    
+
     CharacterController controller;
-    Utilities.ppList<GameObject> usedWaypoints;
+    [HideInInspector]
+    public Utilities.ppList<GameObject> usedWaypoints;
+    GameObject currentWaypoint;
+    Vector3 vectorToPlayer;
 
     void Start()
     {
         infectRange = 1.5f;
 
-        infecttimer = 3.0f; 
+        infecttimer = 3.0f;
         heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
         player = GameObject.FindGameObjectWithTag("Player");
         attackCooldown = attackCooldownMax;
         controller = GetComponent<CharacterController>();
         usedWaypoints = new Utilities.ppList<GameObject>();
-
-        //
-        usedWaypoints.pushBack(new GameObject("One"));
-        usedWaypoints.pushBack(new GameObject("Two"));
-        usedWaypoints.pushBack(new GameObject("Three"));
-        usedWaypoints.pushBack(new GameObject("Four"));
-        usedWaypoints.pushBack(new GameObject("Five"));
-        usedWaypoints.pushBack(new GameObject("TheRealSlimShady"));
-        usedWaypoints.popFront();
-      //  GameObject test = usedWaypoints.popFront();
-        //
     }
 
     void Update()
     {
         if (heroEquipment.paused == false)
         {
-            if(isInfected)
-            Infect();
+            if (isInfected)
+                Infect();
             if (hasAttacked)
             {
                 UpdateAttackCooldown();
             }
+            vectorToPlayer = player.transform.position - transform.position;
             distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
-            if (distanceToPlayer > (attackMaxRange + attackMinRange) / 2.0f)
+            if (LookForPlayer() && distanceToPlayer > (attackMaxRange + attackMinRange) / 2.0f)
             {
-                MoveTowards();
+                MoveTowards(player);
             }
-            else if (distanceToPlayer < (attackMaxRange + attackMinRange) / 2.0f)
+            else if (LookForPlayer() && distanceToPlayer < (attackMaxRange + attackMinRange) / 2.0f)
             {
                 MoveAway();
             }
+            else MoveTowards(NearestWaypoint());
             Turn();
-            if (!hasAttacked && distanceToPlayer <= attackMaxRange && distanceToPlayer >= attackMinRange)
+            if (LookForPlayer() && !hasAttacked && distanceToPlayer <= attackMaxRange && distanceToPlayer >= attackMinRange)
             {
                 Attack();
                 hasAttacked = true;
@@ -75,9 +69,9 @@ public class AISkeletonArcher : MonoBehaviour
         }
     }
 
-    void MoveTowards()
+    void MoveTowards(GameObject target)
     {
-        Vector2 moveTo = (player.transform.position - transform.position).normalized;
+        Vector2 moveTo = (target.transform.position - transform.position).normalized;
         controller.Move(moveTo * Time.deltaTime * moveSpeed);
     }
 
@@ -88,11 +82,11 @@ public class AISkeletonArcher : MonoBehaviour
         foreach (var obj in allObjects)
         {
             Vector3 dist = transform.position - obj.transform.position;
-            if (obj.tag == "Enemy"&&dist.magnitude<infectRange)
+            if (obj.tag == "Enemy" && dist.magnitude < infectRange)
                 obj.SendMessage("GetInfected", SendMessageOptions.DontRequireReceiver);
 
         }
-    
+
     }
     void MoveAway()
     {
@@ -102,7 +96,6 @@ public class AISkeletonArcher : MonoBehaviour
 
     void Turn()
     {
-        Vector3 vectorToPlayer = player.transform.position - transform.position;
         float angle = Mathf.Atan2(vectorToPlayer.y, vectorToPlayer.x) * Mathf.Rad2Deg;
         angle -= 90.0f;
         Quaternion rot = Quaternion.AngleAxis(angle, Vector3.forward);
@@ -128,26 +121,26 @@ public class AISkeletonArcher : MonoBehaviour
     void Decoy(GameObject decoy)
     {
         player = decoy;
-       // playMove = decoy.GetComponent<PlayerMovement>();
+        // playMove = decoy.GetComponent<PlayerMovement>();
     }
     void UnDecoy(GameObject decoy)
     {
         player = GameObject.FindGameObjectWithTag("Player");
-     //   playMove = player.GetComponent<PlayerMovement>();
+        //   playMove = player.GetComponent<PlayerMovement>();
     }
-	void Reinforce()
-	{
-		if (!isReinforced) 
-		{
-			attackMaxRange *= 1.5f;
-			moveSpeed *= 1.5f;
+    void Reinforce()
+    {
+        if (!isReinforced)
+        {
+            attackMaxRange *= 1.5f;
+            moveSpeed *= 1.5f;
             isReinforced = true;
-		}
-		
-	}
+        }
 
-	void UnReinforce()
-	{
+    }
+
+    void UnReinforce()
+    {
         if (isReinforced)
         {
             attackMaxRange /= 1.5f;
@@ -155,7 +148,7 @@ public class AISkeletonArcher : MonoBehaviour
             isReinforced = false;
         }
 
-	}
+    }
 
     void Slow()
     {
@@ -169,5 +162,62 @@ public class AISkeletonArcher : MonoBehaviour
     void GetInfected()
     {
         isInfected = true;
+    }
+    bool LookForPlayer()
+    {
+        RaycastHit[] hits = Physics.RaycastAll(transform.position, vectorToPlayer, distanceToPlayer);
+        for (int i = 0; i < hits.Length; i++)
+        {
+            if (hits[i].transform.gameObject.tag == "Wall")
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    GameObject NearestWaypoint()
+    {
+        // Find all waypoints
+        GameObject[] waypoints = GameObject.FindGameObjectsWithTag("Waypoint");
+        // Starting at [0], find the closest one
+        float leastDistance = Vector3.Distance(waypoints[0].transform.position, transform.position);
+        float toPlayer = Vector3.Distance(waypoints[0].transform.position, player.transform.position);
+        GameObject toReturn = waypoints[0];
+        for (int i = 1; i < waypoints.Length; i++)
+        {
+            bool used = false;
+            for (int index = 0; index < usedWaypoints.Length(); index++)
+            {
+                if (waypoints[i] == usedWaypoints.Index(index))
+                {
+                    used = true;
+                    break;
+                }
+            }
+            if (used)
+                break;
+            if (Vector3.Distance(waypoints[i].transform.position, transform.position) < leastDistance
+                && Vector3.Distance(waypoints[i].transform.position, player.transform.position) < toPlayer)
+            {
+                leastDistance = Vector3.Distance(waypoints[i].transform.position, transform.position);
+                toPlayer = Vector3.Distance(waypoints[i].transform.position, player.transform.position);
+            }
+        }
+        for (int i = 0; i < waypoints.Length; i++)
+        {
+            if (leastDistance == Vector3.Distance(waypoints[i].transform.position, transform.position))
+            {
+                toReturn = waypoints[i];
+                break;
+            }
+        }
+        return toReturn;
+    }
+
+    void LookForWaypoint()
+    {
+        
     }
 }
