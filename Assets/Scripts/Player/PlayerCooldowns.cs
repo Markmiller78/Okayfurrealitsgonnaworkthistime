@@ -34,7 +34,7 @@ public class PlayerCooldowns : MonoBehaviour
             dashCooldown -= Time.deltaTime;
             if (dashCooldown <= 0.0f)
             {
-                anim.CrossFade("PlayerWalking",0.01f);
+                anim.CrossFade("Idle",0.01f);
                 dashCooldown = dashCooldownMax;
                 dashCooling = false;
             }

@@ -20,10 +20,13 @@ public class PlayerMovement : MonoBehaviour
     Quaternion Rotation;
     Vector3 Rotate3d;
     Vector3 KnockbackVec;
+    Animator anim;
 
     void Start()
     {
+        
         player = GameObject.FindGameObjectWithTag("Player");
+        anim = gameObject.GetComponent<Animator>();
 		heroEquipment = gameObject.GetComponent<PlayerEquipment>();
         controller = gameObject.GetComponent<CharacterController>();
         heroCooldowns = gameObject.GetComponent<PlayerCooldowns>();
@@ -58,8 +61,10 @@ public class PlayerMovement : MonoBehaviour
             //Check for Left Stick Axis to 
             //see if it is surpressed fully
             //for more speed
+          
             if (Input.GetAxis("CLSHorizontal") > .8f || Input.GetAxis("CLSVertical") > .8f || Input.GetAxis("CLSVertical") < -.8f || Input.GetAxis("CLSHorizontal") < -.8f)
             {
+              
                 speed = fullSpeed;
             }
             else
@@ -68,12 +73,15 @@ public class PlayerMovement : MonoBehaviour
             //Check Left Joysticks for Movement
             MoveDirect.x = Input.GetAxis("CLSHorizontal");
             MoveDirect.y = Input.GetAxis("CLSVertical");
-
+            if (MoveDirect != Vector2.zero)
+                anim.CrossFade("PlayerWalking", 0.01f);
+            else
+                anim.CrossFade("Idle", 0.01f);
             //Normalize the directional vector
             //Factor in speed and time
             MoveDirect.Normalize();
             MoveDirect *= speed * Time.deltaTime;
-
+           
             //Actually Move the player
             controller.Move(MoveDirect);
             //rb2d.MovePosition(new Vector2(rb2d.transform.position.x + MoveDirect.x, rb2d.transform.position.y + MoveDirect.y));
@@ -81,6 +89,7 @@ public class PlayerMovement : MonoBehaviour
             //Rotate the player to where they are moving
             if (MoveDirect != Vector2.zero)
             {
+            
                 float angle = Mathf.Atan2(MoveDirect.y, MoveDirect.x) * Mathf.Rad2Deg;
                 angle += 270;
                 controller.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
@@ -115,11 +124,15 @@ public class PlayerMovement : MonoBehaviour
             MoveDirect.x = Input.GetAxis("KBHorizontal");
             MoveDirect.y = Input.GetAxis("KBVertical");
 
+            if (MoveDirect != Vector2.zero)
+                anim.CrossFade("PlayerWalking", 0.01f);
+            else
+                anim.CrossFade("Idle", 0.01f);
             //Normalize the directional vector
             //Factor in speed and time
             MoveDirect.Normalize();
             MoveDirect *= speed * Time.deltaTime;
-
+           
             //Actually Move the player
             controller.Move(MoveDirect);
             //rb2d.MovePosition(new Vector2(rb2d.transform.position.x + MoveDirect.x, rb2d.transform.position.y + MoveDirect.y));
