@@ -10,9 +10,11 @@ public class PauseMenu : MonoBehaviour
     public GameObject arrow;
     PlayerEquipment heroEquipment;
     bool axisChanged = false;
-
+    public GameObject SelectorRemains;
+    Vector3 RemainsPOS;
     void Start()
     {
+        RemainsPOS = new Vector3(1, 1, 1);
         pauseCanvas = GameObject.FindGameObjectWithTag("PauseCanvas");
         heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
         pauseCanvas.SetActive(false);
@@ -116,6 +118,7 @@ public class PauseMenu : MonoBehaviour
 
     void Pause()
     {
+        Instantiate(SelectorRemains, RemainsPOS, new Quaternion(0, 0, 0, 0));
         isPaused = true;
         pauseCanvas.SetActive(true);
         heroEquipment.paused = true;
@@ -123,6 +126,7 @@ public class PauseMenu : MonoBehaviour
 
     void UnPause()
     {
+        Destroy(SelectorRemains);
         isPaused = false;
         pauseCanvas.SetActive(false);
         heroEquipment.paused = false;
