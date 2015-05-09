@@ -15,9 +15,11 @@ public class PlayerCooldowns : MonoBehaviour
     public float collectorCooldown;
     public float collectorCooldownMax;
     public bool collectorCooling = false;
+    Animator anim;
 
     void Start()
     {
+        anim = gameObject.GetComponent<Animator>();
         dashCooldown = dashCooldownMax;
         spellCooldown = spellCooldownMax;
         meleeCooldown = meleeCooldownMax;
@@ -32,6 +34,7 @@ public class PlayerCooldowns : MonoBehaviour
             dashCooldown -= Time.deltaTime;
             if (dashCooldown <= 0.0f)
             {
+                anim.CrossFade("PlayerWalking",0.01f);
                 dashCooldown = dashCooldownMax;
                 dashCooling = false;
             }
