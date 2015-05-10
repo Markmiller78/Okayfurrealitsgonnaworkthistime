@@ -14,13 +14,14 @@ public class PlayerMeleeAttack : MonoBehaviour
 
 
     PlayerEquipment heroEqp;
+    Animator anim;
 
     public GameObject fireDebuff;
     public GameObject frostDebuff;
 
     void Start()
     {
-       
+        anim = GetComponentInParent<Animator>();
         player = transform.parent.gameObject;
         playerStats = player.GetComponent<PlayerStats>();
         rotationDelta = player.transform.rotation.z;
@@ -102,6 +103,7 @@ public class PlayerMeleeAttack : MonoBehaviour
     void Melee()
     {
         attacking = true;
+        anim.CrossFade("Attacking", 0.01f);
         gameObject.GetComponentInChildren<SpriteRenderer>().enabled = true;
         gameObject.GetComponentInChildren<ParticleSystem>().enableEmission = true;
     }

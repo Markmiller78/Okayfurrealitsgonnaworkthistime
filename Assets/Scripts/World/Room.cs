@@ -47,6 +47,7 @@ public class Room : MonoBehaviour
         {
             comingFromEntrance = true;
             enemySpawnPointUsed[i] = false;
+            beenThere = false;
         }
     }
 }

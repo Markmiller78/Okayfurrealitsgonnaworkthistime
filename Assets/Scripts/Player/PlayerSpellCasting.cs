@@ -70,10 +70,12 @@ public class PlayerSpellCasting : MonoBehaviour
     PlayerEquipment heroEquipment;
     PlayerCooldowns heroCooldowns;
     PlayerLight heroLight;
+    Animator anim;
     public HUDCooldowns UICD;
 
     void Start()
     {
+        anim = gameObject.GetComponent<Animator>();
         heroEquipment = gameObject.GetComponent<PlayerEquipment>();
         heroCooldowns = gameObject.GetComponent<PlayerCooldowns>();
         heroLight = gameObject.GetComponent<PlayerLight>();
@@ -90,6 +92,7 @@ public class PlayerSpellCasting : MonoBehaviour
                 Camera.main.SendMessage("ScreenShake");
                 heroLight.LoseLight(5);
                 heroCooldowns.spellCooling = true;
+                anim.CrossFade("Spellcasting", 0.01f);
                 //If the orb of light is equipped, fire the orb of light ability
                 if (heroEquipment.equippedAccessory == accessory.OrbOfLight)
                 {
