@@ -111,7 +111,7 @@ public class Health : MonoBehaviour
                 anim.CrossFade("Dying", 0.01f);
                 equipment.paused = true;
                 playerDead = true;
-              //  Instantiate(LoseText);
+                Instantiate(LoseText);
             }
         }
        
