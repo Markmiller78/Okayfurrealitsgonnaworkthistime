@@ -21,12 +21,14 @@ public class Pickup : MonoBehaviour
     public GameObject decoyBootPickup;
     public GameObject blinkBootPickup;
     public string theName;
+    Camera cameras;
 
     GameObject player;
     PlayerEquipment equipment;
 
     void Start()
     {
+        cameras = GameObject.FindObjectOfType<Camera>();
         player = GameObject.FindGameObjectWithTag("Player");
         equipment = player.GetComponent<PlayerEquipment>();
     }
@@ -35,8 +37,17 @@ public class Pickup : MonoBehaviour
     {
         if (displaytooltips)
         {
+            string temp = "Press E to pick up the ";
+            if (theName.Length != 0)
+            {
+                temp += theName;
 
-            GUI.Box(new Rect(0, 0, 140, 20), "Press E to pick up");
+                
+                
+
+            }
+            temp += "\n Durabilty: 10\n";
+            GUI.Box(new Rect(cameras.WorldToScreenPoint(player.transform.position).x+32,/*Screen.height-*/ cameras.WorldToScreenPoint(player.transform.position).y, 200, 100), temp);
         }
 
     }

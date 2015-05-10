@@ -18,13 +18,14 @@ public class Health : MonoBehaviour
     PlayerEquipment equipment;
     public GameObject LoseText;
     bool playerDead;
-
+    Animator anim;
     Health playerHealth;
 
     void Start()
     {
         playerDead = false;
         player = GameObject.FindGameObjectWithTag("Player");
+        anim = gameObject.GetComponent<Animator>();
         playerHealth = player.GetComponent<Health>();
         equipment = player.GetComponent<PlayerEquipment>();
         if (this.tag == "Player")
@@ -107,6 +108,7 @@ public class Health : MonoBehaviour
         {
             if (playerDead)
             {
+                anim.CrossFade("Dying", 0.01f);
                 equipment.paused = true;
                 playerDead = true;
                 Instantiate(LoseText);

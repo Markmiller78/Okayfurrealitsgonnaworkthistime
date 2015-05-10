@@ -65,7 +65,8 @@ public class AISkeletonArcher : MonoBehaviour
             {
                 MoveAway();
             }
-            else MoveTowards(NearestWaypoint());
+            else if (!LookForPlayer())
+                MoveTowards(NearestWaypoint());
             Turn();
             if (LookForPlayer() && !hasAttacked && distanceToPlayer <= attackMaxRange && distanceToPlayer >= attackMinRange)
             {
@@ -197,7 +198,9 @@ public class AISkeletonArcher : MonoBehaviour
         while (true)
         {
             if (LookForWaypoint(waypoints[x]) || x == waypoints.Length - 1)
+            {
                 break;
+            }
             x++;
         }
         bool used = false;
@@ -212,9 +215,9 @@ public class AISkeletonArcher : MonoBehaviour
                 }
             }
             if (used)
-                break;
-            if (/*Vector3.Distance(waypoints[i].transform.position, transform.position) < leastDistance
-                &&*/ Vector3.Distance(waypoints[i].transform.position, player.transform.position) < toPlayer)
+                continue;
+            if (Vector3.Distance(waypoints[i].transform.position, transform.position) < leastDistance
+                || Vector3.Distance(waypoints[i].transform.position, player.transform.position) < toPlayer)
             {
                 leastDistance = Vector3.Distance(waypoints[i].transform.position, transform.position);
                 toPlayer = Vector3.Distance(waypoints[i].transform.position, player.transform.position);

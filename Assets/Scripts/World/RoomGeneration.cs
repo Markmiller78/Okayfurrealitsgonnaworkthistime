@@ -220,20 +220,23 @@ public class RoomGeneration : MonoBehaviour
             Instantiate(finalRoomInfoArray[currentRoom].hazard, new Vector3(finalRoomInfoArray[currentRoom].hazardSpawnPoints[i].x, -finalRoomInfoArray[currentRoom].hazardSpawnPoints[i].y, -1), Quaternion.identity);
         }
         // Spawn enemies
-        finalRoomInfoArray[currentRoom].numEnemies = Random.Range(finalRoomInfoArray[currentRoom].minEnemies, finalRoomInfoArray[currentRoom].maxEnemies);
-        int enemiesSpawned = 0;
-        while (enemiesSpawned < finalRoomInfoArray[currentRoom].numEnemies)
+        if (!finalRoomInfoArray[currentRoom].beenThere)
         {
-            for (int i = 0; i < finalRoomInfoArray[currentRoom].enemySpawnPoints.Length; i++)
+            finalRoomInfoArray[currentRoom].numEnemies = Random.Range(finalRoomInfoArray[currentRoom].minEnemies, finalRoomInfoArray[currentRoom].maxEnemies);
+            int enemiesSpawned = 0;
+            while (enemiesSpawned < finalRoomInfoArray[currentRoom].numEnemies)
             {
-                int chance = Random.Range(1, 5);
-                if (!finalRoomInfoArray[currentRoom].enemySpawnPointUsed[i] && chance == 1)
+                for (int i = 0; i < finalRoomInfoArray[currentRoom].enemySpawnPoints.Length; i++)
                 {
-                    Instantiate(finalRoomInfoArray[currentRoom].enemiesThatCanSpawn[Random.Range(0, finalRoomInfoArray[currentRoom].enemiesThatCanSpawn.Length)], new Vector3(finalRoomInfoArray[currentRoom].enemySpawnPoints[i].x, -finalRoomInfoArray[currentRoom].enemySpawnPoints[i].y, -1f), Quaternion.identity);
-                    finalRoomInfoArray[currentRoom].enemySpawnPointUsed[i] = true;
-                    ++enemiesSpawned;
-                    if (enemiesSpawned == finalRoomInfoArray[currentRoom].numEnemies)
-                        break;
+                    int chance = Random.Range(1, 5);
+                    if (!finalRoomInfoArray[currentRoom].enemySpawnPointUsed[i] && chance == 1)
+                    {
+                        Instantiate(finalRoomInfoArray[currentRoom].enemiesThatCanSpawn[Random.Range(0, finalRoomInfoArray[currentRoom].enemiesThatCanSpawn.Length)], new Vector3(finalRoomInfoArray[currentRoom].enemySpawnPoints[i].x, -finalRoomInfoArray[currentRoom].enemySpawnPoints[i].y, -1f), Quaternion.identity);
+                        finalRoomInfoArray[currentRoom].enemySpawnPointUsed[i] = true;
+                        ++enemiesSpawned;
+                        if (enemiesSpawned == finalRoomInfoArray[currentRoom].numEnemies)
+                            break;
+                    }
                 }
             }
         }
@@ -282,6 +285,7 @@ public class RoomGeneration : MonoBehaviour
                     break;
             }
         }
+        finalRoomInfoArray[currentRoom].beenThere = true;
         //player.transform.position = new Vector3(finalRoomInfoArray[currentRoom].bottomPlayerSpawn.x, -finalRoomInfoArray[currentRoom].bottomPlayerSpawn.y, -1.0f);
     }
 
@@ -489,7 +493,7 @@ public class RoomGeneration : MonoBehaviour
         GameObject[] objArray = GameObject.FindObjectsOfType<GameObject>();
         foreach (GameObject obj in objArray)
         {
-            if (obj.name.Contains("Wall") || obj.name.Contains("Floor") || obj.name.Contains("Hazard") || obj.name.Contains("Door") || obj.tag.Contains("Drop") || obj.tag == "LightTrail")
+            if (obj.name.Contains("Wall") || obj.name.Contains("Floor") || obj.name.Contains("Hazard") || obj.name.Contains("Door") || obj.tag.Contains("Drop") || obj.tag == "LightTrail" || obj.name.Contains("Pickup"))
             {
                 Destroy(obj);
             }

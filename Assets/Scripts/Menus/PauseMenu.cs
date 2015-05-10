@@ -7,12 +7,13 @@ public class PauseMenu : MonoBehaviour
     GameObject pauseCanvas;
     int currOption = 0;
     int numOptions = 3;
-    public GameObject arrow;
     PlayerEquipment heroEquipment;
     bool axisChanged = false;
-
+    public GameObject SelectorRemains;
+    Vector3 RemainsPOS;
     void Start()
     {
+        RemainsPOS = new Vector3(1, 1, 1);
         pauseCanvas = GameObject.FindGameObjectWithTag("PauseCanvas");
         heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
         pauseCanvas.SetActive(false);
@@ -71,7 +72,7 @@ public class PauseMenu : MonoBehaviour
             {
                 case 0:
                     #region Options Menu Stuff
-                    arrow.GetComponent<RectTransform>().position = new Vector3(527.5f, 420f, 0.0f);
+                    SelectorRemains.transform.localPosition = new Vector3(-106f, 37f, -5.1f);
                     if (InputManager.controller && Input.GetButtonDown("CMenuAccept"))
                     {
                         // Options Code Here                       
@@ -84,7 +85,7 @@ public class PauseMenu : MonoBehaviour
                     #endregion
                 case 1:
                     #region Saving
-                    arrow.GetComponent<RectTransform>().position = new Vector3(562.5f, 380f, 0.0f);
+                    SelectorRemains.transform.localPosition = new Vector3(-77f, -4.7f, -5.1f);
                     if (InputManager.controller && Input.GetButtonDown("CMenuAccept"))
                     {
                         // Save Code Here
@@ -97,7 +98,7 @@ public class PauseMenu : MonoBehaviour
                     #endregion
                 case 2:
                     #region Save & Quit
-                    arrow.GetComponent<RectTransform>().position = new Vector3(492.5f, 340f, 0.0f);
+                    SelectorRemains.transform.localPosition = new Vector3(-147f, -42f, -5.1f);
                     if (InputManager.controller && Input.GetButtonDown("CMenuAccept"))
                     {
                         // Save & Quit Code Here
