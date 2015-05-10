@@ -90,7 +90,6 @@ public class PlayerSpellCasting : MonoBehaviour
                 Camera.main.SendMessage("ScreenShake");
                 heroLight.LoseLight(5);
                 heroCooldowns.spellCooling = true;
-                UICD.CooldownTrigger(CooldownID.Spell);
                 //If the orb of light is equipped, fire the orb of light ability
                 if (heroEquipment.equippedAccessory == accessory.OrbOfLight)
                 {
