@@ -7,6 +7,9 @@ public class DisplayEnmiesRemaining : MonoBehaviour
 
     float timer;
     public Text theText;
+
+    public int count;
+
     // Use this for initialization
     void Start()
     {
@@ -21,7 +24,7 @@ public class DisplayEnmiesRemaining : MonoBehaviour
         if (timer <= 0)
         {
             timer = 1;
-            int count = GameObject.FindGameObjectsWithTag("Enemy").Length + GameObject.FindGameObjectsWithTag("ShadowSpawn").Length;
+            count = GameObject.FindGameObjectsWithTag("Enemy").Length + GameObject.FindGameObjectsWithTag("ShadowSpawn").Length;
             theText.text = count.ToString();
         }
     }

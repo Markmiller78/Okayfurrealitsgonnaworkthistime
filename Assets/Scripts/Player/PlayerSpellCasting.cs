@@ -56,6 +56,7 @@ public class PlayerSpellCasting : MonoBehaviour
     public GameObject lifeChain;
     public GameObject deathChain;
     public GameObject earthChain;
+    public bool chained;
 
     [Header("Ensnare")]
     public GameObject lightSnare;
@@ -78,6 +79,7 @@ public class PlayerSpellCasting : MonoBehaviour
         heroCooldowns = gameObject.GetComponent<PlayerCooldowns>();
         heroLight = gameObject.GetComponent<PlayerLight>();
         UICD = GameObject.Find("Spell").GetComponent<HUDCooldowns>();
+        chained = false;
     }
 
     void CastSpell()
@@ -306,6 +308,7 @@ public class PlayerSpellCasting : MonoBehaviour
                 }
                 else if (heroEquipment.equippedAccessory == accessory.ChainLightning)
                 {
+                    chained = false;
                     if (heroEquipment.equippedEmber == ember.None)
                     {
                         Instantiate(lightChain, transform.position, transform.rotation);
