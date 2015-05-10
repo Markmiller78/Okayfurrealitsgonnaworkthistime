@@ -177,7 +177,6 @@ public class PlayerDashing : MonoBehaviour
             //Make the player spend light
             heroLight.LoseLight(5);
             heroCooldowns.dashCooling = true;
-            UICD.CooldownTrigger(CooldownID.Boot);
             timeRemaining = dashDuration;
             //Change the animation state into dashing
             anim.CrossFade("PlayerDashing", 0.01f);
