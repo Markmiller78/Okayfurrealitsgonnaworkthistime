@@ -73,7 +73,7 @@ public class PlayerMovement : MonoBehaviour
             //Check Left Joysticks for Movement
             MoveDirect.x = Input.GetAxis("CLSHorizontal");
             MoveDirect.y = Input.GetAxis("CLSVertical");
-            if (MoveDirect != Vector2.zero)
+            if (MoveDirect != Vector2.zero && anim.name != "Spellcasting")
                 anim.CrossFade("PlayerWalking", 0.01f);
             else
                 anim.CrossFade("Idle", 0.01f);
