@@ -16,6 +16,7 @@ public class PlayerCooldowns : MonoBehaviour
     public float collectorCooldownMax;
     public bool collectorCooling = false;
     Animator anim;
+    PlayerEquipment equipment;
 
     void Start()
     {
@@ -24,46 +25,50 @@ public class PlayerCooldowns : MonoBehaviour
         spellCooldown = spellCooldownMax;
         meleeCooldown = meleeCooldownMax;
         collectorCooldown = collectorCooldownMax;
+        equipment = GetComponent<PlayerEquipment>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (dashCooling)
+        if (!equipment.paused)
         {
-            dashCooldown -= Time.deltaTime;
-            if (dashCooldown <= 0.0f)
+            if (dashCooling)
             {
-                anim.CrossFade("Idle",0.01f);
-                dashCooldown = dashCooldownMax;
-                dashCooling = false;
+                dashCooldown -= Time.deltaTime;
+                if (dashCooldown <= 0.0f)
+                {
+                    anim.CrossFade("Idle", 0.01f);
+                    dashCooldown = dashCooldownMax;
+                    dashCooling = false;
+                }
             }
-        }
-        if (spellCooling)
-        {
-            spellCooldown -= Time.deltaTime;
-            if (spellCooldown <= 0.0f)
+            if (spellCooling)
             {
-                spellCooldown = spellCooldownMax;
-                spellCooling = false;
+                spellCooldown -= Time.deltaTime;
+                if (spellCooldown <= 0.0f)
+                {
+                    spellCooldown = spellCooldownMax;
+                    spellCooling = false;
+                }
             }
-        }
-        if (meleeCooling)
-        {
-            meleeCooldown -= Time.deltaTime;
-            if (meleeCooldown <= 0.0f)
+            if (meleeCooling)
             {
-                meleeCooldown = meleeCooldownMax;
-                meleeCooling = false;
+                meleeCooldown -= Time.deltaTime;
+                if (meleeCooldown <= 0.0f)
+                {
+                    meleeCooldown = meleeCooldownMax;
+                    meleeCooling = false;
+                }
             }
-        }
-        if (collectorCooling)
-        {
-            collectorCooldown -= Time.deltaTime;
-            if (collectorCooldown <= 0.0f)
+            if (collectorCooling)
             {
-                collectorCooldown = collectorCooldownMax;
-                collectorCooling = false;
+                collectorCooldown -= Time.deltaTime;
+                if (collectorCooldown <= 0.0f)
+                {
+                    collectorCooldown = collectorCooldownMax;
+                    collectorCooling = false;
+                }
             }
         }
     }
