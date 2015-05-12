@@ -98,86 +98,86 @@ public class SpellChainLightning : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-            if (target == null)
+        if (target == null)
+        {
+            if (other.gameObject == cantHit)
             {
-                if (other.gameObject == cantHit)
+                return;
+            }
+            if (other.tag == "Wall")
+            {
+                Explode();
+            }
+            else if (other.tag == "Enemy")
+            {
+
+                target = other.gameObject;
+                if (heroEquipment.equippedEmber == ember.None)
                 {
-                    return;
+                    other.GetComponent<Health>().LoseHealth(damage);
                 }
-                if (other.tag == "Wall")
+                else if (heroEquipment.equippedEmber == ember.Fire)
                 {
-                    Explode();
+                    other.GetComponent<Health>().LoseHealth(damage);
+                    GameObject tempObj = (GameObject)Instantiate(debuff, other.transform.position, other.transform.rotation);
+                    tempObj.GetComponent<DebuffFire>().target = other.gameObject;
                 }
-                else if (other.tag == "Enemy")
+                else if (heroEquipment.equippedEmber == ember.Ice)
                 {
-
-                    target = other.gameObject;
-                    if (heroEquipment.equippedEmber == ember.None)
-                    {
-                        other.GetComponent<Health>().LoseHealth(damage);
-                    }
-                    else if (heroEquipment.equippedEmber == ember.Fire)
-                    {
-                        other.GetComponent<Health>().LoseHealth(damage);
-                        GameObject tempObj = (GameObject)Instantiate(debuff, other.transform.position, other.transform.rotation);
-                        tempObj.GetComponent<DebuffFire>().target = other.gameObject;
-                    }
-                    else if (heroEquipment.equippedEmber == ember.Ice)
-                    {
-                        other.GetComponent<Health>().LoseHealth(damage);
-                        GameObject tempObj = (GameObject)Instantiate(debuff, other.transform.position, other.transform.rotation);
-                        tempObj.GetComponent<DebuffFrost>().target = other.gameObject;
-                    }
-                    else if (heroEquipment.equippedEmber == ember.Wind)
-                    {
-                        other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
-                        other.GetComponent<Health>().LoseHealth(damage);
-                    }
-                    else if (heroEquipment.equippedEmber == ember.Life)
-                    {
-                        other.GetComponent<Health>().LoseHealth(damage);
-                    }
-                    else if (heroEquipment.equippedEmber == ember.Earth)
-                    {
-                        Camera.main.SendMessage("ScreenShake");
-                        other.GetComponent<Health>().LoseHealth(damage + 3);
-                    }
-                    else if (heroEquipment.equippedEmber == ember.Death)
-                    {
-                        other.SendMessage("GetInfected", SendMessageOptions.DontRequireReceiver);
-                        other.GetComponent<Health>().LoseHealth(damage);
-                    }
+                    other.GetComponent<Health>().LoseHealth(damage);
+                    GameObject tempObj = (GameObject)Instantiate(debuff, other.transform.position, other.transform.rotation);
+                    tempObj.GetComponent<DebuffFrost>().target = other.gameObject;
+                }
+                else if (heroEquipment.equippedEmber == ember.Wind)
+                {
+                    other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
+                    other.GetComponent<Health>().LoseHealth(damage);
+                }
+                else if (heroEquipment.equippedEmber == ember.Life)
+                {
+                    other.GetComponent<Health>().LoseHealth(damage);
+                }
+                else if (heroEquipment.equippedEmber == ember.Earth)
+                {
+                    Camera.main.SendMessage("ScreenShake");
+                    other.GetComponent<Health>().LoseHealth(damage + 3);
+                }
+                else if (heroEquipment.equippedEmber == ember.Death)
+                {
+                    other.SendMessage("GetInfected", SendMessageOptions.DontRequireReceiver);
+                    other.GetComponent<Health>().LoseHealth(damage);
+                }
 
 
-                    if (pSpells.chained == false)
+                if (pSpells.chained == false)
+                {
+                    if (ugh.count > 0)
                     {
-                        if (ugh.count > 0)
+                        GameObject[] possibleDoodsToShoot = GameObject.FindGameObjectsWithTag("Enemy");
+                        for (int i = 0; i < possibleDoodsToShoot.Length; i++)
                         {
-                            GameObject[] possibleDoodsToShoot = GameObject.FindGameObjectsWithTag("Enemy");
-                            for (int i = 0; i < possibleDoodsToShoot.Length; i++)
+                            if (Vector3.Distance(other.transform.position, possibleDoodsToShoot[i].transform.position) < 3)
                             {
-                                if (Vector3.Distance(other.transform.position, possibleDoodsToShoot[i].transform.position) < 3)
-                                {
-                                    Vector3 temp = possibleDoodsToShoot[i].transform.position - other.transform.position;
+                                Vector3 temp = possibleDoodsToShoot[i].transform.position - other.transform.position;
 
-                                    float angle = Mathf.Atan2(temp.y, temp.x) * Mathf.Rad2Deg + 270;
+                                float angle = Mathf.Atan2(temp.y, temp.x) * Mathf.Rad2Deg + 270;
 
-                                    Quaternion rot = Quaternion.AngleAxis(angle, Vector3.forward);
+                                Quaternion rot = Quaternion.AngleAxis(angle, Vector3.forward);
 
-                                    GameObject theNewChains = (GameObject)Instantiate(theChains, other.transform.position, rot);
-                                    theNewChains.GetComponent<SpellChainLightning>().cantHit = other.gameObject;
-                                    pSpells.chained = true;
-                                    break;
-                                }
+                                GameObject theNewChains = (GameObject)Instantiate(theChains, other.transform.position, rot);
+                                theNewChains.GetComponent<SpellChainLightning>().cantHit = other.gameObject;
+                                pSpells.chained = true;
+                                break;
                             }
                         }
                     }
-                    else
-                    {
-                        Instantiate(hpPickup, other.transform.position, other.transform.rotation);
-                        Instantiate(lightPickup, transform.position, new Quaternion(0, 0, 0, 0));
-                    }
                 }
+                else
+                {
+                    Instantiate(hpPickup, other.transform.position, other.transform.rotation);
+                    Instantiate(lightPickup, transform.position, new Quaternion(0, 0, 0, 0));
+                }
+            }
 
 
         }
@@ -185,6 +185,13 @@ public class SpellChainLightning : MonoBehaviour
 
     void Explode()
     {
+        pSpells = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerSpellCasting>();
+
+        if (target == null && pSpells.chained == false)
+        {
+            Instantiate(lightPickup, transform.position, new Quaternion(0, 0, 0, 0));
+
+        }
         Destroy(gameObject);
     }
 }
