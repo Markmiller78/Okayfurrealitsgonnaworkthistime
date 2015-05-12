@@ -22,7 +22,7 @@ public class MapAndStatsMenu : MonoBehaviour
 
         Texture2D texture = new Texture2D(1, 1);
         texture.wrapMode = TextureWrapMode.Repeat;
-        texture.SetPixel(1, 1, Color.grey);
+        texture.SetPixel(1, 1, new Color(.75f, .75f, .75f));
         texture.Apply();
         style = new GUIStyle();
         style.normal.background = texture;
@@ -55,19 +55,15 @@ public class MapAndStatsMenu : MonoBehaviour
                     {
                         case 0:
                             offset.y += 25 + generator.finalRoomInfoArray[i - 1].height * 5;
-                            //offset.y += (generator.finalRoomInfoArray[i - 1].height / 2) * 5;
                             break;
                         case 1:
                             offset.x += 25 + generator.finalRoomInfoArray[i - 1].width * 5;
-                            //offset.x += (generator.finalRoomInfoArray[i - 1].width / 2) * 5;
                             break;
                         case 2:
                             offset.y -= 25 + generator.finalRoomInfoArray[i - 1].height * 5;
-                            //offset.y -= (generator.finalRoomInfoArray[i - 1].height / 2) * 5;
                             break;
                         case 3:
                             offset.x -= 25 + generator.finalRoomInfoArray[i - 1].width * 5;
-                            //offset.x -= (generator.finalRoomInfoArray[i - 1].width / 2) * 5;
                             break;
                         default:
                             break;
