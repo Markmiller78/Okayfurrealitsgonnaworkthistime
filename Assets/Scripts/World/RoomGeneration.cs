@@ -245,6 +245,7 @@ public class RoomGeneration : MonoBehaviour
         {
             Instantiate(waypoint, new Vector3(finalRoomInfoArray[currentRoom].waypointLocations[i].x, -finalRoomInfoArray[currentRoom].waypointLocations[i].y, -1.0f), Quaternion.identity);
         }
+        // Move player to entrance or exit
         if (finalRoomInfoArray[currentRoom].comingFromEntrance)
         {
             switch (finalRoomInfoArray[currentRoom].entranceDir)
@@ -285,8 +286,9 @@ public class RoomGeneration : MonoBehaviour
                     break;
             }
         }
+        // make sure enemies can't respawn
         finalRoomInfoArray[currentRoom].beenThere = true;
-        }
+    }
 
     void FillDungeon()
     {

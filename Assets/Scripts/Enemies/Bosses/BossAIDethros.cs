@@ -20,14 +20,14 @@ public class BossAIDethros : MonoBehaviour
     float rTimerMax = 5.0f;
     public GameObject meleeAttackObject;
     DethrosMeleeAttack meleeScript;
-    public Text YouWinText;
-    bool Victory;
-    float VictoryTimer;
+    //public Text YouWinText;
+    //bool Victory;
+    //float VictoryTimer;
 
     void Start()
     {
-        Victory = false;
-        VictoryTimer = 5;
+        //Victory = false;
+        //VictoryTimer = 5;
         // Get Player ref
         player = GameObject.FindGameObjectWithTag("Player");
         // Get Controller ref for movement
@@ -42,10 +42,10 @@ public class BossAIDethros : MonoBehaviour
 
     void Update()
     {
-        if (Victory)
-        {
-            VictoryTimer -= Time.deltaTime;
-        }
+        //if (Victory)
+        //{
+        //    VictoryTimer -= Time.deltaTime;
+        //}
         // Only update if game is unpaused
         if (heroEquipment.paused == false)
         {
@@ -86,18 +86,18 @@ public class BossAIDethros : MonoBehaviour
                 case state.aggravated:
                     {
 
-                        YouWinText.text = "You Win!";
-                        heroEquipment.paused = true;
-#if UNITY_STANDALONE
-                        if (VictoryTimer < 0)
-                        {
-                            YouWinText.text = " ";
-                            Application.Quit();
-                        }
-#elif UNITY_EDITOR
-                
-                        UnityEditor.EditorApplication.isPlaying = false;
-#endif
+//                        YouWinText.text = "You Win!";
+//                        heroEquipment.paused = true;
+//#if UNITY_STANDALONE
+//                        if (VictoryTimer < 0)
+//                        {
+//                            YouWinText.text = " ";
+//                            Application.Quit();
+//                        }
+//#elif UNITY_EDITOR
+//                
+//                        UnityEditor.EditorApplication.isPlaying = false;
+//#endif
 
                         if (myHealth.currentHP < myHealth.maxHP / 3f)
                             currState = state.intense;
