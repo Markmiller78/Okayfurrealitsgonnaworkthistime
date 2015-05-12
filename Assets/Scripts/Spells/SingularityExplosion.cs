@@ -17,6 +17,7 @@ public class SingularityExplosion : MonoBehaviour
     public Vector3 vectoplayer;
     public Vector3 playerpos;
 
+    bool once;
     // Use this for initialization
     void Start()
     {
@@ -34,7 +35,7 @@ public class SingularityExplosion : MonoBehaviour
         {
             maxLife = 0.6f;
         }
-
+        once = true;
     }
 
     // Update is called once per frame
@@ -56,7 +57,11 @@ public class SingularityExplosion : MonoBehaviour
     {
         if (other.tag == "Enemy")
         {
-            Instantiate(hpPickup, other.transform.position, other.transform.rotation);
+            if (once)
+            {
+                Instantiate(hpPickup, other.transform.position, other.transform.rotation);
+                once = false;
+            }
 
 
             if (heroEquipment.equippedEmber == ember.None)

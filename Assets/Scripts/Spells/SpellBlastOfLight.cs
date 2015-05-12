@@ -15,6 +15,7 @@ public class SpellBlastOfLight : MonoBehaviour
     GameObject player;
 
     float maxLife;
+    bool once;
 
     // Use this for initialization
     void Start()
@@ -32,7 +33,7 @@ public class SpellBlastOfLight : MonoBehaviour
         {
             maxLife = 1.0f;
         }
-
+        once = true;
     }
 
     // Update is called once per frame
@@ -89,7 +90,11 @@ public class SpellBlastOfLight : MonoBehaviour
                 other.GetComponent<Health>().LoseHealth(3);
             }
 
-            Instantiate(hpPickup, other.transform.position, other.transform.rotation);
+            if (once)
+            {
+                Instantiate(hpPickup, other.transform.position, other.transform.rotation);
+                once = false;
+            }
             other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
             other.GetComponent<Health>().LoseHealth(10);
         }

@@ -14,6 +14,9 @@ public class OrbExplosion : MonoBehaviour
 
     float maxLife;
 
+    bool once;
+
+
     // Use this for initialization
     void Start()
     {
@@ -30,7 +33,75 @@ public class OrbExplosion : MonoBehaviour
         {
             maxLife = 0.6f;
         }
+        once = true;
 
+        float expRadius = 1.3f;
+
+        heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
+
+
+        if (heroEquipment.equippedAccessory == accessory.OrbOfLight)
+        {
+            expRadius = 1.3f;
+        }
+        else if (heroEquipment.equippedAccessory == accessory.Snare)
+        {
+            expRadius = 2.5f;
+        }
+        
+
+
+        GameObject[] Enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+        for (int i = 0; i < Enemies.Length; i++)
+        {
+            if (Vector3.Distance(transform.position, Enemies[i].transform.position) < expRadius)
+            {
+                if (Enemies[i].tag == "Enemy")
+                {
+
+                    if (heroEquipment.equippedEmber == ember.None)
+                    {
+                    }
+                    else if (heroEquipment.equippedEmber == ember.Fire)
+                    {
+                        GameObject tempObj = (GameObject)Instantiate(debuff, Enemies[i].transform.position, Enemies[i].transform.rotation);
+                        tempObj.GetComponent<DebuffFire>().target = Enemies[i].gameObject;
+                    }
+                    else if (heroEquipment.equippedEmber == ember.Ice)
+                    {
+                        GameObject tempObj = (GameObject)Instantiate(debuff, Enemies[i].transform.position, Enemies[i].transform.rotation);
+                        tempObj.GetComponent<DebuffFrost>().target = Enemies[i].gameObject;
+                    }
+                    else if (heroEquipment.equippedEmber == ember.Wind)
+                    {
+                        Enemies[i].SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
+                    }
+
+                    else if (heroEquipment.equippedEmber == ember.Earth)
+                    {
+                        Enemies[i].GetComponent<Health>().LoseHealth(3);
+                    }
+                    else if (heroEquipment.equippedEmber == ember.Death)
+                    {
+                        Enemies[i].SendMessage("GetInfected", SendMessageOptions.DontRequireReceiver);
+                    }
+                    else if (heroEquipment.equippedEmber == ember.Life)
+                    {
+                    }
+
+                    if (once)
+                    {
+                        Instantiate(hpPickup, Enemies[i].transform.position, Enemies[i].transform.rotation);
+                        once = false;
+                    }
+                    Enemies[i].GetComponent<Health>().LoseHealth(5);
+
+
+
+                }
+            }
+        }
     }
 
     // Update is called once per frame
@@ -47,50 +118,54 @@ public class OrbExplosion : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter(Collider other)
-    {
-        heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
-        if (other.tag == "Enemy")
-        {
+    //void OnTriggerEnter(Collider other)
+    //{
+    //    heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
+    //    if (other.tag == "Enemy")
+    //    {
 
-            if (heroEquipment.equippedEmber == ember.None)
-            {
-            }
-            else if (heroEquipment.equippedEmber == ember.Fire)
-            {
-                GameObject tempObj = (GameObject)Instantiate(debuff, other.transform.position, other.transform.rotation);
-                tempObj.GetComponent<DebuffFire>().target = other.gameObject;
-            }
-            else if (heroEquipment.equippedEmber == ember.Ice)
-            {
-                GameObject tempObj = (GameObject)Instantiate(debuff, other.transform.position, other.transform.rotation);
-                tempObj.GetComponent<DebuffFrost>().target = other.gameObject;
-            }
-            else if (heroEquipment.equippedEmber == ember.Wind)
-            {
-                other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
-            }
+    //        if (heroEquipment.equippedEmber == ember.None)
+    //        {
+    //        }
+    //        else if (heroEquipment.equippedEmber == ember.Fire)
+    //        {
+    //            GameObject tempObj = (GameObject)Instantiate(debuff, other.transform.position, other.transform.rotation);
+    //            tempObj.GetComponent<DebuffFire>().target = other.gameObject;
+    //        }
+    //        else if (heroEquipment.equippedEmber == ember.Ice)
+    //        {
+    //            GameObject tempObj = (GameObject)Instantiate(debuff, other.transform.position, other.transform.rotation);
+    //            tempObj.GetComponent<DebuffFrost>().target = other.gameObject;
+    //        }
+    //        else if (heroEquipment.equippedEmber == ember.Wind)
+    //        {
+    //            other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
+    //        }
 
-            else if (heroEquipment.equippedEmber == ember.Earth)
-            {
-                other.GetComponent<Health>().LoseHealth(3);
-            }
-            else if (heroEquipment.equippedEmber == ember.Death)
-            {
-                other.SendMessage("GetInfected", SendMessageOptions.DontRequireReceiver);
-            }
-            else if (heroEquipment.equippedEmber == ember.Life)
-            {
-            }
-
-
-            Instantiate(hpPickup, other.transform.position, other.transform.rotation);
-            other.GetComponent<Health>().LoseHealth(5);
+    //        else if (heroEquipment.equippedEmber == ember.Earth)
+    //        {
+    //            other.GetComponent<Health>().LoseHealth(3);
+    //        }
+    //        else if (heroEquipment.equippedEmber == ember.Death)
+    //        {
+    //            other.SendMessage("GetInfected", SendMessageOptions.DontRequireReceiver);
+    //        }
+    //        else if (heroEquipment.equippedEmber == ember.Life)
+    //        {
+    //        }
 
 
+    //        if (once)
+    //        {
+    //            Instantiate(hpPickup, other.transform.position, other.transform.rotation);
+    //            once = false;
+    //        }
+    //        other.GetComponent<Health>().LoseHealth(5);
 
-        }
-    }
+
+
+    //    }
+    //}
 }
 
 
