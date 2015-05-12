@@ -98,6 +98,7 @@ public class SpellChainLightning : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
         if (target == null)
         {
             if (other.gameObject == cantHit)
