@@ -18,7 +18,7 @@ public class SpellLightBolt : MonoBehaviour {
     GameObject player;
 
     float timer;
-
+    bool once;
     void Start()
     {
         transform.Rotate(270, 0, 0);
@@ -27,6 +27,7 @@ public class SpellLightBolt : MonoBehaviour {
         //particles = gameObject.GetComponent<ParticleSystem>();
         kaboom = (GameObject)Instantiate(expPlacer, transform.position, transform.rotation);
         timer = 0;
+        once = true;
     }
 
     void FixedUpdate()
@@ -51,7 +52,11 @@ public class SpellLightBolt : MonoBehaviour {
         }
         else if (other.tag == "Enemy")
         {
-            Instantiate(hpPickup, other.transform.position, other.transform.rotation);
+            if (once)
+            {
+                Instantiate(hpPickup, other.transform.position, other.transform.rotation);
+                once = false;
+            }
             if (heroEquipment.equippedEmber == ember.None)
             {
                 other.GetComponent<Health>().LoseHealth(damage);
