@@ -42,12 +42,12 @@ public class Pickup : MonoBehaviour
             {
                 temp += theName;
 
-                
-                
+
+
 
             }
             temp += "\n Durabilty: 10\n";
-            GUI.Box(new Rect(cameras.WorldToScreenPoint(player.transform.position).x+32,/*Screen.height-*/ cameras.WorldToScreenPoint(player.transform.position).y, 200, 100), temp);
+            GUI.Box(new Rect(cameras.WorldToScreenPoint(player.transform.position).x + 32, Screen.height - cameras.WorldToScreenPoint(player.transform.position).y, 200, 100), temp);
         }
 
     }
