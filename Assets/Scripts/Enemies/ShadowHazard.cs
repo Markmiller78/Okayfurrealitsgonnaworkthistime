@@ -24,6 +24,10 @@ public class ShadowHazard : MonoBehaviour {
         audioPlayer = gameObject.GetComponent<AudioSource>();
         if (gameObject.tag == "Temporary")
             Destroy(gameObject, 5);
+        if (gameObject.tag == "Temporary2")
+        {
+            Destroy(gameObject, 10f);
+        }
     }
 
     void OnTriggerEnter(Collider other)

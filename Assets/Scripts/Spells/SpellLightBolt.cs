@@ -10,6 +10,7 @@ public class SpellLightBolt : MonoBehaviour {
     public GameObject hpPickup;
 
     public GameObject poke;
+    public GameObject burns;
 
     PlayerEquipment heroEquipment;
     //ParticleSystem particles;
@@ -57,6 +58,7 @@ public class SpellLightBolt : MonoBehaviour {
                 Instantiate(hpPickup, other.transform.position, other.transform.rotation);
                 once = false;
             }
+            Instantiate(burns, new Vector3(other.transform.position.x, other.transform.position.y, -0.5f), new Quaternion(0, 0, 0, 0));
             if (heroEquipment.equippedEmber == ember.None)
             {
                 other.GetComponent<Health>().LoseHealth(damage);

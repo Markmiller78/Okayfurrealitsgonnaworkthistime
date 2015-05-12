@@ -13,6 +13,8 @@ public class SpellSnare : MonoBehaviour {
     public GameObject lightRemains;
     PlayerEquipment heroEquipment;
 
+    public GameObject burns;
+
     void Start()
     {
         heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
@@ -57,6 +59,7 @@ public class SpellSnare : MonoBehaviour {
         }
 
         Instantiate(explosion, transform.position, transform.rotation);
+        Instantiate(burns, new Vector3(transform.position.x, transform.position.y, -0.5f), new Quaternion(0, 0, 0, 0));
         Instantiate(lightRemains, transform.position, transform.rotation);
         Destroy(gameObject);
     }

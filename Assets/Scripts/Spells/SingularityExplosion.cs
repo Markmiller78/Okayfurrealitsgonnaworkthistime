@@ -17,6 +17,8 @@ public class SingularityExplosion : MonoBehaviour
     public Vector3 vectoplayer;
     public Vector3 playerpos;
 
+    public GameObject burns;
+
     bool once;
     // Use this for initialization
     void Start()
@@ -26,6 +28,9 @@ public class SingularityExplosion : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         playerpos = player.transform.position;
         heroEquipment = player.GetComponent<PlayerEquipment>();
+
+        Instantiate(burns, new Vector3(transform.position.x, transform.position.y, -0.5f), new Quaternion(0, 0, 0, 0));
+
 
         if (heroEquipment.equippedEmber == ember.Ice)
         {
@@ -45,6 +50,7 @@ public class SingularityExplosion : MonoBehaviour
             {
                 if (Enemies[i].tag == "Enemy")
                 {
+                    Instantiate(burns, new Vector3(Enemies[i].transform.position.x, Enemies[i].transform.position.y, -0.5f), new Quaternion(0, 0, 0, 0));
 
                     if (once)
                     {
