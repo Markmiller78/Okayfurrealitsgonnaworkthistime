@@ -66,18 +66,18 @@ public class BossAIDethros : MonoBehaviour
         {
             // Get the distance to the player
             distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
+            if (retreatTimer > 0.0f)
+            {
+                retreatTimer -= Time.deltaTime;
+                if (retreatTimer <= 0.0f)
+                {
+                    retreatTimer = 0.0f;
+                }
+            }
             switch (currState)
             {
                 case state.casual:
                     {
-                        if (retreatTimer > 0.0f)
-                        {
-                            retreatTimer -= Time.deltaTime;
-                            if (retreatTimer <= 0.0f)
-                            {
-                                retreatTimer = 0.0f;
-                            }
-                        }
                         if (retreatTimer == 0.0f)
                         {
                             MoveTowardPlayer();
@@ -95,12 +95,14 @@ public class BossAIDethros : MonoBehaviour
                         }
 
                         if (myHealth.currentHP < myHealth.maxHP * 2f / 3f)
+                        {
+                            retreatTimer = 0f;
                             currState = state.aggravated;
+                        }
                     }
                     break;
                 case state.aggravated:
                     {
-
                         //                        YouWinText.text = "You Win!";
                         //                        heroEquipment.paused = true;
                         //#if UNITY_STANDALONE
@@ -113,7 +115,22 @@ public class BossAIDethros : MonoBehaviour
                         //                
                         //                        UnityEditor.EditorApplication.isPlaying = false;
                         //#endif
-
+                        if (retreatTimer == 0.0f)
+                        {
+                            MoveTowardPlayer();
+                            Turn();
+                            if (distanceToPlayer <= 2f)
+                            {
+                                Jump();
+                                MeleeAttack(false);
+                                retreatTimer = rTimerMax;
+                            }
+                        }
+                        else
+                        {
+                            MoveAwayFromPlayer();
+                            Turn();
+                        }
                         specialTimer -= Time.deltaTime;
                         if (specialTimer <= Time.deltaTime && specialTimer > 0.0f)
                         {
@@ -209,5 +226,11 @@ public class BossAIDethros : MonoBehaviour
             wiggled = false;
             transform.position = startPos;
         }
+    }
+    void Jump()
+    {
+        Vector3 temp = player.transform.position;
+        player.transform.position = transform.position;
+        transform.position = temp;
     }
 }
