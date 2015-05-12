@@ -38,7 +38,7 @@ public class Pickup : MonoBehaviour
     {
         if (displaytooltips)
         {
-            string temp = "Press E to pick up the ";
+            string temp = "Press E to pick up the \n";
             if (theName.Length != 0)
             {
                 temp += theName;
