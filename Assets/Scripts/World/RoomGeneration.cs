@@ -86,8 +86,8 @@ public class RoomGeneration : MonoBehaviour
 
         //treasureRoomInfo = treasureRoom.GetComponent<Room>();
 
-        finalRoomArray = new GameObject[9];
-        finalRoomInfoArray = new Room[9];
+        finalRoomArray = new GameObject[11];
+        finalRoomInfoArray = new Room[11];
         FillDungeon();
 
         //TESTING
@@ -286,8 +286,7 @@ public class RoomGeneration : MonoBehaviour
             }
         }
         finalRoomInfoArray[currentRoom].beenThere = true;
-        //player.transform.position = new Vector3(finalRoomInfoArray[currentRoom].bottomPlayerSpawn.x, -finalRoomInfoArray[currentRoom].bottomPlayerSpawn.y, -1.0f);
-    }
+        }
 
     void FillDungeon()
     {
@@ -482,6 +481,53 @@ public class RoomGeneration : MonoBehaviour
         {
             finalRoomInfoArray[8].exitDir = Random.Range(0, 3);
         } while (finalRoomInfoArray[8].exitDir == finalRoomInfoArray[8].entranceDir);
+        finalRoomArray[9] = floorTwoRooms[0];
+        finalRoomInfoArray[9] = floorTwoRoomsInfo[0];
+        switch (finalRoomInfoArray[8].exitDir)
+        {
+            case 0:
+                finalRoomInfoArray[9].entranceDir = 2;
+                break;
+            case 1:
+                finalRoomInfoArray[9].entranceDir = 3;
+                break;
+            case 2:
+                finalRoomInfoArray[9].entranceDir = 0;
+                break;
+            case 3:
+                finalRoomInfoArray[9].entranceDir = 1;
+                break;
+            default:
+                break;
+        }
+        do
+        {
+            finalRoomInfoArray[9].exitDir = Random.Range(0, 3);
+        } while (finalRoomInfoArray[9].exitDir == finalRoomInfoArray[9].entranceDir);
+        finalRoomArray[10] = floorTwoRooms[1];
+        finalRoomInfoArray[10] = floorTwoRoomsInfo[1];
+        switch (finalRoomInfoArray[9].exitDir)
+        {
+            case 0:
+                finalRoomInfoArray[10].entranceDir = 2;
+                break;
+            case 1:
+                finalRoomInfoArray[10].entranceDir = 3;
+                break;
+            case 2:
+                finalRoomInfoArray[10].entranceDir = 0;
+                break;
+            case 3:
+                finalRoomInfoArray[10].entranceDir = 1;
+                break;
+            default:
+                break;
+        }
+        do
+        {
+            finalRoomInfoArray[10].exitDir = Random.Range(0, 3);
+        } while (finalRoomInfoArray[10].exitDir == finalRoomInfoArray[10].entranceDir);
+
         for (int i = 0; i < finalRoomInfoArray.Length; i++)
         {
             finalRoomInfoArray[i].comingFromEntrance = true;

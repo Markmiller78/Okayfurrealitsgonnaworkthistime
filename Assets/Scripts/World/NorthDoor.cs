@@ -22,8 +22,8 @@ public class NorthDoor : MonoBehaviour
     {
         enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length + GameObject.FindGameObjectsWithTag("ShadowSpawn").Length;
         if (isLocked &&
-            ((generator.currentRoom > 0 && generator.finalRoomInfoArray[generator.currentRoom].entranceDir == 2)
-            || (generator.currentRoom < 8 && generator.finalRoomInfoArray[generator.currentRoom].exitDir == 2))
+            ((generator.currentRoom != 0 && generator.currentRoom != 9 && generator.finalRoomInfoArray[generator.currentRoom].entranceDir == 2)
+            || (generator.currentRoom < 10 && generator.finalRoomInfoArray[generator.currentRoom].exitDir == 2))
             && enemyCount == 0)
         {
             isLocked = false;
@@ -54,7 +54,7 @@ public class NorthDoor : MonoBehaviour
     {
         if (other.gameObject == player
             && generator.finalRoomInfoArray[generator.currentRoom].exitDir == 2
-            && generator.currentRoom < 8)
+            && generator.currentRoom < 10)
         {
             ++generator.currentRoom;
             generator.finalRoomInfoArray[generator.currentRoom].comingFromEntrance = true;
