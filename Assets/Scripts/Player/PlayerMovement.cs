@@ -10,6 +10,9 @@ public class PlayerMovement : MonoBehaviour
     float speed;
     float knockbackTimer;
     GameObject player;
+    public bool stunned = false;
+    float stunTimer;
+    float sTimerMax;
 
     CharacterController controller;
     //Rigidbody2D rb2d;
@@ -34,15 +37,24 @@ public class PlayerMovement : MonoBehaviour
         fullSpeed = 3.1f;
         halfSpeed = 1.6f;
         knockbackTimer = 0;
-
+        stunned = false;
+        sTimerMax = .5f;
+        stunTimer = sTimerMax;
     }
 
     void Update()
     {
         if (heroEquipment.paused == false)
         {
-
-
+            if (stunned)
+            {
+                stunTimer -= Time.deltaTime;
+                if (stunTimer <= 0f)
+                {
+                    stunTimer = sTimerMax;
+                    stunned = false;
+                }
+            }
             knockbackTimer -= Time.deltaTime;
             transform.position = new Vector3(transform.position.x, transform.position.y, -1f);
 
@@ -55,7 +67,7 @@ public class PlayerMovement : MonoBehaviour
 
     void CMove()
     {
-        if (heroEquipment.paused == false)
+        if (heroEquipment.paused == false && !stunned)
         {
 
             //Check for Left Stick Axis to 
@@ -84,7 +96,6 @@ public class PlayerMovement : MonoBehaviour
            
             //Actually Move the player
             controller.Move(MoveDirect);
-            //rb2d.MovePosition(new Vector2(rb2d.transform.position.x + MoveDirect.x, rb2d.transform.position.y + MoveDirect.y));
 
             //Rotate the player to where they are moving
             if (MoveDirect != Vector2.zero)
@@ -93,21 +104,19 @@ public class PlayerMovement : MonoBehaviour
                 float angle = Mathf.Atan2(MoveDirect.y, MoveDirect.x) * Mathf.Rad2Deg;
                 angle += 270;
                 controller.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-                //rb2d.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
             }
             if (MoveDirect != Vector2.zero)
             {
                 float angle = Mathf.Atan2(MoveDirect.y, MoveDirect.x) * Mathf.Rad2Deg;
                 angle += 270;
                 controller.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-                //rb2d.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
             }
         }
     }
 
     void KBMove()
     {
-        if (heroEquipment.paused == false)
+        if (heroEquipment.paused == false && !stunned)
         {
 
             //Check for WASD to 
@@ -135,13 +144,12 @@ public class PlayerMovement : MonoBehaviour
            
             //Actually Move the player
             controller.Move(MoveDirect);
-            //rb2d.MovePosition(new Vector2(rb2d.transform.position.x + MoveDirect.x, rb2d.transform.position.y + MoveDirect.y));
         }
     }
 
     void Rotate()
     {
-        if (heroEquipment.paused == false)
+        if (heroEquipment.paused == false && !stunned)
         {
 
             //Check Right sticks for Rotation
@@ -157,20 +165,18 @@ public class PlayerMovement : MonoBehaviour
                 float angle = Mathf.Atan2(MoveDirect.y, -MoveDirect.x) * Mathf.Rad2Deg;
                 angle += 90;
                 controller.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-                //rb2d.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
             }
             if (MoveDirect != Vector2.zero)
             {
                 float angle = Mathf.Atan2(MoveDirect.y, -MoveDirect.x) * Mathf.Rad2Deg;
                 angle += 90;
                 controller.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-                //rb2d.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
             }
         }
     }
     void MouseRotate()
     {
-        if (heroEquipment.paused == false||( heroCooldowns.dashCooling==true&&heroEquipment.equippedBoot==boot.Whirlwind))
+        if (!stunned && heroEquipment.paused == false||( heroCooldowns.dashCooling==true&&heroEquipment.equippedBoot==boot.Whirlwind))
         {
 
             //if (heroEquipment.equippedBoot!=boot.Whirlwind)
@@ -178,7 +184,6 @@ public class PlayerMovement : MonoBehaviour
             // Rotate to face the mouse at all 
             // times if Mouse/keyboar is active
             Vector3 pos = Camera.main.WorldToScreenPoint(controller.transform.position);
-            //Vector3 pos = Camera.main.WorldToScreenPoint(rb2d.transform.position);
             Vector3 dir = Input.mousePosition - pos;
             float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90;
             controller.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);

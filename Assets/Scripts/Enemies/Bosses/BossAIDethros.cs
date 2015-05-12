@@ -18,16 +18,25 @@ public class BossAIDethros : MonoBehaviour
     state currState = state.casual;
     float retreatTimer;
     float rTimerMax = 5.0f;
+    float specialTimer;
+    float sTimerMax = 10.0f;
+    bool wiggled;
+    bool wiggling;
+    float wiggleTimer;
+    float wTimerMax = .5f;
+    Vector3 wiggleStartPos;
     public GameObject meleeAttackObject;
     DethrosMeleeAttack meleeScript;
-    public Text YouWinText;
-    bool Victory;
-    float VictoryTimer;
+    public GameObject enemySpawner;
+    GameObject[] spawners;
+    //public Text YouWinText;
+    //bool Victory;
+    //float VictoryTimer;
 
     void Start()
     {
-        Victory = false;
-        VictoryTimer = 5;
+        //Victory = false;
+        //VictoryTimer = 5;
         // Get Player ref
         player = GameObject.FindGameObjectWithTag("Player");
         // Get Controller ref for movement
@@ -38,14 +47,20 @@ public class BossAIDethros : MonoBehaviour
         myHealth = GetComponent<Health>();
         meleeAttackObject.SetActive(false);
         meleeScript = meleeAttackObject.GetComponent<DethrosMeleeAttack>();
+        Instantiate(enemySpawner, new Vector3(1, -1, -1), Quaternion.Euler(0, 0, 225));
+        Instantiate(enemySpawner, new Vector3(18, -1, -1), Quaternion.Euler(0, 0, 135));
+        Instantiate(enemySpawner, new Vector3(1, -18, -1), Quaternion.Euler(0, 0, 315));
+        Instantiate(enemySpawner, new Vector3(18, -18, -1), Quaternion.Euler(0, 0, 45));
+        spawners = GameObject.FindGameObjectsWithTag("DethSpawn");
+        specialTimer = sTimerMax;
     }
 
     void Update()
     {
-        if (Victory)
-        {
-            VictoryTimer -= Time.deltaTime;
-        }
+        //if (Victory)
+        //{
+        //    VictoryTimer -= Time.deltaTime;
+        //}
         // Only update if game is unpaused
         if (heroEquipment.paused == false)
         {
@@ -69,7 +84,7 @@ public class BossAIDethros : MonoBehaviour
                             Turn();
                             if (distanceToPlayer <= 2f)
                             {
-                                MeleeAttack();
+                                MeleeAttack(false);
                                 retreatTimer = rTimerMax;
                             }
                         }
@@ -86,18 +101,43 @@ public class BossAIDethros : MonoBehaviour
                 case state.aggravated:
                     {
 
-                        YouWinText.text = "You Win!";
-                        heroEquipment.paused = true;
-#if UNITY_STANDALONE
-                        if (VictoryTimer < 0)
+                        //                        YouWinText.text = "You Win!";
+                        //                        heroEquipment.paused = true;
+                        //#if UNITY_STANDALONE
+                        //                        if (VictoryTimer < 0)
+                        //                        {
+                        //                            YouWinText.text = " ";
+                        //                            Application.Quit();
+                        //                        }
+                        //#elif UNITY_EDITOR
+                        //                
+                        //                        UnityEditor.EditorApplication.isPlaying = false;
+                        //#endif
+
+                        specialTimer -= Time.deltaTime;
+                        if (specialTimer <= Time.deltaTime && specialTimer > 0.0f)
                         {
-                            YouWinText.text = " ";
-                            Application.Quit();
+                            player.GetComponent<PlayerMovement>().KnockBack(transform.position);
+                            player.GetComponent<PlayerMovement>().stunned = true;
+                            wiggling = true;
+                            wiggleTimer = wTimerMax;
+                            wiggleStartPos = transform.position;
                         }
-#elif UNITY_EDITOR
-                
-                        UnityEditor.EditorApplication.isPlaying = false;
-#endif
+                        if (wiggling)
+                        {
+                            Wiggle(wiggleStartPos);
+                        }
+                        if (specialTimer <= 0f)
+                        {
+                            if (true)
+                            {
+                                foreach (GameObject spawn in spawners)
+                                {
+                                    spawn.SendMessage("SpawnThings");
+                                }
+                            }
+                            specialTimer = sTimerMax;
+                        }
 
                         if (myHealth.currentHP < myHealth.maxHP / 3f)
                             currState = state.intense;
@@ -130,9 +170,10 @@ public class BossAIDethros : MonoBehaviour
         controller.Move(moveTo * Time.deltaTime * -moveSpeed);
     }
 
-    void MeleeAttack()
+    void MeleeAttack(bool stun)
     {
         meleeAttackObject.SetActive(true);
+        meleeScript.stun = stun;
         meleeScript.attacking = true;
     }
 
@@ -150,9 +191,23 @@ public class BossAIDethros : MonoBehaviour
 
     }
 
-    void Summon()
+    void Wiggle(Vector3 startPos)
     {
-
+        wiggleTimer -= Time.deltaTime;
+        if (!wiggled)
+        {
+            wiggled = true;
+        }
+        else
+        {
+            Vector2 dir = new Vector2(Random.Range(-.1f, .1f), Random.Range(-.1f, .1f));
+            transform.position = new Vector3(startPos.x + dir.x, startPos.y + dir.y, startPos.z);
+        }
+        if (wiggleTimer <= 0f)
+        {
+            wiggling = false;
+            wiggled = false;
+            transform.position = startPos;
+        }
     }
-
 }
