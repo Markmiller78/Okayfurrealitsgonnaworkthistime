@@ -1,13 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SpellChainLightning : MonoBehaviour {
+public class SpellChainLightning : MonoBehaviour
+{
 
 
     public float damage;
 
     public GameObject debuff;
     public GameObject hpPickup;
+    public GameObject lightPickup;
 
     public GameObject theChains;
 
@@ -27,8 +29,11 @@ public class SpellChainLightning : MonoBehaviour {
 
     PlayerSpellCasting pSpells;
 
+    public GameObject cantHit;
+
     bool once;
 
+    bool dood;
 
     float timer;
 
@@ -43,6 +48,8 @@ public class SpellChainLightning : MonoBehaviour {
         timer = 0;
         ugh = GameObject.Find("EnemiesRemaining").GetComponent<DisplayEnmiesRemaining>();
         once = true;
+        cantHit = null;
+        dood = true;
     }
 
     void FixedUpdate()
@@ -50,7 +57,7 @@ public class SpellChainLightning : MonoBehaviour {
         if (heroEquipment.paused == false)
         {
             //Keep firing from the player
-            transform.position = player.transform.position;
+            // transform.position = player.transform.position;
 
             if (target == null)
             {
@@ -81,87 +88,98 @@ public class SpellChainLightning : MonoBehaviour {
                 timer += Time.deltaTime;
 
             }
-            //if (timer >= 0.15f)
-            //{
-            //    Explode();
-            //}
+            if (timer >= 0.15f)
+            {
+                Explode();
+            }
 
         }
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (target == null)
-        {
-            if (other.tag == "Wall")
+            if (target == null)
             {
-                Explode();
-            }
-            else if (other.tag == "Enemy")
-            {
-                target = other.gameObject;
-                Instantiate(hpPickup, other.transform.position, other.transform.rotation);
-                if (heroEquipment.equippedEmber == ember.None)
+                if (other.gameObject == cantHit)
                 {
-                    other.GetComponent<Health>().LoseHealth(damage);
+                    return;
                 }
-                else if (heroEquipment.equippedEmber == ember.Fire)
+                if (other.tag == "Wall")
                 {
-                    other.GetComponent<Health>().LoseHealth(damage);
-                    GameObject tempObj = (GameObject)Instantiate(debuff, other.transform.position, other.transform.rotation);
-                    tempObj.GetComponent<DebuffFire>().target = other.gameObject;
+                    Explode();
                 }
-                else if (heroEquipment.equippedEmber == ember.Ice)
+                else if (other.tag == "Enemy")
                 {
-                    other.GetComponent<Health>().LoseHealth(damage);
-                    GameObject tempObj = (GameObject)Instantiate(debuff, other.transform.position, other.transform.rotation);
-                    tempObj.GetComponent<DebuffFrost>().target = other.gameObject;
-                }
-                else if (heroEquipment.equippedEmber == ember.Wind)
-                {
-                    other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
-                    other.GetComponent<Health>().LoseHealth(damage);
-                }
-                else if (heroEquipment.equippedEmber == ember.Life)
-                {
-                    other.GetComponent<Health>().LoseHealth(damage);
-                }
-                else if (heroEquipment.equippedEmber == ember.Earth)
-                {
-                    Camera.main.SendMessage("ScreenShake");
-                    other.GetComponent<Health>().LoseHealth(damage + 3);
-                }
-                else if (heroEquipment.equippedEmber == ember.Death)
-                {
-                    other.SendMessage("GetInfected", SendMessageOptions.DontRequireReceiver);
-                    other.GetComponent<Health>().LoseHealth(damage);
-                }
 
-
-                if (pSpells.chained == false)
-                {
-                    if (ugh.count > 0)
+                    target = other.gameObject;
+                    if (heroEquipment.equippedEmber == ember.None)
                     {
-                        GameObject[] possibleDoodsToShoot = GameObject.FindGameObjectsWithTag("Enemy");
-                        for (int i = 0; i < possibleDoodsToShoot.Length; i++)
+                        other.GetComponent<Health>().LoseHealth(damage);
+                    }
+                    else if (heroEquipment.equippedEmber == ember.Fire)
+                    {
+                        other.GetComponent<Health>().LoseHealth(damage);
+                        GameObject tempObj = (GameObject)Instantiate(debuff, other.transform.position, other.transform.rotation);
+                        tempObj.GetComponent<DebuffFire>().target = other.gameObject;
+                    }
+                    else if (heroEquipment.equippedEmber == ember.Ice)
+                    {
+                        other.GetComponent<Health>().LoseHealth(damage);
+                        GameObject tempObj = (GameObject)Instantiate(debuff, other.transform.position, other.transform.rotation);
+                        tempObj.GetComponent<DebuffFrost>().target = other.gameObject;
+                    }
+                    else if (heroEquipment.equippedEmber == ember.Wind)
+                    {
+                        other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
+                        other.GetComponent<Health>().LoseHealth(damage);
+                    }
+                    else if (heroEquipment.equippedEmber == ember.Life)
+                    {
+                        other.GetComponent<Health>().LoseHealth(damage);
+                    }
+                    else if (heroEquipment.equippedEmber == ember.Earth)
+                    {
+                        Camera.main.SendMessage("ScreenShake");
+                        other.GetComponent<Health>().LoseHealth(damage + 3);
+                    }
+                    else if (heroEquipment.equippedEmber == ember.Death)
+                    {
+                        other.SendMessage("GetInfected", SendMessageOptions.DontRequireReceiver);
+                        other.GetComponent<Health>().LoseHealth(damage);
+                    }
+
+
+                    if (pSpells.chained == false)
+                    {
+                        if (ugh.count > 0)
                         {
-                            if ( Vector3.Distance(other.transform.position, possibleDoodsToShoot[i].transform.position) < 5)
+                            GameObject[] possibleDoodsToShoot = GameObject.FindGameObjectsWithTag("Enemy");
+                            for (int i = 0; i < possibleDoodsToShoot.Length; i++)
                             {
-                                Vector3 temp = possibleDoodsToShoot[i].transform.position - other.transform.position;
+                                if (Vector3.Distance(other.transform.position, possibleDoodsToShoot[i].transform.position) < 3)
+                                {
+                                    Vector3 temp = possibleDoodsToShoot[i].transform.position - other.transform.position;
 
-                                float angle = Mathf.Atan2(temp.y, temp.x) * Mathf.Rad2Deg;
+                                    float angle = Mathf.Atan2(temp.y, temp.x) * Mathf.Rad2Deg + 270;
 
-                                Quaternion rot = Quaternion.AngleAxis(angle, Vector3.forward);
+                                    Quaternion rot = Quaternion.AngleAxis(angle, Vector3.forward);
 
-                                Instantiate(theChains, other.transform.position, rot);
-
-                                pSpells.chained = true;
+                                    GameObject theNewChains = (GameObject)Instantiate(theChains, other.transform.position, rot);
+                                    theNewChains.GetComponent<SpellChainLightning>().cantHit = other.gameObject;
+                                    pSpells.chained = true;
+                                    break;
+                                }
                             }
                         }
                     }
+                    else
+                    {
+                        Instantiate(hpPickup, other.transform.position, other.transform.rotation);
+                        Instantiate(lightPickup, transform.position, new Quaternion(0, 0, 0, 0));
+                    }
                 }
 
-            }
+
         }
     }
 
