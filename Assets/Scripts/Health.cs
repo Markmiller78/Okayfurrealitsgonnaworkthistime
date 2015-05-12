@@ -83,7 +83,7 @@ public class Health : MonoBehaviour
             else if (equipment.equippedEmber == ember.Life)
             {
                 GameObject instance = (GameObject)Instantiate(lifeEmberSpawn, transform.position, transform.rotation);
-                playerHealth.GainHealth(Amount);
+                playerHealth.GainHealth(1);
 
             }
         }
