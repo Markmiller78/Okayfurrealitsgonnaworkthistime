@@ -29,6 +29,12 @@ public class BossAIDethros : MonoBehaviour
     DethrosMeleeAttack meleeScript;
     public GameObject enemySpawner;
     GameObject[] spawners;
+    public GameObject spellAttack;
+    float spellTimer;
+    float spTimerMax = 2.5f;
+    public GameObject hazard;
+    float hazardPlacementTimer;
+    float hTimerMax = 1.0f;
     //public Text YouWinText;
     //bool Victory;
     //float VictoryTimer;
@@ -53,6 +59,7 @@ public class BossAIDethros : MonoBehaviour
         Instantiate(enemySpawner, new Vector3(18, -18, -1), Quaternion.Euler(0, 0, 45));
         spawners = GameObject.FindGameObjectsWithTag("DethSpawn");
         specialTimer = sTimerMax;
+        spellTimer = spTimerMax;
     }
 
     void Update()
@@ -115,6 +122,7 @@ public class BossAIDethros : MonoBehaviour
                         //                
                         //                        UnityEditor.EditorApplication.isPlaying = false;
                         //#endif
+                        spellTimer -= Time.deltaTime;
                         if (retreatTimer == 0.0f)
                         {
                             MoveTowardPlayer();
@@ -128,6 +136,11 @@ public class BossAIDethros : MonoBehaviour
                         }
                         else
                         {
+                            if (spellTimer <= 0f)
+                            {
+                                Instantiate(spellAttack, transform.position, transform.rotation);
+                                spellTimer = spTimerMax;
+                            }
                             MoveAwayFromPlayer();
                             Turn();
                         }
@@ -162,7 +175,61 @@ public class BossAIDethros : MonoBehaviour
                     break;
                 case state.intense:
                     {
-
+                        spellTimer -= Time.deltaTime;
+                        hazardPlacementTimer -= Time.deltaTime;
+                        if (retreatTimer == 0.0f)
+                        {
+                            if (spellTimer <= 0f)
+                            {
+                                Instantiate(spellAttack, transform.position, transform.rotation);
+                                spellTimer = spTimerMax;
+                            }
+                            MoveTowardPlayer();
+                            Turn();
+                            if (distanceToPlayer <= 2f)
+                            {
+                                Jump();
+                                MeleeAttack(false);
+                                retreatTimer = rTimerMax;
+                            }
+                        }
+                        else
+                        {
+                            if (hazardPlacementTimer <= 0f)
+                            {
+                                GameObject h = hazard;
+                                h.tag = "Temporary2";
+                                Instantiate(h, transform.position, transform.rotation);
+                                //Destroy(h, 10f);
+                                hazardPlacementTimer = hTimerMax;
+                            }
+                            MoveAwayFromPlayer();
+                            Turn();
+                        }
+                        specialTimer -= Time.deltaTime;
+                        if (specialTimer <= Time.deltaTime && specialTimer > 0.0f)
+                        {
+                            player.GetComponent<PlayerMovement>().KnockBack(transform.position);
+                            player.GetComponent<PlayerMovement>().stunned = true;
+                            wiggling = true;
+                            wiggleTimer = wTimerMax;
+                            wiggleStartPos = transform.position;
+                        }
+                        if (wiggling)
+                        {
+                            Wiggle(wiggleStartPos);
+                        }
+                        if (specialTimer <= 0f)
+                        {
+                            if (true)
+                            {
+                                foreach (GameObject spawn in spawners)
+                                {
+                                    spawn.SendMessage("SpawnThings");
+                                }
+                            }
+                            specialTimer = sTimerMax;
+                        }
                     }
                     break;
                 default:
