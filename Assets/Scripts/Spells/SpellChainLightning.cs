@@ -167,7 +167,6 @@ public class SpellChainLightning : MonoBehaviour
                                 GameObject theNewChains = (GameObject)Instantiate(theChains, other.transform.position, rot);
                                 theNewChains.GetComponent<SpellChainLightning>().cantHit = other.gameObject;
                                 pSpells.chained = true;
-                                break;
                             }
                         }
                     }
