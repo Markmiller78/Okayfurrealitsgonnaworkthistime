@@ -20,6 +20,7 @@ public class Pickup : MonoBehaviour
     public GameObject chargeBootPickup;
     public GameObject decoyBootPickup;
     public GameObject blinkBootPickup;
+    public Font font;
     public string theName;
     Camera cameras;
 
@@ -41,13 +42,11 @@ public class Pickup : MonoBehaviour
             if (theName.Length != 0)
             {
                 temp += theName;
-
-                
-                
-
             }
+            if(theName.Contains("Ember"))
             temp += "\n Durabilty: 10\n";
-            GUI.Box(new Rect(cameras.WorldToScreenPoint(player.transform.position).x+32,/*Screen.height-*/ cameras.WorldToScreenPoint(player.transform.position).y, 200, 100), temp);
+
+            GUI.Box(new Rect(cameras.WorldToScreenPoint(player.transform.position).x+32,Screen.height- cameras.WorldToScreenPoint(player.transform.position).y, 250, 150), temp);
         }
 
     }
