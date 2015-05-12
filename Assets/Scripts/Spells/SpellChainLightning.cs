@@ -35,6 +35,8 @@ public class SpellChainLightning : MonoBehaviour
 
     bool dood;
 
+    public GameObject burns;
+
     float timer;
 
     void Start()
@@ -98,6 +100,7 @@ public class SpellChainLightning : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
         if (target == null)
         {
             if (other.gameObject == cantHit)
@@ -110,7 +113,7 @@ public class SpellChainLightning : MonoBehaviour
             }
             else if (other.tag == "Enemy")
             {
-
+                Instantiate(burns, new Vector3(other.transform.position.x, other.transform.position.y, -0.5f), new Quaternion(0, 0, 0, 0));
                 target = other.gameObject;
                 if (heroEquipment.equippedEmber == ember.None)
                 {
@@ -167,7 +170,6 @@ public class SpellChainLightning : MonoBehaviour
                                 GameObject theNewChains = (GameObject)Instantiate(theChains, other.transform.position, rot);
                                 theNewChains.GetComponent<SpellChainLightning>().cantHit = other.gameObject;
                                 pSpells.chained = true;
-                                break;
                             }
                         }
                     }

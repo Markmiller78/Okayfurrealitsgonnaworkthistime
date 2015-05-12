@@ -13,6 +13,7 @@ public class SpellBlastOfLight : MonoBehaviour
     public GameObject remains;
     public GameObject hpPickup;
     GameObject player;
+    public GameObject burns;
 
     float maxLife;
     bool once;
@@ -24,6 +25,9 @@ public class SpellBlastOfLight : MonoBehaviour
         timeAlive = 0;
         theLight = gameObject.GetComponent<Light>();
         heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
+
+        Instantiate(burns, new Vector3(transform.position.x, transform.position.y, -0.5f), new Quaternion(0, 0, 0, 0));
+
 
         if (heroEquipment.equippedEmber == ember.Ice)
         {
@@ -43,6 +47,7 @@ public class SpellBlastOfLight : MonoBehaviour
             {
                 if (Enemies[i].tag == "Enemy")
                 {
+                    Instantiate(burns, new Vector3(Enemies[i].transform.position.x, Enemies[i].transform.position.y, -0.5f), new Quaternion(0, 0, 0, 0));
 
                     if (heroEquipment.equippedEmber == ember.None)
                     {
