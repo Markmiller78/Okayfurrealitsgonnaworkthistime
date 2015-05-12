@@ -6,6 +6,7 @@ public class DethrosMeleeAttack : MonoBehaviour
     GameObject dethros;
     public float attackDamage = 5.0f;
     public bool attacking = false;
+    public bool stun = false;
     float hasRotated = 0.0f;
     float toRotate = 180.0f;
     float rotationDelta = 0.0f;
@@ -13,6 +14,7 @@ public class DethrosMeleeAttack : MonoBehaviour
     GameObject player;
     Health pHealth;
     PlayerEquipment pEquip;
+    PlayerMovement pMove;
 
     void Start()
     {
@@ -21,6 +23,7 @@ public class DethrosMeleeAttack : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         pHealth = player.GetComponent<Health>();
         pEquip = player.GetComponent<PlayerEquipment>();
+        pMove = player.GetComponent<PlayerMovement>();
     }
 
     void Update()
@@ -47,6 +50,7 @@ public class DethrosMeleeAttack : MonoBehaviour
     {
         if (other.gameObject == player)
         {
+            pMove.KnockBack(transform.position);
             pHealth.LoseHealth(attackDamage);
         }
     }
