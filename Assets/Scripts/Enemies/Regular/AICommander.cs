@@ -11,16 +11,20 @@ public class AICommander : MonoBehaviour
     public bool isReinforcing = false;
     public bool isAttacking = false;
     public bool isInfected = false;
+    public bool isPathing = false;
     CharacterController controller;
     public float atkdmg;
     public float atkrange;
     public float atkcooldown;
     public float atkcooldownref;
     public float movementspeed = 3.0f;
+    public float timer;
     public float[] distance;
     PlayerEquipment heroEquipment;
     public float dist;
     public Vector3 vectoplayer;
+    public Vector3 path;
+    public Vector3 MoveTo;
     public int size;
     float snaredSpeed;
     float SnareTimer;
@@ -30,13 +34,17 @@ public class AICommander : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        timer = 2.0f;
+
+        path = Vector3.zero;
+        MoveTo = Vector3.zero;
         infecttimer = 3.0f;
         isSnared = false;
         player = GameObject.FindGameObjectWithTag("Player");
         list = GameObject.FindGameObjectsWithTag("Enemy");
         heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
         controller = GetComponent<CharacterController>();
-        movementspeed = 3.0f;
+        movementspeed = 1.2f;
     }
 
     // Update is called once per frame
@@ -135,8 +143,16 @@ public class AICommander : MonoBehaviour
     }
     void MoveTowardsPlayer()
     {
-
-        controller.Move(vectoplayer.normalized * Time.deltaTime * -movementspeed);
+        if (timer == 2.0f)
+        {
+           
+            MoveTo = Pathfind();
+            
+        }
+        timer -= Time.deltaTime;
+        if (timer <= 0.0f)
+            timer = 2.0f;
+        controller.Move( MoveTo* Time.deltaTime * movementspeed);
     }
 
     void FacePlayer()
@@ -144,11 +160,13 @@ public class AICommander : MonoBehaviour
         //float tempangle=Vector3.Angle (transform.up,disttoplayer);
         //transform.Rotate (Vector3.back,tempangle+180);
 
-
-        float tempangle = Mathf.Atan2(vectoplayer.y, vectoplayer.x) * Mathf.Rad2Deg;
-        tempangle += 90.0f;
-        Quaternion rotation = Quaternion.AngleAxis(tempangle, Vector3.forward);
-        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 2.5f);
+   
+            float tempangle = Mathf.Atan2(vectoplayer.y, vectoplayer.x) * Mathf.Rad2Deg;
+            tempangle += 90.0f;
+            Quaternion rotation = Quaternion.AngleAxis(tempangle, Vector3.forward);
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 2.5f);
+       
+      
 
     }
     void AttackPlayer()
@@ -156,8 +174,10 @@ public class AICommander : MonoBehaviour
 
         if (dist < atkrange && !isAttacking)
         {
-            player.GetComponent<Health>().LoseHealth(atkdmg);
-            player.GetComponent<Knockback>().SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
+
+            if (player != null)
+                player.GetComponent<PlayerMovement>().SendMessage("Knockback",vectoplayer.normalized, SendMessageOptions.DontRequireReceiver);
+                       player.GetComponent<Health>().LoseHealth(atkdmg);
 
             isAttacking = true;
         }
@@ -213,4 +233,62 @@ public class AICommander : MonoBehaviour
         }
 
     }
+
+    Vector3 Pathfind()
+    {
+
+       
+            path = -vectoplayer;
+   
+        RaycastHit info;
+        Physics.Raycast(transform.position, path.normalized, out info);
+        {
+
+            Debug.Log(info.collider.tag);
+            if (info.collider.tag == "Wall" && (info.collider.transform.position - transform.position).magnitude <= (GetComponent<Renderer>().bounds.size.x + 0.25f))
+            {
+
+
+                Debug.Log("Direction should change!");
+
+                Vector3 temp = new Vector3(path.x, -path.y);
+                //path.x = vectoplayer.y / Mathf.Sqrt(vectoplayer.x * vectoplayer.x + vectoplayer.y*vectoplayer.y);
+                //if (vectoplayer.y!=0)
+                //path.y = -vectoplayer.x * path.x / vectoplayer.y;
+
+                temp = temp / Mathf.Sqrt(vectoplayer.x * vectoplayer.x + vectoplayer.y * vectoplayer.y);
+
+                if (Random.value > 0.5)
+                {
+                    temp.x = -temp.x;
+                    temp.y = -temp.y;
+                }
+                path = temp;
+                Debug.Log(path);
+
+
+
+
+
+
+                //float tempangle = Mathf.Atan2(path.y, path.x) * Mathf.Rad2Deg;
+                //tempangle += 90.0f;
+                //Quaternion rotation = Quaternion.AngleAxis(tempangle, Vector3.forward);
+                //transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 0.5f);
+            }
+            else
+            {
+                path = -vectoplayer;
+                Debug.Log("No need!");
+
+            }
+          
+          
+        }
+
+
+        return path.normalized;
+    }
+
+ 
 }

@@ -25,6 +25,7 @@ public class GenerateLoot : MonoBehaviour {
     public GameObject Trailblazer;
     public GameObject Charge;
 
+
     public enum Loots { none = 0, emberfire , emberlife, emberwind, emberfrost, accesOrb, accesbolt, accessnare,
     accesblast, accesmine,accessing, acceschain}
     Loots lootToDrop;
@@ -154,9 +155,9 @@ public class GenerateLoot : MonoBehaviour {
         string[] embers = new string[10];
         embers[0] = "Scorching Ember of ";
         embers[1] = "Quake Ember of ";
-        embers[2] = "Frost Ember of ";
+        embers[2] = "Rejuvenating Ember of ";
         embers[3] = "Gale Ember of ";
-        embers[4] = "Rejuvenating Ember of";
+        embers[4] = "Frost Ember of";
         embers[5] = "Doom Ember of ";
 
        
