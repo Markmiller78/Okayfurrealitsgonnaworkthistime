@@ -28,6 +28,17 @@ public class Options : MonoBehaviour {
 
     }
 
+    void Update()
+    {
+#if UNITY_WEBPLAYER
+        if (Screen.fullScreen)
+        {
+            Screen.SetResolution(1280, 720, false);
+            Screen.fullScreen = false;
+        }
+#endif
+    }
+
     public void sfxIncrease()
     {
         sfxVolume++;

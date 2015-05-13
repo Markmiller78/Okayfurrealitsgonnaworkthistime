@@ -376,6 +376,19 @@ public class MainMenu : MonoBehaviour
                     }
                 case 2:
                     {
+#if UNITY_WEBPLAYER
+                        break;
+#endif
+                        if (Screen.fullScreen)
+                        {
+                            Screen.SetResolution(1280, 720, !Screen.fullScreen);
+
+                        }
+                        else
+                        {
+                            Screen.SetResolution(1280, 720, Screen.fullScreen);
+
+                        }
                         Screen.fullScreen = !Screen.fullScreen;
                         break;
                     }

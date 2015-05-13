@@ -245,6 +245,7 @@ public class RoomGeneration : MonoBehaviour
         {
             Instantiate(waypoint, new Vector3(finalRoomInfoArray[currentRoom].waypointLocations[i].x, -finalRoomInfoArray[currentRoom].waypointLocations[i].y, -1.0f), Quaternion.identity);
         }
+        // Move player to entrance or exit
         if (finalRoomInfoArray[currentRoom].comingFromEntrance)
         {
             switch (finalRoomInfoArray[currentRoom].entranceDir)
@@ -285,8 +286,9 @@ public class RoomGeneration : MonoBehaviour
                     break;
             }
         }
+        // make sure enemies can't respawn
         finalRoomInfoArray[currentRoom].beenThere = true;
-        }
+    }
 
     void FillDungeon()
     {
@@ -539,7 +541,7 @@ public class RoomGeneration : MonoBehaviour
         GameObject[] objArray = GameObject.FindObjectsOfType<GameObject>();
         foreach (GameObject obj in objArray)
         {
-            if (obj.name.Contains("Wall") || obj.name.Contains("Floor") || obj.name.Contains("Hazard") || obj.name.Contains("Door") || obj.tag.Contains("Drop") || obj.tag == "LightTrail" || obj.name.Contains("Pickup"))
+            if (obj.name.Contains("Wall") || obj.name.Contains("Floor") || obj.name.Contains("Hazard") || obj.name.Contains("Door") || obj.tag.Contains("Drop") || obj.tag == "LightTrail" || obj.name.Contains("Pickup") || obj.name.Contains("dead") || obj.name == "Burn")
             {
                 Destroy(obj);
             }

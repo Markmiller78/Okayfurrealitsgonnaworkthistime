@@ -174,8 +174,13 @@ public class PlayerDashing : MonoBehaviour
         //If the player isnt already dashing, begin dashing
         if (!heroCooldowns.dashCooling)
         {
+            if (heroLight.currentLight < 10)
+            {
+                return;
+            }
             //Make the player spend light
-            heroLight.LoseLight(5);
+            heroLight.LoseLight(10);
+            heroEquipment.EmberLoseDurability();
             heroCooldowns.dashCooling = true;
             timeRemaining = dashDuration;
             //Change the animation state into dashing

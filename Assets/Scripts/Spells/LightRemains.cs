@@ -80,7 +80,7 @@ public class LightRemains : MonoBehaviour
     void PickUp()
     {
         Instantiate(missile, transform.position, transform.rotation);
-        heroLight.GainLight(5);
+        heroLight.GainLight(18);
         active = false;
     }
 }
