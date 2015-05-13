@@ -811,13 +811,13 @@ public class MainMenu : MonoBehaviour
                 case 0:
                     {
                         //HARD DIFFICULTY
-                        LevelManager.Load("Game");
+                        LevelManager.Load("IntroCutscene");
                         break;
                     }
                 case 1:
                     {
                         //NORMAL DIFFICULTY
-                        LevelManager.Load("Game");
+                        LevelManager.Load("IntroCutscene");
                         break;
                     }
                 case 2:
