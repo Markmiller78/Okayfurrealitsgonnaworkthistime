@@ -541,7 +541,7 @@ public class RoomGeneration : MonoBehaviour
         GameObject[] objArray = GameObject.FindObjectsOfType<GameObject>();
         foreach (GameObject obj in objArray)
         {
-            if (obj.name.Contains("Wall") || obj.name.Contains("Floor") || obj.name.Contains("Hazard") || obj.name.Contains("Door") || obj.tag.Contains("Drop") || obj.tag == "LightTrail" || obj.name.Contains("Pickup") || obj.name.Contains("dead") || obj.name == "Burn")
+            if (obj.name.Contains("Wall") || obj.name.Contains("Floor") || obj.name.Contains("Hazard") || obj.name.Contains("Door") || obj.tag.Contains("Drop") || obj.tag == "LightTrail" || obj.name.Contains("Pickup") || obj.name.Contains("dead") || obj.name.Contains("Burn"))
             {
                 Destroy(obj);
             }
