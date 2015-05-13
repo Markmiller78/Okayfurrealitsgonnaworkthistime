@@ -64,6 +64,13 @@ public class BossAIDethros : MonoBehaviour
 
     void Update()
     {
+        if (transform.position.x < 0f ||
+            transform.position.x > 20f ||
+            transform.position.y > 0f ||
+            transform.position.y < -20f)
+        {
+            transform.position = new Vector3(9.5f, -9.5f, -1f);
+        }
         //if (Victory)
         //{
         //    VictoryTimer -= Time.deltaTime;
