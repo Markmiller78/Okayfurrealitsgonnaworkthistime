@@ -375,6 +375,7 @@ public class PlayerSpellCasting : MonoBehaviour
                     Camera.main.SendMessage("ScreenShake");
                     return;
                 }
+                heroEquipment.EmberLoseDurability();
                 heroLight.LoseLight(20);
                 playersLight.intensity = 5.5f;
                 ///Instantiate(castParticles, transform.position, transform.rotation);

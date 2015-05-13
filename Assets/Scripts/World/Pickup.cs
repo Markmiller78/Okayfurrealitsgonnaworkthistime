@@ -178,21 +178,32 @@ public class Pickup : MonoBehaviour
                     switch (whichOneToEquip)
                     {
                         case 1:
+                            equipment.emberDurability = 10;
                             equipment.equippedEmber = ember.Life;
                             break;
                         case 2:
+                            equipment.emberDurability = 10;
+
                             equipment.equippedEmber = ember.Death;
                             break;
                         case 3:
+                            equipment.emberDurability = 10;
+
                             equipment.equippedEmber = ember.Earth;
                             break;
                         case 4:
+                            equipment.emberDurability = 10;
+
                             equipment.equippedEmber = ember.Wind;
                             break;
                         case 5:
+                            equipment.emberDurability = 10;
+
                             equipment.equippedEmber = ember.Fire;
                             break;
                         case 6:
+                            equipment.emberDurability = 10;
+
                             equipment.equippedEmber = ember.Ice;
                             break;
                         default:
