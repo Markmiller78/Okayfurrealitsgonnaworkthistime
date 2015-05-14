@@ -72,7 +72,7 @@ public class Options : MonoBehaviour
 
     public void sfxIncrease()
     {
-        sfxVolume++;
+        sfxVolume += 5;
         if (sfxVolume > 100)
         {
             sfxVolume = 100;
@@ -92,7 +92,7 @@ public class Options : MonoBehaviour
 
     public void sfxDecrease()
     {
-        sfxVolume--;
+        sfxVolume -= 5;
         if (sfxVolume < 0)
         {
             sfxVolume = 0;
@@ -111,7 +111,7 @@ public class Options : MonoBehaviour
 
     public void musicIncrease()
     {
-        musicVolume++;
+        musicVolume += 5;
         if (musicVolume > 100)
         {
             musicVolume = 100;
@@ -130,7 +130,7 @@ public class Options : MonoBehaviour
 
     public void musicDecrease()
     {
-        musicVolume--;
+        musicVolume -=5;
         if (musicVolume < 0)
         {
             musicVolume = 0;

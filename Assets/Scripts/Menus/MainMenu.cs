@@ -469,21 +469,18 @@ public class MainMenu : MonoBehaviour
         if ((Input.GetAxis("CLSVertical") > .7f || Input.GetAxis("KBVertical") > 0 || Input.GetAxis("CDPadVertical") > .7f || Input.GetAxis("CLSHorizontal") > .7f || Input.GetAxis("KBHorizontal") > 0 || Input.GetAxis("CDPadHorizontal") > .7f) && AxisChanged == false && currentSelection == 8)
         {
             theOptions.sfxIncrease();
-            soundSource.volume = theOptions.sfxVolume * 0.01f;
             if (soundSource.isPlaying)
                 soundSource.Stop();
-            soundSource.clip = selectSound;
-            soundSource.Play();
+            soundSource.PlayOneShot(selectSound);
             AxisChanged = true;
         }
         if ((Input.GetAxis("CLSVertical") < -0.7f || Input.GetAxis("KBVertical") < 0 || Input.GetAxis("CDPadVertical") < -0.7f || Input.GetAxis("CLSHorizontal") < -0.7f || Input.GetAxis("KBHorizontal") < 0 || Input.GetAxis("CDPadHorizontal") < -0.7f) && AxisChanged == false && currentSelection == 8)
         {
             theOptions.sfxDecrease();
-            soundSource.volume = theOptions.sfxVolume * 0.01f;
             if (soundSource.isPlaying)
                 soundSource.Stop();
-            soundSource.clip = selectSound;
-            soundSource.Play();
+            soundSource.PlayOneShot(selectSound);
+
             AxisChanged = true;
 
         }
