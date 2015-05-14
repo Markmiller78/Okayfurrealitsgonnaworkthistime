@@ -10,6 +10,7 @@ public class NorthDoor : MonoBehaviour
     public bool displaytooltips = false;
     int enemyCount;
     bool iHopeThisWorks;
+    bool easyMode;
 
     void Start()
     {
@@ -18,14 +19,15 @@ public class NorthDoor : MonoBehaviour
         generator = dungeon.GetComponent<RoomGeneration>();
         isLocked = true;
         iHopeThisWorks = true;
+        easyMode = GameObject.FindObjectOfType<Options>().easyMode;
     }
 
     void Update()
     {
         enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length + GameObject.FindGameObjectsWithTag("ShadowSpawn").Length;
         if (isLocked &&
-            ((generator.currentRoom != 0 && generator.currentRoom != 9 && generator.finalRoomInfoArray[generator.currentRoom].entranceDir == 2)
-            || (generator.currentRoom < 16 && generator.finalRoomInfoArray[generator.currentRoom].exitDir == 2))
+            ((generator.currentRoom != 0 && generator.currentRoom != (easyMode ? 11 : 9) && generator.finalRoomInfoArray[generator.currentRoom].entranceDir == 2)
+            || (generator.currentRoom < (easyMode ? 20 : 16) && generator.finalRoomInfoArray[generator.currentRoom].exitDir == 2))
             && enemyCount == 0)
         {
             isLocked = false;
@@ -58,7 +60,7 @@ public class NorthDoor : MonoBehaviour
         {
             if (other.gameObject == player
                 && generator.finalRoomInfoArray[generator.currentRoom].exitDir == 2
-                && generator.currentRoom < 16)
+                && generator.currentRoom < (easyMode ? 20 : 16))
             {
                 ++generator.currentRoom;
                 generator.finalRoomInfoArray[generator.currentRoom].comingFromEntrance = true;
