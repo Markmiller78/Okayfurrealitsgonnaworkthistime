@@ -20,7 +20,7 @@ public class EnableEmberUI : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
-        if (timer >= 1.0f)
+        if (timer >= 0.5f)
         {
             if (heroEquip.emberDurability <= 0)
             {
