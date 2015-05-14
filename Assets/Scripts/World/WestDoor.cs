@@ -63,14 +63,15 @@ public class WestDoor : MonoBehaviour
                 ++generator.currentRoom;
                 generator.finalRoomInfoArray[generator.currentRoom].comingFromEntrance = true;
                 generator.Reset();
+                iHopeThisWorks = false;
             }
             else if (other.gameObject == player && generator.currentRoom > 0)
             {
                 --generator.currentRoom;
                 generator.finalRoomInfoArray[generator.currentRoom].comingFromEntrance = false;
                 generator.Reset();
+                iHopeThisWorks = false;
             }
         }
-        iHopeThisWorks = false;
     }
 }
