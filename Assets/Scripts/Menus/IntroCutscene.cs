@@ -9,6 +9,7 @@ public class IntroCutscene : MonoBehaviour
     public Image FadeText;
     public GameObject Particlecircle;
     public Text FirstText;
+    public Text SkipText;
     public GameObject Scene1;
     public GameObject Scene2;
     public GameObject SprintingUndead;
@@ -26,6 +27,7 @@ public class IntroCutscene : MonoBehaviour
     int Stage;
     int i;
 
+   
     string Text1 = "The Evil Dark Morrius, jealous of the world's happiness, stole the world's light and trapped it in a crystal in his lair.";
     string Text2 = "The world was left in everlasting darkness.";
     string Text3 = "With the world in darkness all hope seemed lost... Morrius's Dark Minions flooded the land.";
@@ -51,9 +53,14 @@ public class IntroCutscene : MonoBehaviour
         if (Stage == 1)
             FadeIn();
 
+        if (Input.GetButtonDown("KBPause") || Input.GetButtonDown("CPause"))
+        {
+            LevelManager.Load("Game");
+        }
         //Begin Text
         if (Stage == 1 && timer < 0 && i < Text1.Length)
         {
+            SkipText.text = " ";
             timer = .03f;
             ScrollingText();
             i++;

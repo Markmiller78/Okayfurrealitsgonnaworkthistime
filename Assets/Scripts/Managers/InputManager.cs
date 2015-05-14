@@ -14,8 +14,11 @@ public class InputManager : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        cooldowns = player.GetComponent<PlayerCooldowns>();
-        melee = player.GetComponentInChildren<PlayerMeleeAttack>();
+        if (player != null)
+        {
+            cooldowns = player.GetComponent<PlayerCooldowns>();
+            melee = player.GetComponentInChildren<PlayerMeleeAttack>();
+        }
     }
 
     void Update()
@@ -116,7 +119,7 @@ public class InputManager : MonoBehaviour
         else
         {
             #region KB/M controls
-            if (!isPaused && !mapMenu)
+            if (!isPaused && !mapMenu && player != null)
             {
                 // WASD or arrow keys to move
                 if (Input.GetAxis("KBHorizontal") != 0.0f || Input.GetAxis("KBVertical") != 0.0f)
