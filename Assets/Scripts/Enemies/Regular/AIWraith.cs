@@ -27,11 +27,14 @@ public class AIWraith : MonoBehaviour
 
     float AttackTimer;
     bool AttackCD;
-
+    float snaredSpeed;
+    float SnareTimer;
+    bool isSnared;
 
     // Use this for initialization
     void Start()
     {
+        isSnared = false;
         player = GameObject.FindGameObjectWithTag("Player");
         controller = GetComponent<CharacterController>();
         //Random.seed = 8675309;
@@ -151,6 +154,18 @@ public class AIWraith : MonoBehaviour
 
         //  print("Wraith: RETURNED BAD WAYPOINT!");
         // return;
+    }
+
+    void Snare()
+    {
+        isSnared = true;
+        SnareTimer = 2;
+        snaredSpeed = moveSpeed;
+        moveSpeed = 0;
+    }
+    void Unsnare()
+    {
+        moveSpeed = snaredSpeed;
     }
 
     void Turn()
