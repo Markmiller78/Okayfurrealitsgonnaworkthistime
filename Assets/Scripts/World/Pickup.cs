@@ -27,11 +27,38 @@ public class Pickup : MonoBehaviour
     GameObject player;
     PlayerEquipment equipment;
 
+    int phase;
+    float timer;
     void Start()
     {
         cameras = GameObject.FindObjectOfType<Camera>();
         player = GameObject.FindGameObjectWithTag("Player");
         equipment = player.GetComponent<PlayerEquipment>();
+        phase = 0;
+    }
+
+    void Update()
+    {
+        if (phase == 0)
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y + Time.deltaTime * 0.1f, transform.position.z);
+            timer += Time.deltaTime;
+            if (timer >= 0.8f)
+            {
+                timer = 0;
+                phase = 1;
+            }
+        }
+        else
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y - Time.deltaTime * 0.1f, transform.position.z);
+            timer += Time.deltaTime;
+            if (timer >= 0.8f)
+            {
+                timer = 0;
+                phase = 0;
+            }
+        }
     }
 
     void OnGUI()
