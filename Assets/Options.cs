@@ -5,7 +5,35 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 
 
-public class Options : MonoBehaviour {
+public class Options : MonoBehaviour
+{
+    private static Options _instance;
+
+    public static Options instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = GameObject.FindObjectOfType<Options>();
+                DontDestroyOnLoad(_instance.gameObject);
+            }
+            return _instance;
+        }
+    }
+
+    void Awake()
+    {
+        if (_instance == null)
+        {
+            _instance = this;
+            DontDestroyOnLoad(this);
+        }
+        else if (this != _instance)
+        {
+            Destroy(this.gameObject);
+        }
+    }
 
     public int sfxVolume;
     public int musicVolume;
@@ -15,6 +43,9 @@ public class Options : MonoBehaviour {
 
     public Text sfxInt2;
     public Text musicInt2;
+
+    [HideInInspector]
+    public bool easyMode;
 
     void Start()
     {
@@ -48,6 +79,14 @@ public class Options : MonoBehaviour {
         }
         sfxInt.text = sfxVolume.ToString();
         sfxInt2.text = sfxVolume.ToString();
+        Save();
+
+        GameObject[] objects = (GameObject[])GameObject.FindObjectsOfType(typeof(GameObject));
+
+        for (int i = 0; i < objects.Length; i++)
+        {
+            objects[i].BroadcastMessage("ChangeVolume", SendMessageOptions.DontRequireReceiver);
+        }
 
     }
 
@@ -60,6 +99,14 @@ public class Options : MonoBehaviour {
         }
         sfxInt.text = sfxVolume.ToString();
         sfxInt2.text = sfxVolume.ToString();
+        Save();
+
+        GameObject[] objects = (GameObject[])GameObject.FindObjectsOfType(typeof(GameObject));
+
+        for (int i = 0; i < objects.Length; i++)
+        {
+            objects[i].BroadcastMessage("ChangeVolume", SendMessageOptions.DontRequireReceiver);
+        }
     }
 
     public void musicIncrease()
@@ -72,6 +119,13 @@ public class Options : MonoBehaviour {
         musicInt.text = musicVolume.ToString();
         musicInt2.text = musicVolume.ToString();
         Save();
+
+        GameObject[] objects = (GameObject[])GameObject.FindObjectsOfType(typeof(GameObject));
+
+        for (int i = 0; i < objects.Length; i++)
+        {
+            objects[i].BroadcastMessage("ChangeVolume", SendMessageOptions.DontRequireReceiver);
+        }
     }
 
     public void musicDecrease()
@@ -84,6 +138,13 @@ public class Options : MonoBehaviour {
         musicInt.text = musicVolume.ToString();
         musicInt2.text = musicVolume.ToString();
         Save();
+
+        GameObject[] objects = (GameObject[])GameObject.FindObjectsOfType(typeof(GameObject));
+
+        for (int i = 0; i < objects.Length; i++)
+        {
+            objects[i].BroadcastMessage("ChangeVolume", SendMessageOptions.DontRequireReceiver);
+        }
     }
 
 
@@ -94,10 +155,10 @@ public class Options : MonoBehaviour {
         FileStream file = File.Create(Application.persistentDataPath + "/optioninfo.dat");
         OptionData data = new OptionData();
         data.sfxVolume = sfxVolume;
-        data.musicVolume= musicVolume;
+        data.musicVolume = musicVolume;
         bin.Serialize(file, data);
         file.Close();
-      
+
     }
     public void Load()
     {
@@ -108,7 +169,7 @@ public class Options : MonoBehaviour {
             FileStream file = File.Open(Application.persistentDataPath + "/optioninfo.dat", FileMode.Open);
             OptionData data = (OptionData)bin.Deserialize(file);
             sfxVolume = data.sfxVolume;
-          musicVolume = data.musicVolume;
+            musicVolume = data.musicVolume;
             file.Close();
 
         }
@@ -118,8 +179,8 @@ public class Options : MonoBehaviour {
 [System.Serializable]
 public class OptionData
 {
-    public int sfxVolume ;
-    public int musicVolume ;
+    public int sfxVolume;
+    public int musicVolume;
 
 
 }
