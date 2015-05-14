@@ -14,6 +14,9 @@ public class PlayerEquipment : MonoBehaviour
     public accessory equippedAccessory;
     public ember equippedEmber;
 
+    AudioSource audioPlayer;
+
+    public AudioClip equipmentSound;
 
     public int emberDurability;
 
@@ -21,6 +24,7 @@ public class PlayerEquipment : MonoBehaviour
 
     void Start()
     {
+        audioPlayer = gameObject.GetComponent<AudioSource>();
         emberDurability = 0;
         paused = false;
     }
@@ -32,6 +36,12 @@ public class PlayerEquipment : MonoBehaviour
         {
             equippedEmber = ember.None;
         }
+    }
+
+    void PlayEquipmentSound()
+    {
+        Debug.Log("sounddd");
+        audioPlayer.PlayOneShot(equipmentSound);
     }
 
 }
