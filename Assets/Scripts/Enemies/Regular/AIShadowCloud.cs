@@ -55,18 +55,18 @@ public class AIShadowCloud : MonoBehaviour
 
     }
 
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject == player)
-        {
-            heroLight.cookie = HazardCookie;
-        }
-    }
+    //void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.gameObject == player)
+    //    {
+    //    }
+    //}
 
     void OnTriggerStay(Collider other)
     {
         if (other.gameObject == player)
         {
+            heroLight.cookie = HazardCookie;
             heroHP.LoseHealth(DamagePerSecond * Time.deltaTime);
         }
     }
@@ -108,6 +108,11 @@ public class AIShadowCloud : MonoBehaviour
             isReinforced = false;
         }
 
+    }
+
+    void OnDestroy()
+    {
+        heroLight.cookie = null;
     }
 
     void Decoy(GameObject decoy)
