@@ -28,10 +28,14 @@ public class AISkeletonArcher : MonoBehaviour
     Vector3 vectorToPlayer;
     float forgetTimer = 0.0f;
 
+    float snaredSpeed;
+    float SnareTimer;
+    bool isSnared;
+
     void Start()
     {
         infectRange = 1.5f;
-
+        isSnared = false;   
         infecttimer = 3.0f;
         heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
         player = GameObject.FindGameObjectWithTag("Player");
@@ -156,6 +160,18 @@ public class AISkeletonArcher : MonoBehaviour
             isReinforced = false;
         }
 
+    }
+
+    void Snare()
+    {
+        isSnared = true;
+        SnareTimer = 2;
+        snaredSpeed = moveSpeed;
+        moveSpeed = 0;
+    }
+    void Unsnare()
+    {
+        moveSpeed = snaredSpeed;
     }
 
     void Slow()

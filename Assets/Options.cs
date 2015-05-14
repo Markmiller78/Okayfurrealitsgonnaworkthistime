@@ -45,6 +45,11 @@ public class Options : MonoBehaviour
     public Text musicInt2;
 
     [HideInInspector]
+    public GameObject savedPlayer;
+    GameObject player;
+    bool beenAssigned;
+
+    [HideInInspector]
     public bool easyMode;
 
     void Start()
@@ -56,11 +61,17 @@ public class Options : MonoBehaviour
 
         sfxInt2.text = sfxVolume.ToString();
         musicInt2.text = musicVolume.ToString();
-
+        beenAssigned = false;
     }
 
     void Update()
     {
+        if (!beenAssigned && Application.loadedLevelName == "Game")
+        {
+            player = GameObject.FindGameObjectWithTag("Player");
+            beenAssigned = true;
+        }
+
 #if UNITY_WEBPLAYER
         if (Screen.fullScreen)
         {
