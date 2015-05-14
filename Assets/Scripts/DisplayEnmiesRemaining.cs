@@ -7,6 +7,8 @@ public class DisplayEnmiesRemaining : MonoBehaviour
 
     float timer;
     public Text theText;
+    public GameObject Ghosty;
+    public GameObject Unlocked;
 
     public int count;
 
@@ -25,6 +27,16 @@ public class DisplayEnmiesRemaining : MonoBehaviour
         {
             timer = 1;
             count = GameObject.FindGameObjectsWithTag("Enemy").Length + GameObject.FindGameObjectsWithTag("ShadowSpawn").Length;
+            if (count > 0)
+            {
+                Ghosty.SetActive(true);
+                Unlocked.SetActive(false);
+            }
+            else
+            {
+                Ghosty.SetActive(false);
+                Unlocked.SetActive(true);
+            }
             theText.text = count.ToString();
         }
     }
