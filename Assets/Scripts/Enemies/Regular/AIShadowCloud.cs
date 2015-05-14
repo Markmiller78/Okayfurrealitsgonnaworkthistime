@@ -19,8 +19,13 @@ public class AIShadowCloud : MonoBehaviour
     Health heroHP;
     Light heroLight;
 
+    float snaredSpeed;
+    float SnareTimer;
+    bool isSnared;
+
     void Start()
     {
+        isSnared = false;
         infecttimer = 3.0f;
         player = GameObject.FindGameObjectWithTag("Player");
         heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
@@ -114,6 +119,18 @@ public class AIShadowCloud : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
      //   playMove = player.GetComponent<PlayerMovement>();
+    }
+
+    void Snare()
+    {
+        isSnared = true;
+        SnareTimer = 2;
+        snaredSpeed = moveSpeed;
+        moveSpeed = 0;
+    }
+    void Unsnare()
+    {
+        moveSpeed = snaredSpeed;
     }
 
     void GetInfected()
