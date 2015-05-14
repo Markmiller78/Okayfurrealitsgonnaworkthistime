@@ -44,6 +44,9 @@ public class Options : MonoBehaviour
     public Text sfxInt2;
     public Text musicInt2;
 
+    [HideInInspector]
+    public bool easyMode;
+
     void Start()
     {
         Load();
