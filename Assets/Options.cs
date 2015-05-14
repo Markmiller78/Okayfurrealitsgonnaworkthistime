@@ -28,6 +28,17 @@ public class Options : MonoBehaviour {
 
     }
 
+    void Update()
+    {
+#if UNITY_WEBPLAYER
+        if (Screen.fullScreen)
+        {
+            Screen.SetResolution(1280, 720, false);
+            Screen.fullScreen = false;
+        }
+#endif
+    }
+
     public void sfxIncrease()
     {
         sfxVolume++;
@@ -37,6 +48,14 @@ public class Options : MonoBehaviour {
         }
         sfxInt.text = sfxVolume.ToString();
         sfxInt2.text = sfxVolume.ToString();
+        Save();
+
+        GameObject[] objects = (GameObject[])GameObject.FindObjectsOfType(typeof(GameObject));
+
+        for (int i = 0; i < objects.Length; i++)
+        {
+            objects[i].BroadcastMessage("ChangeVolume", SendMessageOptions.DontRequireReceiver);
+        }
 
     }
 
@@ -49,6 +68,14 @@ public class Options : MonoBehaviour {
         }
         sfxInt.text = sfxVolume.ToString();
         sfxInt2.text = sfxVolume.ToString();
+        Save();
+
+        GameObject[] objects = (GameObject[])GameObject.FindObjectsOfType(typeof(GameObject));
+
+        for (int i = 0; i < objects.Length; i++)
+        {
+            objects[i].BroadcastMessage("ChangeVolume", SendMessageOptions.DontRequireReceiver);
+        }
     }
 
     public void musicIncrease()
@@ -61,6 +88,13 @@ public class Options : MonoBehaviour {
         musicInt.text = musicVolume.ToString();
         musicInt2.text = musicVolume.ToString();
         Save();
+
+        GameObject[] objects = (GameObject[])GameObject.FindObjectsOfType(typeof(GameObject));
+
+        for (int i = 0; i < objects.Length; i++)
+        {
+            objects[i].BroadcastMessage("ChangeVolume", SendMessageOptions.DontRequireReceiver);
+        }
     }
 
     public void musicDecrease()
@@ -73,6 +107,13 @@ public class Options : MonoBehaviour {
         musicInt.text = musicVolume.ToString();
         musicInt2.text = musicVolume.ToString();
         Save();
+
+        GameObject[] objects = (GameObject[])GameObject.FindObjectsOfType(typeof(GameObject));
+
+        for (int i = 0; i < objects.Length; i++)
+        {
+            objects[i].BroadcastMessage("ChangeVolume", SendMessageOptions.DontRequireReceiver);
+        }
     }
 
 

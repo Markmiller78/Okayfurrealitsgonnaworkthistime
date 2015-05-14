@@ -20,6 +20,7 @@ public class SpellOrbOfLight : MonoBehaviour
     public Vector3 playerpos;
     public Vector3 dir;
 
+    public GameObject leftovers;
 
 
     void Start()
@@ -78,6 +79,7 @@ public class SpellOrbOfLight : MonoBehaviour
     {
         Instantiate(explosion, transform.position, transform.rotation);
         Instantiate(lightRemains, transform.position, transform.rotation);
+        Instantiate(leftovers, new Vector3(transform.position.x, transform.position.y, -0.5f), transform.rotation);
         Destroy(gameObject);
     }
 }

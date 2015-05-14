@@ -20,6 +20,7 @@ public class Pickup : MonoBehaviour
     public GameObject chargeBootPickup;
     public GameObject decoyBootPickup;
     public GameObject blinkBootPickup;
+    public Font font;
     public string theName;
     Camera cameras;
 
@@ -37,17 +38,15 @@ public class Pickup : MonoBehaviour
     {
         if (displaytooltips)
         {
-            string temp = "Press E to pick up the ";
+            string temp = "Press E to pick up the \n";
             if (theName.Length != 0)
             {
                 temp += theName;
-
-                
-                
-
             }
+            if(theName.Contains("Ember"))
             temp += "\n Durabilty: 10\n";
-            GUI.Box(new Rect(cameras.WorldToScreenPoint(player.transform.position).x+32,/*Screen.height-*/ cameras.WorldToScreenPoint(player.transform.position).y, 200, 100), temp);
+
+            GUI.Box(new Rect(cameras.WorldToScreenPoint(player.transform.position).x+32,Screen.height- cameras.WorldToScreenPoint(player.transform.position).y, 250, 150), temp);
         }
 
     }
@@ -179,21 +178,32 @@ public class Pickup : MonoBehaviour
                     switch (whichOneToEquip)
                     {
                         case 1:
+                            equipment.emberDurability = 10;
                             equipment.equippedEmber = ember.Life;
                             break;
                         case 2:
+                            equipment.emberDurability = 10;
+
                             equipment.equippedEmber = ember.Death;
                             break;
                         case 3:
+                            equipment.emberDurability = 10;
+
                             equipment.equippedEmber = ember.Earth;
                             break;
                         case 4:
+                            equipment.emberDurability = 10;
+
                             equipment.equippedEmber = ember.Wind;
                             break;
                         case 5:
+                            equipment.emberDurability = 10;
+
                             equipment.equippedEmber = ember.Fire;
                             break;
                         case 6:
+                            equipment.emberDurability = 10;
+
                             equipment.equippedEmber = ember.Ice;
                             break;
                         default:

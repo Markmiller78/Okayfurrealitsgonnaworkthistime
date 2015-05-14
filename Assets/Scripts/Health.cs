@@ -21,6 +21,8 @@ public class Health : MonoBehaviour
     Animator anim;
     Health playerHealth;
 
+    public GameObject corpse;
+
     void Start()
     {
         playerDead = false;
@@ -83,7 +85,7 @@ public class Health : MonoBehaviour
             else if (equipment.equippedEmber == ember.Life)
             {
                 GameObject instance = (GameObject)Instantiate(lifeEmberSpawn, transform.position, transform.rotation);
-                playerHealth.GainHealth(Amount);
+                playerHealth.GainHealth(1);
 
             }
         }
@@ -94,6 +96,7 @@ public class Health : MonoBehaviour
         if (this.tag != "Player")
         {
             Instantiate(lightRemains, transform.position, transform.rotation);
+            Instantiate(corpse, new Vector3(transform.position.x, transform.position.y, -0.5f), transform.rotation);
             gameObject.GetComponent<GenerateLoot>().Generateloot();
             if (isInfected)
             {
