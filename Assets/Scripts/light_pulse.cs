@@ -4,9 +4,12 @@ using System.Collections;
 public class light_pulse : MonoBehaviour {
 
     public Light lt;
-    public float lIntensity;
-    public float lRange;
-    public bool grow;
+    //public float lIntensity;
+    public float MinIntensity, MaxIntensity;
+    //public float lRange;
+    public float MinRange, MaxRange;
+
+    bool grow;
     float timer = 0;
 	// Use this for initialization
 	void Start () {
@@ -17,10 +20,10 @@ public class light_pulse : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (lt.intensity < 3.3f)
+        if (lt.intensity < MinIntensity)
             grow = true;
 
-        if (lt.intensity >= 4.3f)
+        if (lt.intensity >= MaxIntensity)
             grow = false;
 
         timer -= Time.deltaTime;
@@ -37,11 +40,11 @@ public class light_pulse : MonoBehaviour {
         }
 
 
-        if (lt.range < 13)
-            lt.range = 13;
+        if (lt.range < MinRange)
+            lt.range = MinRange;
 
-        if (lt.range > 15)
-            lt.range = 15;
+        if (lt.range > MaxRange)
+            lt.range = MaxRange;
 
         if (grow)
             lt.intensity += .5f * Time.deltaTime;

@@ -31,10 +31,16 @@ public class RoomGeneration : MonoBehaviour
     public int currentRoom = 0;
     //public GameObject treasureRoom;
     //Room treasureRoomInfo;
+    public GameObject hazard;
+    public GameObject nDoor;
+    public GameObject sDoor;
+    public GameObject eDoor;
+    public GameObject wDoor;
     public GameObject waypoint;
+    public GameObject chest;
 
     public GameObject[] checkpointRooms;
-    Room[] checkpointRoomsInfo;    
+    Room[] checkpointRoomsInfo;
 
     bool easyMode;
 
@@ -238,7 +244,7 @@ public class RoomGeneration : MonoBehaviour
         {
             Instantiate(finalRoomInfoArray[currentRoom].hazard, new Vector3(finalRoomInfoArray[currentRoom].hazardSpawnPoints[i].x, -finalRoomInfoArray[currentRoom].hazardSpawnPoints[i].y, -1), Quaternion.identity);
         }
-        // Spawn enemies
+        // Spawn enemies & possibly a chest
         if (!finalRoomInfoArray[currentRoom].beenThere)
         {
             finalRoomInfoArray[currentRoom].numEnemies = Random.Range(finalRoomInfoArray[currentRoom].minEnemies, finalRoomInfoArray[currentRoom].maxEnemies);
@@ -247,7 +253,7 @@ public class RoomGeneration : MonoBehaviour
             {
                 for (int i = 0; i < finalRoomInfoArray[currentRoom].enemySpawnPoints.Length; i++)
                 {
-                    int chance = Random.Range(1, 5);
+                    int chance = Random.Range(1, 50);
                     if (!finalRoomInfoArray[currentRoom].enemySpawnPointUsed[i] && chance == 1)
                     {
                         Instantiate(finalRoomInfoArray[currentRoom].enemiesThatCanSpawn[Random.Range(0, finalRoomInfoArray[currentRoom].enemiesThatCanSpawn.Length)], new Vector3(finalRoomInfoArray[currentRoom].enemySpawnPoints[i].x, -finalRoomInfoArray[currentRoom].enemySpawnPoints[i].y, -1f), Quaternion.identity);
@@ -258,6 +264,25 @@ public class RoomGeneration : MonoBehaviour
                     }
                 }
             }
+            float chanceychance = Random.Range(0f, 1f);
+            if (chanceychance <= .3f)
+            {
+                bool spawned = false;
+                while (!spawned)
+                {
+                    for (int i = 0; i < finalRoomInfoArray[currentRoom].chestSpawnLocations.Length; i++)
+                    {
+                        int c = Random.Range(1, 5);
+                        if (c == 1)
+                        {
+                            Instantiate(chest, new Vector3(finalRoomInfoArray[currentRoom].chestSpawnLocations[i].x, -finalRoomInfoArray[currentRoom].chestSpawnLocations[i].y, -1f), Quaternion.identity);
+                            spawned = true;
+                            break;
+                        }
+                    }
+                }
+            }
+
         }
         //Spawn Waypoints
         for (int i = 0; i < finalRoomInfoArray[currentRoom].waypointLocations.Length; i++)
