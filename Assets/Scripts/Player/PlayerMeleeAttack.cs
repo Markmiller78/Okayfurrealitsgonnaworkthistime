@@ -12,12 +12,15 @@ public class PlayerMeleeAttack : MonoBehaviour
     float rotationDelta = 0.0f;
     public float speed = 3.0f;
 
+    AudioSource audioPlayer;
 
     PlayerEquipment heroEqp;
     Animator anim;
 
     public GameObject fireDebuff;
     public GameObject frostDebuff;
+
+    public AudioClip meleeSound;
 
     void Start()
     {
@@ -26,7 +29,7 @@ public class PlayerMeleeAttack : MonoBehaviour
         playerStats = player.GetComponent<PlayerStats>();
         rotationDelta = player.transform.rotation.z;
         heroEqp = player.GetComponent<PlayerEquipment>();
-
+        audioPlayer = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -102,9 +105,14 @@ public class PlayerMeleeAttack : MonoBehaviour
 
     void Melee()
     {
-        attacking = true;
-        anim.CrossFade("Attacking", 0.01f);
-        gameObject.GetComponentInChildren<SpriteRenderer>().enabled = true;
-        gameObject.GetComponentInChildren<ParticleSystem>().enableEmission = true;
+        if (attacking == false)
+        {
+            audioPlayer.PlayOneShot(meleeSound);
+            attacking = true;
+            anim.CrossFade("Attacking", 0.01f);
+            gameObject.GetComponentInChildren<SpriteRenderer>().enabled = true;
+            gameObject.GetComponentInChildren<ParticleSystem>().enableEmission = true;
+        }
+
     }
 }

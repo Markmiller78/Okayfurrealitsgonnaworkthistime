@@ -14,11 +14,24 @@ public class PlayerEquipment : MonoBehaviour
     public accessory equippedAccessory;
     public ember equippedEmber;
 
+
+    public int emberDurability;
+
     public bool paused;
 
     void Start()
     {
+        emberDurability = 0;
         paused = false;
+    }
+
+    public void EmberLoseDurability()
+    {
+        emberDurability--;
+        if (emberDurability <= -1)
+        {
+            equippedEmber = ember.None;
+        }
     }
 
 }

@@ -53,10 +53,10 @@ public class BossAIDethros : MonoBehaviour
         myHealth = GetComponent<Health>();
         meleeAttackObject.SetActive(false);
         meleeScript = meleeAttackObject.GetComponent<DethrosMeleeAttack>();
-        Instantiate(enemySpawner, new Vector3(1, -1, -1), Quaternion.Euler(0, 0, 225));
-        Instantiate(enemySpawner, new Vector3(18, -1, -1), Quaternion.Euler(0, 0, 135));
-        Instantiate(enemySpawner, new Vector3(1, -18, -1), Quaternion.Euler(0, 0, 315));
-        Instantiate(enemySpawner, new Vector3(18, -18, -1), Quaternion.Euler(0, 0, 45));
+        Instantiate(enemySpawner, new Vector3(5, -5, -1), Quaternion.Euler(0, 0, 225));
+        Instantiate(enemySpawner, new Vector3(13, -5, -1), Quaternion.Euler(0, 0, 135));
+        Instantiate(enemySpawner, new Vector3(5, -13, -1), Quaternion.Euler(0, 0, 315));
+        Instantiate(enemySpawner, new Vector3(13, -13, -1), Quaternion.Euler(0, 0, 45));
         spawners = GameObject.FindGameObjectsWithTag("DethSpawn");
         specialTimer = sTimerMax;
         spellTimer = spTimerMax;

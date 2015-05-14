@@ -466,46 +466,43 @@ public class MainMenu : MonoBehaviour
             }
         }
         //Sound Fx Volume up/down
-        if ((Input.GetAxis("CLSVertical") > .7f || Input.GetAxis("KBVertical") > 0 || Input.GetAxis("CDPadVertical") > .7f) && AxisChanged == false && currentSelection == 8)
+        if ((Input.GetAxis("CLSVertical") > .7f || Input.GetAxis("KBVertical") > 0 || Input.GetAxis("CDPadVertical") > .7f || Input.GetAxis("CLSHorizontal") > .7f || Input.GetAxis("KBHorizontal") > 0 || Input.GetAxis("CDPadHorizontal") > .7f) && AxisChanged == false && currentSelection == 8)
         {
             theOptions.sfxIncrease();
-            soundSource.volume = theOptions.sfxVolume * 0.01f;
             if (soundSource.isPlaying)
                 soundSource.Stop();
-            soundSource.clip = selectSound;
-            soundSource.Play();
+            soundSource.PlayOneShot(selectSound);
             AxisChanged = true;
         }
-        if ((Input.GetAxis("CLSVertical") < -0.7f || Input.GetAxis("KBVertical") < 0 || Input.GetAxis("CDPadVertical") < -0.7f) && AxisChanged == false && currentSelection == 8)
+        if ((Input.GetAxis("CLSVertical") < -0.7f || Input.GetAxis("KBVertical") < 0 || Input.GetAxis("CDPadVertical") < -0.7f || Input.GetAxis("CLSHorizontal") < -0.7f || Input.GetAxis("KBHorizontal") < 0 || Input.GetAxis("CDPadHorizontal") < -0.7f) && AxisChanged == false && currentSelection == 8)
         {
             theOptions.sfxDecrease();
-            soundSource.volume = theOptions.sfxVolume * 0.01f;
             if (soundSource.isPlaying)
                 soundSource.Stop();
-            soundSource.clip = selectSound;
-            soundSource.Play();
+            soundSource.PlayOneShot(selectSound);
+
             AxisChanged = true;
 
         }
-        if ((Input.GetAxis("CLSVertical") == 0 && Input.GetAxis("KBVertical") == 0 && Input.GetAxis("CDPadVertical") == 0) && currentSelection == 8)
+        if ((Input.GetAxis("CLSVertical") == 0 && Input.GetAxis("KBVertical") == 0 && Input.GetAxis("CDPadVertical") == 0 && Input.GetAxis("CLSHorizontal") == 0 && Input.GetAxis("KBHorizontal") == 0 && Input.GetAxis("CDPadHorizontal") == 0) && currentSelection == 8)
         {
             AxisChanged = false;
         }
 
 
         //Music Volume up/down
-        if ((Input.GetAxis("CLSVertical") > .7f || Input.GetAxis("KBVertical") > 0 || Input.GetAxis("CDPadVertical") > .7f) && AxisChanged == false && currentSelection == 9)
+        if ((Input.GetAxis("CLSVertical") > .7f || Input.GetAxis("KBVertical") > 0 || Input.GetAxis("CDPadVertical") > .7f || Input.GetAxis("CLSHorizontal") > .7f || Input.GetAxis("KBHorizontal") > 0 || Input.GetAxis("CDPadHorizontal") > .7f) && AxisChanged == false && currentSelection == 9)
         {
             theOptions.musicIncrease();
             AxisChanged = true;
         }
-        if ((Input.GetAxis("CLSVertical") < -0.7f || Input.GetAxis("KBVertical") < 0 || Input.GetAxis("CDPadVertical") < -0.7f) && AxisChanged == false && currentSelection == 9)
+        if ((Input.GetAxis("CLSVertical") < -0.7f || Input.GetAxis("KBVertical") < 0 || Input.GetAxis("CDPadVertical") < -0.7f || Input.GetAxis("CLSHorizontal") < -0.7f || Input.GetAxis("KBHorizontal") < 0 || Input.GetAxis("CDPadHorizontal") < -0.7f) && AxisChanged == false && currentSelection == 9)
         {
             theOptions.musicDecrease();
             AxisChanged = true;
 
         }
-        if ((Input.GetAxis("CLSVertical") == 0 && Input.GetAxis("KBVertical") == 0 && Input.GetAxis("CDPadVertical") == 0) && currentSelection == 9)
+        if ((Input.GetAxis("CLSVertical") == 0 && Input.GetAxis("KBVertical") == 0 && Input.GetAxis("CDPadVertical") == 0 && Input.GetAxis("CLSHorizontal") == 0 && Input.GetAxis("KBHorizontal") == 0 && Input.GetAxis("CDPadHorizontal") == 0) && currentSelection == 9)
         {
             AxisChanged = false;
         }
@@ -823,14 +820,16 @@ public class MainMenu : MonoBehaviour
             {
                 case 0:
                     {
-                        //HARD DIFFICULTY
-                        LevelManager.Load("Game");
+                        //EASY DIFFICULTY
+                        LevelManager.Load("IntroCutscene");
+                        GameObject.FindObjectOfType<Options>().easyMode = true;
                         break;
                     }
                 case 1:
                     {
                         //NORMAL DIFFICULTY
-                        LevelManager.Load("Game");
+                        LevelManager.Load("IntroCutscene");
+                        GameObject.FindObjectOfType<Options>().easyMode = false;
                         break;
                     }
                 case 2:
