@@ -40,7 +40,6 @@ public class AILivingDead : MonoBehaviour
         //playerHealth = player.GetComponent<Health>();
         attackCooldownMax = 1;
         attackCooldown = attackCooldownMax;
-        attackRange = .8f;
         //rb2d = GetComponent<Rigidbody2D>();
         controller = GetComponent<CharacterController>();
     }
@@ -93,9 +92,11 @@ public class AILivingDead : MonoBehaviour
 
     void Attack()
     {
-        if(playMove!=null)
-        playMove.KnockBack(transform.position);
-        player.GetComponent<Health>().LoseHealth(7);
+        if (playMove != null)
+        {
+            playMove.KnockBack(transform.position);
+            player.GetComponent<Health>().LoseHealth(attackDamage);
+        }
     }
 
     void UpdateAttackCooldown()

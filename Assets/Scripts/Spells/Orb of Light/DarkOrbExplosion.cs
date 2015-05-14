@@ -8,6 +8,7 @@ public class DarkOrbExplosion : MonoBehaviour {
     float timeAlive;
     GameObject player;
     float maxLife;
+    public float explodedamage;
 
     // Use this for initialization
     void Start()
@@ -38,7 +39,7 @@ public class DarkOrbExplosion : MonoBehaviour {
         heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
         if (other.tag == "Player")
         {
-            other.GetComponent<Health>().LoseHealth(5);
+            other.GetComponent<Health>().LoseHealth(explodedamage);
         }
     }
 }
