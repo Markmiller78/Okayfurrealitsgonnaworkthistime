@@ -11,7 +11,7 @@ public class EnemyLight : MonoBehaviour {
 	void Start () {
         thelight = gameObject.GetComponent<Light>();
         phase = 0;
-        thelight.range = 0;
+        thelight.range = 1.5f;
 	}
 	
 	// Update is called once per frame
@@ -19,7 +19,7 @@ public class EnemyLight : MonoBehaviour {
         if (phase == 0)
         {
             thelight.range = thelight.range + Time.deltaTime;
-            if (thelight.range >= 3f)
+            if (thelight.range >= 3.5f)
             {
                 phase = 1;
             }
