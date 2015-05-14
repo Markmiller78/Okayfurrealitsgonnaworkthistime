@@ -43,7 +43,7 @@ public class DarkOrbOfLight : MonoBehaviour {
         }
         else if (other.tag == "Player")
         {
-            other.GetComponent<Health>().LoseHealth(12);
+            other.GetComponent<Health>().LoseHealth(damage);
             Explode();
         }
     }

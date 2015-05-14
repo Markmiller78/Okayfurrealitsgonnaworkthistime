@@ -57,7 +57,7 @@ public class HealthRemains : MonoBehaviour {
     void PickUp()
     {
         Instantiate(missile, transform.position, transform.rotation);
-        heroHp.GainHealth(1);
+        heroHp.GainHealth(2.5f);
         active = false;
     }
 }
