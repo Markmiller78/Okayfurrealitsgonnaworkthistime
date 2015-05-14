@@ -11,6 +11,7 @@ public class PlayerSpellCasting : MonoBehaviour
     public GameObject lifeOrb;
     public GameObject deathOrb;
     public GameObject earthOrb;
+    public AudioClip orbAudio;
 
     [Header("Singularity")]
     public GameObject lightSing;
@@ -38,6 +39,7 @@ public class PlayerSpellCasting : MonoBehaviour
     public GameObject lifeBolt;
     public GameObject deathBolt;
     public GameObject earthBolt;
+    public AudioClip boltAudio;
 
     [Header("Light Mine")]
     public GameObject lightMine;
@@ -80,6 +82,8 @@ public class PlayerSpellCasting : MonoBehaviour
     public GameObject castParticles;
     float shootTimer;
 
+    AudioSource audioPlayer;
+
     void Start()
     {
         anim = gameObject.GetComponent<Animator>();
@@ -88,6 +92,7 @@ public class PlayerSpellCasting : MonoBehaviour
         heroLight = gameObject.GetComponent<PlayerLight>();
         UICD = GameObject.Find("Spell").GetComponent<HUDCooldowns>();
         playersLight = gameObject.GetComponentInChildren<Light>();
+        audioPlayer = gameObject.GetComponent<AudioSource>();
         chained = false;
         shoot = false;
         shootTimer = 0;
@@ -382,6 +387,18 @@ public class PlayerSpellCasting : MonoBehaviour
                 heroCooldowns.spellCooling = true;
                 anim.CrossFade("Spellcasting", 0.01f);
                 shoot = true;
+
+                if (heroEquipment.equippedAccessory == accessory.BoltOfLight)
+                {
+                    audioPlayer.PlayOneShot(boltAudio);
+
+                }
+                else if (heroEquipment.equippedAccessory == accessory.OrbOfLight)
+                {
+                    audioPlayer.PlayOneShot(orbAudio);
+                    
+                }
+
             }
         }
 
