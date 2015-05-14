@@ -17,7 +17,7 @@ public class DisplayEmberDurability : MonoBehaviour {
     {
         heroEquip = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
 
-        timer = 1;
+        timer = 0.5f;
     }
 
     // Update is called once per frame
@@ -27,7 +27,7 @@ public class DisplayEmberDurability : MonoBehaviour {
 
         if (timer <= 0)
         {
-            timer = 1;
+            timer = 0.5f;
             count = heroEquip.emberDurability;
             theText.text = count.ToString();
         }

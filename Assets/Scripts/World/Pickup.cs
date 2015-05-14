@@ -122,24 +122,31 @@ public class Pickup : MonoBehaviour
                         case accessory.None:
                             break;
                         case accessory.OrbOfLight:
+                            player.SendMessage("PlayEquipmentSound", SendMessageOptions.DontRequireReceiver);
                             Instantiate(orbOfLightPickup, transform.position, transform.rotation);
                             break;
                         case accessory.BoltOfLight:
+                            player.SendMessage("PlayEquipmentSound", SendMessageOptions.DontRequireReceiver);
                             Instantiate(boltOfLightPickup, transform.position, transform.rotation);
                             break;
                         case accessory.BlastOfLight:
+                            player.SendMessage("PlayEquipmentSound", SendMessageOptions.DontRequireReceiver);
                             Instantiate(blastOfLightPickup, transform.position, transform.rotation);
                             break;
                         case accessory.ChainLightning:
+                            player.SendMessage("PlayEquipmentSound", SendMessageOptions.DontRequireReceiver);
                             Instantiate(chainLightningPickup, transform.position, transform.rotation);
                             break;
                         case accessory.Singularity:
+                            player.SendMessage("PlayEquipmentSound", SendMessageOptions.DontRequireReceiver);
                             Instantiate(singularityPickup, transform.position, transform.rotation);
                             break;
                         case accessory.Snare:
+                            player.SendMessage("PlayEquipmentSound", SendMessageOptions.DontRequireReceiver);
                             Instantiate(snarePickup, transform.position, transform.rotation);
                             break;
                         case accessory.LightMine:
+                            player.SendMessage("PlayEquipmentSound", SendMessageOptions.DontRequireReceiver);
                             Instantiate(lightMinePickup, transform.position, transform.rotation);
                             break;
                         default:

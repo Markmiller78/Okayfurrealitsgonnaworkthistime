@@ -1028,7 +1028,7 @@ public class RoomGeneration : MonoBehaviour
         {
             if (obj.name.Contains("Wall") || obj.name.Contains("Floor") || obj.name.Contains("Hazard") || obj.name.Contains("Door")
                 || obj.tag.Contains("Drop") || obj.tag == "LightTrail" || obj.name.Contains("Pickup") || obj.name.Contains("dead")
-                || obj.name.Contains("Burn") || obj.tag == "Waypoint")
+                || obj.name.Contains("Burn") || obj.tag == "Waypoint" || obj.name.Contains("Spawn"))
             {
                 Destroy(obj);
             }
