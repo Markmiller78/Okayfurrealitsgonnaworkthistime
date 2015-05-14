@@ -71,7 +71,7 @@ public class EastDoor : MonoBehaviour
                 generator.Reset();
             }
         }
-        iHopeThisWorks = !iHopeThisWorks;
+        iHopeThisWorks = false;
     }
 }
 

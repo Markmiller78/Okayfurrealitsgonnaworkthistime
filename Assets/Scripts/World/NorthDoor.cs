@@ -71,7 +71,7 @@ public class NorthDoor : MonoBehaviour
                 generator.Reset();
             }
         }
-        iHopeThisWorks = !iHopeThisWorks;
+        iHopeThisWorks = false;
     }
 
 

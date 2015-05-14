@@ -71,6 +71,6 @@ public class WestDoor : MonoBehaviour
                 generator.Reset();
             }
         }
-        iHopeThisWorks = !iHopeThisWorks;
+        iHopeThisWorks = false;
     }
 }
