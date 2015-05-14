@@ -33,6 +33,11 @@ public class RoomGeneration : MonoBehaviour
     //Room treasureRoomInfo;
     public GameObject waypoint;
 
+    public GameObject[] checkpointRooms;
+    Room[] checkpointRoomsInfo;    
+
+    bool easyMode;
+
     void Start()
     {
         //DontDestroyOnLoad(this);
@@ -88,8 +93,20 @@ public class RoomGeneration : MonoBehaviour
 
         //treasureRoomInfo = treasureRoom.GetComponent<Room>();
 
-        finalRoomArray = new GameObject[17];
-        finalRoomInfoArray = new Room[17];
+        easyMode = GameObject.FindObjectOfType<Options>().easyMode;
+
+        if (easyMode)
+        {
+            checkpointRoomsInfo = new Room[checkpointRooms.Length];
+            for (int i = 0; i < checkpointRooms.Length; i++)
+            {
+                checkpointRoomsInfo[i] = checkpointRooms[i].GetComponent<Room>();
+                checkpointRoomsInfo[i].setUsed();
+            }
+        }
+
+        finalRoomArray = new GameObject[/*easyMode ? 18 : */17];
+        finalRoomInfoArray = new Room[/*easyMode ? 18 : */17];
         FillDungeon();
 
         //TESTING
@@ -347,8 +364,8 @@ public class RoomGeneration : MonoBehaviour
         {
             finalRoomInfoArray[2].exitDir = Random.Range(0, 3);
         } while (finalRoomInfoArray[2].exitDir == finalRoomInfoArray[2].entranceDir);
-        finalRoomArray[3] = floorOneRooms[2];
-        finalRoomInfoArray[3] = floorOneRoomsInfo[2];
+        finalRoomArray[3] = easyMode ? checkpointRooms[0] : floorOneRooms[2];
+        finalRoomInfoArray[3] = easyMode ? checkpointRoomsInfo[0] : floorOneRoomsInfo[2];
         switch (finalRoomInfoArray[2].exitDir)
         {
             case 0:
