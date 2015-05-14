@@ -25,7 +25,7 @@ public class EastDoor : MonoBehaviour
         enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length + GameObject.FindGameObjectsWithTag("ShadowSpawn").Length;
         if (isLocked &&
             ((generator.currentRoom != 0 && generator.currentRoom != 9 && generator.finalRoomInfoArray[generator.currentRoom].entranceDir == 3)
-            || (generator.currentRoom < 10 && generator.finalRoomInfoArray[generator.currentRoom].exitDir == 3))
+            || (generator.currentRoom < 16 && generator.finalRoomInfoArray[generator.currentRoom].exitDir == 3))
             && enemyCount == 0)
         {
             isLocked = false;
@@ -58,7 +58,7 @@ public class EastDoor : MonoBehaviour
         {
             if (other.gameObject == player
                 && generator.finalRoomInfoArray[generator.currentRoom].exitDir == 3
-                && generator.currentRoom < 10)
+                && generator.currentRoom < 16)
             {
                 ++generator.currentRoom;
                 generator.finalRoomInfoArray[generator.currentRoom].comingFromEntrance = true;
