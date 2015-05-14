@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
 
     public float fullSpeed;
     public float halfSpeed;
+    public bool isinHazard = false;
     float speed;
     float knockbackTimer;
     GameObject player;
