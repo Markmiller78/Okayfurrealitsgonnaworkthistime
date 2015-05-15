@@ -906,7 +906,7 @@ public class MainMenu : MonoBehaviour
     void Save()
     {
         if (Application.platform == RuntimePlatform.OSXWebPlayer
-           || Application.platform == RuntimePlatform.WindowsWebPlayer)
+           || Application.platform == RuntimePlatform.WindowsWebPlayer) 
         {
 
 
