@@ -13,9 +13,11 @@ public class SingularityExplosion : MonoBehaviour
     float maxLife;
     public GameObject lightRemains;
     public GameObject hpPickup;
+    public float dmg;
 
     public Vector3 vectoplayer;
     public Vector3 playerpos;
+    PlayerStats theStats;
 
     public GameObject burns;
 
@@ -23,9 +25,12 @@ public class SingularityExplosion : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+     
         timeAlive = 0;
+        dmg = 10;
         theLight = gameObject.GetComponent<Light>();
         player = GameObject.FindGameObjectWithTag("Player");
+        theStats = player.GetComponent<PlayerStats>();
         playerpos = player.transform.position;
         heroEquipment = player.GetComponent<PlayerEquipment>();
 
@@ -66,35 +71,35 @@ public class SingularityExplosion : MonoBehaviour
                     }
                     else if (heroEquipment.equippedEmber == ember.Fire)
                     {
-                        Enemies[i].GetComponent<Health>().LoseHealth(10);
+                        Enemies[i].GetComponent<Health>().LoseHealth(dmg + theStats.spellModifier);
                         GameObject tempObj = (GameObject)Instantiate(debuff, Enemies[i].transform.position, Enemies[i].transform.rotation);
                         tempObj.GetComponent<DebuffFire>().target = Enemies[i].gameObject;
                     }
                     else if (heroEquipment.equippedEmber == ember.Ice)
                     {
-                        Enemies[i].GetComponent<Health>().LoseHealth(10);
+                        Enemies[i].GetComponent<Health>().LoseHealth(dmg + theStats.spellModifier);
                         GameObject tempObj = (GameObject)Instantiate(debuff, Enemies[i].transform.position, Enemies[i].transform.rotation);
                         tempObj.GetComponent<DebuffFrost>().target = Enemies[i].gameObject;
                     }
                     else if (heroEquipment.equippedEmber == ember.Wind)
                     {
                         Enemies[i].SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
-                        Enemies[i].GetComponent<Health>().LoseHealth(10);
-                    }
+                        Enemies[i].GetComponent<Health>().LoseHealth(dmg + theStats.spellModifier);
+                     }
                     else if (heroEquipment.equippedEmber == ember.Life)
                     {
                         Enemies[i].SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
-                        Enemies[i].GetComponent<Health>().LoseHealth(10);
+                        Enemies[i].GetComponent<Health>().LoseHealth(dmg + theStats.spellModifier);
                     }
                     else if (heroEquipment.equippedEmber == ember.Death)
                     {
                         Enemies[i].SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
-                        Enemies[i].GetComponent<Health>().LoseHealth(10);
+                        Enemies[i].GetComponent<Health>().LoseHealth(dmg + theStats.spellModifier);
                     }
                     else if (heroEquipment.equippedEmber == ember.Earth)
                     {
                         Enemies[i].SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
-                        Enemies[i].GetComponent<Health>().LoseHealth(13);
+                        Enemies[i].GetComponent<Health>().LoseHealth(dmg +3+ theStats.spellModifier);
                     }
 
 

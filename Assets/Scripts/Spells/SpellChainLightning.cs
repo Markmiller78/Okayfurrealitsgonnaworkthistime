@@ -19,7 +19,7 @@ public class SpellChainLightning : MonoBehaviour
 
     PlayerEquipment heroEquipment;
     //ParticleSystem particles;
-
+    PlayerStats theStats;
     GameObject kaboom;
     GameObject player;
 
@@ -41,6 +41,7 @@ public class SpellChainLightning : MonoBehaviour
 
     void Start()
     {
+        theStats = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>();
         transform.Rotate(270, 0, 0);
         player = GameObject.FindGameObjectWithTag("Player");
         heroEquipment = player.GetComponent<PlayerEquipment>();
@@ -125,38 +126,38 @@ public class SpellChainLightning : MonoBehaviour
                 target = other.gameObject;
                 if (heroEquipment.equippedEmber == ember.None)
                 {
-                    other.GetComponent<Health>().LoseHealth(damage);
+                    other.GetComponent<Health>().LoseHealth(damage+theStats.spellModifier);
                 }
                 else if (heroEquipment.equippedEmber == ember.Fire)
                 {
-                    other.GetComponent<Health>().LoseHealth(damage);
+                    other.GetComponent<Health>().LoseHealth(damage+theStats.spellModifier);
                     GameObject tempObj = (GameObject)Instantiate(debuff, other.transform.position, other.transform.rotation);
                     tempObj.GetComponent<DebuffFire>().target = other.gameObject;
                 }
                 else if (heroEquipment.equippedEmber == ember.Ice)
                 {
-                    other.GetComponent<Health>().LoseHealth(damage);
+                    other.GetComponent<Health>().LoseHealth(damage+theStats.spellModifier);
                     GameObject tempObj = (GameObject)Instantiate(debuff, other.transform.position, other.transform.rotation);
                     tempObj.GetComponent<DebuffFrost>().target = other.gameObject;
                 }
                 else if (heroEquipment.equippedEmber == ember.Wind)
                 {
                     other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
-                    other.GetComponent<Health>().LoseHealth(damage);
+                    other.GetComponent<Health>().LoseHealth(damage+theStats.spellModifier);
                 }
                 else if (heroEquipment.equippedEmber == ember.Life)
                 {
-                    other.GetComponent<Health>().LoseHealth(damage);
+                    other.GetComponent<Health>().LoseHealth(damage+theStats.spellModifier);
                 }
                 else if (heroEquipment.equippedEmber == ember.Earth)
                 {
                     Camera.main.SendMessage("ScreenShake");
-                    other.GetComponent<Health>().LoseHealth(damage + 3);
+                    other.GetComponent<Health>().LoseHealth(damage + 3+theStats.spellModifier);
                 }
                 else if (heroEquipment.equippedEmber == ember.Death)
                 {
                     other.SendMessage("GetInfected", SendMessageOptions.DontRequireReceiver);
-                    other.GetComponent<Health>().LoseHealth(damage);
+                    other.GetComponent<Health>().LoseHealth(damage+theStats.spellModifier);
                 }
 
 

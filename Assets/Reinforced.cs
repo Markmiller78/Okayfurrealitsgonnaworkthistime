@@ -31,6 +31,8 @@ public class Reinforced : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
+        if (gameObject == null)
+            Destroy(temp);
         if (isReinforced)
         {
             temp.gameObject.transform.position = transform.position;

@@ -4,10 +4,20 @@ using System.Collections;
 public class PingMissile : MonoBehaviour {
 
     GameObject player;
+    public AudioClip lightSound;
+
+    AudioSource aPlayer;
+
+    ParticleSystem particles;
+
+    bool once;
 
 	// Use this for initialization
 	void Start () {
         player = GameObject.FindGameObjectWithTag("Player");
+        particles = gameObject.GetComponent<ParticleSystem>();
+        aPlayer = gameObject.GetComponent<AudioSource>();
+        once = true;
 	}
 	
 	// Update is called once per frame
@@ -29,9 +39,17 @@ public class PingMissile : MonoBehaviour {
 
         transform.position = new Vector3(moveTo.x + transform.position.x, moveTo.y + transform.position.y, -3.1f);
 
+        
         if ( Mathf.Abs(transform.position.x - player.transform.position.x) <= 0.3f && Mathf.Abs(transform.position.y - player.transform.position.y) <= 0.3f )
         {
-            Destroy(gameObject);
+            if (once)
+            {
+                aPlayer.PlayOneShot(lightSound);
+
+                particles.enableEmission = false;
+                Destroy(gameObject, 1);
+                once = false;
+            }
         }
 	}
 }

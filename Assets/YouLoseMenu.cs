@@ -13,6 +13,11 @@ public class YouLoseMenu : MonoBehaviour
     public float[] theChoices = new float[] { };
     public GameObject MainMenuText;
     public GameObject[] MainMenu4Highlight = new GameObject[] { };
+    bool easyMode;
+    RoomGeneration generator;
+    Health playerHealth;
+    PlayerLight dasLicht;
+    PlayerEquipment equipment;
 
     // Use this for initialization
     void Start()
@@ -20,6 +25,11 @@ public class YouLoseMenu : MonoBehaviour
         currentSelection = 0;
         maxchoices = 1;
         AxisChanged = false;
+        easyMode = GameObject.FindObjectOfType<Options>().easyMode;
+        generator = GameObject.FindGameObjectWithTag("Dungeon").GetComponent<RoomGeneration>();
+        playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>();
+        dasLicht = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerLight>();
+        equipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
     }
 
     // Update is called once per frame
@@ -65,7 +75,27 @@ public class YouLoseMenu : MonoBehaviour
             {
                 case 0:
                     {
-                        LevelManager.Load("Game");
+                        //
+                        if (easyMode && generator.currentRoom > 3)
+                        {
+                            while (generator.currentRoom != 3 &&
+                                generator.currentRoom != 7 &&
+                                generator.currentRoom != 14 &&
+                                generator.currentRoom != 18)
+                            {
+                                --generator.currentRoom;
+                                generator.Reset();
+                            }
+                            generator.Reset();
+                            //playerHealth.currentHP = playerHealth.maxHP;
+                            equipment.paused = false;
+                            playerHealth.GainHealth(playerHealth.maxHP);
+                            dasLicht.currentLight = dasLicht.maxLight;
+                            GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Light>().cookie = null;
+                            Destroy(this.gameObject);
+                        }
+                        else
+                            LevelManager.Load("Game");
                         break;
                     }
                 case 1:

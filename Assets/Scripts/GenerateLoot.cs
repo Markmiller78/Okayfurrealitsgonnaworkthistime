@@ -3,7 +3,8 @@ using System.Collections;
 
 
 
-public class GenerateLoot : MonoBehaviour {
+public class GenerateLoot : MonoBehaviour
+{
 
 
     public GameObject EmberFire;
@@ -26,72 +27,75 @@ public class GenerateLoot : MonoBehaviour {
     public GameObject Charge;
 
 
-    public enum Loots { none = 0, emberfire , emberlife, emberwind, emberfrost, accesOrb, accesbolt, accessnare,
-    accesblast, accesmine,accessing, acceschain}
-    Loots lootToDrop;
-	// Use this for initialization
-	void Start () 
+    public enum Loots
     {
-	
-	}
-	
+        none = 0, emberfire, emberlife, emberwind, emberfrost, accesOrb, accesbolt, accessnare,
+        accesblast, accesmine, accessing, acceschain
+    }
+    Loots lootToDrop;
+    // Use this for initialization
+    void Start()
+    {
+
+    }
+
 
     public void Generateloot()
     {
 
-        if(gameObject.tag == "Chest")
+        if (gameObject.tag == "Chest")
         {
-            int RandNum = Random.Range(1,11);
+            int RandNum = Random.Range(1, 17);
             GameObject Loot = DetermineType(RandNum);
             string SendName = DetermineName(RandNum, 1, 1);
             GameObject temp = (GameObject)Instantiate(Loot, transform.position, transform.rotation);
-            temp.SendMessage("SetName", SendName, SendMessageOptions.DontRequireReceiver);                     
+            temp.SendMessage("SetName", SendName, SendMessageOptions.DontRequireReceiver);
             int MoreLoots = Random.Range(0, 100);
-            if(MoreLoots > 50)
+            if (MoreLoots > 50)
             {
                 transform.position += new Vector3(.5f, 0, 0);
-                RandNum = Random.Range(1, 11);
+                RandNum = Random.Range(1, 17);
                 Loot = DetermineType(RandNum);
                 SendName = DetermineName(RandNum, 1, 1);
                 temp = (GameObject)Instantiate(Loot, transform.position, transform.rotation);
-                temp.SendMessage("SetName", SendName, SendMessageOptions.DontRequireReceiver);            
+                temp.SendMessage("SetName", SendName, SendMessageOptions.DontRequireReceiver);
                 transform.position -= new Vector3(.5f, 0, 0);
             }
             int MoarLoots = Random.Range(0, 100);
             if (MoarLoots > 70)
             {
                 transform.position -= new Vector3(.7f, 0, 0);
-                RandNum = Random.Range(1, 11);
+                RandNum = Random.Range(1, 17);
                 Loot = DetermineType(RandNum);
                 SendName = DetermineName(RandNum, 1, 1);
                 temp = (GameObject)Instantiate(Loot, transform.position, transform.rotation);
-                temp.SendMessage("SetName", SendName, SendMessageOptions.DontRequireReceiver);        
+                temp.SendMessage("SetName", SendName, SendMessageOptions.DontRequireReceiver);
                 transform.position += new Vector3(.7f, 0, 0);
             }
             int MoarLootz = Random.Range(0, 100);
             if (MoarLootz > 80)
             {
                 transform.position += new Vector3(0, .6f, 0);
-                RandNum = Random.Range(1, 11);
+                RandNum = Random.Range(1, 17);
                 Loot = DetermineType(RandNum);
                 SendName = DetermineName(RandNum, 1, 1);
                 temp = (GameObject)Instantiate(Loot, transform.position, transform.rotation);
-                temp.SendMessage("SetName", SendName, SendMessageOptions.DontRequireReceiver);        
+                temp.SendMessage("SetName", SendName, SendMessageOptions.DontRequireReceiver);
                 transform.position -= new Vector3(0, .6f, 0);
             }
         }
-        if(gameObject.tag == "Enemy")
+        if (gameObject.tag == "Enemy")
         {
             int MoarLootz = Random.Range(0, 100);
-            if (MoarLootz > 90)
+            if (MoarLootz > 70)
             {
-                transform.position += new Vector3(0, .6f, 0);
-                int RandNum = Random.Range(1, 11);
+                //transform.position += new Vector3(0, .6f, 0);
+                int RandNum = Random.Range(1, 17);
                 GameObject Loot = DetermineType(RandNum);
                 string SendName = DetermineName(RandNum, 1, 1);
                 GameObject temp = (GameObject)Instantiate(Loot, transform.position, transform.rotation);
-                temp.SendMessage("SetName", SendName, SendMessageOptions.DontRequireReceiver);        
-                transform.position -= new Vector3(0, .6f, 0);
+                temp.SendMessage("SetName", SendName, SendMessageOptions.DontRequireReceiver);
+                //transform.position -= new Vector3(0, .6f, 0);
             }
         }
 
@@ -99,7 +103,7 @@ public class GenerateLoot : MonoBehaviour {
 
     GameObject DetermineType(int randNum)
     {
-        if(randNum == 1)
+        if (randNum == 1)
         {
             return EmberFire;
         }
@@ -143,6 +147,26 @@ public class GenerateLoot : MonoBehaviour {
         {
             return AccesChain;
         }
+        else if (randNum == 12)
+        {
+            return Decoy;
+        }
+        else if (randNum == 13)
+        {
+            return Blink;
+        }
+        else if (randNum == 14)
+        {
+            return WhirlWind;
+        }
+        else if (randNum == 15)
+        {
+            return Trailblazer;
+        }
+        else if (randNum == 16)
+        {
+            return Charge;
+        }
         print("DETERMINE LOOT ERROR: Returned Chain");
         return AccesChain;
     }
@@ -150,17 +174,17 @@ public class GenerateLoot : MonoBehaviour {
     string DetermineName(int randNum, int Attribute1, int Attribute2)
     {
         // WORK HERE FRANSWEA
-        string theName="";
+        string theName = "";
 
         string[] embers = new string[10];
-        embers[0] = "Scorching Ember of ";
-        embers[1] = "Quake Ember of ";
+        embers[1] = "Scorching Ember of ";
+        embers[8] = "Quake Ember of ";
         embers[2] = "Rejuvenating Ember of ";
         embers[3] = "Gale Ember of ";
         embers[4] = "Frost Ember of";
         embers[5] = "Doom Ember of ";
 
-       
+
         string[] accessories = new string[3];
         accessories[0] = "Ring of ";
         accessories[1] = "Bracelet of ";
@@ -181,7 +205,7 @@ public class GenerateLoot : MonoBehaviour {
         }
         else
             theName += embers[randNum];
-        if(Random.value>0.5f)
+        if (Random.value > 0.5f)
         {
 
             theName += attribute1[Random.Range(0, 1)];

@@ -27,11 +27,38 @@ public class Pickup : MonoBehaviour
     GameObject player;
     PlayerEquipment equipment;
 
+    int phase;
+    float timer;
     void Start()
     {
         cameras = GameObject.FindObjectOfType<Camera>();
         player = GameObject.FindGameObjectWithTag("Player");
         equipment = player.GetComponent<PlayerEquipment>();
+        phase = 0;
+    }
+
+    void Update()
+    {
+        if (phase == 0)
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y + Time.deltaTime * 0.1f, transform.position.z);
+            timer += Time.deltaTime;
+            if (timer >= 0.8f)
+            {
+                timer = 0;
+                phase = 1;
+            }
+        }
+        else
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y - Time.deltaTime * 0.1f, transform.position.z);
+            timer += Time.deltaTime;
+            if (timer >= 0.8f)
+            {
+                timer = 0;
+                phase = 0;
+            }
+        }
     }
 
     void OnGUI()
@@ -50,23 +77,42 @@ public class Pickup : MonoBehaviour
         }
 
     }
-    void DisplayTooltip()
-    {
-        displaytooltips = true;
-
-    }
+ 
+   void DisplayTooltip()
+   {
+     //  displaytooltips = true;
+   
+   }
 
     void DoNotDisplayTooltip()
     {
-        displaytooltips = false;
+       // displaytooltips = false;
     }
 
 
     void OnTriggerStay(Collider other)
     {
+        displaytooltips = true;
         if ((InputManager.controller && Input.GetButtonDown("CInteract") || (!InputManager.controller && Input.GetButtonDown("KBInteract")))
             && other.gameObject == player)
         {
+
+            GameObject[] gos = GameObject.FindGameObjectsWithTag("PickUp");
+
+            float distance = Vector3.Distance(transform.position, player.transform.position);
+
+            for (int i = 0; i < gos.Length; i++)
+            {
+                if (gos[i] == gameObject)
+                {
+                    continue;
+                }
+                if (Vector3.Distance(gos[i].transform.position, player.transform.position) <= distance)
+                {
+                    return;
+                }
+            }
+
             switch (typeOfEquipment)
             {
                 case equipmentType.Boot:
@@ -122,24 +168,31 @@ public class Pickup : MonoBehaviour
                         case accessory.None:
                             break;
                         case accessory.OrbOfLight:
+                            player.SendMessage("PlayEquipmentSound", SendMessageOptions.DontRequireReceiver);
                             Instantiate(orbOfLightPickup, transform.position, transform.rotation);
                             break;
                         case accessory.BoltOfLight:
+                            player.SendMessage("PlayEquipmentSound", SendMessageOptions.DontRequireReceiver);
                             Instantiate(boltOfLightPickup, transform.position, transform.rotation);
                             break;
                         case accessory.BlastOfLight:
+                            player.SendMessage("PlayEquipmentSound", SendMessageOptions.DontRequireReceiver);
                             Instantiate(blastOfLightPickup, transform.position, transform.rotation);
                             break;
                         case accessory.ChainLightning:
+                            player.SendMessage("PlayEquipmentSound", SendMessageOptions.DontRequireReceiver);
                             Instantiate(chainLightningPickup, transform.position, transform.rotation);
                             break;
                         case accessory.Singularity:
+                            player.SendMessage("PlayEquipmentSound", SendMessageOptions.DontRequireReceiver);
                             Instantiate(singularityPickup, transform.position, transform.rotation);
                             break;
                         case accessory.Snare:
+                            player.SendMessage("PlayEquipmentSound", SendMessageOptions.DontRequireReceiver);
                             Instantiate(snarePickup, transform.position, transform.rotation);
                             break;
                         case accessory.LightMine:
+                            player.SendMessage("PlayEquipmentSound", SendMessageOptions.DontRequireReceiver);
                             Instantiate(lightMinePickup, transform.position, transform.rotation);
                             break;
                         default:
@@ -216,6 +269,11 @@ public class Pickup : MonoBehaviour
             }
             Destroy(gameObject);
         }
+    }
+    void OnTriggerExit(Collider other)
+    {
+
+        displaytooltips = false;
     }
 
     void SetName(string aName)

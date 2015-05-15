@@ -10,8 +10,12 @@ public class Decoy : MonoBehaviour {
     public float range;
     public GameObject explosion;
     public GameObject[] allObjects;
+    GameObject player;
+    PlayerStats theStats;
 	// Use this for initialization
 	void Start ()  {
+        player = GameObject.FindGameObjectWithTag("Player");
+        theStats = player.GetComponent<PlayerStats>();
         range = 2.0f;
         damage = 8.0f;
 		GameObject[] allObjects;
@@ -39,7 +43,7 @@ public class Decoy : MonoBehaviour {
                     {
                         if (obj.GetComponent<Health>() != null)
                         {
-                            obj.GetComponent<Health>().LoseHealth(damage);
+                            obj.GetComponent<Health>().LoseHealth(damage+theStats.spellModifier);
                             obj.GetComponent<Knockback>().SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
                         }
                     }

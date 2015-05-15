@@ -12,11 +12,13 @@ public class SpellSnare : MonoBehaviour {
     public GameObject explosion;
     public GameObject lightRemains;
     PlayerEquipment heroEquipment;
-
+    PlayerStats theStats;
     public GameObject burns;
 
     void Start()
     {
+        theStats = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>();
+        damage = 5.0f;
         heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
         distanceTraveled = 0;
     }
@@ -54,7 +56,7 @@ public class SpellSnare : MonoBehaviour {
             if (Vector3.Distance(transform.position, Enemies[i].transform.position) < 2.5f)
             {
                 Enemies[i].SendMessage("Snare", SendMessageOptions.DontRequireReceiver);
-                Enemies[i].GetComponent<Health>().LoseHealth(5);
+                Enemies[i].GetComponent<Health>().LoseHealth(damage+theStats.spellModifier);
             }
         }
 

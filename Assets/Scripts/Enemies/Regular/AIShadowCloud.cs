@@ -19,8 +19,13 @@ public class AIShadowCloud : MonoBehaviour
     Health heroHP;
     Light heroLight;
 
+    float snaredSpeed;
+    float SnareTimer;
+    bool isSnared;
+
     void Start()
     {
+        isSnared = false;
         infecttimer = 3.0f;
         player = GameObject.FindGameObjectWithTag("Player");
         heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
@@ -50,18 +55,18 @@ public class AIShadowCloud : MonoBehaviour
 
     }
 
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject == player)
-        {
-            heroLight.cookie = HazardCookie;
-        }
-    }
+    //void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.gameObject == player)
+    //    {
+    //    }
+    //}
 
     void OnTriggerStay(Collider other)
     {
         if (other.gameObject == player)
         {
+            heroLight.cookie = HazardCookie;
             heroHP.LoseHealth(DamagePerSecond * Time.deltaTime);
         }
     }
@@ -105,6 +110,11 @@ public class AIShadowCloud : MonoBehaviour
 
     }
 
+    void OnDestroy()
+    {
+        heroLight.cookie = null;
+    }
+
     void Decoy(GameObject decoy)
     {
         player = decoy;
@@ -114,6 +124,18 @@ public class AIShadowCloud : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
      //   playMove = player.GetComponent<PlayerMovement>();
+    }
+
+    void Snare()
+    {
+        isSnared = true;
+        SnareTimer = 2;
+        snaredSpeed = moveSpeed;
+        moveSpeed = 0;
+    }
+    void Unsnare()
+    {
+        moveSpeed = snaredSpeed;
     }
 
     void GetInfected()

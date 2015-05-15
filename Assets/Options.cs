@@ -5,7 +5,35 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 
 
-public class Options : MonoBehaviour {
+public class Options : MonoBehaviour
+{
+    private static Options _instance;
+
+    public static Options instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = GameObject.FindObjectOfType<Options>();
+                DontDestroyOnLoad(_instance.gameObject);
+            }
+            return _instance;
+        }
+    }
+
+    void Awake()
+    {
+        if (_instance == null)
+        {
+            _instance = this;
+            DontDestroyOnLoad(this);
+        }
+        else if (this != _instance)
+        {
+            Destroy(this.gameObject);
+        }
+    }
 
     public int sfxVolume;
     public int musicVolume;
@@ -16,6 +44,14 @@ public class Options : MonoBehaviour {
     public Text sfxInt2;
     public Text musicInt2;
 
+    [HideInInspector]
+    public GameObject savedPlayer;
+    GameObject player;
+    bool beenAssigned;
+
+    [HideInInspector]
+    public bool easyMode;
+
     void Start()
     {
         Load();
@@ -25,11 +61,17 @@ public class Options : MonoBehaviour {
 
         sfxInt2.text = sfxVolume.ToString();
         musicInt2.text = musicVolume.ToString();
-
+        beenAssigned = false;
     }
 
     void Update()
     {
+        if (!beenAssigned && Application.loadedLevelName == "Game")
+        {
+            player = GameObject.FindGameObjectWithTag("Player");
+            beenAssigned = true;
+        }
+
 #if UNITY_WEBPLAYER
         if (Screen.fullScreen)
         {
@@ -41,7 +83,7 @@ public class Options : MonoBehaviour {
 
     public void sfxIncrease()
     {
-        sfxVolume++;
+        sfxVolume += 5;
         if (sfxVolume > 100)
         {
             sfxVolume = 100;
@@ -61,7 +103,7 @@ public class Options : MonoBehaviour {
 
     public void sfxDecrease()
     {
-        sfxVolume--;
+        sfxVolume -= 5;
         if (sfxVolume < 0)
         {
             sfxVolume = 0;
@@ -80,7 +122,7 @@ public class Options : MonoBehaviour {
 
     public void musicIncrease()
     {
-        musicVolume++;
+        musicVolume += 5;
         if (musicVolume > 100)
         {
             musicVolume = 100;
@@ -99,7 +141,7 @@ public class Options : MonoBehaviour {
 
     public void musicDecrease()
     {
-        musicVolume--;
+        musicVolume -= 5;
         if (musicVolume < 0)
         {
             musicVolume = 0;
@@ -119,28 +161,47 @@ public class Options : MonoBehaviour {
 
     public void Save()
     {
+        if (Application.platform == RuntimePlatform.OSXWebPlayer
+   || Application.platform == RuntimePlatform.WindowsWebPlayer)
+        {
+            PlayerPrefs.SetInt("PlayerSFX", sfxVolume);
+            PlayerPrefs.SetInt("PlayerMusic", musicVolume);
 
-        BinaryFormatter bin = new BinaryFormatter();
-        FileStream file = File.Create(Application.persistentDataPath + "/optioninfo.dat");
-        OptionData data = new OptionData();
-        data.sfxVolume = sfxVolume;
-        data.musicVolume= musicVolume;
-        bin.Serialize(file, data);
-        file.Close();
-      
+        }
+        else
+        {
+            BinaryFormatter bin = new BinaryFormatter();
+            FileStream file = File.Create(Application.persistentDataPath + "/optioninfo.dat");
+            OptionData data = new OptionData();
+            data.sfxVolume = sfxVolume;
+            data.musicVolume = musicVolume;
+            bin.Serialize(file, data);
+            file.Close();
+        }
+
+
     }
     public void Load()
     {
-
-        if (File.Exists(Application.persistentDataPath + "/optioninfo.dat"))
+        if (Application.platform == RuntimePlatform.OSXWebPlayer
+|| Application.platform == RuntimePlatform.WindowsWebPlayer)
         {
-            BinaryFormatter bin = new BinaryFormatter();
-            FileStream file = File.Open(Application.persistentDataPath + "/optioninfo.dat", FileMode.Open);
-            OptionData data = (OptionData)bin.Deserialize(file);
-            sfxVolume = data.sfxVolume;
-          musicVolume = data.musicVolume;
-            file.Close();
+           sfxVolume= PlayerPrefs.GetInt("PlayerSFX",100);  
+            musicVolume=PlayerPrefs.GetInt("PlayerMusic",100);
 
+        }
+        else
+        {
+            if (File.Exists(Application.persistentDataPath + "/optioninfo.dat"))
+            {
+                BinaryFormatter bin = new BinaryFormatter();
+                FileStream file = File.Open(Application.persistentDataPath + "/optioninfo.dat", FileMode.Open);
+                OptionData data = (OptionData)bin.Deserialize(file);
+                sfxVolume = data.sfxVolume;
+                musicVolume = data.musicVolume;
+                file.Close();
+
+            }
         }
     }
 }
@@ -148,8 +209,8 @@ public class Options : MonoBehaviour {
 [System.Serializable]
 public class OptionData
 {
-    public int sfxVolume ;
-    public int musicVolume ;
+    public int sfxVolume;
+    public int musicVolume;
 
 
 }
