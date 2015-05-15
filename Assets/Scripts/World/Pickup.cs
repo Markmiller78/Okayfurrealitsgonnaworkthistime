@@ -94,6 +94,23 @@ public class Pickup : MonoBehaviour
         if ((InputManager.controller && Input.GetButtonDown("CInteract") || (!InputManager.controller && Input.GetButtonDown("KBInteract")))
             && other.gameObject == player)
         {
+
+            GameObject[] gos = GameObject.FindGameObjectsWithTag("PickUp");
+
+            float distance = Vector3.Distance(transform.position, player.transform.position);
+
+            for (int i = 0; i < gos.Length; i++)
+            {
+                if (gos[i] == gameObject)
+                {
+                    continue;
+                }
+                if (Vector3.Distance(gos[i].transform.position, player.transform.position) <= distance)
+                {
+                    return;
+                }
+            }
+
             switch (typeOfEquipment)
             {
                 case equipmentType.Boot:
