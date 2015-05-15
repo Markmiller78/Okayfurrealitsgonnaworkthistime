@@ -15,8 +15,8 @@ public class RoomGeneration : MonoBehaviour
     //
     public GameObject[] floorTwoMazes;
     Room[] floorTwoMazesInfo;
-    //public GameObject lorneRoom;
-    //Room lorneRoomInfo;
+    public GameObject lorneRoom;
+    Room lorneRoomInfo;
     //public GameObject[] floorThreeRooms;
     //Room[] floorThreeRoomsInfo;
     //public GameObject[] floorThreeMazes;
@@ -78,8 +78,8 @@ public class RoomGeneration : MonoBehaviour
             floorTwoMazesInfo[i] = floorTwoMazes[i].GetComponent<Room>();
             floorTwoMazesInfo[i].setUsed();
         }
-        //lorneRoomInfo = lorneRoom.GetComponent<Room>();
-        //lorneRoomInfo.setUsed();
+        lorneRoomInfo = lorneRoom.GetComponent<Room>();
+        lorneRoomInfo.setUsed();
         //Utilities.ArrayShuffle(floorThreeRooms);
         //floorThreeRoomsInfo = new Room[floorThreeRooms.Length];
         //for (int i = 0; i < floorThreeRooms.Length; i++)
@@ -111,13 +111,13 @@ public class RoomGeneration : MonoBehaviour
             }
         }
 
-        finalRoomArray = new GameObject[easyMode ? 21 : 17];
-        finalRoomInfoArray = new Room[easyMode ? 21 : 17];
+        finalRoomArray = new GameObject[easyMode ? 22 : 18];
+        finalRoomInfoArray = new Room[easyMode ? 22 : 18];
         FillDungeon();
 
         //TESTING
-        //finalRoomArray[0] = floorTwoMazes[3];
-        //finalRoomInfoArray[0] = floorTwoMazesInfo[3];
+        //finalRoomArray[0] = floorOneRooms[3];
+        //finalRoomInfoArray[0] = floorOneRoomsInfo[3];
         //ENDTESTING
 
         CreateRoom();
@@ -247,6 +247,7 @@ public class RoomGeneration : MonoBehaviour
         // Spawn enemies & possibly a chest
         if (!finalRoomInfoArray[currentRoom].beenThere)
         {
+            Utilities.ArrayShuffle(finalRoomInfoArray[currentRoom].enemySpawnPoints);
             finalRoomInfoArray[currentRoom].numEnemies = Random.Range(finalRoomInfoArray[currentRoom].minEnemies, finalRoomInfoArray[currentRoom].maxEnemies);
             int enemiesSpawned = 0;
             while (enemiesSpawned < finalRoomInfoArray[currentRoom].numEnemies)
@@ -711,33 +712,33 @@ public class RoomGeneration : MonoBehaviour
         {
             finalRoomInfoArray[16].exitDir = Random.Range(0, 3);
         } while (finalRoomInfoArray[16].exitDir == finalRoomInfoArray[16].entranceDir);
+        finalRoomArray[17] = easyMode ? floorTwoMazes[1] : lorneRoom;
+        finalRoomInfoArray[17] = easyMode ? floorTwoMazesInfo[1] : lorneRoomInfo;
+        switch (finalRoomInfoArray[16].exitDir)
+        {
+            case 0:
+                finalRoomInfoArray[17].entranceDir = 2;
+                break;
+            case 1:
+                finalRoomInfoArray[17].entranceDir = 3;
+                break;
+            case 2:
+                finalRoomInfoArray[17].entranceDir = 0;
+                break;
+            case 3:
+                finalRoomInfoArray[17].entranceDir = 1;
+                break;
+            default:
+                break;
+        }
+        do
+        {
+            finalRoomInfoArray[17].exitDir = Random.Range(0, 3);
+        } while (finalRoomInfoArray[17].exitDir == finalRoomInfoArray[17].entranceDir);
 
         //
         if (easyMode)
         {
-            finalRoomArray[17] = floorTwoMazes[1];
-            finalRoomInfoArray[17] = floorTwoMazesInfo[1];
-            switch (finalRoomInfoArray[16].exitDir)
-            {
-                case 0:
-                    finalRoomInfoArray[17].entranceDir = 2;
-                    break;
-                case 1:
-                    finalRoomInfoArray[17].entranceDir = 3;
-                    break;
-                case 2:
-                    finalRoomInfoArray[17].entranceDir = 0;
-                    break;
-                case 3:
-                    finalRoomInfoArray[17].entranceDir = 1;
-                    break;
-                default:
-                    break;
-            }
-            do
-            {
-                finalRoomInfoArray[17].exitDir = Random.Range(0, 3);
-            } while (finalRoomInfoArray[17].exitDir == finalRoomInfoArray[17].entranceDir);
             finalRoomArray[18] = checkpointRooms[1];
             finalRoomInfoArray[18] = checkpointRoomsInfo[1];
             switch (finalRoomInfoArray[17].exitDir)
@@ -807,6 +808,29 @@ public class RoomGeneration : MonoBehaviour
             {
                 finalRoomInfoArray[20].exitDir = Random.Range(0, 3);
             } while (finalRoomInfoArray[20].exitDir == finalRoomInfoArray[20].entranceDir);
+            finalRoomArray[21] = lorneRoom;
+            finalRoomInfoArray[21] = lorneRoomInfo;
+            switch (finalRoomInfoArray[20].exitDir)
+            {
+                case 0:
+                    finalRoomInfoArray[21].entranceDir = 2;
+                    break;
+                case 1:
+                    finalRoomInfoArray[21].entranceDir = 3;
+                    break;
+                case 2:
+                    finalRoomInfoArray[21].entranceDir = 0;
+                    break;
+                case 3:
+                    finalRoomInfoArray[21].entranceDir = 1;
+                    break;
+                default:
+                    break;
+            }
+            do
+            {
+                finalRoomInfoArray[21].exitDir = Random.Range(0, 3);
+            } while (finalRoomInfoArray[21].exitDir == finalRoomInfoArray[21].entranceDir);
         }
         //
         //finalRoomArray[17] = lorneRoom;
