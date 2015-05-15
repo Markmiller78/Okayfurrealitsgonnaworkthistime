@@ -40,7 +40,8 @@ public class ShadowHazard : MonoBehaviour {
             // Slow the player
             heroMovement.halfSpeed = 0.8f;
             heroMovement.fullSpeed = 1.6f;
-            heroDash.dashSpeed = 2;
+            //heroDash.dashSpeed = 2;
+            //Dont slow the player anymore
             heroLight.cookie = HazardCookie;
 
             //Play the hazard sound attached to the player
@@ -73,7 +74,7 @@ public class ShadowHazard : MonoBehaviour {
                 // Return the players speeds to normal
                 heroMovement.halfSpeed = 1.6f;
                 heroMovement.fullSpeed = 3.1f;
-                heroDash.dashSpeed = 4;
+                //heroDash.dashSpeed = 4;
                 heroLight.cookie = null;
 
                 //Stop playing audio

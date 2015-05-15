@@ -13,12 +13,15 @@ public class TrailProjectile : MonoBehaviour
     public GameObject TrailLightRemains;
 
     PlayerEquipment eqp;
-
+    public float damage;
     bool once;
     public bool isWindEmber;
+    PlayerStats theStats;
 
     void Start()
     {
+        theStats = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>();
+        damage = 3.0f;
         //Orient the thing to look correct
         if (isWindEmber)
         {
@@ -70,7 +73,7 @@ public class TrailProjectile : MonoBehaviour
         {
             if (other.tag == "Enemy")
             {
-                other.GetComponent<Health>().LoseHealth(3);
+                other.GetComponent<Health>().LoseHealth(damage+theStats.spellModifier/2.0f);
                 timeAlive = (MaxTimeActive - 0.7f);
             }
         }

@@ -14,18 +14,21 @@ public class SpellBlastOfLight : MonoBehaviour
     public GameObject hpPickup;
     GameObject player;
     public GameObject burns;
+    public float dmg;
 
     float maxLife;
     bool once;
+    PlayerStats theStats;
 
     // Use this for initialization
     void Start()
     {
+        dmg = 10;
         player = GameObject.FindGameObjectWithTag("Player");
         timeAlive = 0;
         theLight = gameObject.GetComponent<Light>();
         heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
-
+        theStats = player.GetComponent<PlayerStats>();
         Instantiate(burns, new Vector3(transform.position.x, transform.position.y, -0.5f), new Quaternion(0, 0, 0, 0));
 
 
@@ -88,7 +91,7 @@ public class SpellBlastOfLight : MonoBehaviour
                         once = false;
                     }
                     Enemies[i].SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
-                    Enemies[i].GetComponent<Health>().LoseHealth(10);
+                    Enemies[i].GetComponent<Health>().LoseHealth(dmg+theStats.spellModifier);
 
 
 

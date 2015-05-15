@@ -19,18 +19,21 @@ public class SpellOrbOfLight : MonoBehaviour
     public Vector3 vectoplayer;
     public Vector3 playerpos;
     public Vector3 dir;
+    PlayerStats theStats;
 
     public GameObject leftovers;
 
 
     void Start()
     {
+        damage = 5.0f;
         change = 0.5f;
         dir = transform.up;
         player = GameObject.FindGameObjectWithTag("Player");
         playerpos = player.transform.position;
         heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
         distanceTraveled = 0;
+        theStats = player.GetComponent<PlayerStats>();
 
         playerequip = player.GetComponent<PlayerEquipment>();
 
@@ -68,7 +71,7 @@ public class SpellOrbOfLight : MonoBehaviour
         else if (other.tag == "Enemy")
         {
 
-            other.GetComponent<Health>().LoseHealth(5);
+            other.GetComponent<Health>().LoseHealth(damage+theStats.spellModifier);
 
 
             Explode();
