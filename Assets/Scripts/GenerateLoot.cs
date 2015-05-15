@@ -11,6 +11,8 @@ public class GenerateLoot : MonoBehaviour
     public GameObject EmberLife;
     public GameObject EmberWind;
     public GameObject EmberFrost;
+    public GameObject EmberDeath;
+    public GameObject EmberEarth;
 
     public GameObject AccesOrb;
     public GameObject AccesBolt;
@@ -26,6 +28,7 @@ public class GenerateLoot : MonoBehaviour
     public GameObject Trailblazer;
     public GameObject Charge;
 
+    ItemStat SendStat;
 
     public enum Loots
     {
@@ -42,10 +45,10 @@ public class GenerateLoot : MonoBehaviour
 
     public void Generateloot()
     {
-
+        int SecondStat;
         if (gameObject.tag == "Chest")
         {
-            int RandNum = Random.Range(1, 17);
+            int RandNum = Random.Range(1, 19);
             GameObject Loot = DetermineType(RandNum);
             string SendName = DetermineName(RandNum, 1, 1);
             GameObject temp = (GameObject)Instantiate(Loot, transform.position, transform.rotation);
@@ -54,47 +57,115 @@ public class GenerateLoot : MonoBehaviour
             if (MoreLoots > 50)
             {
                 transform.position += new Vector3(.5f, 0, 0);
-                RandNum = Random.Range(1, 17);
+                RandNum = Random.Range(1, 19);
                 Loot = DetermineType(RandNum);
                 SendName = DetermineName(RandNum, 1, 1);
                 temp = (GameObject)Instantiate(Loot, transform.position, transform.rotation);
                 temp.SendMessage("SetName", SendName, SendMessageOptions.DontRequireReceiver);
                 transform.position -= new Vector3(.5f, 0, 0);
+
+                SendStat.TheStat = (StatType)DetermineStat(RandNum);
+                SendStat.StatAmount = DetermineStatAmount(RandNum);
+                temp.SendMessage("SetStat1", SendStat, SendMessageOptions.DontRequireReceiver);
+
+                //50% Chance to Generate a Second stat
+                SecondStat = Random.Range(0, 100);
+                if (SecondStat > 50)
+                {
+                    SendStat.TheStat = (StatType)DetermineStat(RandNum);
+                    SendStat.StatAmount = DetermineStatAmount(RandNum);
+                    temp.SendMessage("SetStat2", SendStat, SendMessageOptions.DontRequireReceiver);
+                }
             }
             int MoarLoots = Random.Range(0, 100);
             if (MoarLoots > 70)
             {
                 transform.position -= new Vector3(.7f, 0, 0);
-                RandNum = Random.Range(1, 17);
+                RandNum = Random.Range(1, 19);
                 Loot = DetermineType(RandNum);
                 SendName = DetermineName(RandNum, 1, 1);
                 temp = (GameObject)Instantiate(Loot, transform.position, transform.rotation);
                 temp.SendMessage("SetName", SendName, SendMessageOptions.DontRequireReceiver);
                 transform.position += new Vector3(.7f, 0, 0);
+
+                SendStat.TheStat = (StatType)DetermineStat(RandNum);
+                SendStat.StatAmount = DetermineStatAmount(RandNum);
+                temp.SendMessage("SetStat1", SendStat, SendMessageOptions.DontRequireReceiver);
+
+                //50% Chance to Generate a Second stat
+                SecondStat = Random.Range(0, 100);
+                if (SecondStat > 50)
+                {
+                    SendStat.TheStat = (StatType)DetermineStat(RandNum);
+                    SendStat.StatAmount = DetermineStatAmount(RandNum);
+                    temp.SendMessage("SetStat2", SendStat, SendMessageOptions.DontRequireReceiver);
+                }
             }
             int MoarLootz = Random.Range(0, 100);
             if (MoarLootz > 80)
             {
                 transform.position += new Vector3(0, .6f, 0);
-                RandNum = Random.Range(1, 17);
+                RandNum = Random.Range(1, 19);
                 Loot = DetermineType(RandNum);
                 SendName = DetermineName(RandNum, 1, 1);
                 temp = (GameObject)Instantiate(Loot, transform.position, transform.rotation);
                 temp.SendMessage("SetName", SendName, SendMessageOptions.DontRequireReceiver);
                 transform.position -= new Vector3(0, .6f, 0);
+
+                SendStat.TheStat = (StatType)DetermineStat(RandNum);
+                SendStat.StatAmount = DetermineStatAmount(RandNum);
+                temp.SendMessage("SetStat1", SendStat, SendMessageOptions.DontRequireReceiver);
+
+                //50% Chance to Generate a Second stat
+                SecondStat = Random.Range(0, 100);
+                if (SecondStat > 50)
+                {
+                    SendStat.TheStat = (StatType)DetermineStat(RandNum);
+                    SendStat.StatAmount = DetermineStatAmount(RandNum);
+                    temp.SendMessage("SetStat2", SendStat, SendMessageOptions.DontRequireReceiver);
+                }
             }
         }
         if (gameObject.tag == "Enemy")
         {
             int MoarLootz = Random.Range(0, 100);
-            if (MoarLootz > 70)
+            if (MoarLootz > 10)
             {
                 //transform.position += new Vector3(0, .6f, 0);
-                int RandNum = Random.Range(1, 17);
+                int RandNum = Random.Range(1, 19);
                 GameObject Loot = DetermineType(RandNum);
                 string SendName = DetermineName(RandNum, 1, 1);
+
+
+                //Don't Allow Loot to Overlap
+                Vector3 ObjectPOS = transform.position;
+                GameObject[] objects = GameObject.FindGameObjectsWithTag("PickUp");
+                for (int i = 0; i < objects.Length; i++)
+                {
+                    if (ObjectPOS.x < objects[i].transform.position.x + .3f && ObjectPOS.x > objects[i].transform.position.x - .3f && ObjectPOS.y < objects[i].transform.position.y + .3f && ObjectPOS.y > objects[i].transform.position.y - .3f)
+                    {
+                        print("Loot Stacked! Deleted Generating Loot.");
+                        return;
+                    }
+                }
+
+
                 GameObject temp = (GameObject)Instantiate(Loot, transform.position, transform.rotation);
                 temp.SendMessage("SetName", SendName, SendMessageOptions.DontRequireReceiver);
+
+                SendStat.TheStat = (StatType)DetermineStat(RandNum);
+                SendStat.StatAmount = DetermineStatAmount(RandNum);
+                temp.SendMessage("SetStat1", SendStat, SendMessageOptions.DontRequireReceiver);
+
+                //50% Chance to Generate a Second stat
+                SecondStat = Random.Range(0, 100);
+                if (SecondStat > 50)
+                {
+                    SendStat.TheStat = (StatType)DetermineStat(RandNum);
+                    SendStat.StatAmount = DetermineStatAmount(RandNum);
+                    temp.SendMessage("SetStat2", SendStat, SendMessageOptions.DontRequireReceiver);
+                }
+                //temp.SendMessage("SetStat1", )
                 //transform.position -= new Vector3(0, .6f, 0);
             }
         }
@@ -121,54 +192,104 @@ public class GenerateLoot : MonoBehaviour
         }
         else if (randNum == 5)
         {
-            return AccesOrb;
+            return EmberDeath;
         }
         else if (randNum == 6)
         {
-            return AccesBolt;
+            return EmberEarth;
         }
         else if (randNum == 7)
         {
-            return AccesSnare;
+            return AccesOrb;
         }
         else if (randNum == 8)
         {
-            return AccesBlast;
+            return AccesBolt;
         }
         else if (randNum == 9)
         {
-            return AccesMine;
+            return AccesSnare;
         }
         else if (randNum == 10)
         {
-            return AccesSing;
+            return AccesBlast;
         }
         else if (randNum == 11)
         {
-            return AccesChain;
+            return AccesMine;
         }
         else if (randNum == 12)
         {
-            return Decoy;
+            return AccesSing;
         }
         else if (randNum == 13)
         {
-            return Blink;
+            return AccesChain;
         }
         else if (randNum == 14)
         {
-            return WhirlWind;
+            return Decoy;
         }
         else if (randNum == 15)
         {
-            return Trailblazer;
+            return Blink;
         }
         else if (randNum == 16)
+        {
+            return WhirlWind;
+        }
+        else if (randNum == 17)
+        {
+            return Trailblazer;
+        }
+        else if (randNum == 18)
         {
             return Charge;
         }
         print("DETERMINE LOOT ERROR: Returned Chain");
         return AccesChain;
+    }
+
+    int DetermineStat(int ItemID)
+    {
+
+        //IF (ItemID is an Ember)
+        if(ItemID < 7)
+        {
+            return 0; //No Stat Boosts
+        }
+
+        //IF (ItemID is a spell)
+        if(ItemID > 6 && ItemID < 19)
+        {
+            int ItemStatNum = Random.Range(1, 5);
+
+            if (ItemStatNum == 1)
+                return 1;
+            if (ItemStatNum == 2)
+                return 2;
+            if (ItemStatNum == 3)
+                return 3;
+            if (ItemStatNum == 4)
+                return 4;
+        }
+        return 0;
+    }
+
+    int DetermineStatAmount(int ItemIDD)
+    {
+                if(ItemIDD < 7)
+        {
+            return 0; //No Stat Boosts
+        }
+        int StatGen = Random.Range(1, 3);
+        RoomGeneration Dunref;
+        GameObject Dun = GameObject.FindGameObjectWithTag("Dungeon");
+        Dunref = Dun.GetComponent<RoomGeneration>();
+
+        StatGen += Dunref.currentRoom;
+
+        return StatGen;
     }
 
     string DetermineName(int randNum, int Attribute1, int Attribute2)
@@ -201,7 +322,6 @@ public class GenerateLoot : MonoBehaviour
         if (randNum > 4)
         {
             theName += accessories[Random.Range(0, 2)];
-
         }
         else
             theName += embers[randNum];
