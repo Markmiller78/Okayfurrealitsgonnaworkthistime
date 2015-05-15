@@ -87,11 +87,11 @@ public class YouLoseMenu : MonoBehaviour
                                 generator.Reset();
                             }
                             generator.Reset();
-                            playerHealth.currentHP = playerHealth.maxHP;
-                            playerHealth.healthPercent = 100f;
-                            dasLicht.currentLight = dasLicht.maxLight;
-                            GameObject.FindGameObjectWithTag("Player").GetComponent<Light>().cookie = null;
+                            //playerHealth.currentHP = playerHealth.maxHP;
                             equipment.paused = false;
+                            playerHealth.GainHealth(playerHealth.maxHP);
+                            dasLicht.currentLight = dasLicht.maxLight;
+                            GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Light>().cookie = null;
                             Destroy(this.gameObject);
                         }
                         else
