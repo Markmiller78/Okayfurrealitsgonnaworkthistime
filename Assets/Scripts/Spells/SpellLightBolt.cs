@@ -11,7 +11,7 @@ public class SpellLightBolt : MonoBehaviour {
 
     public GameObject poke;
     public GameObject burns;
-
+    PlayerStats theStats;
     PlayerEquipment heroEquipment;
     //ParticleSystem particles;
 
@@ -24,6 +24,7 @@ public class SpellLightBolt : MonoBehaviour {
     {
         transform.Rotate(270, 0, 0);
         player = GameObject.FindGameObjectWithTag("Player");
+        theStats = player.GetComponent<PlayerStats>();
         heroEquipment = player.GetComponent<PlayerEquipment>();
         //particles = gameObject.GetComponent<ParticleSystem>();
         kaboom = (GameObject)Instantiate(expPlacer, transform.position, transform.rotation);
@@ -61,19 +62,19 @@ public class SpellLightBolt : MonoBehaviour {
             Instantiate(burns, new Vector3(other.transform.position.x, other.transform.position.y, -0.5f), new Quaternion(0, 0, 0, 0));
             if (heroEquipment.equippedEmber == ember.None)
             {
-                other.GetComponent<Health>().LoseHealth(damage);
+                other.GetComponent<Health>().LoseHealth(damage+theStats.spellModifier);
                 Instantiate(poke, other.transform.position, other.transform.rotation);
             }
             else if (heroEquipment.equippedEmber == ember.Fire)
             {
-                other.GetComponent<Health>().LoseHealth(damage);
+                other.GetComponent<Health>().LoseHealth(damage + theStats.spellModifier);
                 Instantiate(poke, other.transform.position, other.transform.rotation);
                 GameObject tempObj = (GameObject)Instantiate(debuff, other.transform.position, other.transform.rotation);
                 tempObj.GetComponent<DebuffFire>().target = other.gameObject;
             }
             else if (heroEquipment.equippedEmber == ember.Ice)
             {
-                other.GetComponent<Health>().LoseHealth(damage);
+                other.GetComponent<Health>().LoseHealth(damage + theStats.spellModifier);
                 Instantiate(poke, other.transform.position, other.transform.rotation);
                 GameObject tempObj = (GameObject)Instantiate(debuff, other.transform.position, other.transform.rotation);
                 tempObj.GetComponent<DebuffFrost>().target = other.gameObject;
@@ -82,24 +83,24 @@ public class SpellLightBolt : MonoBehaviour {
             {
                 Instantiate(poke, other.transform.position, other.transform.rotation);
                 other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
-                other.GetComponent<Health>().LoseHealth(damage);
+                other.GetComponent<Health>().LoseHealth(damage + theStats.spellModifier);
             }
             else if (heroEquipment.equippedEmber == ember.Life)
             {
                 Instantiate(poke, other.transform.position, other.transform.rotation);
-                other.GetComponent<Health>().LoseHealth(damage);
+                other.GetComponent<Health>().LoseHealth(damage + theStats.spellModifier);
             }
             else if (heroEquipment.equippedEmber == ember.Earth)
             {
                 Instantiate(poke, other.transform.position, other.transform.rotation);
                 Camera.main.SendMessage("ScreenShake");
-                other.GetComponent<Health>().LoseHealth(damage + 3);
+                other.GetComponent<Health>().LoseHealth(damage + 3 + theStats.spellModifier);
             }
             else if (heroEquipment.equippedEmber == ember.Death)
             {
                 Instantiate(poke, other.transform.position, other.transform.rotation);
                 other.SendMessage("GetInfected", SendMessageOptions.DontRequireReceiver);
-                other.GetComponent<Health>().LoseHealth(damage);
+                other.GetComponent<Health>().LoseHealth(damage + theStats.spellModifier);
             }
         }
     }

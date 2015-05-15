@@ -13,7 +13,7 @@ public class PlayerMeleeAttack : MonoBehaviour
     public float speed = 3.0f;
 
     AudioSource audioPlayer;
-
+    
     PlayerEquipment heroEqp;
     Animator anim;
 
@@ -26,7 +26,7 @@ public class PlayerMeleeAttack : MonoBehaviour
     {
         anim = GetComponentInParent<Animator>();
         player = transform.parent.gameObject;
-        playerStats = player.GetComponent<PlayerStats>();
+            playerStats = player.GetComponent<PlayerStats>();
         rotationDelta = player.transform.rotation.z;
         heroEqp = player.GetComponent<PlayerEquipment>();
         audioPlayer = GetComponent<AudioSource>();
