@@ -91,7 +91,7 @@ public class GenerateLoot : MonoBehaviour {
                 string SendName = DetermineName(RandNum, 1, 1);
                 GameObject temp = (GameObject)Instantiate(Loot, transform.position, transform.rotation);
                 temp.SendMessage("SetName", SendName, SendMessageOptions.DontRequireReceiver);        
-                transform.position -= new Vector3(0, .6f, 0);
+                //transform.position -= new Vector3(0, .6f, 0);
             }
         }
 
