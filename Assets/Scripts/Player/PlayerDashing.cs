@@ -48,6 +48,19 @@ public class PlayerDashing : MonoBehaviour
     public GameObject LifeCharge;
     public GameObject EarthCharge;
     public GameObject DeathCharge;
+
+    public AudioClip charge;
+    public AudioClip whirl;
+    public AudioClip decoy;
+    public AudioClip blink;
+    public AudioClip trail;
+
+    AudioSource aPlayer;
+
+    Vector3 oldPos;
+
+    bool once;
+
     void Start()
     {
         earthtrailtime = 0;
@@ -58,6 +71,8 @@ public class PlayerDashing : MonoBehaviour
         heroCooldowns = gameObject.GetComponent<PlayerCooldowns>();
         trailBlazerDropTimer = 0.0f;
         UICD = GameObject.Find("Boot").GetComponent<HUDCooldowns>();
+        aPlayer = gameObject.GetComponent<AudioSource>();
+        once = false;
     }
 
     void Update()
@@ -68,7 +83,14 @@ public class PlayerDashing : MonoBehaviour
             //If the player is dashing, perform the dash
             if (timeRemaining > 0)
             {
-
+                if (timeRemaining < 0.15f)
+                {
+                    if (once && heroEquipment.equippedBoot == boot.Charge)
+                    {
+                        Instantiate(lightRemains, oldPos, new Quaternion(0, 0, 0, 0));
+                        once = false;
+                    }
+                }
                 timeRemaining -= Time.deltaTime;
 
                 if (heroEquipment.equippedBoot != boot.Blink)
@@ -188,8 +210,17 @@ public class PlayerDashing : MonoBehaviour
             //Set up the local variables
             trailBlazerDropTimer = 0.1f;
 
+            if (heroEquipment.equippedBoot == boot.Trailblazer)
+            {
+                aPlayer.PlayOneShot(trail);
+
+            }
+
             if (heroEquipment.equippedBoot == boot.Charge)
             {
+                aPlayer.PlayOneShot(charge);
+                oldPos = transform.position;
+                once = true;
                 //No ember equipped
                 if (heroEquipment.equippedEmber == ember.None)
                 {
@@ -227,6 +258,8 @@ public class PlayerDashing : MonoBehaviour
 
             if (heroEquipment.equippedBoot == boot.Blink)
             {
+                aPlayer.PlayOneShot(blink);
+
                 //No ember equipped
                 if (heroEquipment.equippedEmber == ember.None)
                 {
@@ -266,6 +299,8 @@ public class PlayerDashing : MonoBehaviour
             }
             if (heroEquipment.equippedBoot == boot.Whirlwind)
             {
+                aPlayer.PlayOneShot(whirl);
+
                 //No ember equipped
                 if (heroEquipment.equippedEmber == ember.None)
                 {
@@ -307,7 +342,8 @@ public class PlayerDashing : MonoBehaviour
             }
             if (heroEquipment.equippedBoot == boot.Decoy)
             {
-             
+
+                aPlayer.PlayOneShot(decoy);
 
                  
                 //No ember equipped
