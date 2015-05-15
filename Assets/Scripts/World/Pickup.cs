@@ -77,20 +77,22 @@ public class Pickup : MonoBehaviour
         }
 
     }
-    void DisplayTooltip()
-    {
-        displaytooltips = true;
-
-    }
+ 
+   void DisplayTooltip()
+   {
+     //  displaytooltips = true;
+   
+   }
 
     void DoNotDisplayTooltip()
     {
-        displaytooltips = false;
+       // displaytooltips = false;
     }
 
 
     void OnTriggerStay(Collider other)
     {
+        displaytooltips = true;
         if ((InputManager.controller && Input.GetButtonDown("CInteract") || (!InputManager.controller && Input.GetButtonDown("KBInteract")))
             && other.gameObject == player)
         {
@@ -267,6 +269,11 @@ public class Pickup : MonoBehaviour
             }
             Destroy(gameObject);
         }
+    }
+    void OnTriggerExit(Collider other)
+    {
+
+        displaytooltips = false;
     }
 
     void SetName(string aName)

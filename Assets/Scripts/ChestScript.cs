@@ -7,11 +7,13 @@ public class ChestScript : MonoBehaviour {
 	public GameObject player;
 	public GameObject loot;
     PlayerLight heroLight;
+    Camera cameras;
 	
 	// Use this for initialization
 	void Start () {
 		player = GameObject.FindGameObjectWithTag ("Player");
 		heroLight=player.gameObject.GetComponent<PlayerLight>();
+        cameras = GameObject.FindObjectOfType<Camera>();
 	}
 	
 	// Update is called once per frame
@@ -23,7 +25,9 @@ public class ChestScript : MonoBehaviour {
 	{
 		if (displaytooltips)
 		{
-			GUI.Box (new Rect (0, 0, 100, 20), "Press E to open");
+        string temp="Press E to open";
+            GUI.Box(new Rect(cameras.WorldToScreenPoint(player.transform.position).x + 32, Screen.height - cameras.WorldToScreenPoint(player.transform.position).y, 100, 40), temp);
+
 		}
 
 	}

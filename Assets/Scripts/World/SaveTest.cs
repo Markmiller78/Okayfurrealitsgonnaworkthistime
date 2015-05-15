@@ -20,25 +20,14 @@ public class SaveTest : MonoBehaviour {
 		Debug.Log(life + "/n" + lightss);
 	
 	}
-	void OnGUI()
-	{
-
-		
-		if (GUI.Button (new Rect (10, 260, 100, 30), "Save")) {
-			Save ();
-
-		}
-		
-		if (GUI.Button (new Rect (10, 400, 100, 30), "Load")) {
-			Load ();
-		}
-	}
+ 
    public void Save()
     {
         if (Application.platform == RuntimePlatform.OSXWebPlayer
            || Application.platform == RuntimePlatform.WindowsWebPlayer)
         {
-
+            PlayerPrefs.SetFloat("PlayerHealth", gameObject.GetComponent<Health>().currentHP);
+            PlayerPrefs.SetFloat("PlayerLight", gameObject.GetComponent<Health>().currentHP);
 
         }
         else
@@ -76,6 +65,7 @@ class PlayerDatas
 {
 	public float health;
     public float theLight;
+    PlayerStats stats;
 
 
 }
