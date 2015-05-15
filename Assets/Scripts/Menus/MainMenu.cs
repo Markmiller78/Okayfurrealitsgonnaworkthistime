@@ -21,7 +21,7 @@ public class MainMenu : MonoBehaviour
     public Text ControlsTextW;
     bool ControllerOptionToggle;
     bool AxisChanged = false;
-    
+
     public enum Menu { Main = 0, Options, Achievements, Credits, Continue, AreYouSure, SelectDifficulty };
     Menu CurrMenu = Menu.Main;
     public GameObject MainMenuText;
@@ -56,11 +56,11 @@ public class MainMenu : MonoBehaviour
 
 
         ControllerOptionToggle = false;
-        health = 50; 
-        theLight = 0; 
+        health = 50;
+        theLight = 0;
 
 #if UNITY_STANDALONE
-        Save();
+      //  Save();
 #endif
         //   playerhealth.text = health.ToString();
         //     playerlight.text = light.ToString();
@@ -267,7 +267,7 @@ public class MainMenu : MonoBehaviour
         }
     }
 
-   void OptionsMenu()
+    void OptionsMenu()
     {
         maxchoices = 4;
         choices[0] = 2.9f;
@@ -716,7 +716,7 @@ public class MainMenu : MonoBehaviour
                 case 0:
                     {
                         //CONTINUE PREVIOUS GAME
-                        LoadStats();
+                      //  LoadStats();
                         Application.LoadLevel("TonyScene");
                         break;
                     }
@@ -870,24 +870,24 @@ public class MainMenu : MonoBehaviour
     }
 
 
-    void LoadStats()
-    {
-        playerhealth.text = "100";
+    //    void LoadStats()
+    //    {
+    //        playerhealth.text = "100";
 
 
-        if (File.Exists(Application.persistentDataPath + "/playerinfo.dat"))
-        {
-            BinaryFormatter bin = new BinaryFormatter();
-            FileStream file = File.Open(Application.persistentDataPath + "/playerinfo.dat", FileMode.Open);
-            PlayerData data = (PlayerData)bin.Deserialize(file);
-            playerhealth.text = data.health.ToString();
-            playerlight.text = data.light.ToString();
-            file.Close();
+    //        if (File.Exists(Application.persistentDataPath + "/playerinfo.dat"))
+    //        {
+    //            BinaryFormatter bin = new BinaryFormatter();
+    //            FileStream file = File.Open(Application.persistentDataPath + "/playerinfo.dat", FileMode.Open);
+    //            PlayerData data = (PlayerData)bin.Deserialize(file);
+    //            playerhealth.text = data.health.ToString();
+    //            playerlight.text = data.light.ToString();
+    //            file.Close();
 
 
-        }
+    //        }
 
-    }
+    //    }
 
     void LoadOptions()
     {
@@ -903,33 +903,34 @@ public class MainMenu : MonoBehaviour
 
         }
     }
-    void Save()
-    {
-        if (Application.platform == RuntimePlatform.OSXWebPlayer
-           || Application.platform == RuntimePlatform.WindowsWebPlayer) 
-        {
-
-
-        }
-        else
-        {
-            BinaryFormatter bin = new BinaryFormatter();
-            FileStream file = File.Create(Application.persistentDataPath + "/playerinfo.dat");
-            PlayerData data = new PlayerData();
-            data.health = health;
-            data.light = theLight;
-            bin.Serialize(file, data);
-            file.Close();
-        }
-
-    }
 }
+//    void Save()
+//    {
+//        if (Application.platform == RuntimePlatform.OSXWebPlayer
+//           || Application.platform == RuntimePlatform.WindowsWebPlayer) 
+//        {
 
 
-[System.Serializable]
-class PlayerData
-{
-    public int health;
-    public int light;
-}
+//        }
+//        else
+//        {
+//            BinaryFormatter bin = new BinaryFormatter();
+//            FileStream file = File.Create(Application.persistentDataPath + "/playerinfo.dat");
+//            PlayerData data = new PlayerData();
+//            data.health = health;
+//            data.light = theLight;
+//            bin.Serialize(file, data);
+//            file.Close();
+//        }
+
+//    }
+//}
+
+
+//[System.Serializable]
+//class PlayerData
+//{
+//    public int health;
+//    public int light;
+//}
 
