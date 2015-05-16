@@ -8,12 +8,16 @@ public class ChestScript : MonoBehaviour {
 	public GameObject loot;
     PlayerLight heroLight;
     Camera cameras;
+
+    Options theoptions;
 	
 	// Use this for initialization
 	void Start () {
 		player = GameObject.FindGameObjectWithTag ("Player");
 		heroLight=player.gameObject.GetComponent<PlayerLight>();
         cameras = GameObject.FindObjectOfType<Camera>();
+        theoptions = GameObject.Find("TheOptions").GetComponent<Options>();
+
 	}
 	
 	// Update is called once per frame
@@ -36,6 +40,7 @@ public class ChestScript : MonoBehaviour {
 	{
 		Vector3 dist = transform.position - player.transform.position;
 		if (dist.magnitude < 1.0f) {
+            theoptions.OpenChest();
 			heroLight.LoseLight (5);
             gameObject.GetComponent<GenerateLoot>().Generateloot();
 			//Instantiate (loot, transform.position, new Quaternion (0, 0, 0, 0));

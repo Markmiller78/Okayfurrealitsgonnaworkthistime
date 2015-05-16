@@ -44,6 +44,12 @@ public class Options : MonoBehaviour
     public Text sfxInt2;
     public Text musicInt2;
 
+    int numMelee;
+    int numDash;
+    int numEnemiesKilled;
+
+    public bool[] achievements;
+
     [HideInInspector]
     public GameObject savedPlayer;
     GameObject player;
@@ -54,6 +60,14 @@ public class Options : MonoBehaviour
 
     void Start()
     {
+        achievements = new bool[5];
+
+
+        achievements[0] = false; // Game Beaten
+        achievements[1] = false; // Melee
+        achievements[2] = false; // Chest
+        achievements[3] = false; // Dash
+        achievements[4] = false; // Defeat 100 Enemies
         Load();
         DontDestroyOnLoad(gameObject);
         sfxInt.text = sfxVolume.ToString();
@@ -62,6 +76,54 @@ public class Options : MonoBehaviour
         sfxInt2.text = sfxVolume.ToString();
         musicInt2.text = musicVolume.ToString();
         beenAssigned = false;
+        numMelee = 0;
+        numEnemiesKilled = 0;
+        numDash = 0;
+
+
+    }
+
+    public void AddToMelee()
+    {
+        numMelee++;
+        if (numMelee >= 50 && achievements[1] == false)
+        {
+            GameObject.Find("MeleeAchv").GetComponent<Image>().enabled = true;
+            achievements[1] = true;
+            Save();
+        }
+    }
+
+    public void AddToDash()
+    {
+        numDash++;
+        if (numDash >= 50 && achievements[3] == false)
+        {
+            GameObject.Find("DashAchv").GetComponent<Image>().enabled = true;
+            achievements[3] = true;
+            Save();
+        }
+    }
+
+    public void AddToEnemy()
+    {
+        numEnemiesKilled++;
+        if (numEnemiesKilled >= 100 && achievements[4] == false)
+        {
+            GameObject.Find("EnemyAchv").GetComponent<Image>().enabled = true;
+            achievements[4] = true;
+            Save();
+        }
+    }
+
+    public void OpenChest()
+    {
+        if (achievements[2] == false)
+        {
+            GameObject.Find("ChestAchv").GetComponent<Image>().enabled = true;
+            achievements[2] = true;
+            Save();
+        }
     }
 
     void Update()
@@ -175,6 +237,11 @@ public class Options : MonoBehaviour
             OptionData data = new OptionData();
             data.sfxVolume = sfxVolume;
             data.musicVolume = musicVolume;
+            data.achieve = achievements[0];
+            data.achieve1 = achievements[1];
+            data.achieve2 = achievements[2];
+            data.achieve3 = achievements[3];
+            data.achieve4 = achievements[4];
             bin.Serialize(file, data);
             file.Close();
         }
@@ -186,8 +253,8 @@ public class Options : MonoBehaviour
         if (Application.platform == RuntimePlatform.OSXWebPlayer
 || Application.platform == RuntimePlatform.WindowsWebPlayer)
         {
-           sfxVolume= PlayerPrefs.GetInt("PlayerSFX",100);  
-            musicVolume=PlayerPrefs.GetInt("PlayerMusic",100);
+            sfxVolume = PlayerPrefs.GetInt("PlayerSFX", 100);
+            musicVolume = PlayerPrefs.GetInt("PlayerMusic", 100);
 
         }
         else
@@ -199,6 +266,12 @@ public class Options : MonoBehaviour
                 OptionData data = (OptionData)bin.Deserialize(file);
                 sfxVolume = data.sfxVolume;
                 musicVolume = data.musicVolume;
+                achievements[0] = data.achieve;
+                achievements[1] = data.achieve1;
+                achievements[2] = data.achieve2;
+                achievements[3] = data.achieve3;
+                achievements[4] = data.achieve4;
+
                 file.Close();
 
             }
@@ -211,6 +284,11 @@ public class OptionData
 {
     public int sfxVolume;
     public int musicVolume;
+   public bool achieve;
+   public bool achieve1;
+   public bool achieve2;
+   public bool achieve3;
+   public bool achieve4;
 
 
 }

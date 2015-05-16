@@ -5,9 +5,12 @@ public class Utilities
 {
     public static void ArraySwap<T>(T[] arr, int a, int b)
     {
-        T temp = arr[a];
-        arr[a] = arr[b];
-        arr[b] = temp;
+        if (arr.Length > 1)
+        {
+            T temp = arr[a];
+            arr[a] = arr[b];
+            arr[b] = temp;
+        }
     }
 
     public static void ArrayShuffle<T>(T[] arr, int times = 100)

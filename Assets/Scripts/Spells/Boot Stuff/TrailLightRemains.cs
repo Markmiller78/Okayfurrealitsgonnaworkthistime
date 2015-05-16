@@ -12,7 +12,7 @@ public class TrailLightRemains : MonoBehaviour
     Light particleLight;
     SpriteRenderer sprite;
     bool once;
-
+    public GameObject missile;
     public GameObject trailParticles;
 
     void Start()
@@ -65,6 +65,7 @@ public class TrailLightRemains : MonoBehaviour
     void PickUp()
     {
         //The dash currently spawns 11 of these as of 4/22/15
+        Instantiate(missile, transform.position, transform.rotation);
         heroLight.GainLight(1);
         active = false;
     }

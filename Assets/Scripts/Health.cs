@@ -23,8 +23,12 @@ public class Health : MonoBehaviour
 
     public GameObject corpse;
 
+    Options theoptions;
+
     void Start()
     {
+        theoptions = GameObject.Find("TheOptions").GetComponent<Options>();
+
         playerDead = false;
         player = GameObject.FindGameObjectWithTag("Player");
         anim = gameObject.GetComponent<Animator>();
@@ -41,6 +45,7 @@ public class Health : MonoBehaviour
         {
             generator = dungeon.GetComponent<RoomGeneration>();
         }
+
 
     }
 
@@ -95,6 +100,7 @@ public class Health : MonoBehaviour
     {
         if (this.tag != "Player")
         {
+            theoptions.AddToEnemy();
             Instantiate(lightRemains, transform.position, transform.rotation);
             Instantiate(corpse, new Vector3(transform.position.x, transform.position.y, -0.5f), transform.rotation);
             gameObject.GetComponent<GenerateLoot>().Generateloot();
