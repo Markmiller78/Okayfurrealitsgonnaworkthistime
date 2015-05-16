@@ -61,6 +61,8 @@ public class PlayerDashing : MonoBehaviour
 
     bool once;
 
+    Options theoptions;
+
     void Start()
     {
         earthtrailtime = 0;
@@ -73,6 +75,8 @@ public class PlayerDashing : MonoBehaviour
         UICD = GameObject.Find("Boot").GetComponent<HUDCooldowns>();
         aPlayer = gameObject.GetComponent<AudioSource>();
         once = false;
+        theoptions = GameObject.Find("TheOptions").GetComponent<Options>();
+
     }
 
     void Update()
@@ -200,6 +204,9 @@ public class PlayerDashing : MonoBehaviour
             {
                 return;
             }
+
+            theoptions.AddToDash();
+
             //Make the player spend light
             heroLight.LoseLight(10);
             heroEquipment.EmberLoseDurability();
