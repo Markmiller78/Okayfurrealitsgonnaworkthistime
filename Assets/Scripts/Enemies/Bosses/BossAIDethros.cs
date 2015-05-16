@@ -170,7 +170,9 @@ public class BossAIDethros : MonoBehaviour
                             {
                                 foreach (GameObject spawn in spawners)
                                 {
-                                    spawn.SendMessage("SpawnThings");
+                                    float c = Random.Range(0f, 1f);
+                                    if (c <= .8f)
+                                        spawn.SendMessage("SpawnThings");
                                 }
                             }
                             specialTimer = sTimerMax;
@@ -232,7 +234,9 @@ public class BossAIDethros : MonoBehaviour
                             {
                                 foreach (GameObject spawn in spawners)
                                 {
-                                    spawn.SendMessage("SpawnThings");
+                                    float c = Random.Range(0f, 1f);
+                                    if (c <= .9f)
+                                        spawn.SendMessage("SpawnThings");
                                 }
                             }
                             specialTimer = sTimerMax;

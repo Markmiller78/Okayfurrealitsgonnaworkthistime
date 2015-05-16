@@ -857,29 +857,6 @@ public class RoomGeneration : MonoBehaviour
             } while (finalRoomInfoArray[21].exitDir == finalRoomInfoArray[21].entranceDir);
         }
         //
-        //finalRoomArray[17] = lorneRoom;
-        //finalRoomInfoArray[17] = lorneRoomInfo;
-        //switch (finalRoomInfoArray[16].exitDir)
-        //{
-        //    case 0:
-        //        finalRoomInfoArray[17].entranceDir = 2;
-        //        break;
-        //    case 1:
-        //        finalRoomInfoArray[17].entranceDir = 3;
-        //        break;
-        //    case 2:
-        //        finalRoomInfoArray[17].entranceDir = 0;
-        //        break;
-        //    case 3:
-        //        finalRoomInfoArray[17].entranceDir = 1;
-        //        break;
-        //    default:
-        //        break;
-        //}
-        //do
-        //{
-        //    finalRoomInfoArray[17].exitDir = Random.Range(0, 3);
-        //} while (finalRoomInfoArray[17].exitDir == finalRoomInfoArray[17].entranceDir);
         //finalRoomArray[18] = floorThreeRooms[0];
         //finalRoomInfoArray[18] = floorTwoRoomsInfo[0];
         //switch (finalRoomInfoArray[17].exitDir)
