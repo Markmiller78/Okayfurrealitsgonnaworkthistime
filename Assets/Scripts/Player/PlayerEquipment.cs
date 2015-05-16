@@ -64,7 +64,7 @@ public class PlayerEquipment : MonoBehaviour
 
     void PlayEquipmentSound()
     {
-        Debug.Log("sounddd");
+       // Debug.Log("sounddd");
         audioPlayer.PlayOneShot(equipmentSound);
     }
 
@@ -177,7 +177,7 @@ public class PlayerEquipment : MonoBehaviour
         PlayStats.SendMessage("GetSpellMod" ,TotalSP, SendMessageOptions.DontRequireReceiver);
         PlayStats.SendMessage("GetMaxHPMod" ,MaxHP, SendMessageOptions.DontRequireReceiver);
         PlayStats.SendMessage("GetMaxLightMod" ,MaxLight, SendMessageOptions.DontRequireReceiver);
-        print("CalculatingStats");
+        //print("CalculatingStats");
 
     }
 

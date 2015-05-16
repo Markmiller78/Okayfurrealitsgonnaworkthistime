@@ -154,7 +154,7 @@ public class GenerateLoot : MonoBehaviour
                 {
                     if (ObjectPOS.x < objects[i].transform.position.x + .3f && ObjectPOS.x > objects[i].transform.position.x - .3f && ObjectPOS.y < objects[i].transform.position.y + .3f && ObjectPOS.y > objects[i].transform.position.y - .3f)
                     {
-                        print("Loot Stacked! Deleted Generating Loot.");
+                        //print("Loot Stacked! Deleted Generating Loot.");
                         return;
                     }
                 }
