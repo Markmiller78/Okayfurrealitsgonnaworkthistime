@@ -118,6 +118,7 @@ public class Health : MonoBehaviour
             if (playerDead)
             {
                 anim.CrossFade("Dying", 0.01f);
+                GameObject.FindObjectOfType<BGM>().SendMessage("SetToMenu", SendMessageOptions.DontRequireReceiver);
                 equipment.paused = true;
                 playerDead = true;
                 Instantiate(LoseText);

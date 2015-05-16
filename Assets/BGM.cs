@@ -6,7 +6,7 @@ public class BGM : MonoBehaviour {
     GameObject dungeon;
   public  RoomGeneration theRooms;
     GameObject player;
-    AudioSource audioPlayer;
+   AudioSource audioPlayer;
     bool beenAssigned;
     public int volume;
 
@@ -56,7 +56,7 @@ public class BGM : MonoBehaviour {
         {
             audioPlayer.volume = 0;
         }
-        if(Application.loadedLevelName=="MainMenu" )
+        if(Application.loadedLevelName=="MainMenu"&&audioPlayer.volume==0 )
         {
             audioPlayer.Stop();
            audioPlayer.volume = volume*0.1f;
@@ -162,6 +162,11 @@ public class BGM : MonoBehaviour {
 
 
     }
- 
+ void SetToMenu()
+    {
+        audioPlayer.Stop();
+        audioPlayer.clip = clips[4];
+        audioPlayer.Play();
+    }
     
 }

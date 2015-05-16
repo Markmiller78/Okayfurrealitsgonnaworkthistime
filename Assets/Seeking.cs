@@ -11,11 +11,13 @@ public class Seeking : MonoBehaviour
     public GameObject explosion;
     PlayerLight theLight;
     public GameObject the_remains;
+    public GameObject Lorne;
     // Use this for initialization
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         theLight = player.GetComponent<PlayerLight>();
+        
     }
 
 
