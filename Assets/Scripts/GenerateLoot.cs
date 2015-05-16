@@ -46,6 +46,8 @@ public class GenerateLoot : MonoBehaviour
     public void Generateloot()
     {
         int SecondStat;
+        int DetStat1, DetStat2;
+
         if (gameObject.tag == "Chest")
         {
             int RandNum = Random.Range(1, 19);
@@ -59,12 +61,14 @@ public class GenerateLoot : MonoBehaviour
                 transform.position += new Vector3(.5f, 0, 0);
                 RandNum = Random.Range(1, 19);
                 Loot = DetermineType(RandNum);
-                SendName = DetermineName(RandNum, 1, 1);
+                DetStat1 = DetermineStat(RandNum);
+                DetStat2 = DetermineStat(RandNum);
+                SendName = DetermineName(RandNum, DetStat1, DetStat2);
                 temp = (GameObject)Instantiate(Loot, transform.position, transform.rotation);
                 temp.SendMessage("SetName", SendName, SendMessageOptions.DontRequireReceiver);
                 transform.position -= new Vector3(.5f, 0, 0);
 
-                SendStat.TheStat = (StatType)DetermineStat(RandNum);
+                SendStat.TheStat = (StatType)DetStat1;
                 SendStat.StatAmount = DetermineStatAmount(RandNum);
                 temp.SendMessage("SetStat1", SendStat, SendMessageOptions.DontRequireReceiver);
 
@@ -72,7 +76,7 @@ public class GenerateLoot : MonoBehaviour
                 SecondStat = Random.Range(0, 100);
                 if (SecondStat > 50)
                 {
-                    SendStat.TheStat = (StatType)DetermineStat(RandNum);
+                    SendStat.TheStat = (StatType)DetStat2;
                     SendStat.StatAmount = DetermineStatAmount(RandNum);
                     temp.SendMessage("SetStat2", SendStat, SendMessageOptions.DontRequireReceiver);
                 }
@@ -83,12 +87,14 @@ public class GenerateLoot : MonoBehaviour
                 transform.position -= new Vector3(.7f, 0, 0);
                 RandNum = Random.Range(1, 19);
                 Loot = DetermineType(RandNum);
-                SendName = DetermineName(RandNum, 1, 1);
+                DetStat1 = DetermineStat(RandNum);
+                DetStat2 = DetermineStat(RandNum);
+                SendName = DetermineName(RandNum, DetStat1, DetStat2);
                 temp = (GameObject)Instantiate(Loot, transform.position, transform.rotation);
                 temp.SendMessage("SetName", SendName, SendMessageOptions.DontRequireReceiver);
                 transform.position += new Vector3(.7f, 0, 0);
 
-                SendStat.TheStat = (StatType)DetermineStat(RandNum);
+                SendStat.TheStat = (StatType)DetStat1;
                 SendStat.StatAmount = DetermineStatAmount(RandNum);
                 temp.SendMessage("SetStat1", SendStat, SendMessageOptions.DontRequireReceiver);
 
@@ -96,7 +102,7 @@ public class GenerateLoot : MonoBehaviour
                 SecondStat = Random.Range(0, 100);
                 if (SecondStat > 50)
                 {
-                    SendStat.TheStat = (StatType)DetermineStat(RandNum);
+                    SendStat.TheStat = (StatType)DetStat2;
                     SendStat.StatAmount = DetermineStatAmount(RandNum);
                     temp.SendMessage("SetStat2", SendStat, SendMessageOptions.DontRequireReceiver);
                 }
@@ -107,12 +113,14 @@ public class GenerateLoot : MonoBehaviour
                 transform.position += new Vector3(0, .6f, 0);
                 RandNum = Random.Range(1, 19);
                 Loot = DetermineType(RandNum);
-                SendName = DetermineName(RandNum, 1, 1);
+                DetStat1 = DetermineStat(RandNum);
+                DetStat2 = DetermineStat(RandNum);
+                SendName = DetermineName(RandNum, DetStat1, DetStat2);
                 temp = (GameObject)Instantiate(Loot, transform.position, transform.rotation);
                 temp.SendMessage("SetName", SendName, SendMessageOptions.DontRequireReceiver);
                 transform.position -= new Vector3(0, .6f, 0);
 
-                SendStat.TheStat = (StatType)DetermineStat(RandNum);
+                SendStat.TheStat = (StatType)DetStat1;
                 SendStat.StatAmount = DetermineStatAmount(RandNum);
                 temp.SendMessage("SetStat1", SendStat, SendMessageOptions.DontRequireReceiver);
 
@@ -120,7 +128,7 @@ public class GenerateLoot : MonoBehaviour
                 SecondStat = Random.Range(0, 100);
                 if (SecondStat > 50)
                 {
-                    SendStat.TheStat = (StatType)DetermineStat(RandNum);
+                    SendStat.TheStat = (StatType)DetStat2;
                     SendStat.StatAmount = DetermineStatAmount(RandNum);
                     temp.SendMessage("SetStat2", SendStat, SendMessageOptions.DontRequireReceiver);
                 }
@@ -134,7 +142,9 @@ public class GenerateLoot : MonoBehaviour
                 //transform.position += new Vector3(0, .6f, 0);
                 int RandNum = Random.Range(1, 19);
                 GameObject Loot = DetermineType(RandNum);
-                string SendName = DetermineName(RandNum, 1, 1);
+                DetStat1 = DetermineStat(RandNum);
+                DetStat2 = DetermineStat(RandNum);
+                string SendName = DetermineName(RandNum, DetStat1, DetStat2);
 
 
                 //Don't Allow Loot to Overlap
@@ -153,7 +163,7 @@ public class GenerateLoot : MonoBehaviour
                 GameObject temp = (GameObject)Instantiate(Loot, transform.position, transform.rotation);
                 temp.SendMessage("SetName", SendName, SendMessageOptions.DontRequireReceiver);
 
-                SendStat.TheStat = (StatType)DetermineStat(RandNum);
+                SendStat.TheStat = (StatType)DetStat1;
                 SendStat.StatAmount = DetermineStatAmount(RandNum);
                 temp.SendMessage("SetStat1", SendStat, SendMessageOptions.DontRequireReceiver);
 
@@ -161,7 +171,7 @@ public class GenerateLoot : MonoBehaviour
                 SecondStat = Random.Range(0, 100);
                 if (SecondStat > 50)
                 {
-                    SendStat.TheStat = (StatType)DetermineStat(RandNum);
+                    SendStat.TheStat = (StatType)DetStat2;
                     SendStat.StatAmount = DetermineStatAmount(RandNum);
                     temp.SendMessage("SetStat2", SendStat, SendMessageOptions.DontRequireReceiver);
                 }
@@ -254,13 +264,13 @@ public class GenerateLoot : MonoBehaviour
     {
 
         //IF (ItemID is an Ember)
-        if(ItemID < 7)
+        if (ItemID < 7)
         {
             return 0; //No Stat Boosts
         }
 
         //IF (ItemID is a spell)
-        if(ItemID > 6 && ItemID < 19)
+        if (ItemID > 6 && ItemID < 19)
         {
             int ItemStatNum = Random.Range(1, 5);
 
@@ -278,7 +288,7 @@ public class GenerateLoot : MonoBehaviour
 
     int DetermineStatAmount(int ItemIDD)
     {
-                if(ItemIDD < 7)
+        if (ItemIDD < 7)
         {
             return 0; //No Stat Boosts
         }
@@ -294,47 +304,322 @@ public class GenerateLoot : MonoBehaviour
 
     string DetermineName(int randNum, int Attribute1, int Attribute2)
     {
-        // WORK HERE FRANSWEA
-        string theName = "";
-
-        string[] embers = new string[10];
-        embers[1] = "Scorching Ember of ";
-        embers[8] = "Quake Ember of ";
-        embers[2] = "Rejuvenating Ember of ";
-        embers[3] = "Gale Ember of ";
-        embers[4] = "Frost Ember of";
-        embers[5] = "Doom Ember of ";
-
-
-        string[] accessories = new string[3];
-        accessories[0] = "Ring of ";
-        accessories[1] = "Bracelet of ";
-        accessories[2] = "Necklace of ";
-
-        string[] attribute1 = new string[2];
-        attribute1[0] = "Awesome";
-        attribute1[1] = "Stengthening";
-
-        string[] attribute2 = new string[2];
-        attribute2[0] = "Destruction";
-        attribute2[1] = "Syphoning";
-
-        if (randNum > 4)
+        string name = "Unknown Object";
+        int RandomStuff = 0;
+        if (randNum == 1)
         {
-            theName += accessories[Random.Range(0, 2)];
+            RandomStuff = Random.Range(1, 4);
+            switch (RandomStuff)
+            {
+                case 1:
+                    {
+                        name = "Fiery Ember";
+                        break;
+                    }
+                case 2:
+                    {
+                        name = "Burning Ember";
+                        break;
+                    }
+                case 3:
+                    {
+                        name = "Fire Ember";
+                        break;
+                    }
+            }
         }
-        else
-            theName += embers[randNum];
-        if (Random.value > 0.5f)
+        else if (randNum == 2)
+        {
+            RandomStuff = Random.Range(1, 4);
+            switch (RandomStuff)
+            {
+                case 1:
+                    {
+                        name = "Life Ember";
+                        break;
+                    }
+                case 2:
+                    {
+                        name = "Regenerating Ember";
+                        break;
+                    }
+                case 3:
+                    {
+                        name = "Rejuvenation Ember";
+                        break;
+                    }
+            }
+        }
+        else if (randNum == 3)
+        {
+            RandomStuff = Random.Range(1, 4);
+            switch (RandomStuff)
+            {
+                case 1:
+                    {
+                        name = "Gale Ember";
+                        break;
+                    }
+                case 2:
+                    {
+                        name = "Gusting Ember";
+                        break;
+                    }
+                case 3:
+                    {
+                        name = "Windy Ember";
+                        break;
+                    }
+            }
+        }
+        else if (randNum == 4)
+        {
+            RandomStuff = Random.Range(1, 4);
+            switch (RandomStuff)
+            {
+                case 1:
+                    {
+                        name = "Frosty Ember";
+                        break;
+                    }
+                case 2:
+                    {
+                        name = "Icy Ember";
+                        break;
+                    }
+                case 3:
+                    {
+                        name = "Frozen Ember";
+                        break;
+                    }
+            }
+        }
+        else if (randNum == 5)
+        {
+            RandomStuff = Random.Range(1, 4);
+            switch (RandomStuff)
+            {
+                case 1:
+                    {
+                        name = "Death Ember";
+                        break;
+                    }
+                case 2:
+                    {
+                        name = "Undying Ember";
+                        break;
+                    }
+                case 3:
+                    {
+                        name = "CorpseExplosion Ember";
+                        break;
+                    }
+            }
+        }
+        else if (randNum == 6)
+        {
+            RandomStuff = Random.Range(1, 4);
+            switch (RandomStuff)
+            {
+                case 1:
+                    {
+                        name = "Quaking Ember of ";
+                        break;
+                    }
+                case 2:
+                    {
+                        name = "Earth Ember of ";
+                        break;
+                    }
+                case 3:
+                    {
+                        name = "EarthQuake Ember of ";
+                        break;
+                    }
+            }
+        }
+        else if (randNum == 7)
+        {
+            name = "Light Orb of ";
+        }
+        else if (randNum == 8)
+        {
+            name = "Light Bolt of ";
+        }
+        else if (randNum == 9)
+        {
+            name = "Ensaring Light of ";
+        }
+        else if (randNum == 10)
+        {
+            name = "Light Blast of ";
+        }
+        else if (randNum == 11)
+        {
+            name = "Light Mine of ";
+        }
+        else if (randNum == 12)
+        {
+            name = "Light Singularity of ";
+        }
+        else if (randNum == 13)
+        {
+            name = "Chain Lightning of ";
+        }
+        else if (randNum == 14)
+        {
+            name = "Decoy Boots of ";
+        }
+        else if (randNum == 15)
+        {
+            name = "Blink Boots of ";
+        }
+        else if (randNum == 16)
+        {
+            name = "Whirlwind Boots of ";
+        }
+        else if (randNum == 17)
+        {
+            name = "Trailblaizer Boots of ";
+        }
+        else if (randNum == 18)
+        {
+            name = "Charging Boots of ";
+        }
+
+
+
+        if(Attribute1 == 2)
+        {
+            RandomStuff = Random.Range(1, 4);
+            switch (RandomStuff)
+            {
+                case 1:
+                    {
+                        name += "Casting";
+                        break;
+                    }
+                case 2:
+                    {
+                        name += "Power";
+                        break;
+                    }
+                case 3:
+                    {
+                        name += "the Mage";
+                        break;
+                    }
+            }
+        }
+        if (Attribute1 == 1)
+        {
+            RandomStuff = Random.Range(1, 4);
+            switch (RandomStuff)
+            {
+                case 1:
+                    {
+                        name += "Strength";
+                        break;
+                    }
+                case 2:
+                    {
+                        name += "the Bull";
+                        break;
+                    }
+                case 3:
+                    {
+                        name += "Attack";
+                        break;
+                    }
+            }
+        }
+        if (Attribute1 == 3)
+        {
+            RandomStuff = Random.Range(1, 4);
+            switch (RandomStuff)
+            {
+                case 1:
+                    {
+                        name += "Fortitude";
+                        break;
+                    }
+                case 2:
+                    {
+                        name += "Health";
+                        break;
+                    }
+                case 3:
+                    {
+                        name += "Suvival";
+                        break;
+                    }
+            }
+        }
+        if (Attribute1 == 4)
         {
 
-            theName += attribute1[Random.Range(0, 1)];
+            RandomStuff = Random.Range(1, 4);
+            switch (RandomStuff)
+            {
+                case 1:
+                    {
+                        name += "Shining";
+                        break;
+                    }
+                case 2:
+                    {
+                        name += "Brightness";
+                        break;
+                    }
+                case 3:
+                    {
+                        name += "Sight";
+                        break;
+                    }
+            }
         }
-        else
-            theName += attribute2[Random.Range(0, 1)];
 
 
-        return theName;
+
+        return name;
+
+        //string theName = "";
+
+        //string[] embers = new string[10];
+        //embers[1] = "Scorching Ember of ";
+        //embers[8] = "Quake Ember of ";
+        //embers[2] = "Rejuvenating Ember of ";
+        //embers[3] = "Gale Ember of ";
+        //embers[4] = "Frost Ember of";
+        //embers[5] = "Doom Ember of ";
+
+
+        //string[] accessories = new string[3];
+        //accessories[0] = "Ring of ";
+        //accessories[1] = "Bracelet of ";
+        //accessories[2] = "Necklace of ";
+
+        //string[] attribute1 = new string[2];
+        //attribute1[0] = "Awesome";
+        //attribute1[1] = "Stengthening";
+
+        //string[] attribute2 = new string[2];
+        //attribute2[0] = "Destruction";
+        //attribute2[1] = "Syphoning";
+
+        //if (randNum > 4)
+        //{
+        //    theName += accessories[Random.Range(0, 2)];
+        //}
+        //else
+        //    theName += embers[randNum];
+        //if (Random.value > 0.5f)
+        //{
+
+        //    theName += attribute1[Random.Range(0, 1)];
+        //}
+        //else
+        //    theName += attribute2[Random.Range(0, 1)];
     }
 }
 
