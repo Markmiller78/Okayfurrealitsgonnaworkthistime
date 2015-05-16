@@ -50,7 +50,7 @@ public class RoomGeneration : MonoBehaviour
     {
         //DontDestroyOnLoad(this);
         player = GameObject.FindGameObjectWithTag("Player");
-        Utilities.ArrayShuffle(floorOneRooms);
+        //Utilities.ArrayShuffle(floorOneRooms);
         floorOneRoomsInfo = new Room[floorOneRooms.Length];
         for (int i = 0; i < floorOneRooms.Length; i++)
         {
@@ -118,8 +118,8 @@ public class RoomGeneration : MonoBehaviour
         FillDungeon();
 
         //TESTING
-        //finalRoomArray[0] = floorOneRooms[3];
-        //finalRoomInfoArray[0] = floorOneRoomsInfo[3];
+        //finalRoomArray[0] = floorOneRooms[9];
+        //finalRoomInfoArray[0] = floorOneRoomsInfo[9];
         //ENDTESTING
 
         CreateRoom();
