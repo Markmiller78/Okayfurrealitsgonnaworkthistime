@@ -8,7 +8,7 @@ public class BGM : MonoBehaviour {
     GameObject player;
     AudioSource audioPlayer;
     bool beenAssigned;
-    int volume;
+    public int volume;
 
 
     private static BGM _instance;
@@ -50,6 +50,19 @@ public class BGM : MonoBehaviour {
 	// Update is called once per frame
     void Update()
     {
+        volume = GameObject.FindObjectOfType<Options>().musicVolume;
+
+        if(Application.loadedLevelName=="Credits")
+        {
+            audioPlayer.volume = 0;
+        }
+        if(Application.loadedLevelName=="MainMenu"&&audioPlayer.volume==0)
+        {
+            audioPlayer.Stop();
+           audioPlayer.volume = volume*0.1f;
+            audioPlayer.clip = clips[4];
+            audioPlayer.Play();
+        }
         if (!beenAssigned && Application.loadedLevelName == "Game")
         {
             player = GameObject.FindGameObjectWithTag("Player");
@@ -69,12 +82,14 @@ public class BGM : MonoBehaviour {
 
    if(theRooms!=null)
    {
-       volume = GameObject.FindObjectOfType<Options>().musicVolume;
  
        if (Application.loadedLevelName == "LoadScreen")
            audioPlayer.volume=0;
-       else if(volume!=audioPlayer.volume)
-            GameObject.FindObjectOfType<Options>().musicVolume=volume;
+       else if (volume != audioPlayer.volume)
+       {
+           GameObject.FindObjectOfType<Options>().musicVolume = volume;
+           audioPlayer.volume = volume * 0.1f;
+       }
        
        if(!GameObject.FindObjectOfType<Options>().easyMode)
        {

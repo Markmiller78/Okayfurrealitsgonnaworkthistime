@@ -14,20 +14,24 @@ public class Credits : MonoBehaviour {
     {
  
 		creds = Canvas.FindObjectOfType<Canvas>();
-	}
+    	}
 	
 	// Update is called once per frame
 	void Update ()
     {
-	
-	 
-	 
+
+        creds.transform.position = new Vector3(creds.transform.position.x, -130, creds.transform.position.z);
+        if ((Input.GetButtonDown("CMenuAccept") || Input.GetButtonDown("KBMenuAccept")) || (Input.GetKeyDown(KeyCode.Mouse0)))
+        {
+            Application.LoadLevel("MainMenu");
+
+        }
 			creds.transform.Translate(scrolling);
-			scrolling.y+=0.9f;
+			scrolling.y+=1.1f;
 	 
-			if(creds.transform.position.y>=2030)
+			if(creds.transform.position.y>=Screen.height*3.8f)
 			{
-				scrolling.y=-430.0f;
+				scrolling.y=-130.0f;
 
 			}
 		 

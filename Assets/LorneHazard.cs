@@ -14,11 +14,17 @@ public class LorneHazard : MonoBehaviour
     PlayerDashing heroDash;
     GameObject tocheck;
     AudioSource audioPlayer;
+    public float timer = 5.0f;
     public float countertodestroythefriggingbug = 0;
-    GameObject[] floors;
+    public GameObject[] floors;
+    bool active = false;
+    public GameObject Safety;
+    int[] Safezones;
+    public float timertosafety = 4.0f;
 
     void Start()
     {
+        this.gameObject.SetActive(false);
         tocheck = this.gameObject;
         hero = GameObject.FindGameObjectWithTag("Player");
         heroHP = hero.GetComponent<Health>();
@@ -26,14 +32,35 @@ public class LorneHazard : MonoBehaviour
         heroMovement = hero.GetComponent<PlayerMovement>();
         heroDash = hero.GetComponent<PlayerDashing>();
         audioPlayer = gameObject.GetComponent<AudioSource>();
+        Safezones= new int[6];
 
        floors = GameObject.FindGameObjectsWithTag("Floor");
-        if (gameObject.tag == "Temporary")
-            Destroy(gameObject, 5);
-        if (gameObject.tag == "Temporary2")
-        {
-            Destroy(gameObject, 10f);
-        }
+       if (floors != null)
+       { }
+       //{
+       //    int tempforchoosingfloors = 0;
+       //    for (; tempforchoosingfloors < 6; )
+       //    {
+       //        int temp = Random.Range(0, floors.Length);
+       //        bool tempbool = true;
+       //        for (int i = 0; i < Safezones.Length; i++)
+       //        {
+       //            if (Safezones[i] == temp)
+       //                tempbool = false;
+
+       //        }
+       //        if (tempbool)
+       //        {
+       //            Safezones[tempforchoosingfloors] = temp;
+       //            ++tempforchoosingfloors;
+       //            Instantiate(Safety, floors[temp].gameObject.transform.position, floors[temp].gameObject.transform.rotation);
+
+       //        }
+
+
+       //    }
+       //}
+ 
     }
 
     void OnTriggerEnter(Collider other)
@@ -89,5 +116,22 @@ public class LorneHazard : MonoBehaviour
         }
     }
 
-
+    void Update()
+    {
+        if (active)
+        {
+            timer -= Time.deltaTime;
+            if (timer <= 0)
+                Destroy(this.gameObject);
+        }
+        else
+        {
+            timertosafety -= Time.deltaTime;
+            if(timertosafety<=0)
+            {
+                this.gameObject.SetActive(true);
+                active = true;
+            }
+        }
+    }
 }
