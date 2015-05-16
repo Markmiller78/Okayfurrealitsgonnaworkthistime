@@ -1,8 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public enum equipmentType { Boot, Accessory, Ember };
 
+public enum StatType { None = 0, MeleeMod, SpellMod, MaxHP, MaxLight };
+
+public struct ItemStat
+{
+    public StatType TheStat;
+    public int StatAmount;
+};
 public class Pickup : MonoBehaviour
 {
     public bool displaytooltips = false;
@@ -21,24 +29,40 @@ public class Pickup : MonoBehaviour
     public GameObject decoyBootPickup;
     public GameObject blinkBootPickup;
     public Font font;
-    public string theName;
+    float sendTimer;
+    public GameObject TooltipWindow;
+    RawImage ToolTipBack;
+    public Vector3 ToolPOS;
+    SetToolTipTexts ToolTipTexts;
     Camera cameras;
+    public GameObject Temp;
 
     GameObject player;
     PlayerEquipment equipment;
+
+
+    ItemStat Stat1forPickup;
+    ItemStat Stat2forPickup;
+    string NameforPickup;
+
 
     int phase;
     float timer;
     void Start()
     {
+        sendTimer = 1;
         cameras = GameObject.FindObjectOfType<Camera>();
         player = GameObject.FindGameObjectWithTag("Player");
+        Temp = Instantiate(TooltipWindow);
+        // TooltipWindow = GameObject.FindGameObjectWithTag("ToolTipCanvas");
+
         equipment = player.GetComponent<PlayerEquipment>();
         phase = 0;
     }
 
     void Update()
     {
+        sendTimer -= Time.deltaTime;
         if (phase == 0)
         {
             transform.position = new Vector3(transform.position.x, transform.position.y + Time.deltaTime * 0.1f, transform.position.z);
@@ -59,40 +83,63 @@ public class Pickup : MonoBehaviour
                 phase = 0;
             }
         }
+
+        //if (TooltipWindow != null)
+        //{
+        //    ToolTipBack.transform.localPosition = transform.position;
+        //    print("Change");
+        //}
+        if (sendTimer < 0 && ToolTipBack != null && displaytooltips == true)
+        {
+            //ToolTipBack.SendMessage("ToolSetTexts", ToolTipTexts, SendMessageOptions.DontRequireReceiver);
+            sendTimer = .5f;
+        }
+        if (ToolTipBack != null && displaytooltips == true)
+        {
+            ToolPOS = Camera.main.WorldToScreenPoint(transform.position);
+            float offsetY = Screen.height - 310;
+            ToolTipBack.transform.localPosition = new Vector3(ToolPOS.x - 550, ToolPOS.y - offsetY, -5);
+        }
+
+
     }
 
     void OnGUI()
     {
-        if (displaytooltips)
-        {
-            string temp = "Press E to pick up the \n";
-            if (theName.Length != 0)
-            {
-                temp += theName;
-            }
-            if(theName.Contains("Ember"))
-            temp += "\n Durabilty: 10\n";
 
-            GUI.Box(new Rect(cameras.WorldToScreenPoint(player.transform.position).x+32,Screen.height- cameras.WorldToScreenPoint(player.transform.position).y, 250, 150), temp);
-        }
+        #region //if (theName.Length != 0)
+        //{
+        //string temp = "Press E to pick up the \n";
+        //    temp += theName;
+        //}
+        //if (theName.Contains("Ember"))
+        //    temp += "\n Durabilty: 10\n";
+
+        //GUI.Box(new Rect(cameras.WorldToScreenPoint(player.transform.position).x + 32, Screen.height - cameras.WorldToScreenPoint(player.transform.position).y, 250, 150), temp);
+        #endregion
 
     }
- 
-   void DisplayTooltip()
-   {
-     //  displaytooltips = true;
-   
-   }
+    void DisplayTooltip()
+    {
+        displaytooltips = true;
+        if (Temp != null)
+        {
+            Temp.SetActive(true);
+            ToolTipBack = Temp.GetComponentInChildren<RawImage>();
+            ToolTipBack.SendMessage("ToolSetTexts", ToolTipTexts, SendMessageOptions.DontRequireReceiver);
+        }
+    }
 
     void DoNotDisplayTooltip()
     {
-       // displaytooltips = false;
+        displaytooltips = false;
+        if (Temp != null)
+            Temp.SetActive(false);
     }
 
 
     void OnTriggerStay(Collider other)
     {
-        displaytooltips = true;
         if ((InputManager.controller && Input.GetButtonDown("CInteract") || (!InputManager.controller && Input.GetButtonDown("KBInteract")))
             && other.gameObject == player)
         {
@@ -113,28 +160,51 @@ public class Pickup : MonoBehaviour
                 }
             }
 
+
             switch (typeOfEquipment)
             {
                 case equipmentType.Boot:
                     #region Boots
                     switch (equipment.equippedBoot)
                     {
+
                         case boot.None:
                             break;
                         case boot.Trailblazer:
-                            Instantiate(TrailblazerBootPickup, transform.position, transform.rotation);
+                            player.SendMessage("PlayEquipmentSound", SendMessageOptions.DontRequireReceiver);
+
+                            GameObject Temp0 = (GameObject)Instantiate(TrailblazerBootPickup, transform.position, transform.rotation);
+                            Temp0.SendMessage("SetName", equipment.BootName, SendMessageOptions.DontRequireReceiver);
+                            Temp0.SendMessage("SetStat1", equipment.BootStat1, SendMessageOptions.DontRequireReceiver);
+                            Temp0.SendMessage("SetStat2", equipment.BootStat2, SendMessageOptions.DontRequireReceiver);
                             break;
                         case boot.Whirlwind:
-                            Instantiate(whirlwindBootPickup, transform.position, transform.rotation);
+                            player.SendMessage("PlayEquipmentSound", SendMessageOptions.DontRequireReceiver);
+                            GameObject Temp2 = (GameObject)Instantiate(whirlwindBootPickup, transform.position, transform.rotation);
+                            Temp2.SendMessage("SetName", equipment.BootName, SendMessageOptions.DontRequireReceiver);
+                            Temp2.SendMessage("SetStat1", equipment.BootStat1, SendMessageOptions.DontRequireReceiver);
+                            Temp2.SendMessage("SetStat2", equipment.BootStat2, SendMessageOptions.DontRequireReceiver);
                             break;
                         case boot.Charge:
-                            Instantiate(chargeBootPickup, transform.position, transform.rotation);
+                            player.SendMessage("PlayEquipmentSound", SendMessageOptions.DontRequireReceiver);
+                            GameObject Temp3 = (GameObject)Instantiate(chargeBootPickup, transform.position, transform.rotation);
+                            Temp3.SendMessage("SetName", equipment.BootName, SendMessageOptions.DontRequireReceiver);
+                            Temp3.SendMessage("SetStat1", equipment.BootStat1, SendMessageOptions.DontRequireReceiver);
+                            Temp3.SendMessage("SetStat2", equipment.BootStat2, SendMessageOptions.DontRequireReceiver);
                             break;
                         case boot.Decoy:
-                            Instantiate(decoyBootPickup, transform.position, transform.rotation);
+                            player.SendMessage("PlayEquipmentSound", SendMessageOptions.DontRequireReceiver);
+                            GameObject Temp4 = (GameObject)Instantiate(decoyBootPickup, transform.position, transform.rotation);
+                            Temp4.SendMessage("SetName", equipment.BootName, SendMessageOptions.DontRequireReceiver);
+                            Temp4.SendMessage("SetStat1", equipment.BootStat1, SendMessageOptions.DontRequireReceiver);
+                            Temp4.SendMessage("SetStat2", equipment.BootStat2, SendMessageOptions.DontRequireReceiver);
                             break;
                         case boot.Blink:
-                            Instantiate(blinkBootPickup, transform.position, transform.rotation);
+                            player.SendMessage("PlayEquipmentSound", SendMessageOptions.DontRequireReceiver);
+                            GameObject Temp5 = (GameObject)Instantiate(blinkBootPickup, transform.position, transform.rotation);
+                            Temp5.SendMessage("SetName", equipment.BootName, SendMessageOptions.DontRequireReceiver);
+                            Temp5.SendMessage("SetStat1", equipment.BootStat1, SendMessageOptions.DontRequireReceiver);
+                            Temp5.SendMessage("SetStat2", equipment.BootStat2, SendMessageOptions.DontRequireReceiver);
                             break;
                         default:
                             break;
@@ -143,18 +213,33 @@ public class Pickup : MonoBehaviour
                     {
                         case 1:
                             equipment.equippedBoot = boot.Trailblazer;
+                            equipment.BootName = NameforPickup;
+                            equipment.BootStat1 = Stat1forPickup;
+                            equipment.BootStat2 = Stat2forPickup;
                             break;
                         case 2:
                             equipment.equippedBoot = boot.Whirlwind;
+                            equipment.BootName = NameforPickup;
+                            equipment.BootStat1 = Stat1forPickup;
+                            equipment.BootStat2 = Stat2forPickup;
                             break;
                         case 3:
                             equipment.equippedBoot = boot.Charge;
+                            equipment.BootName = NameforPickup;
+                            equipment.BootStat1 = Stat1forPickup;
+                            equipment.BootStat2 = Stat2forPickup;
                             break;
                         case 4:
                             equipment.equippedBoot = boot.Decoy;
+                            equipment.BootName = NameforPickup;
+                            equipment.BootStat1 = Stat1forPickup;
+                            equipment.BootStat2 = Stat2forPickup;
                             break;
                         case 5:
                             equipment.equippedBoot = boot.Blink;
+                            equipment.BootName = NameforPickup;
+                            equipment.BootStat1 = Stat1forPickup;
+                            equipment.BootStat2 = Stat2forPickup;
                             break;
                         default:
                             break;
@@ -169,31 +254,52 @@ public class Pickup : MonoBehaviour
                             break;
                         case accessory.OrbOfLight:
                             player.SendMessage("PlayEquipmentSound", SendMessageOptions.DontRequireReceiver);
-                            Instantiate(orbOfLightPickup, transform.position, transform.rotation);
+                            GameObject _Temp0 = (GameObject)Instantiate(orbOfLightPickup, transform.position, transform.rotation);
+                            _Temp0.SendMessage("SetName", equipment.AccessoryName, SendMessageOptions.DontRequireReceiver);
+                            _Temp0.SendMessage("SetStat1", equipment.AccessoryStat1, SendMessageOptions.DontRequireReceiver);
+                            _Temp0.SendMessage("SetStat2", equipment.AccessoryStat2, SendMessageOptions.DontRequireReceiver);
                             break;
                         case accessory.BoltOfLight:
                             player.SendMessage("PlayEquipmentSound", SendMessageOptions.DontRequireReceiver);
-                            Instantiate(boltOfLightPickup, transform.position, transform.rotation);
+                            GameObject _Temp1 = (GameObject)Instantiate(boltOfLightPickup, transform.position, transform.rotation);
+                            _Temp1.SendMessage("SetName", equipment.AccessoryName, SendMessageOptions.DontRequireReceiver);
+                            _Temp1.SendMessage("SetStat1", equipment.AccessoryStat1, SendMessageOptions.DontRequireReceiver);
+                            _Temp1.SendMessage("SetStat2", equipment.AccessoryStat2, SendMessageOptions.DontRequireReceiver);
                             break;
                         case accessory.BlastOfLight:
                             player.SendMessage("PlayEquipmentSound", SendMessageOptions.DontRequireReceiver);
-                            Instantiate(blastOfLightPickup, transform.position, transform.rotation);
+                            GameObject _Temp2 = (GameObject)Instantiate(blastOfLightPickup, transform.position, transform.rotation);
+                            _Temp2.SendMessage("SetName", equipment.AccessoryName, SendMessageOptions.DontRequireReceiver);
+                            _Temp2.SendMessage("SetStat1", equipment.AccessoryStat1, SendMessageOptions.DontRequireReceiver);
+                            _Temp2.SendMessage("SetStat2", equipment.AccessoryStat2, SendMessageOptions.DontRequireReceiver);
                             break;
                         case accessory.ChainLightning:
                             player.SendMessage("PlayEquipmentSound", SendMessageOptions.DontRequireReceiver);
-                            Instantiate(chainLightningPickup, transform.position, transform.rotation);
+                            GameObject _Temp3 = (GameObject)Instantiate(chainLightningPickup, transform.position, transform.rotation);
+                            _Temp3.SendMessage("SetName", equipment.AccessoryName, SendMessageOptions.DontRequireReceiver);
+                            _Temp3.SendMessage("SetStat1", equipment.AccessoryStat1, SendMessageOptions.DontRequireReceiver);
+                            _Temp3.SendMessage("SetStat2", equipment.AccessoryStat2, SendMessageOptions.DontRequireReceiver);
                             break;
                         case accessory.Singularity:
                             player.SendMessage("PlayEquipmentSound", SendMessageOptions.DontRequireReceiver);
-                            Instantiate(singularityPickup, transform.position, transform.rotation);
+                            GameObject _Temp4 = (GameObject)Instantiate(singularityPickup, transform.position, transform.rotation);
+                            _Temp4.SendMessage("SetName", equipment.AccessoryName, SendMessageOptions.DontRequireReceiver);
+                            _Temp4.SendMessage("SetStat1", equipment.AccessoryStat1, SendMessageOptions.DontRequireReceiver);
+                            _Temp4.SendMessage("SetStat2", equipment.AccessoryStat2, SendMessageOptions.DontRequireReceiver);
                             break;
                         case accessory.Snare:
                             player.SendMessage("PlayEquipmentSound", SendMessageOptions.DontRequireReceiver);
-                            Instantiate(snarePickup, transform.position, transform.rotation);
+                            GameObject _Temp5 = (GameObject)Instantiate(snarePickup, transform.position, transform.rotation);
+                            _Temp5.SendMessage("SetName", equipment.AccessoryName, SendMessageOptions.DontRequireReceiver);
+                            _Temp5.SendMessage("SetStat1", equipment.AccessoryStat1, SendMessageOptions.DontRequireReceiver);
+                            _Temp5.SendMessage("SetStat2", equipment.AccessoryStat2, SendMessageOptions.DontRequireReceiver);
                             break;
                         case accessory.LightMine:
                             player.SendMessage("PlayEquipmentSound", SendMessageOptions.DontRequireReceiver);
-                            Instantiate(lightMinePickup, transform.position, transform.rotation);
+                            GameObject _Temp6 = (GameObject)Instantiate(lightMinePickup, transform.position, transform.rotation);
+                            _Temp6.SendMessage("SetName", equipment.AccessoryName, SendMessageOptions.DontRequireReceiver);
+                            _Temp6.SendMessage("SetStat1", equipment.AccessoryStat1, SendMessageOptions.DontRequireReceiver);
+                            _Temp6.SendMessage("SetStat2", equipment.AccessoryStat2, SendMessageOptions.DontRequireReceiver);
                             break;
                         default:
                             break;
@@ -202,24 +308,45 @@ public class Pickup : MonoBehaviour
                     {
                         case 1:
                             equipment.equippedAccessory = accessory.OrbOfLight;
+                            equipment.AccessoryName = NameforPickup;
+                            equipment.AccessoryStat1 = Stat1forPickup;
+                            equipment.AccessoryStat2 = Stat2forPickup;
                             break;
                         case 2:
                             equipment.equippedAccessory = accessory.BoltOfLight;
+                            equipment.AccessoryName = NameforPickup;
+                            equipment.AccessoryStat1 = Stat1forPickup;
+                            equipment.AccessoryStat2 = Stat2forPickup;
                             break;
                         case 3:
                             equipment.equippedAccessory = accessory.BlastOfLight;
+                            equipment.AccessoryName = NameforPickup;
+                            equipment.AccessoryStat1 = Stat1forPickup;
+                            equipment.AccessoryStat2 = Stat2forPickup;
                             break;
                         case 4:
                             equipment.equippedAccessory = accessory.ChainLightning;
+                            equipment.AccessoryName = NameforPickup;
+                            equipment.AccessoryStat1 = Stat1forPickup;
+                            equipment.AccessoryStat2 = Stat2forPickup;
                             break;
                         case 5:
                             equipment.equippedAccessory = accessory.Singularity;
+                            equipment.AccessoryName = NameforPickup;
+                            equipment.AccessoryStat1 = Stat1forPickup;
+                            equipment.AccessoryStat2 = Stat2forPickup;
                             break;
                         case 6:
                             equipment.equippedAccessory = accessory.Snare;
+                            equipment.AccessoryName = NameforPickup;
+                            equipment.AccessoryStat1 = Stat1forPickup;
+                            equipment.AccessoryStat2 = Stat2forPickup;
                             break;
                         case 7:
                             equipment.equippedAccessory = accessory.LightMine;
+                            equipment.AccessoryName = NameforPickup;
+                            equipment.AccessoryStat1 = Stat1forPickup;
+                            equipment.AccessoryStat2 = Stat2forPickup;
                             break;
                         default:
                             break;
@@ -267,18 +394,98 @@ public class Pickup : MonoBehaviour
                 default:
                     break;
             }
+            equipment.CalculateStats();
+            Destroy(Temp);
             Destroy(gameObject);
         }
-    }
-    void OnTriggerExit(Collider other)
-    {
-
-        displaytooltips = false;
     }
 
     void SetName(string aName)
     {
-        print("CHANGENAME");
-        theName = aName;
+        // print("CHANGENAME");
+        NameforPickup = aName;
+        ToolTipTexts._ItemName = aName;
     }
+
+    void SetStat1(ItemStat firstStat)
+    {
+        Stat1forPickup = firstStat;
+        string theName = "nada";
+        switch (firstStat.TheStat)
+        {
+            case StatType.None:
+                {
+                    theName = " ";
+                    break;
+                }
+            case StatType.SpellMod:
+                {
+                    theName = "Spell Power";
+                    break;
+                }
+            case StatType.MeleeMod:
+                {
+                    theName = "Attack Damage";
+                    break;
+                }
+            case StatType.MaxHP:
+                {
+                    theName = "Max HP";
+                    break;
+                }
+            case StatType.MaxLight:
+                {
+                    theName = "Max Light";
+                    break;
+                }
+        }
+
+        ToolTipTexts._ItemStat1 = theName;
+        if (firstStat.StatAmount == 0)
+            ToolTipTexts._ItemAmount2 = " ";
+        else
+            ToolTipTexts._ItemAmount1 = firstStat.StatAmount.ToString();
+    }
+
+    void SetStat2(ItemStat secondStat)
+    {
+        Stat2forPickup = secondStat;
+        string theName = "nada";
+        switch (secondStat.TheStat)
+        {
+            case StatType.None:
+                {
+                    theName = " ";
+                    break;
+                }
+            case StatType.SpellMod:
+                {
+                    theName = "Spell Power";
+                    break;
+                }
+            case StatType.MeleeMod:
+                {
+                    theName = "Attack Damage";
+                    break;
+                }
+            case StatType.MaxHP:
+                {
+                    theName = "Max HP";
+                    break;
+                }
+            case StatType.MaxLight:
+                {
+                    theName = "Max Light";
+                    break;
+                }
+        }
+        ToolTipTexts._ItemStat2 = theName;
+        if (secondStat.StatAmount == 0)
+            ToolTipTexts._ItemAmount2 = " ";
+        else
+            ToolTipTexts._ItemAmount2 = secondStat.StatAmount.ToString();
+    }
+
+
+
 }

@@ -5,24 +5,40 @@ using System.Collections.Generic;
 public class ToolTips : MonoBehaviour {
 
 	public GameObject[] objects;
-
+    GameObject DisplayThisToolTip;
+    float ShortestDistance;
+    float CurrItemDistance;
 	// Use this for initialization
 	void Start () {
 
-	
+        ShortestDistance = 1000000;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
-		objects = GameObject.FindObjectsOfType <GameObject>();
-		foreach (GameObject obj in objects)
-		{
-			if((transform.position-obj.transform.position).magnitude<1.5f)
-			obj.SendMessage("DisplayTooltip", SendMessageOptions.DontRequireReceiver);
-			else
-				obj.SendMessage("DoNotDisplayTooltip", SendMessageOptions.DontRequireReceiver);
-		}
-	
+        ShortestDistance = 100000;
+        objects = GameObject.FindGameObjectsWithTag("PickUp");
+        for(int i = 0; i< objects.Length; i++)
+        {
+
+            CurrItemDistance = Vector3.Distance(objects[i].transform.position, transform.position);
+
+            if(CurrItemDistance < ShortestDistance)
+            {
+                DisplayThisToolTip = objects[i];
+                ShortestDistance = CurrItemDistance;
+            }
+        }
+
+
+
+        for (int i = 0; i < objects.Length; i++)
+        {
+            objects[i].SendMessage("DoNotDisplayTooltip", SendMessageOptions.DontRequireReceiver);
+        }
+        if(ShortestDistance < 1.5f)
+        DisplayThisToolTip.SendMessage("DisplayTooltip", SendMessageOptions.DontRequireReceiver);
 	}
+
 }

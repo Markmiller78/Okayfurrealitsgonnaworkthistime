@@ -9,14 +9,18 @@ public class SaveTest : MonoBehaviour {
 	public float life;
 	public float lightss;
     public bool shouldload = false;
+    GameObject dungeon;
     
 
 
 	// Use this for initialization
 	void Start () {
         player = GameObject.FindGameObjectWithTag("Player");
-        if (shouldload==true)
+        dungeon = GameObject.FindGameObjectWithTag("Dungeon");
+        if (shouldload == true)
+        {
             Load();
+        }
 	}
 	
 	// Update is called once per frame
@@ -80,6 +84,7 @@ class PlayerData
 	public float health;
     public float theLight;
     PlayerStats stats;
+
 
 
 }
