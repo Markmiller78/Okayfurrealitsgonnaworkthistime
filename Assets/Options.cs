@@ -44,6 +44,8 @@ public class Options : MonoBehaviour
     public Text sfxInt2;
     public Text musicInt2;
 
+    int numMelee;
+
     public bool[] achievements;
 
     [HideInInspector]
@@ -64,6 +66,26 @@ public class Options : MonoBehaviour
         sfxInt2.text = sfxVolume.ToString();
         musicInt2.text = musicVolume.ToString();
         beenAssigned = false;
+        numMelee = 0;
+
+        achievements = new bool[5];
+
+        achievements[0] = false; // Game Beaten
+        achievements[1] = false; // Melee
+        achievements[2] = false;
+        achievements[3] = false;
+        achievements[4] = false;
+
+    }
+
+    public void AddToMelee()
+    {
+        numMelee++;
+        if (numMelee >= 50 && achievements[1] == false)
+        {
+            GameObject.Find("MeleeAchv").GetComponent<Image>().enabled = true;
+            achievements[1] = true;
+        }
     }
 
     void Update()

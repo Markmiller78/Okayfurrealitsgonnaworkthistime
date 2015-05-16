@@ -22,6 +22,8 @@ public class PlayerMeleeAttack : MonoBehaviour
 
     public AudioClip meleeSound;
 
+    Options theoptions;
+
     void Start()
     {
         anim = GetComponentInParent<Animator>();
@@ -30,6 +32,7 @@ public class PlayerMeleeAttack : MonoBehaviour
         rotationDelta = player.transform.rotation.z;
         heroEqp = player.GetComponent<PlayerEquipment>();
         audioPlayer = GetComponent<AudioSource>();
+        theoptions = GameObject.Find("TheOptions").GetComponent<Options>();
     }
 
     void Update()
@@ -107,6 +110,7 @@ public class PlayerMeleeAttack : MonoBehaviour
     {
         if (attacking == false)
         {
+            theoptions.AddToMelee();
             audioPlayer.PlayOneShot(meleeSound);
             attacking = true;
             anim.CrossFade("Attacking", 0.01f);
