@@ -50,16 +50,17 @@ public class BGM : MonoBehaviour {
 	// Update is called once per frame
     void Update()
     {
-        volume = GameObject.FindObjectOfType<Options>().musicVolume;
+   
 
         if(Application.loadedLevelName=="Credits")
         {
+            volume = GameObject.FindObjectOfType<Options>().musicVolume;
             audioPlayer.volume = 0;
         }
         if(Application.loadedLevelName=="MainMenu"&&audioPlayer.volume==0 )
         {
             audioPlayer.Stop();
-           audioPlayer.volume = volume*0.1f;
+           audioPlayer.volume = volume*0.01f;
             audioPlayer.clip = clips[4];
             audioPlayer.Play();
         }
@@ -91,8 +92,9 @@ public class BGM : MonoBehaviour {
                         audioPlayer.volume = 0;
                     else if (volume != audioPlayer.volume)
                     {
+                        audioPlayer.volume = volume * 0.01f;
                         GameObject.FindObjectOfType<Options>().musicVolume = volume;
-                        audioPlayer.volume = volume * 0.1f;
+                     
                     }
 
                     if (!GameObject.FindObjectOfType<Options>().easyMode)
