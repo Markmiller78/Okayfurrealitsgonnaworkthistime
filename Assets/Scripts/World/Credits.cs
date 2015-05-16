@@ -21,7 +21,7 @@ public class Credits : MonoBehaviour {
     {
 
         creds.transform.position = new Vector3(creds.transform.position.x, -130, creds.transform.position.z);
-        if ((Input.GetButtonDown("CMenuAccept") || Input.GetButtonDown("KBMenuAccept")) || (Input.GetKeyDown(KeyCode.Mouse0)))
+        if ((Input.GetButtonDown("CMenuAccept") || Input.GetButtonDown("KBMenuAccept")) || (Input.GetButtonDown("CPause") || Input.GetButtonDown("KBPause"))||(Input.GetKeyDown(KeyCode.Mouse0)))
         {
             Application.LoadLevel("MainMenu");
 
