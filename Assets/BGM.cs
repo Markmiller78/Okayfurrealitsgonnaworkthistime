@@ -4,7 +4,7 @@ using System.Collections;
 public class BGM : MonoBehaviour {
     public AudioClip[] clips;
     GameObject dungeon;
-    RoomGeneration theRooms;
+  public  RoomGeneration theRooms;
     GameObject player;
     AudioSource audioPlayer;
     bool beenAssigned;
