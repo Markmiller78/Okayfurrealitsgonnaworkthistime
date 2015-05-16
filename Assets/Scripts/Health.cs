@@ -17,7 +17,7 @@ public class Health : MonoBehaviour
    public  GameObject lightRemains;
     PlayerEquipment equipment;
     public GameObject LoseText;
-    bool playerDead;
+   public bool playerDead;
     Animator anim;
     Health playerHealth;
 
@@ -118,6 +118,8 @@ public class Health : MonoBehaviour
             if (playerDead)
             {
                 anim.CrossFade("Dying", 0.01f);
+                GameObject.FindObjectOfType<BGM>().SendMessage("SetToMenu", SendMessageOptions.DontRequireReceiver);
+               // GameObject.FindObjectOfType<BGM>().audioPlayer.Stop();
                 equipment.paused = true;
                 playerDead = true;
                 Instantiate(LoseText);
