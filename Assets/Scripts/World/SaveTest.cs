@@ -10,13 +10,15 @@ public class SaveTest : MonoBehaviour {
 	public float lightss;
     public bool shouldload = false;
     GameObject dungeon;
-    
+    RoomGeneration theRooms;
 
 
 	// Use this for initialization
 	void Start () {
+
         player = GameObject.FindGameObjectWithTag("Player");
         dungeon = GameObject.FindGameObjectWithTag("Dungeon");
+        theRooms = GameObject.FindGameObjectWithTag("Dungeon").GetComponent<RoomGeneration>(); 
         if (shouldload == true)
         {
             Load();
@@ -25,7 +27,12 @@ public class SaveTest : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		Debug.Log(life + "/n" + lightss);
+		 if(dungeon==null)
+         {
+             dungeon = GameObject.FindGameObjectWithTag("Dungeon");
+             theRooms = GameObject.FindGameObjectWithTag("Dungeon").GetComponent<RoomGeneration>();
+         }
+            
 
 	
 	}
