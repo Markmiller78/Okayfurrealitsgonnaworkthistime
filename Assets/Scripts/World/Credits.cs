@@ -20,7 +20,10 @@ public class Credits : MonoBehaviour {
 	void Update ()
     {
 	
-	 
+	 if(Input.GetButtonDown("KBMenuCancel") || Input.GetButtonDown("CMenuCancel"))
+     {
+         LevelManager.Load("MainMenu");
+     }
 	 
 			creds.transform.Translate(scrolling);
 			scrolling.y+=0.9f;

@@ -13,6 +13,7 @@ public class PingAction : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+
         collis = gameObject.GetComponent<SphereCollider>();
         heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
         Destroy(gameObject, 0.6f);

@@ -37,19 +37,29 @@ public class AIShadowSpawn : MonoBehaviour
     bool newWayPoint;
     float maxSpeed;
     float AnimTimer;
+    public int StoredLight;
+    public GameObject BlindedParts;
+    public GameObject ReturningParts;
+    bool AbleToMelee;
+    public float attackDamage;
+    float AttackTimer;
 
     GameObject PrimaryThreat;
     GameObject SecondaryThreat;
+    PlayerMovement playMove;
     public enum State { Idle = 0, Evade, SuperEvade, Enrage }
     State CurrentState = State.Idle;
     void Start()
     {
+        AttackTimer = .5f;
+        AbleToMelee = false;
         EnragedSoundPlaying = false;
         heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
         Playsounds = gameObject.GetComponent<AudioSource>();
         //Random.seed = 42;
         player = GameObject.FindGameObjectWithTag("Player");
         playerLight = player.GetComponent<PlayerLight>();
+        playMove = player.GetComponent<PlayerMovement>();
         ShadowHealth = GetComponent<Health>();
         Moveto = new Vector3(0, 0);
         controller = GetComponent<CharacterController>();
@@ -69,6 +79,7 @@ public class AIShadowSpawn : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        AttackTimer -= Time.deltaTime;
         if (heroEquipment.paused == false)
         {
             //WorkPlease.SetInteger("AnimationNum", 0);
@@ -178,7 +189,8 @@ public class AIShadowSpawn : MonoBehaviour
                 //print("did stuff");
             }
 
-
+            if (DistancetoPlayer < 2f && AbleToMelee == true)
+                Attack();
 
             Moveto.Normalize();
             if (Physics.Raycast(transform.position, Moveto, .7f) && CurrentState != State.Enrage)
@@ -198,13 +210,14 @@ public class AIShadowSpawn : MonoBehaviour
 
             ConsumeLight();
             if (speed > 1)
-                controller.Move(Moveto); 
+                controller.Move(Moveto);
         }
     }
 
     void Idle()
     {
         maxSpeed = 3;
+        AbleToMelee = false;
 
         //Change Idle Waypoint every 2 seconds.
         if (timerCount > 2)
@@ -221,6 +234,8 @@ public class AIShadowSpawn : MonoBehaviour
 
     void Evade()
     {
+        AbleToMelee = false;
+
         if (timerCount > 1)
         {
             timerCount = 0;
@@ -234,6 +249,8 @@ public class AIShadowSpawn : MonoBehaviour
 
     void SuperEvade()
     {
+        AbleToMelee = false;
+
         maxSpeed = 4;
 
         if (stuckCounter <= 0)
@@ -268,8 +285,24 @@ public class AIShadowSpawn : MonoBehaviour
         WayPoint = player.transform.position - transform.position;
         Moveto = WayPoint;
         newWayPoint = true;
+
+
+
+        if (AttackTimer < 0)
+        {
+            AttackTimer = .5f;
+            AbleToMelee = true;
+        }
     }
 
+    void Attack()
+    {
+        if (playMove != null)
+        {
+            playMove.KnockBack(transform.position);
+            player.GetComponent<Health>().LoseHealth(attackDamage);
+        }
+    }
     void Jump()
     {
         Vector3 temp = player.transform.position;
@@ -291,15 +324,13 @@ public class AIShadowSpawn : MonoBehaviour
             playerConsumeTimer = 2;
             Instantiate(Lightexplosion, player.transform.position, player.transform.rotation);
             playerLight.currentLight -= 4;
-            ShadowHealth.currentHP -= 7;
-            ShadowHealth.currentHP += 8;
-
+            StoredLight += 4;
         }
 
 
         if (DistancetoLight < 2 && DmgTimer <= 0)
         {
-            
+
             DmgTimer = .5f;
             //print("GetLight");
             //INSTANTIATE PARTICLES ON THE PLAYER HERE TO SIGNIFY STEALING LIGHT AND DAMAGING THE SPAWN
@@ -307,13 +338,13 @@ public class AIShadowSpawn : MonoBehaviour
             //print(DistancetoPrimary);
 
             //NearestLightPickup.GetComponent<LightID>();
-            if(NearestLightPickup.GetComponent<LightID>().theID == lightID.Large)
+            if (NearestLightPickup.GetComponent<LightID>().theID == lightID.Large)
             {
-                ShadowHealth.currentHP -= 12;
+                StoredLight += 18;
             }
-            else if(NearestLightPickup.GetComponent<LightID>().theID == lightID.Small)
+            else if (NearestLightPickup.GetComponent<LightID>().theID == lightID.Small)
             {
-                ShadowHealth.currentHP -= 5;
+                StoredLight += 1;
             }
             Destroy(NearestLightPickup);
 
@@ -323,13 +354,39 @@ public class AIShadowSpawn : MonoBehaviour
 
         //DO Dead things
         if (ShadowHealth.currentHP <= 0)
+        {
+            BlindedByTheLight();
             Destroy(gameObject);
-
+    }
 
 
 
 
     }
+
+    void BlindedByTheLight()
+    {
+        PlayerLight ReturnLight = player.GetComponent<PlayerLight>();
+        ShadowHealth = GetComponent<Health>();
+        if (ShadowHealth != null)
+            ShadowHealth.LoseHealth(StoredLight);
+
+        Instantiate(BlindedParts, transform.position, transform.rotation);
+        Instantiate(ReturningParts, transform.position, transform.rotation);
+        ReturnLight.currentLight += StoredLight;
+
+        if (ReturnLight.currentLight > ReturnLight.maxLight)
+        {
+            ReturnLight.currentLight = ReturnLight.maxLight;
+        }
+
+        StoredLight = 0;
+
+    }
+
+
+
+
     public static GameObject findNearestWithTag(Vector3 fromPosition, string tag)
     {
         GameObject[] gos = GameObject.FindGameObjectsWithTag(tag);
