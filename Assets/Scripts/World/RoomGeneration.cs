@@ -42,7 +42,7 @@ public class RoomGeneration : MonoBehaviour
     public GameObject[] checkpointRooms;
     Room[] checkpointRoomsInfo;
 
-   public bool easyMode;
+    bool easyMode;
     int enemyMod;
     int prevRoom = -1;
 
@@ -50,7 +50,7 @@ public class RoomGeneration : MonoBehaviour
     {
         //DontDestroyOnLoad(this);
         player = GameObject.FindGameObjectWithTag("Player");
-        Utilities.ArrayShuffle(floorOneRooms);
+        //Utilities.ArrayShuffle(floorOneRooms);
         floorOneRoomsInfo = new Room[floorOneRooms.Length];
         for (int i = 0; i < floorOneRooms.Length; i++)
         {
@@ -118,8 +118,8 @@ public class RoomGeneration : MonoBehaviour
         FillDungeon();
 
         //TESTING
-        //finalRoomArray[0] = floorOneRooms[3];
-        //finalRoomInfoArray[0] = floorOneRoomsInfo[3];
+        //finalRoomArray[0] = floorOneRooms[9];
+        //finalRoomInfoArray[0] = floorOneRoomsInfo[9];
         //ENDTESTING
 
         CreateRoom();
@@ -137,7 +137,7 @@ public class RoomGeneration : MonoBehaviour
         else
             --enemyMod;
 
-        if (enemyMod == 0)
+        if (enemyMod <= 0)
         {
             enemyMod = (easyMode ? 11 : 9);
         }

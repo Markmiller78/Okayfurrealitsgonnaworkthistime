@@ -112,7 +112,10 @@ public class AIShadowCloud : MonoBehaviour
 
     void OnDestroy()
     {
-        heroLight.cookie = null;
+        if (heroLight != null)
+        {
+            heroLight.cookie = null;
+        }
     }
 
     void Decoy(GameObject decoy)
