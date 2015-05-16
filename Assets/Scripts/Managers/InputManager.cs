@@ -69,7 +69,8 @@ public class InputManager : MonoBehaviour
                 {
                     player.SendMessage("Interact", SendMessageOptions.DontRequireReceiver);
                     GameObject chest = GameObject.FindGameObjectWithTag("Chest");
-                    chest.SendMessage("Interact");
+                    if (chest != null)
+                        chest.SendMessage("Interact");
                 }
             }
             // Start to pause
