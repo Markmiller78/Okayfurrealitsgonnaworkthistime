@@ -89,10 +89,12 @@ public class PauseMenu : MonoBehaviour
                     if (InputManager.controller && Input.GetButtonDown("CMenuAccept"))
                     {
                         // Save Code Here
+                        GameObject.FindGameObjectWithTag("Player").SendMessage("Save", SendMessageOptions.DontRequireReceiver);
                     }
                     else if (!InputManager.controller && Input.GetButtonDown("KBMenuAccept"))
                     {
                         // Save Code Here
+                        GameObject.FindGameObjectWithTag("Player").SendMessage("Save", SendMessageOptions.DontRequireReceiver);
                     }
                     break;
                     #endregion
@@ -102,10 +104,14 @@ public class PauseMenu : MonoBehaviour
                     if (InputManager.controller && Input.GetButtonDown("CMenuAccept"))
                     {
                         // Save & Quit Code Here
+                        GameObject.FindGameObjectWithTag("Player").SendMessage("Save", SendMessageOptions.DontRequireReceiver);
+                        Application.Quit();
                     }
                     else if (!InputManager.controller && Input.GetButtonDown("KBMenuAccept"))
                     {
                         // Save & Quit Code Here
+                        GameObject.FindGameObjectWithTag("Player").SendMessage("Save", SendMessageOptions.DontRequireReceiver);
+                        Application.Quit();
                     }
                     break;
                     #endregion

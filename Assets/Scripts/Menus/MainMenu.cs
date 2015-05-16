@@ -323,6 +323,7 @@ public class MainMenu : MonoBehaviour
                         MainMenuText.SetActive(false);
                         LevelManager.Load("Credits");
                         CurrMenu = Menu.Credits;
+                        Application.LoadLevel("Credits");
                         break;
                     }
                 case 3:

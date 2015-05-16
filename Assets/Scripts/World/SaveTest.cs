@@ -96,15 +96,18 @@ public class SaveTest : MonoBehaviour {
       gameObject.GetComponent<Health>().currentHP=      PlayerPrefs.GetFloat("PlayerHealth", 100);
      gameObject.GetComponent<PlayerLight>().currentLight=      PlayerPrefs.GetFloat("PlayerLight", 100);
      int teemplenght = PlayerPrefs.GetInt("RoomArrLenght", 0);
-     theRooms.finalRoomInfoArray = new Room[teemplenght];
-     for (int i = 0; i < teemplenght; i++)
+     if (teemplenght != 0)
      {
-               string temp= "Room_"+i.ToString()+" been there";
-                 string temps= "RoomID_"+i.ToString();
-         theRooms.finalRoomInfoArray[i].beenThere=     PlayerPrefs.GetInt(temp)==1?true:false;
-               theRooms.finalRoomInfoArray[i].roomID= PlayerPrefs.GetInt(temps);
+         theRooms.finalRoomInfoArray = new Room[teemplenght];
+         for (int i = 0; i < teemplenght; i++)
+         {
+             string temp = "Room_" + i.ToString() + " been there";
+             string temps = "RoomID_" + i.ToString();
+             theRooms.finalRoomInfoArray[i].beenThere = PlayerPrefs.GetInt(temp) == 1 ? true : false;
+             theRooms.finalRoomInfoArray[i].roomID = PlayerPrefs.GetInt(temps);
+         }
      }
-     options.easyMode = PlayerPrefs.GetInt("EasyMode") == 1 ? true : false;
+     options.easyMode = PlayerPrefs.GetInt("EasyMode",1) == 1 ? true : false;
 
        }
        else
