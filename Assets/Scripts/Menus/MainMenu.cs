@@ -59,6 +59,7 @@ public class MainMenu : MonoBehaviour
         MouseCanClick = false;
         disablemouse = false;
         // Load();
+        SelectRects = new Rect[7];
         for (int i = 0; i < SelectRects.Length; i++)
         {
 

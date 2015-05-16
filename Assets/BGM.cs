@@ -60,12 +60,15 @@ public class BGM : MonoBehaviour {
         if( dungeon==null)
         {
             dungeon = GameObject.FindGameObjectWithTag("Dungeon");
-            theRooms = dungeon.GetComponent<RoomGeneration>();
+            if (dungeon != null)
+            {
+                theRooms = dungeon.GetComponent<RoomGeneration>();
+            }
         }
 
    if(theRooms!=null)
    {
-       if(!theRooms.easyMode)
+       if(!GameObject.FindObjectOfType<Options>().easyMode)
        {
       if( theRooms.currentRoom < 8&&audioPlayer.clip!=clips[0])
       {
