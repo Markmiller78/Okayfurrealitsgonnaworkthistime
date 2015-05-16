@@ -8,6 +8,7 @@ public class BGM : MonoBehaviour {
     GameObject player;
     AudioSource audioPlayer;
     bool beenAssigned;
+    Options options;
 
 
     private static BGM _instance;
@@ -39,6 +40,7 @@ public class BGM : MonoBehaviour {
     }
 	// Use this for initialization
 	void Start () {
+        options = GameObject.FindObjectOfType<Options>();
         audioPlayer = gameObject.GetComponent<AudioSource>();
         dungeon = GameObject.FindGameObjectWithTag("Dungeon");
         DontDestroyOnLoad(this.gameObject);
@@ -52,6 +54,7 @@ public class BGM : MonoBehaviour {
         if (!beenAssigned && Application.loadedLevelName == "Game")
         {
             player = GameObject.FindGameObjectWithTag("Player");
+            if(player!=null)
             beenAssigned = true;
         }
         
@@ -65,7 +68,7 @@ public class BGM : MonoBehaviour {
 
    if(theRooms!=null)
    {
-       if(!theRooms.easyMode)
+       if(!options.easyMode)
        {
       if( theRooms.currentRoom < 8&&audioPlayer.clip!=clips[0])
       {
