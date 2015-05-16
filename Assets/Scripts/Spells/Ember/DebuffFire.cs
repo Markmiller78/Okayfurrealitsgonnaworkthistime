@@ -15,11 +15,17 @@ public class DebuffFire : MonoBehaviour
 
     void Start()
     {
+        eqp = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
+
         timer = 0;
+        if (target == null)
+        {
+            Destroy(gameObject);
+            return;
+        }
         targetHealth = target.GetComponent<Health>();
         particles = gameObject.GetComponent<ParticleSystem>();
         theLight = gameObject.GetComponent<Light>();
-        eqp = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
 
     }
 

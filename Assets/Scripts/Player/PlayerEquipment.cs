@@ -47,6 +47,10 @@ public class PlayerEquipment : MonoBehaviour
         audioPlayer = gameObject.GetComponent<AudioSource>();
         emberDurability = 0;
         paused = false;
+
+        BootName = "Starter Charging Boot";
+        AccessoryName = "Starter Orb of Light";
+
     }
 
     public void EmberLoseDurability()

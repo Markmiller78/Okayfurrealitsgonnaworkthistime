@@ -46,21 +46,39 @@ public class MainMenu : MonoBehaviour
     public AudioClip selectSound;
     public AudioSource soundSource;
 
+    public Rect[] SelectRects;
+    Vector2 Mouse;
+    Vector2 MouseOld;
+    bool MouseCanClick;
 
     float timer = 0;
-
+    int offset = 0;
     // Use this for initialization
     void Start()
     {
+        MouseCanClick = false;
         // Load();
+        for (int i = 0; i < SelectRects.Length; i++)
+        {
 
+            SelectRects[i] = new Rect(516, 125 + offset, 300, 150);
+            offset += 67;
+        }
+        SelectRects[0] = new Rect(516, 125, 300, 150);  //Exit button
+        SelectRects[1] = new Rect(516, 192, 300, 150); // Off the screen not needed for this menu
+        SelectRects[2] = new Rect(516, 259, 300, 150); // Off the screen not needed for this menu
+        SelectRects[3] = new Rect(516, 326, 300, 150); // Off the screen not needed for this menu
+        SelectRects[4] = new Rect(516, 393, 300, 150); // Off the screen not needed for this menu
+        SelectRects[5] = new Rect(516, 460, 300, 150); // Off the screen not needed for this menu
+        SelectRects[6] = new Rect(516, 527, 300, 150); // Off the screen not needed for this menu
+        Mouse = new Vector2(Input.mousePosition.x, Screen.height - Input.mousePosition.y);
 
         ControllerOptionToggle = false;
         health = 50;
         theLight = 0;
 
 #if UNITY_STANDALONE
-      //  Save();
+        //  Save();
 #endif
         //   playerhealth.text = health.ToString();
         //     playerlight.text = light.ToString();
@@ -71,6 +89,31 @@ public class MainMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        print(Mouse);
+
+        MouseOld = Mouse;
+        Mouse = new Vector2(Input.mousePosition.x, Screen.height - Input.mousePosition.y);
+        if (Mouse != MouseOld)
+        {
+            for (int i = 0; i < SelectRects.Length; i++)
+            {
+                if (SelectRects[i].Contains(Mouse))
+                    currentSelection = i;
+            }
+        }
+
+
+        for (int i = 0; i < SelectRects.Length; i++)
+        {
+            MouseCanClick = false;
+            if (SelectRects[i].Contains(Mouse))
+            {
+                MouseCanClick = true;
+                break;
+            }
+        }
+
+
         timer -= Time.deltaTime;
         SelectIcon.transform.position = new Vector3(-2.2f, choices[currentSelection], -5);
         if ((Input.GetAxis("CLSVertical") > .7f || Input.GetAxis("KBVertical") > 0 || Input.GetAxis("CDPadVertical") > .7f) && AxisChanged == false && currentSelection < 8)
@@ -108,31 +151,73 @@ public class MainMenu : MonoBehaviour
         {
             case Menu.Main:
                 {
+                    SelectRects[0] = new Rect(516, 125, 300, 150); 
+                    SelectRects[1] = new Rect(516, 192, 300, 150); 
+                    SelectRects[2] = new Rect(516, 259, 300, 150); 
+                    SelectRects[3] = new Rect(516, 326, 300, 150); 
+                    SelectRects[4] = new Rect(516, 525, 300, 150); 
+                    SelectRects[5] = new Rect(516, 1867, 300, 150);
+                    SelectRects[6] = new Rect(516, 1867, 300, 150);
                     MainMenuSelect();
                     break;
                 }
             case Menu.Options:
                 {
+                    SelectRects[0] = new Rect(516, 125, 300, 150); 
+                    SelectRects[1] = new Rect(516, 192, 300, 150); 
+                    SelectRects[2] = new Rect(516, 259, 300, 150); 
+                    SelectRects[3] = new Rect(516, 326, 300, 150); 
+                    SelectRects[4] = new Rect(516, 393, 300, 150); 
+                    SelectRects[5] = new Rect(516, 460, 300, 150); 
+                    SelectRects[6] = new Rect(516, 527, 300, 150); 
                     OptionsMenu();
                     break;
                 }
             case Menu.Credits:
                 {
+                    SelectRects[0] = new Rect(516, 525, 300, 150); 
+                    SelectRects[1] = new Rect(516, 1867, 300, 150);
+                    SelectRects[2] = new Rect(516, 1867, 300, 150);
+                    SelectRects[3] = new Rect(516, 1867, 300, 150);
+                    SelectRects[4] = new Rect(516, 1867, 300, 150);
+                    SelectRects[5] = new Rect(516, 1867, 300, 150);
+                    SelectRects[6] = new Rect(516, 1867, 300, 150);
                     CreditsMenu();
                     break;
                 }
             case Menu.Achievements:
                 {
+                    SelectRects[0] = new Rect(516, 525, 300, 150);  
+                    SelectRects[1] = new Rect(516, 1867, 300, 150); 
+                    SelectRects[2] = new Rect(516, 1867, 300, 150); 
+                    SelectRects[3] = new Rect(516, 1867, 300, 150); 
+                    SelectRects[4] = new Rect(516, 1867, 300, 150); 
+                    SelectRects[5] = new Rect(516, 1867, 300, 150); 
+                    SelectRects[6] = new Rect(516, 1867, 300, 150); 
                     AchievementsMenu();
                     break;
                 }
             case Menu.Continue:
                 {
+                    SelectRects[0] = new Rect(516, 125 + 70, 300, 150);
+                    SelectRects[1] = new Rect(516, 125 + 140, 300, 150);
+                    SelectRects[2] = new Rect(516, 525, 300, 150); 
+                    SelectRects[3] = new Rect(516, 1867, 300, 150);
+                    SelectRects[4] = new Rect(516, 1867, 300, 150);
+                    SelectRects[5] = new Rect(516, 1867, 300, 150);
+                    SelectRects[6] = new Rect(516, 1867, 300, 150);
                     ContinueMenu();
                     break;
                 }
             case Menu.SelectDifficulty:
                 {
+                    SelectRects[0] = new Rect(516, 125 + 70, 300, 150);
+                    SelectRects[1] = new Rect(516, 125 + 140, 300, 150);
+                    SelectRects[2] = new Rect(516, 525, 300, 150); 
+                    SelectRects[3] = new Rect(516, 1867, 300, 150);
+                    SelectRects[4] = new Rect(516, 1867, 300, 150);
+                    SelectRects[5] = new Rect(516, 1867, 300, 150);
+                    SelectRects[6] = new Rect(516, 1867, 300, 150);
                     SelectDifficultyMenu();
                     break;
                 }
@@ -151,6 +236,7 @@ public class MainMenu : MonoBehaviour
         choices[4] = -2.72f;
         MainMenuText.SetActive(true);
 
+  
         switch (currentSelection)
         {
             //This is used for Highlighting the currently selected menu option
@@ -202,7 +288,8 @@ public class MainMenu : MonoBehaviour
         }
 
 
-        if ((Input.GetButtonDown("CMenuAccept") || Input.GetButtonDown("KBMenuAccept")) && timer < 0)
+
+        if ((Input.GetButtonDown("CMenuAccept") || Input.GetButtonDown("KBMenuAccept")) || (Input.GetKeyDown(KeyCode.Mouse0) && MouseCanClick) && timer < 0 )
         {
             timer = .5f;
             for (int i = 0; i < 5; i++)
@@ -349,7 +436,7 @@ public class MainMenu : MonoBehaviour
                 }
         }
 
-        if ((Input.GetButtonDown("CMenuAccept") || Input.GetButtonDown("KBMenuAccept")) && timer < 0)
+        if ((Input.GetButtonDown("CMenuAccept") || Input.GetButtonDown("KBMenuAccept")) || (Input.GetKeyDown(KeyCode.Mouse0) && MouseCanClick) && timer < 0)
         {
             timer = .5f;
             for (int i = 0; i < 5; i++)
@@ -511,7 +598,7 @@ public class MainMenu : MonoBehaviour
     void CreditsMenu()
     {
         maxchoices = 0;
-        choices[0] = -1.7f;
+        choices[0] = -2.72f;
         Credits.SetActive(true);
 
 
@@ -529,7 +616,7 @@ public class MainMenu : MonoBehaviour
                     break;
                 }
         }
-        if ((Input.GetButtonDown("CMenuAccept") || Input.GetButtonDown("KBMenuAccept")) && timer < 0)
+        if ((Input.GetButtonDown("CMenuAccept") || Input.GetButtonDown("KBMenuAccept")) || (Input.GetKeyDown(KeyCode.Mouse0) && MouseCanClick) && timer < 0)
         {
             timer = 1;
             for (int i = 0; i < 1; i++)
@@ -546,6 +633,13 @@ public class MainMenu : MonoBehaviour
             {
                 case 0:
                     {
+                        SelectRects[0] = new Rect(516, 125, 300, 150);
+                        SelectRects[1] = new Rect(516, 192, 300, 150);
+                        SelectRects[2] = new Rect(516, 259, 300, 150);
+                        SelectRects[3] = new Rect(516, 326, 300, 150);
+                        SelectRects[4] = new Rect(516, 525, 300, 150);
+                        SelectRects[5] = new Rect(516, 1867, 300, 150);
+                        SelectRects[6] = new Rect(516, 1867, 300, 150);
                         Credits.SetActive(false);
                         CurrMenu = Menu.Main;
                         currentSelection = 2;
@@ -572,6 +666,13 @@ public class MainMenu : MonoBehaviour
             {
                 default:
                     {
+                        SelectRects[0] = new Rect(516, 125, 300, 150);
+                        SelectRects[1] = new Rect(516, 192, 300, 150);
+                        SelectRects[2] = new Rect(516, 259, 300, 150);
+                        SelectRects[3] = new Rect(516, 326, 300, 150);
+                        SelectRects[4] = new Rect(516, 525, 300, 150);
+                        SelectRects[5] = new Rect(516, 1867, 300, 150);
+                        SelectRects[6] = new Rect(516, 1867, 300, 150);
                         Credits.SetActive(false);
                         CurrMenu = Menu.Main;
                         currentSelection = 2;
@@ -587,7 +688,7 @@ public class MainMenu : MonoBehaviour
     void AchievementsMenu()
     {
         maxchoices = 0;
-        choices[0] = -1.7f;
+        choices[0] = -2.72f;
         Achievements.SetActive(true);
 
         switch (currentSelection)
@@ -603,7 +704,7 @@ public class MainMenu : MonoBehaviour
                     break;
                 }
         }
-        if ((Input.GetButtonDown("CMenuAccept") || Input.GetButtonDown("KBMenuAccept")) && timer < 0)
+        if ((Input.GetButtonDown("CMenuAccept") || Input.GetButtonDown("KBMenuAccept")) || (Input.GetKeyDown(KeyCode.Mouse0) && MouseCanClick) && timer < 0)
         {
             timer = 1;
             for (int i = 0; i < 1; i++)
@@ -621,6 +722,13 @@ public class MainMenu : MonoBehaviour
             {
                 case 0:
                     {
+                        SelectRects[0] = new Rect(516, 125, 300, 150);
+                        SelectRects[1] = new Rect(516, 192, 300, 150);
+                        SelectRects[2] = new Rect(516, 259, 300, 150);
+                        SelectRects[3] = new Rect(516, 326, 300, 150);
+                        SelectRects[4] = new Rect(516, 525, 300, 150);
+                        SelectRects[5] = new Rect(516, 1867, 300, 150);
+                        SelectRects[6] = new Rect(516, 1867, 300, 150);
                         Achievements.SetActive(false);
                         CurrMenu = Menu.Main;
                         currentSelection = 3;
@@ -647,6 +755,13 @@ public class MainMenu : MonoBehaviour
             {
                 default:
                     {
+                        SelectRects[0] = new Rect(516, 125, 300, 150);
+                        SelectRects[1] = new Rect(516, 192, 300, 150);
+                        SelectRects[2] = new Rect(516, 259, 300, 150);
+                        SelectRects[3] = new Rect(516, 326, 300, 150);
+                        SelectRects[4] = new Rect(516, 525, 300, 150);
+                        SelectRects[5] = new Rect(516, 1867, 300, 150);
+                        SelectRects[6] = new Rect(516, 1867, 300, 150);
                         Achievements.SetActive(false);
                         CurrMenu = Menu.Main;
                         currentSelection = 3;
@@ -697,7 +812,7 @@ public class MainMenu : MonoBehaviour
                     break;
                 }
         }
-        if ((Input.GetButtonDown("CMenuAccept") || Input.GetButtonDown("KBMenuAccept")) && timer < 0)
+        if ((Input.GetButtonDown("CMenuAccept") || Input.GetButtonDown("KBMenuAccept")) || (Input.GetKeyDown(KeyCode.Mouse0) && MouseCanClick) && timer < 0)
         {
             timer = 1;
             for (int i = 0; i < 3; i++)
@@ -716,7 +831,7 @@ public class MainMenu : MonoBehaviour
                 case 0:
                     {
                         //CONTINUE PREVIOUS GAME
-                      //  LoadStats();
+                        //  LoadStats();
                         Application.LoadLevel("TonyScene");
                         break;
                     }
@@ -729,6 +844,13 @@ public class MainMenu : MonoBehaviour
                     }
                 case 2:
                     {
+                        SelectRects[0] = new Rect(516, 125, 300, 150);
+                        SelectRects[1] = new Rect(516, 192, 300, 150);
+                        SelectRects[2] = new Rect(516, 259, 300, 150);
+                        SelectRects[3] = new Rect(516, 326, 300, 150);
+                        SelectRects[4] = new Rect(516, 525, 300, 150);
+                        SelectRects[5] = new Rect(516, 1867, 300, 150);
+                        SelectRects[6] = new Rect(516, 1867, 300, 150);
                         ContinueText.SetActive(false);
                         CurrMenu = Menu.Main;
                         currentSelection = 0;
@@ -755,6 +877,13 @@ public class MainMenu : MonoBehaviour
             {
                 default:
                     {
+                        SelectRects[0] = new Rect(516, 125, 300, 150);
+                        SelectRects[1] = new Rect(516, 192, 300, 150);
+                        SelectRects[2] = new Rect(516, 259, 300, 150);
+                        SelectRects[3] = new Rect(516, 326, 300, 150);
+                        SelectRects[4] = new Rect(516, 525, 300, 150);
+                        SelectRects[5] = new Rect(516, 1867, 300, 150);
+                        SelectRects[6] = new Rect(516, 1867, 300, 150);
                         ContinueText.SetActive(false);
                         CurrMenu = Menu.Main;
                         currentSelection = 3;
@@ -803,7 +932,7 @@ public class MainMenu : MonoBehaviour
                     break;
                 }
         }
-        if ((Input.GetButtonDown("CMenuAccept") || Input.GetButtonDown("KBMenuAccept")) && timer < 0)
+        if ((Input.GetButtonDown("CMenuAccept") || Input.GetButtonDown("KBMenuAccept")) || (Input.GetKeyDown(KeyCode.Mouse0) && MouseCanClick) && timer < 0)
         {
             timer = 1;
             for (int i = 0; i < 3; i++)
@@ -834,6 +963,14 @@ public class MainMenu : MonoBehaviour
                     }
                 case 2:
                     {
+                        SelectRects[0] = new Rect(516, 125 + 70, 300, 150);
+                        SelectRects[1] = new Rect(516, 125 + 140, 300, 150);
+                        SelectRects[2] = new Rect(516, 525, 300, 150);
+                        SelectRects[3] = new Rect(516, 1867, 300, 150);
+                        SelectRects[4] = new Rect(516, 1867, 300, 150);
+                        SelectRects[5] = new Rect(516, 1867, 300, 150);
+                        SelectRects[6] = new Rect(516, 1867, 300, 150);
+                        ContinueMenu();
                         SelectDifficulty.SetActive(false);
                         CurrMenu = Menu.Continue;
                         currentSelection = 0;
@@ -860,6 +997,14 @@ public class MainMenu : MonoBehaviour
             {
                 default:
                     {
+                        SelectRects[0] = new Rect(516, 125 + 70, 300, 150);
+                        SelectRects[1] = new Rect(516, 125 + 140, 300, 150);
+                        SelectRects[2] = new Rect(516, 525, 300, 150);
+                        SelectRects[3] = new Rect(516, 1867, 300, 150);
+                        SelectRects[4] = new Rect(516, 1867, 300, 150);
+                        SelectRects[5] = new Rect(516, 1867, 300, 150);
+                        SelectRects[6] = new Rect(516, 1867, 300, 150);
+                        ContinueMenu();
                         SelectDifficulty.SetActive(false);
                         CurrMenu = Menu.Continue;
                         currentSelection = 0;
