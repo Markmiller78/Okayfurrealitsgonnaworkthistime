@@ -44,6 +44,8 @@ public class Options : MonoBehaviour
     public Text sfxInt2;
     public Text musicInt2;
 
+    public bool[] achievements;
+
     [HideInInspector]
     public GameObject savedPlayer;
     GameObject player;
