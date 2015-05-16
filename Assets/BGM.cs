@@ -8,6 +8,7 @@ public class BGM : MonoBehaviour {
     GameObject player;
     AudioSource audioPlayer;
     bool beenAssigned;
+    int volume;
 
 
     private static BGM _instance;
@@ -68,6 +69,13 @@ public class BGM : MonoBehaviour {
 
    if(theRooms!=null)
    {
+       volume = GameObject.FindObjectOfType<Options>().musicVolume;
+ 
+       if (Application.loadedLevelName == "LoadScreen")
+           audioPlayer.volume=0;
+       else if(volume!=audioPlayer.volume)
+            GameObject.FindObjectOfType<Options>().musicVolume=volume;
+       
        if(!GameObject.FindObjectOfType<Options>().easyMode)
        {
       if( theRooms.currentRoom < 8&&audioPlayer.clip!=clips[0])
