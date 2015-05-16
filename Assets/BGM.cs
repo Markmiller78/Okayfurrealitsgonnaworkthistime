@@ -56,7 +56,7 @@ public class BGM : MonoBehaviour {
         {
             audioPlayer.volume = 0;
         }
-        if(Application.loadedLevelName=="MainMenu"&&audioPlayer.volume==0)
+        if(Application.loadedLevelName=="MainMenu" )
         {
             audioPlayer.Stop();
            audioPlayer.volume = volume*0.1f;
