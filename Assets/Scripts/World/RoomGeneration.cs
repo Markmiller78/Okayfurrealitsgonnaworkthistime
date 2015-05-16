@@ -42,7 +42,7 @@ public class RoomGeneration : MonoBehaviour
     public GameObject[] checkpointRooms;
     Room[] checkpointRoomsInfo;
 
-    bool easyMode;
+    public bool easyMode;
     int enemyMod;
     int prevRoom = -1;
 

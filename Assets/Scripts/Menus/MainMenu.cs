@@ -50,13 +50,14 @@ public class MainMenu : MonoBehaviour
     Vector2 Mouse;
     Vector2 MouseOld;
     bool MouseCanClick;
-
+    bool disablemouse;
     float timer = 0;
     int offset = 0;
     // Use this for initialization
     void Start()
     {
         MouseCanClick = false;
+        disablemouse = false;
         // Load();
         for (int i = 0; i < SelectRects.Length; i++)
         {
@@ -93,7 +94,7 @@ public class MainMenu : MonoBehaviour
 
         MouseOld = Mouse;
         Mouse = new Vector2(Input.mousePosition.x, Screen.height - Input.mousePosition.y);
-        if (Mouse != MouseOld)
+        if (Mouse != MouseOld && disablemouse == false)
         {
             for (int i = 0; i < SelectRects.Length; i++)
             {
@@ -163,13 +164,13 @@ public class MainMenu : MonoBehaviour
                 }
             case Menu.Options:
                 {
-                    SelectRects[0] = new Rect(516, 125, 300, 150); 
-                    SelectRects[1] = new Rect(516, 192, 300, 150); 
-                    SelectRects[2] = new Rect(516, 259, 300, 150); 
-                    SelectRects[3] = new Rect(516, 326, 300, 150); 
-                    SelectRects[4] = new Rect(516, 393, 300, 150); 
-                    SelectRects[5] = new Rect(516, 460, 300, 150); 
-                    SelectRects[6] = new Rect(516, 527, 300, 150); 
+                    SelectRects[0] = new Rect(516, 125, 300, 150);
+                    SelectRects[1] = new Rect(516, 192, 300, 150);
+                    SelectRects[2] = new Rect(516, 259, 300, 150);
+                    SelectRects[3] = new Rect(516, 326, 300, 150);
+                    SelectRects[4] = new Rect(516, 525, 300, 150);
+                    SelectRects[5] = new Rect(516, 1867, 300, 150);
+                    SelectRects[6] = new Rect(516, 1867, 300, 150);
                     OptionsMenu();
                     break;
                 }
@@ -453,11 +454,13 @@ public class MainMenu : MonoBehaviour
             {
                 case 0:
                     {
+                        disablemouse = true;
                         currentSelection = 8;
                         break;
                     }
                 case 1:
                     {
+                        disablemouse = true;
                         currentSelection = 9;
                         break;
                     }
@@ -508,11 +511,13 @@ public class MainMenu : MonoBehaviour
                     }
                 case 8:
                     {
+                        disablemouse = false;
                         currentSelection = 0;
                         break;
                     }
                 case 9:
                     {
+                        disablemouse = false;
                         currentSelection = 1;
                         break;
                     }
