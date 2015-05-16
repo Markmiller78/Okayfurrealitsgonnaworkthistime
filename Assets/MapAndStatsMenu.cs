@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using UnityEngine.UI;
 public class MapAndStatsMenu : MonoBehaviour
 {
     bool showing;
@@ -12,8 +12,39 @@ public class MapAndStatsMenu : MonoBehaviour
     GameObject dungeon;
     RoomGeneration generator;
 
+    public Text SpellPower;
+    public Text AttackDamage;
+    public Text MaxHP;
+    public Text MaxLight;
+
+    [Header("Accessory Tip")]
+    public Text T1Name;
+    public Text T1Stat1;
+    public Text T1Stat2;
+    public Text T1StatAmount1;
+    public Text T1StatAmount2;
+
+    [Header("Boot Tooltip")]
+    public Text T2Name;
+    public Text T2Stat1;
+    public Text T2Stat2;
+    public Text T2StatAmount1;
+    public Text T2StatAmount2;
+
+    [Header("Ember Tooltip")]
+    public GameObject EmberIcon;
+    public Text T3Name;
+    public Text T3Stat1;
+    public Text T3Stat2;
+    public Text T3StatAmount1;
+    public Text T3StatAmount2;
+
+
+    float timer;
+
     void Start()
     {
+        timer = .5f;
         player = GameObject.FindGameObjectWithTag("Player");
         equipment = player.GetComponent<PlayerEquipment>();
         canvas = GameObject.Find("Map&StatsCanvas");
@@ -40,7 +71,12 @@ public class MapAndStatsMenu : MonoBehaviour
 
     void Update()
     {
-
+        timer -= Time.deltaTime;
+        if (timer < 0)
+        {
+            timer = .5f;
+            GetStatsFromEquipment();
+        }
     }
 
     void OnGUI()
@@ -118,5 +154,72 @@ public class MapAndStatsMenu : MonoBehaviour
         showing = false;
         canvas.SetActive(false);
         equipment.paused = false;
+    }
+
+    void GetStatsFromEquipment()
+    {
+
+        PlayerStats plyStats = player.GetComponent<PlayerStats>();
+        float health = plyStats.maxHPModifier + 100;
+        float lght = plyStats.maxLightModifier + 100;
+        SpellPower.text = plyStats.spellModifier.ToString();
+        AttackDamage.text = plyStats.meleeModifier.ToString();
+        MaxHP.text = health.ToString();
+        MaxLight.text = lght.ToString();
+
+        T1Name.text = equipment.AccessoryName;
+        T1Stat1.text = equipment.AccessoryStat1.TheStat.ToString();
+        T1Stat2.text = equipment.AccessoryStat2.TheStat.ToString();
+        T1StatAmount1.text = equipment.AccessoryStat1.StatAmount.ToString();
+        T1StatAmount2.text = equipment.AccessoryStat2.StatAmount.ToString();
+        
+        T2Name.text = equipment.BootName;
+        T2Stat1.text = equipment.BootStat1.TheStat.ToString();
+        T2Stat2.text = equipment.BootStat2.TheStat.ToString();
+        T2StatAmount1.text = equipment.BootStat1.StatAmount.ToString();
+        T2StatAmount2.text = equipment.BootStat2.StatAmount.ToString();
+
+
+
+        if(equipment.emberDurability > 0)
+        {
+            EmberIcon.SetActive(true);
+            T3Name.text = equipment.EmberName;
+            T3Stat1.text = "Ember Durability";
+            T3Stat2.text = "";
+            T3StatAmount1.text = equipment.emberDurability.ToString();
+            T3StatAmount2.text = "";
+        }
+        else
+        {
+            EmberIcon.SetActive(false);
+            T3Name.text = " ";
+            T3Stat1.text = " ";
+            T3Stat2.text = " ";
+            T3StatAmount1.text = " ";
+            T3StatAmount2.text = " ";
+        }
+
+
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }
