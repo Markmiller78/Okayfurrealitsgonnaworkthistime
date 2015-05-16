@@ -16,7 +16,7 @@ public class Splash : MonoBehaviour {
         if(timer<=0)
         {
 
-            Application.LoadLevel("Game");
+            Application.LoadLevel("MainMenu");
         }
 	
 	}
