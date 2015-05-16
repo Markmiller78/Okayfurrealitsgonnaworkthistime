@@ -43,6 +43,8 @@ public class RoomGeneration : MonoBehaviour
     Room[] checkpointRoomsInfo;
 
     bool easyMode;
+    int enemyMod;
+    int prevRoom = -1;
 
     void Start()
     {
@@ -122,12 +124,23 @@ public class RoomGeneration : MonoBehaviour
 
         CreateRoom();
         //Reset();
+        enemyMod = (easyMode ? 11 : 9);
     }
 
     void CreateRoom()
     {
         bool skip = false;
         bool hasSkipped = false;
+
+        if (prevRoom > currentRoom)
+            ++enemyMod;
+        else
+            --enemyMod;
+
+        if (enemyMod == 0)
+        {
+            enemyMod = (easyMode ? 11 : 9);
+        }
 
         // Spawn north wall and possibly door
         for (int i = 0; i < finalRoomInfoArray[currentRoom].width; i++)
@@ -248,7 +261,17 @@ public class RoomGeneration : MonoBehaviour
         if (!finalRoomInfoArray[currentRoom].beenThere)
         {
             Utilities.ArrayShuffle(finalRoomInfoArray[currentRoom].enemySpawnPoints);
-            finalRoomInfoArray[currentRoom].numEnemies = Random.Range(finalRoomInfoArray[currentRoom].minEnemies, finalRoomInfoArray[currentRoom].maxEnemies);
+            int min = finalRoomInfoArray[currentRoom].minEnemies;
+            if (min - enemyMod > 0)
+            {
+                min -= enemyMod;
+            }
+            int max = finalRoomInfoArray[currentRoom].maxEnemies;
+            if (max - enemyMod > min)
+            {
+                max -= enemyMod;
+            }
+            finalRoomInfoArray[currentRoom].numEnemies = Random.Range(min, max);
             int enemiesSpawned = 0;
             while (enemiesSpawned < finalRoomInfoArray[currentRoom].numEnemies)
             {
@@ -333,6 +356,7 @@ public class RoomGeneration : MonoBehaviour
         }
         // make sure enemies can't respawn
         finalRoomInfoArray[currentRoom].beenThere = true;
+        prevRoom = currentRoom;
     }
 
     void FillDungeon()
