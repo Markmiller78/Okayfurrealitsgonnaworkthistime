@@ -12,12 +12,16 @@ public class BossAILorne : MonoBehaviour {
     CharacterController controller;
     Health myHealth;
     PlayerEquipment heroEquipment;
+   public GameObject darkOrb;
+    int maxcasts;
+    bool isCasting = false;
     enum state { happy, upset, ravingMad,spiritform };
     state currState = state.happy;
     float retreatTimer;
+    int currentcasts;
     float rTimerMax = 5.0f;
     float specialTimer;
-    float sTimerMax = 10.0f;
+    float spellTimerMax = 5.0f;
     bool wiggled;
     bool wiggling;
     float wiggleTimer;
@@ -36,8 +40,10 @@ public class BossAILorne : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
     {
-         
-           
+
+        maxcasts = 3;
+        currentcasts = 0;
+
             player = GameObject.FindGameObjectWithTag("Player");
             controller = GetComponent<CharacterController>();
             heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
@@ -47,7 +53,7 @@ public class BossAILorne : MonoBehaviour {
             Instantiate(enemySpawner, new Vector3(5, -14, -1), Quaternion.Euler(0, 0, 315));
             Instantiate(enemySpawner, new Vector3(14, -14, -1), Quaternion.Euler(0, 0, 45));
             spawners = GameObject.FindGameObjectsWithTag("LorneSpawn");
-            specialTimer = sTimerMax;
+            specialTimer = spellTimerMax;
             spellTimer = spTimerMax;
         
 	
@@ -57,6 +63,7 @@ public class BossAILorne : MonoBehaviour {
 	void Update ()
     
     {
+        distanceToPlayer = (transform.position - player.transform.position).magnitude;
         if (transform.position.x < 0f ||
             transform.position.x > 20f ||
             transform.position.y > 0f ||
@@ -68,10 +75,24 @@ public class BossAILorne : MonoBehaviour {
         {
             distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
             Turn();
+            if(isCasting)
+            {
+                spellTimer -= Time.deltaTime;
+                if(spellTimer<=0.0f)
+                {
+                    spellTimer = spellTimerMax;
+                    isCasting = false;
+                }
+            
+            }
             switch(currState)
             {
                 case state.happy:
-
+                    if (distanceToPlayer<spellMinRange)
+                    MoveAwayFromPlayer();
+                   
+                    SpellCast();
+                        
                     break;
                 case state.upset:
 
@@ -109,8 +130,27 @@ public class BossAILorne : MonoBehaviour {
         transform.rotation = Quaternion.Slerp(transform.rotation, rot, Time.deltaTime * turnSpeed);
     }
 
-    void SpellAttack()
+    void SpellCast()
     {
+        Vector3 vectoplayer = transform.position - player.transform.position;
+        
+        if (!Physics.Raycast(transform.position, vectoplayer.normalized, spellMaxRange))
+        {
+            if (Random.value > 0.2f&&!isCasting)
+            {
+                Instantiate(darkOrb, transform.position, transform.rotation);
+                ++currentcasts;
+                    if(currentcasts==maxcasts)
+                    {
+                        spellTimer = spellTimerMax;
+                isCasting = true;
+                currentcasts = 0;
+                    }
+            }
+        }
+
+
+
 
     }
 

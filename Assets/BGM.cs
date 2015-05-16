@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BGM : MonoBehaviour
-{
+public class BGM : MonoBehaviour {
     public AudioClip[] clips;
     GameObject dungeon;
-    RoomGeneration theRooms;
+  public  RoomGeneration theRooms;
     GameObject player;
     AudioSource audioPlayer;
     bool beenAssigned;
+    int volume;
 
 
     private static BGM _instance;
@@ -38,17 +38,16 @@ public class BGM : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
-    // Use this for initialization
-    void Start()
-    {
+	// Use this for initialization
+	void Start () {
         audioPlayer = gameObject.GetComponent<AudioSource>();
         dungeon = GameObject.FindGameObjectWithTag("Dungeon");
         DontDestroyOnLoad(this.gameObject);
         beenAssigned = false;
-
-    }
-
-    // Update is called once per frame
+	
+	}
+	
+	// Update is called once per frame
     void Update()
     {
         if (!beenAssigned && Application.loadedLevelName == "Game")
@@ -56,10 +55,10 @@ public class BGM : MonoBehaviour
             player = GameObject.FindGameObjectWithTag("Player");
             beenAssigned = true;
         }
+        
+    
 
-
-
-        if (dungeon == null)
+        if( dungeon==null)
         {
             dungeon = GameObject.FindGameObjectWithTag("Dungeon");
             if (dungeon != null)
@@ -68,79 +67,86 @@ public class BGM : MonoBehaviour
             }
         }
 
-        if (theRooms != null)
-        {
-            if (!GameObject.FindObjectOfType<Options>().easyMode)
-            {
-                if (theRooms.currentRoom < 8 && audioPlayer.clip != clips[0])
-                {
-                    audioPlayer.Stop();
-                    audioPlayer.clip = clips[0];
-                    audioPlayer.Play();
+   if(theRooms!=null)
+   {
+       volume = GameObject.FindObjectOfType<Options>().musicVolume;
+ 
+       if (Application.loadedLevelName == "LoadScreen")
+           audioPlayer.volume=0;
+       else if(volume!=audioPlayer.volume)
+            GameObject.FindObjectOfType<Options>().musicVolume=volume;
+       
+       if(!GameObject.FindObjectOfType<Options>().easyMode)
+       {
+      if( theRooms.currentRoom < 8&&audioPlayer.clip!=clips[0])
+      {
+          audioPlayer.Stop();
+          audioPlayer.clip = clips[0];
+          audioPlayer.Play();
+
+      
+      }
+      else if(theRooms.currentRoom==8||theRooms.currentRoom==17&&audioPlayer.clip!=clips[2])
+      {
+          audioPlayer.Stop();
+          audioPlayer.clip = clips[2];
+          audioPlayer.Play();
+
+      }
+      else if( theRooms.currentRoom > 8&&audioPlayer.clip!=clips[1])
+      {
+          audioPlayer.Stop();
+          audioPlayer.clip = clips[1];
+          audioPlayer.Play();
+
+      
+      }
+      else if(theRooms.currentRoom==26&&audioPlayer.clip!=clips[3])
+      {
+          audioPlayer.Stop();
+          audioPlayer.clip = clips[3];
+          audioPlayer.Play();
+      }
+          
+       }
+       else
+       {
+           if (theRooms.currentRoom < 10 && audioPlayer.clip != clips[0])
+           {
+               audioPlayer.Stop();
+               audioPlayer.clip = clips[0];
+               audioPlayer.Play();
 
 
-                }
-                else if (theRooms.currentRoom == 8 || theRooms.currentRoom == 17 && audioPlayer.clip != clips[2])
-                {
-                    audioPlayer.Stop();
-                    audioPlayer.clip = clips[2];
-                    audioPlayer.Play();
+           }
+           else if (theRooms.currentRoom == 10 || theRooms.currentRoom == 21 && audioPlayer.clip != clips[2])
+           {
+               audioPlayer.Stop();
+               audioPlayer.clip = clips[2];
+               audioPlayer.Play();
 
-                }
-                else if (theRooms.currentRoom > 8 && audioPlayer.clip != clips[1])
-                {
-                    audioPlayer.Stop();
-                    audioPlayer.clip = clips[1];
-                    audioPlayer.Play();
-
-
-                }
-                else if (theRooms.currentRoom == 26 && audioPlayer.clip != clips[3])
-                {
-                    audioPlayer.Stop();
-                    audioPlayer.clip = clips[3];
-                    audioPlayer.Play();
-                }
-
-            }
-            else
-            {
-                if (theRooms.currentRoom < 10 && audioPlayer.clip != clips[0])
-                {
-                    audioPlayer.Stop();
-                    audioPlayer.clip = clips[0];
-                    audioPlayer.Play();
+           }
+           else if (theRooms.currentRoom >10  && audioPlayer.clip != clips[1])
+           {
+               audioPlayer.Stop();
+               audioPlayer.clip = clips[1];
+               audioPlayer.Play();
 
 
-                }
-                else if (theRooms.currentRoom == 10 || theRooms.currentRoom == 21 && audioPlayer.clip != clips[2])
-                {
-                    audioPlayer.Stop();
-                    audioPlayer.clip = clips[2];
-                    audioPlayer.Play();
+           }
+           else if (theRooms.currentRoom == 32 && audioPlayer.clip != clips[3])
+           {
+               audioPlayer.Stop();
+               audioPlayer.clip = clips[3];
+               audioPlayer.Play();
+           }
 
-                }
-                else if (theRooms.currentRoom > 10 && audioPlayer.clip != clips[1])
-                {
-                    audioPlayer.Stop();
-                    audioPlayer.clip = clips[1];
-                    audioPlayer.Play();
-
-
-                }
-                else if (theRooms.currentRoom == 32 && audioPlayer.clip != clips[3])
-                {
-                    audioPlayer.Stop();
-                    audioPlayer.clip = clips[3];
-                    audioPlayer.Play();
-                }
-
-            }
-        }
+       }
+   }
 
 
 
     }
-
-
+ 
+    
 }
