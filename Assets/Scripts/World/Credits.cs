@@ -27,7 +27,7 @@ public class Credits : MonoBehaviour {
 
         }
 			creds.transform.Translate(scrolling);
-			scrolling.y+=1.1f;
+			scrolling.y+=100.0f*Time.deltaTime;
 	 
 			if(creds.transform.position.y>=Screen.height*4.5f)
 			{

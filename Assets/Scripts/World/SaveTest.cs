@@ -44,6 +44,7 @@ public class SaveTest : MonoBehaviour {
                     
                     {
                         Save();
+                        Debug.Log("Saved!");
                         shouldsave = false;
                     }
 
