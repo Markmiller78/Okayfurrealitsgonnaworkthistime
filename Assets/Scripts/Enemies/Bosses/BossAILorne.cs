@@ -34,7 +34,8 @@ public class BossAILorne : MonoBehaviour {
     public GameObject LorneHazard;
     public GameObject enemySpawner;
     GameObject[] spawners;
-    
+    public GameObject seeking;
+
     Vector3 posref;
     float spellTimer;
     float spTimerMax = 2.5f;
@@ -134,6 +135,14 @@ public class BossAILorne : MonoBehaviour {
                     break;
                 case state.ravingMad:
                     moveSpeed = 1.5f;
+                    if(!isCasting)
+                    { if(Random.value>0.7f)
+                    {
+                        Instantiate(seeking, transform.position, transform.rotation);
+
+                    }
+
+                    }
 
                     break;
                 case state.spiritform:
