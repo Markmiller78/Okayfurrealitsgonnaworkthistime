@@ -20,10 +20,12 @@ public class SaveTest : MonoBehaviour {
     public bool shouldsave = true;
     public int enemies=0;
     bool saved = false;
+	PlayerEquipment eq;
 
 
 	// Use this for initialization
 	void Start () {
+		eq = GetComponent<PlayerEquipment> ();
         options = GameObject.FindObjectOfType<Options>();
         player = GameObject.FindGameObjectWithTag("Player");
         dungeon = GameObject.FindGameObjectWithTag("Dungeon");
@@ -69,7 +71,14 @@ public class SaveTest : MonoBehaviour {
         {
             PlayerPrefs.SetFloat("PlayerHealth", gameObject.GetComponent<Health>().currentHP);
             PlayerPrefs.SetFloat("PlayerLight", gameObject.GetComponent<PlayerLight>().currentLight);
+			PlayerPrefs.SetFloat("MeleeMod",theStats.meleeModifier);
+			PlayerPrefs.SetFloat("SpellMod",theStats.spellModifier);
+			PlayerPrefs.SetFloat("LightMod",theStats.maxLightModifier);
+			PlayerPrefs.SetFloat("LifeMod",theStats.maxHPModifier);
             PlayerPrefs.SetInt("EasyMode", options.easyMode.GetHashCode());
+			PlayerPrefs.SetInt("Ember",(int)eq.equippedEmber);
+			PlayerPrefs.SetInt("Boot",(int)eq.equippedBoot);
+
             PlayerPrefs.SetInt("RoomArrLenght", theRooms.finalRoomInfoArray.Length);
             for (int i = 0; i < theRooms.finalRoomInfoArray.Length; i++)
             {
@@ -99,6 +108,8 @@ public class SaveTest : MonoBehaviour {
             data.maxLightModifier = theStats.maxLightModifier;
             data.meleeModifier = theStats.meleeModifier;
             data.spellModifier = theStats.spellModifier;
+			data.equippedember= (int)eq.equippedEmber;
+			data.equippedboot= (int)eq.equippedBoot;
             CopyRooms(data);
            // data.finalRoomInfoArray = theRooms.finalRoomInfoArray;
             bin.Serialize(file, data);
@@ -118,6 +129,14 @@ public class SaveTest : MonoBehaviour {
        {
       gameObject.GetComponent<Health>().currentHP=      PlayerPrefs.GetFloat("PlayerHealth", 100);
      gameObject.GetComponent<PlayerLight>().currentLight=      PlayerPrefs.GetFloat("PlayerLight", 100);
+
+		theStats.meleeModifier   =	PlayerPrefs.GetFloat("MeleeMod",0 );
+		theStats.spellModifier   =	PlayerPrefs.GetFloat("SpellMod",0 );
+		theStats.maxLightModifier=	PlayerPrefs.GetFloat("LightMod",0 );
+		theStats.maxHPModifier   =	PlayerPrefs.GetFloat("LifeMod", 0 );
+ 
+		eq.equippedEmber=(ember)	PlayerPrefs.GetInt("Ember",0);
+		eq.equippedBoot  =	(boot)PlayerPrefs.GetInt("Boot",0 );
      int teemplenght = PlayerPrefs.GetInt("RoomArrLenght", 0);
      if (teemplenght != 0)
      {
@@ -235,6 +254,8 @@ public class PlayerData
     public bool easymode;
     public int amountofrooms;
     public RoomData[] roominfo ;
+	public int equippedember;
+	public int equippedboot;
 
 
 }
