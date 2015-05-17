@@ -19,8 +19,6 @@ public class LifeEmberStolenHealth : MonoBehaviour
     {
         if (eqp.paused == false)
         {
-
-
             transform.position = Vector3.MoveTowards(transform.position, player.transform.position, Time.deltaTime * 5f);
         }
     }
