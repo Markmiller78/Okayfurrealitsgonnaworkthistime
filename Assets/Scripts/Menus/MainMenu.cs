@@ -1042,20 +1042,20 @@ public class MainMenu : MonoBehaviour
 
     //    }
 
-    void LoadOptions()
-    {
+    //void LoadOptions()
+    //{
 
-        if (File.Exists(Application.persistentDataPath + "/optioninfo.dat"))
-        {
-            BinaryFormatter bin = new BinaryFormatter();
-            FileStream file = File.Open(Application.persistentDataPath + "/optioninfo.dat", FileMode.Open);
-            OptionData data = (OptionData)bin.Deserialize(file);
-            theOptions.sfxVolume = data.sfxVolume;
-            theOptions.musicVolume = data.musicVolume;
-            file.Close();
+    //    if (File.Exists(Application.persistentDataPath + "/optioninfo.dat"))
+    //    {
+    //        BinaryFormatter bin = new BinaryFormatter();
+    //        FileStream file = File.Open(Application.persistentDataPath + "/optioninfo.dat", FileMode.Open);
+    //        OptionData data = (OptionData)bin.Deserialize(file);
+    //        theOptions.sfxVolume = data.sfxVolume;
+    //        theOptions.musicVolume = data.musicVolume;
+    //        file.Close();
 
-        }
-    }
+    //    }
+    //}
 }
 //    void Save()
 //    {
