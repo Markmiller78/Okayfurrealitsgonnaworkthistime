@@ -31,11 +31,11 @@ public class RoomGeneration : MonoBehaviour
     public int currentRoom = 0;
     //public GameObject treasureRoom;
     //Room treasureRoomInfo;
-    public GameObject hazard;
-    public GameObject nDoor;
-    public GameObject sDoor;
-    public GameObject eDoor;
-    public GameObject wDoor;
+    //public GameObject hazard;
+    //public GameObject nDoor;
+    //public GameObject sDoor;
+    //public GameObject eDoor;
+    //public GameObject wDoor;
     public GameObject waypoint;
     public GameObject chest;
 
@@ -118,8 +118,8 @@ public class RoomGeneration : MonoBehaviour
         FillDungeon();
 
         //TESTING
-        finalRoomArray[0] = floorThreeRooms[2];
-        finalRoomInfoArray[0] = floorThreeRoomsInfo[2];
+        //finalRoomArray[0] = floorThreeRooms[4];
+        //finalRoomInfoArray[0] = floorThreeRoomsInfo[4];
         //ENDTESTING
 
         CreateRoom();
