@@ -30,6 +30,8 @@ public class AIWraith : MonoBehaviour
     float snaredSpeed;
     float SnareTimer;
     bool isSnared;
+    float TopDoor, LeftDoor, roomWidth, roomHeight;
+    public Rect Bounds;
 
     // Use this for initialization
     void Start()
@@ -43,16 +45,67 @@ public class AIWraith : MonoBehaviour
         wayPointTimer = 8;
         timer = .5f;
         AttackTimer = 2;
+        DetermineDoorPositions();
+        Bounds = new Rect(TopDoor, LeftDoor, roomWidth, roomHeight);
 
-        //SouthDoorY = GameObject.FindGameObjectWithTag("SouthDoor").transform.position.y;
-        //EastDoorX = GameObject.FindGameObjectWithTag("EastDoor").transform.position.x;
-        //WestDoorX = GameObject.FindGameObjectWithTag("WestDoor").transform.position.x;
+
+    }
+
+
+
+
+    void DetermineDoorPositions()
+    {
+
+        GameObject[] Doors = GameObject.FindGameObjectsWithTag("Door");
+        float PossibleBoundary;
+        TopDoor = 0;
+        LeftDoor = 100000;
+        float BottomDoor = 0;
+        float RightDoor = 0;
+
+
+        //FIND TOP DOOR LOCATION
+        for (int i = 0; i < Doors.Length; i++)
+        {
+            PossibleBoundary = Doors[i].transform.position.y;
+            if (TopDoor < PossibleBoundary)
+                TopDoor = PossibleBoundary;
+        }
+        PossibleBoundary = 0;
+        for (int i = 0; i < Doors.Length; i++)
+        {
+            PossibleBoundary = Doors[i].transform.position.y;
+            if (BottomDoor > PossibleBoundary)
+                BottomDoor = PossibleBoundary;
+        }
+
+        //Width
+        for (int i = 0; i < Doors.Length; i++)
+        {
+            PossibleBoundary = Doors[i].transform.position.x;
+            if (LeftDoor > PossibleBoundary)
+                LeftDoor = PossibleBoundary;
+        }
+
+        PossibleBoundary = 0;
+        for (int i = 0; i < Doors.Length; i++)
+        {
+            PossibleBoundary = Doors[i].transform.position.x;
+            if (RightDoor < PossibleBoundary)
+                RightDoor = PossibleBoundary;
+        }
+
+        roomWidth = RightDoor - LeftDoor;
+        roomHeight = BottomDoor - TopDoor;
 
     }
 
     // Update is called once per frame
     void Update()
     {
+
+
         if (heroEquipment.paused == false)
         {
             wayPointTimer -= Time.deltaTime;
@@ -113,11 +166,11 @@ public class AIWraith : MonoBehaviour
             float DistanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
             Vector3 Target = player.transform.position - transform.position;
             RaycastHit[] things = Physics.RaycastAll(transform.position, Target, DistanceToPlayer);
-            for(int i = 0; i < things.Length; i++)
+            for (int i = 0; i < things.Length; i++)
             {
                 if (things[i].collider.gameObject.tag == "Wall")
                 {
-                    NewWayPoint(); 
+                    NewWayPoint();
                     return;
                 }
             }
@@ -126,7 +179,7 @@ public class AIWraith : MonoBehaviour
             AttackCD = true;
 
 
-            
+
 
 
         }
@@ -139,21 +192,50 @@ public class AIWraith : MonoBehaviour
     void NewWayPoint()
     {
 
-        //for (int i = 0; i < 100; i++)
-        //{
+        for (int i = 0; i < 40; i++)
+        {
+            for (int k = 0; k < 30; k++)
+            {
+                randX = Random.Range(-5, 5);
+                randY = Random.Range(-5, 5);
 
-        randX = Random.Range(-3, 3);
-        randY = Random.Range(-3, 3);
-        WayPoint = new Vector3(player.transform.position.x + randX, player.transform.position.y + randY);
+                Vector2 b1 = new Vector2(player.transform.position.x + randX, player.transform.position.y + randY);
+                if (b1.x > Bounds.xMin && b1.x < Bounds.xMax && b1.y < Bounds.yMin && b1.y > Bounds.yMax)
+                {
+                    break;
+                }
 
-        // if (i == 90)
-        //    print("I reached 90");
+            }
+
+
+            WayPoint = new Vector3(player.transform.position.x + randX, player.transform.position.y + randY);
+
+            GameObject[] Walls = GameObject.FindGameObjectsWithTag("Wall");
+            float WaytoWall = 0;
+            bool BadPoint = false;
+
+            for (int p = 0; p < Walls.Length; p++)
+            {
+                WaytoWall = Vector3.Distance(WayPoint, Walls[p].transform.position);
+
+                if (WaytoWall < 2)
+                {
+                    BadPoint = true;
+                }
+
+
+            }
+
+            if (BadPoint == false)
+            {
+                break;
+            }
+        }
+
+
 
         return;
-        // }
 
-        //  print("Wraith: RETURNED BAD WAYPOINT!");
-        // return;
     }
 
     void Snare()
