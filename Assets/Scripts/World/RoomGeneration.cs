@@ -118,8 +118,8 @@ public class RoomGeneration : MonoBehaviour
         FillDungeon();
 
         //TESTING
-        finalRoomArray[0] = floorThreeRooms[5];
-        finalRoomInfoArray[0] = floorThreeRoomsInfo[5];
+        finalRoomArray[0] = floorThreeRooms[6];
+        finalRoomInfoArray[0] = floorThreeRoomsInfo[6];
         //ENDTESTING
 
         CreateRoom();
@@ -299,7 +299,7 @@ public class RoomGeneration : MonoBehaviour
                         int c = Random.Range(1, 5);
                         if (c == 1)
                         {
-                            Instantiate(chest, new Vector3(finalRoomInfoArray[currentRoom].chestSpawnLocations[i].x, -finalRoomInfoArray[currentRoom].chestSpawnLocations[i].y, -1f), Quaternion.identity);
+                            Instantiate(chest, new Vector3(finalRoomInfoArray[currentRoom].chestSpawnLocations[i].x, -finalRoomInfoArray[currentRoom].chestSpawnLocations[i].y, -.9f), Quaternion.identity);
                             spawned = true;
                             break;
                         }
