@@ -37,8 +37,9 @@ public class Health : MonoBehaviour
         if (this.tag == "Player")
         {
             healthBar = GameObject.FindGameObjectWithTag("HealthBar");
+           
         }
-        healthPercent = currentHP / maxHP * 100;
+        healthPercent = currentHP / maxHP;
 
         dungeon = GameObject.FindGameObjectWithTag("Dungeon");
         if (dungeon != null)
@@ -62,9 +63,9 @@ public class Health : MonoBehaviour
             if (currentHP > maxHP)
                 currentHP = maxHP;
 
+            healthPercent = currentHP / maxHP;
             if (this.tag == "Player")
             {
-                healthPercent = currentHP / maxHP;
                 healthBar.transform.localScale = new Vector3(healthPercent, 1, 1);
             }
         }
@@ -81,10 +82,9 @@ public class Health : MonoBehaviour
                 playerDead = true;
                 Die();
             }
-
+            healthPercent = currentHP / maxHP;
             if (this.tag == "Player")
             {
-                healthPercent = currentHP / maxHP;
                 healthBar.transform.localScale = new Vector3(healthPercent, 1, 1);
             }
             else if (equipment.equippedEmber == ember.Life)
