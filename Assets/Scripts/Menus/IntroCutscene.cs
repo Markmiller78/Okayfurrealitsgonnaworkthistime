@@ -10,7 +10,7 @@ public class IntroCutscene : MonoBehaviour
     public GameObject Particlecircle;
     public Text FirstText;
     public Text SkipText;
-    public GameObject Scene1;
+    public GameObject Scene1; 
     public GameObject Scene2;
     public GameObject SprintingUndead;
     public GameObject RunningSkeleton;

@@ -27,6 +27,14 @@ public class Seeking : MonoBehaviour
 
     void FixedUpdate()
     {
+		if (player == null)
+		{
+        player = GameObject.FindGameObjectWithTag("Player");
+			if(player!=null)
+			theLight = player.GetComponent<PlayerLight>();
+			
+		}
+
         transform.up = (player.transform.position - transform.position).normalized;
         transform.position += transform.up * speed * Time.deltaTime;
 
