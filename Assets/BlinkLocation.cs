@@ -31,7 +31,7 @@ public class BlinkLocation : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         timer += Time.deltaTime;
-        if (timer >= 0.4f)
+        if (timer >= 0.05f)
         {
             Instantiate(explosion, player.transform.position, transform.rotation);
             if (tpFailed)

@@ -39,7 +39,17 @@ public class PlayerDashing : MonoBehaviour
     public GameObject windDecoy; 
     public GameObject earthDecoy; 
     public GameObject lifeDecoy;
-    public GameObject deathDecoy; 
+    public GameObject deathDecoy;
+
+    [Header("Whirlwind")]
+
+    public GameObject lightWhirl;
+    public GameObject fireWhirl;
+    public GameObject iceWhirl;
+    public GameObject windWhirl;
+    public GameObject earthWhirl;
+    public GameObject lifeWhirl;
+    public GameObject deathWhirl; 
 
 
     [Header("Charge")]
@@ -329,7 +339,7 @@ public class PlayerDashing : MonoBehaviour
                 //No ember equipped
                 if (heroEquipment.equippedEmber == ember.None)
                 {
-                    
+                    Instantiate(lightWhirl, transform.position, transform.rotation);
 
                 }
                 //Ice ember equipped
