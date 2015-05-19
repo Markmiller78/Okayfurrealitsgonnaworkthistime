@@ -5,14 +5,13 @@ public class AIBossDethImproved : MonoBehaviour
 {
 
     GameObject player;
-
     //Need this for knockback maybe? remove if wraith doesnt knock back
     PlayerMovement playMove;
     PlayerEquipment heroEquipment;
     Health playerHealth;
     CharacterController controller;
     public GameObject enemySpawner;
-
+    Health Myhealth;
     public GameObject DarkOrb;
     public GameObject VanishParts;
     public GameObject AppearParts;
@@ -26,7 +25,6 @@ public class AIBossDethImproved : MonoBehaviour
     public float moveSpeed;
     public float turnSpeed;
     bool attacking;
-
     public bool isInfected = false;
     public bool isReinforced = false;
     float wayPointTimer, timer;
@@ -37,10 +35,24 @@ public class AIBossDethImproved : MonoBehaviour
     float snaredSpeed;
     float TopDoor, LeftDoor, roomWidth, roomHeight;
     public Rect Bounds;
+    GameObject[] Spawn;
+    float StateTimer;
+    float SpawnTimer;
+    int CurrentState;
+    public GameObject Forcefield;
+    float DistanceToPlayer;
+    public GameObject BossHealthBar;
+    GameObject HealthRemaining;
+
+
 
     // Use this for initialization
     void Start()
     {
+        DistanceToPlayer = 10;
+        CurrentState = 0;
+        StateTimer = 1000000;
+        SpawnTimer = 20;
         vanishTimer = 1;
         player = GameObject.FindGameObjectWithTag("Player");
         controller = GetComponent<CharacterController>();
@@ -60,10 +72,11 @@ public class AIBossDethImproved : MonoBehaviour
         angleOffset = 0;
         vanishbool = true;
         vanishbool2 = true;
+        Myhealth = gameObject.GetComponent<Health>();
+
+        Instantiate(BossHealthBar);
+        HealthRemaining = GameObject.FindGameObjectWithTag("Boss Health");
     }
-
-
-
 
     void DetermineDoorPositions()
     {
@@ -115,97 +128,186 @@ public class AIBossDethImproved : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (HealthRemaining != null)
+            HealthRemaining.transform.localScale = new Vector3(Myhealth.healthPercent, 1, 1);
+        else
+            HealthRemaining = GameObject.FindGameObjectWithTag("Boss Health");
 
         if (heroEquipment.paused == false)
         {
+            StateTimer -= Time.deltaTime;
+            SpawnTimer -= Time.deltaTime;
             wayPointTimer -= Time.deltaTime;
             timer -= Time.deltaTime;
 
-            if (wayPointTimer < .5f && vanishbool)
+
+            if (Myhealth.healthPercent < .75f && StateTimer > 1000)
+                StateTimer = 1;
+
+
+            if (Myhealth.healthPercent < .75f && CurrentState == 0 && StateTimer < 2 && StateTimer > 1.9f)
             {
                 VanishEffect();
-                vanishbool = false;
             }
-            if (wayPointTimer < 0)
+            if (Myhealth.healthPercent < .75f && CurrentState == 0 && StateTimer < 1.7f)
             {
-                VanishEffect();
-                vanishbool = true;
                 Vanish();
-                wayPointTimer = 8;
-                NewWayPoint();
-                DistanceToWayPoint = Vector3.Distance(transform.position, WayPoint);
             }
 
-            if (timer <= 0)
+
+
+            if (Myhealth.healthPercent < .75f && CurrentState == 0 && StateTimer < 0)
             {
-                timer = .5f;
-                DistanceToWayPoint = Vector3.Distance(transform.position, WayPoint);
-                //print(DistanceToWayPoint);
+                        Spawn = GameObject.FindGameObjectsWithTag("DethSpawn");
+
+                        foreach (GameObject Spawner in Spawn)
+                        {
+                                Spawner.SendMessage("TurnOnSummoning", SendMessageOptions.DontRequireReceiver);
+                        }
+                gameObject.tag = "Invincible";
+                Forcefield.SetActive(true);
+                StateTimer = 20;
+                SpawnTimer = 4;
+                CurrentState = 1;
             }
 
-
-            if (DistanceToWayPoint < 1.5f)
+            if(Myhealth.healthPercent < .75f && CurrentState == 1 && StateTimer < 0)
             {
-                attacking = true;
+                Spawn = GameObject.FindGameObjectsWithTag("DethSpawn");
+
+                foreach (GameObject Spawner in Spawn)
+                {
+                        Spawner.SendMessage("TurnOffSummoning", SendMessageOptions.DontRequireReceiver);
+                }
+                gameObject.tag = "Enemy";
+                Forcefield.SetActive(false);
+                StateTimer = 60;
+                CurrentState = 0;
             }
+
+
+
+
+
+
+            switch (CurrentState)
+            {
+
+                    //BASIC STATE
+                case 0:
+                    {
+                        if (wayPointTimer < .5f && vanishbool)
+                        {
+                            VanishEffect();
+                            vanishbool = false;
+                        }
+                        if (wayPointTimer < 0)
+                        {
+                            VanishEffect();
+                            vanishbool = true;
+                            Vanish();
+                            wayPointTimer = 8;
+                            NewWayPoint();
+                            DistanceToWayPoint = Vector3.Distance(transform.position, WayPoint);
+                        }
+
+                        if (timer <= 0)
+                        {
+                            timer = .5f;
+                            DistanceToWayPoint = Vector3.Distance(transform.position, WayPoint);
+                            //print(DistanceToWayPoint);
+                        }
+
+
+                        if (DistanceToWayPoint < 1.5f)
+                        {
+                            attacking = true;
+                        }
+                        else
+                            attacking = false;
+
+
+                        if (!attacking)
+                            Move();
+                        else
+                        {
+                            Attack();
+                        }
+
+
+                        vanishTimer -= Time.deltaTime;
+
+                        if (vanishTimer < .3f && vanishbool2 == true)
+                        {
+                            AppearEffect();
+                            vanishbool2 = false;
+                        }
+                        if (vanishTimer < 0)
+                        {
+                            vanishTimer = 10000;
+                            AppearEffect();
+                            Appear();
+                        }
+
+                        Turn();
+
+                        break;
+                    }
+
+                    //SUMMON CREATURES
+                case 1:
+                    {
+
+                        transform.position = new Vector3(9.5f, -9, -1);
+
+                        if(SpawnTimer < 0)
+                        {
+                            SpawnTimer = 7;
+                            RaiseTheDead();
+                        }
+
+
+                        break;
+                    }
+
+            }
+
+            if (angleOffset < -50)
+            {
+                increaseOffset = true;
+            }
+            if (angleOffset > 50)
+            {
+                increaseOffset = false;
+            }
+
+
+            if (increaseOffset)
+                angleOffset += Time.deltaTime * 55;
             else
-                attacking = false;
+                angleOffset -= Time.deltaTime * 55;
 
 
-            if (!attacking)
-                Move();
-            else
-            {
-                Attack();
-            }
-
-
-            vanishTimer -= Time.deltaTime;
-
-            if (vanishTimer < .3f && vanishbool2 == true)
-            {
-                AppearEffect();
-                vanishbool2 = false;
-            }
-            if (vanishTimer < 0)
-            {
-                vanishTimer = 10000;
-                AppearEffect();
-                Appear();
-            }
-
-            Turn();
         }
-
-        if (angleOffset < -50)
-        {
-            increaseOffset = true;
-        }
-        if (angleOffset > 50)
-        {
-            increaseOffset = false;
-        }
-
-
-        if (increaseOffset)
-            angleOffset += Time.deltaTime * 55;
-        else
-            angleOffset -= Time.deltaTime * 55;
-
-
-
     }
+
+
 
     void Move()
     {
+        DistanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
+        if (DistanceToPlayer < 1)
+            player.SendMessage("KnockBack", transform.position, SendMessageOptions.DontRequireReceiver);
         Vector2 moveTo = (WayPoint - transform.position).normalized;
         controller.Move(moveTo * Time.deltaTime * moveSpeed);
     }
 
     void Attack()
     {
-
+        DistanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
+        if (DistanceToPlayer < 1)
+            player.SendMessage("KnockBack", transform.position, SendMessageOptions.DontRequireReceiver);
+        transform.position = new Vector3(transform.position.x, transform.position.y, -1);
         if (AttackCD)
         {
             AttackCD = false;
@@ -219,11 +321,6 @@ public class AIBossDethImproved : MonoBehaviour
             Instantiate(DarkOrb, transform.position, transform.rotation);
             AttackTimer = .5f;
             AttackCD = true;
-
-
-
-
-
         }
 
 
@@ -238,15 +335,19 @@ public class AIBossDethImproved : MonoBehaviour
         {
             for (int k = 0; k < 30; k++)
             {
-                randX = Random.Range(-5, 5);
-                randY = Random.Range(-5, 5);
+
+
+                    randX = Random.Range(-5, 5);
+                    randY = Random.Range(-5,5);
+
+
+
 
                 Vector2 b1 = new Vector2(player.transform.position.x + randX, player.transform.position.y + randY);
                 if (b1.x > Bounds.xMin && b1.x < Bounds.xMax && b1.y < Bounds.yMin && b1.y > Bounds.yMax)
                 {
                     break;
                 }
-
             }
 
 
@@ -264,8 +365,6 @@ public class AIBossDethImproved : MonoBehaviour
                 {
                     BadPoint = true;
                 }
-
-
             }
 
             if (BadPoint == false)
@@ -295,7 +394,7 @@ public class AIBossDethImproved : MonoBehaviour
             Vector3 vectorToPlayer = player.transform.position - transform.position;
             float angle = Mathf.Atan2(vectorToPlayer.y, vectorToPlayer.x) * Mathf.Rad2Deg;
             angle -= 90.0f;
-
+            transform.position = new Vector3(transform.position.x, transform.position.y, -1);
 
             Quaternion rot = Quaternion.AngleAxis(angle + angleOffset, Vector3.forward);
             transform.rotation = Quaternion.Slerp(transform.rotation, rot, Time.deltaTime * turnSpeed);
@@ -313,7 +412,7 @@ public class AIBossDethImproved : MonoBehaviour
         print("Disappeared");
         transform.position = new Vector3(transform.position.x, transform.position.y, 5);
         NewWayPoint();
-        vanishTimer = 2;
+        vanishTimer = 2.5f;
         vanishbool2 = true;
 
     }
@@ -327,4 +426,21 @@ public class AIBossDethImproved : MonoBehaviour
         print("Re-appeared");
         transform.position = new Vector3(transform.position.x, transform.position.y, -1);
     }
+
+    void RaiseTheDead()
+    {
+        Spawn = GameObject.FindGameObjectsWithTag("DethSpawn");
+
+        foreach (GameObject Spawner in Spawn)
+        {
+
+            if(Myhealth.healthPercent < .25f)
+                Spawner.SendMessage("SpawnWraith", SendMessageOptions.DontRequireReceiver);
+            else
+            Spawner.SendMessage("SpawnLivingDead", SendMessageOptions.DontRequireReceiver);
+        }
+    }
+
+
+
 }

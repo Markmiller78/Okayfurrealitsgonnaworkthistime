@@ -47,7 +47,7 @@ public class AIWraith : MonoBehaviour
         AttackTimer = 2;
         DetermineDoorPositions();
         Bounds = new Rect(TopDoor, LeftDoor, roomWidth, roomHeight);
-
+        NewWayPoint();
 
     }
 

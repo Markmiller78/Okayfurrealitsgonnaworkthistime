@@ -39,7 +39,17 @@ public class PlayerDashing : MonoBehaviour
     public GameObject windDecoy; 
     public GameObject earthDecoy; 
     public GameObject lifeDecoy;
-    public GameObject deathDecoy; 
+    public GameObject deathDecoy;
+
+    [Header("Whirlwind")]
+
+    public GameObject lightWhirl;
+    public GameObject fireWhirl;
+    public GameObject iceWhirl;
+    public GameObject windWhirl;
+    public GameObject earthWhirl;
+    public GameObject lifeWhirl;
+    public GameObject deathWhirl; 
 
 
     [Header("Charge")]
@@ -200,13 +210,6 @@ public class PlayerDashing : MonoBehaviour
                             trailBlazerDropTimer = 0.0f;
 
                         }
-                        if(heroEquipment.equippedBoot==boot.Whirlwind)
-                        {
-                            float tempangle = 180.0f;
-
-                            Quaternion rotation = Quaternion.AngleAxis(tempangle, Vector3.forward);
-                            GetComponent<SpriteRenderer>().transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 4.5f);
-                        }
                     }
                 } 
             }
@@ -336,7 +339,7 @@ public class PlayerDashing : MonoBehaviour
                 //No ember equipped
                 if (heroEquipment.equippedEmber == ember.None)
                 {
-                    
+                    Instantiate(lightWhirl, transform.position, transform.rotation);
 
                 }
                 //Ice ember equipped
