@@ -8,6 +8,7 @@ public class Health : MonoBehaviour
     public float healthPercent;
     public bool isInfected = false;
     GameObject healthBar;
+    public GameObject BossParts;
 
     GameObject dungeon;
     RoomGeneration generator;
@@ -75,6 +76,11 @@ public class Health : MonoBehaviour
     {
         if (equipment.paused == false)
         {
+            //Negate Damage
+            if (this.tag == "Invincible")
+                return;
+
+            //Normal Operation
             currentHP -= Amount;
             if (currentHP <= 0)
             {
@@ -98,6 +104,8 @@ public class Health : MonoBehaviour
 
     void Die()
     {
+        if (this.name == "Dethros(Clone)")
+            Instantiate(BossParts, this.transform.position, this.transform.rotation);
         if (this.tag != "Player")
         {
             theoptions.AddToEnemy();

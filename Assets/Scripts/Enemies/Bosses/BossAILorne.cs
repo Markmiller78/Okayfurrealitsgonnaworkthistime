@@ -2,6 +2,8 @@
 using System.Collections;
 
 public class BossAILorne : MonoBehaviour {
+   
+    
     GameObject player;
     float distanceToPlayer;
     public Vector3 IdleVec;
@@ -14,9 +16,8 @@ public class BossAILorne : MonoBehaviour {
     public float idletimer;
     GameObject temphaz;
     PlayerEquipment heroEquipment;
-   public GameObject darkOrb;
-   public GameObject fairyorb;
-
+    public GameObject darkOrb;
+    public GameObject fairyorb;
     int maxcasts;
     bool isCasting = false;
     enum state { happy, upset, ravingMad,spiritform };
@@ -27,21 +28,19 @@ public class BossAILorne : MonoBehaviour {
     float specialTimer;
     float spellTimerMax = 5.0f;
     bool hazarding;
-     
- 
-   
- 
     public GameObject LorneHazard;
     public GameObject enemySpawner;
     GameObject[] spawners;
     public GameObject seeking;
-
     Vector3 posref;
     float spellTimer;
     float spTimerMax = 2.5f;
     public GameObject hazard;
     float hazardPlacementTimer;
     float hTimerMax = 1.0f;
+
+
+
 	// Use this for initialization
 	void Start () 
     {
