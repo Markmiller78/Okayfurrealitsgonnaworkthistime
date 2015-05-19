@@ -61,7 +61,7 @@ public class EastDoor : MonoBehaviour
         {
             if (other.gameObject == player
                 && generator.finalRoomInfoArray[generator.currentRoom].exitDir == 3
-                && generator.currentRoom < (easyMode ? 20 : 16))
+                && generator.currentRoom < (easyMode ? 33 : 27))
             {
                 ++generator.currentRoom;
                 generator.finalRoomInfoArray[generator.currentRoom].comingFromEntrance = true;

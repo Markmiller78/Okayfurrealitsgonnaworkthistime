@@ -61,7 +61,7 @@ public class WestDoor : MonoBehaviour
         {
             if (other.gameObject == player
                 && generator.finalRoomInfoArray[generator.currentRoom].exitDir == 1
-                && generator.currentRoom < (easyMode ? 20 : 16))
+                && generator.currentRoom < (easyMode ? 33 : 27))
             {
                 ++generator.currentRoom;
                 generator.finalRoomInfoArray[generator.currentRoom].comingFromEntrance = true;
