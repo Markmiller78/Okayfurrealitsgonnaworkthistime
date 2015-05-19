@@ -118,8 +118,8 @@ public class RoomGeneration : MonoBehaviour
         FillDungeon();
 
         //TESTING
-        //finalRoomArray[0] = floorThreeRooms[8];
-        //finalRoomInfoArray[0] = floorThreeRoomsInfo[8];
+        //finalRoomArray[0] = floorThreeRooms[9];
+        //finalRoomInfoArray[0] = floorThreeRoomsInfo[9];
         //ENDTESTING
 
         CreateRoom();
