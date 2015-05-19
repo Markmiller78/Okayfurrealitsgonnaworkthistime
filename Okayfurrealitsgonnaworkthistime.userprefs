@@ -1,23 +1,18 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\World\SaveTest.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\eight.cs">
     <Files>
-      <File FileName="Assets\Scripts\World\SaveTest.cs" Line="151" Column="13" />
-      <File FileName="Assets\Scripts\Menus\MainMenu.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Menus\IntroCutscene.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\World\Room.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\World\Credits.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Player\PlayerDashing.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Enemies\Regular\AICommander.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Enemies\Regular\AIDarkFairy.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Decoy.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Enemies\Regular\AILivingDead.cs" Line="102" Column="4" />
       <File FileName="Assets\Scripts\Managers\InputManager.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Enemies\Regular\AILivingDead.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Enemies\Regular\AIShadowSpawn.cs" Line="1" Column="1" />
-      <File FileName="Assets\AchievementGoAway.cs" Line="1" Column="1" />
-      <File FileName="Assets\BGM.cs" Line="1" Column="1" />
-      <File FileName="Assets\Seeking.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\World\RoomGeneration.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Health.cs" Line="1" Column="1" />
+      <File FileName="Assets\SfxVolumeManager.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Player\PlayerMeleeAttack.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Player\PlayerDashing.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Managers\CameraManager.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Player\PlayerMovement.cs" Line="6" Column="2" />
+      <File FileName="Assets\eight.cs" Line="23" Column="23" />
+      <File FileName="Assets\Scripts\World\SaveTest.cs" Line="279" Column="2" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

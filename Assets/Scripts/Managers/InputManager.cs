@@ -10,6 +10,7 @@ public class InputManager : MonoBehaviour
     public static bool controller = false;
     bool isPaused = false;
     bool mapMenu = false;
+    Animator anim;
 
     void Start()
     {
@@ -18,6 +19,7 @@ public class InputManager : MonoBehaviour
         {
             cooldowns = player.GetComponent<PlayerCooldowns>();
             melee = player.GetComponentInChildren<PlayerMeleeAttack>();
+            anim = player.GetComponent<Animator>();
         }
     }
 
@@ -126,6 +128,14 @@ public class InputManager : MonoBehaviour
                 if (Input.GetAxis("KBHorizontal") != 0.0f || Input.GetAxis("KBVertical") != 0.0f)
                 {
                     player.SendMessage("KBMove");
+                }
+                else
+                {
+                    anim.SetFloat("Speed", 0);
+					if(anim.GetCurrentAnimatorStateInfo(0).IsName("PlayerWalking"))
+					   anim.CrossFade("Idle",0.01f);
+                
+
                 }
                 // Mouse to rotate
                 player.SendMessage("MouseRotate");

@@ -75,11 +75,13 @@ public class SaveTest : MonoBehaviour {
 			PlayerPrefs.SetFloat("SpellMod",theStats.spellModifier);
 			PlayerPrefs.SetFloat("LightMod",theStats.maxLightModifier);
 			PlayerPrefs.SetFloat("LifeMod",theStats.maxHPModifier);
+
             PlayerPrefs.SetInt("EasyMode", options.easyMode.GetHashCode());
 			PlayerPrefs.SetInt("Ember",(int)eq.equippedEmber);
 			PlayerPrefs.SetInt("Boot",(int)eq.equippedBoot);
 
             PlayerPrefs.SetInt("RoomArrLenght", theRooms.finalRoomInfoArray.Length);
+
             for (int i = 0; i < theRooms.finalRoomInfoArray.Length; i++)
             {
                 string temp= "Room_"+i.ToString()+" been there";
@@ -127,17 +129,22 @@ public class SaveTest : MonoBehaviour {
        if (Application.platform == RuntimePlatform.OSXWebPlayer
    || Application.platform == RuntimePlatform.WindowsWebPlayer)
        {
-      gameObject.GetComponent<Health>().currentHP=      PlayerPrefs.GetFloat("PlayerHealth", 100);
-     gameObject.GetComponent<PlayerLight>().currentLight=      PlayerPrefs.GetFloat("PlayerLight", 100);
+			//Loading Hp and Liht
 
+      gameObject.GetComponent<Health>().currentHP=      PlayerPrefs.GetFloat("PlayerHealth", 100);
+      gameObject.GetComponent<PlayerLight>().currentLight=      PlayerPrefs.GetFloat("PlayerLight", 100);
+			//Loading stats
 		theStats.meleeModifier   =	PlayerPrefs.GetFloat("MeleeMod",0 );
 		theStats.spellModifier   =	PlayerPrefs.GetFloat("SpellMod",0 );
 		theStats.maxLightModifier=	PlayerPrefs.GetFloat("LightMod",0 );
 		theStats.maxHPModifier   =	PlayerPrefs.GetFloat("LifeMod", 0 );
- 
+
+			//Loading boot and embers
 		eq.equippedEmber=(ember)	PlayerPrefs.GetInt("Ember",0);
 		eq.equippedBoot  =	(boot)PlayerPrefs.GetInt("Boot",0 );
+			//Loading the amount of rooms in the roomgenerator
      int teemplenght = PlayerPrefs.GetInt("RoomArrLenght", 0);
+
      if (teemplenght != 0)
      {
          theRooms.finalRoomInfoArray = new Room[teemplenght];
@@ -182,8 +189,8 @@ public class SaveTest : MonoBehaviour {
        for (int i = 0; i < data.amountofrooms; i++)
        {
 		   data.roominfo[i]            = new RoomData();
-           data.roominfo[i].width      = theRooms.finalRoomInfoArray[i].width;
-           data.roominfo[i].height     = theRooms.finalRoomInfoArray[i].height;
+        //data.roominfo[i].width      = theRooms.finalRoomInfoArray[i].width;
+        //data.roominfo[i].height     = theRooms.finalRoomInfoArray[i].height;
            // data.wallTiles               = theRooms.finalRoomInfoArray[0].wallTiles;
            //  data.floorTiles              = theRooms.finalRoomInfoArray[0].floorTiles; 
            // data.SouthDoor               = theRooms.finalRoomInfoArray[0].SouthDoor;
@@ -194,8 +201,8 @@ public class SaveTest : MonoBehaviour {
            //  data.enemiesThatCanSpawn     = theRooms.finalRoomInfoArray[0].enemiesThatCanSpawn;
            //  data.enemySpawnPoints        = theRooms.finalRoomInfoArray[0].enemySpawnPoints; 
            //  data.enemySpawnPointUsed     = theRooms.finalRoomInfoArray[0].enemySpawnPointUsed;
-           data.roominfo[i].minEnemies = theRooms.finalRoomInfoArray[i].minEnemies;
-           data.roominfo[i].maxEnemies = theRooms.finalRoomInfoArray[i].maxEnemies;
+          // data.roominfo[i].minEnemies = theRooms.finalRoomInfoArray[i].minEnemies;
+          // data.roominfo[i].maxEnemies = theRooms.finalRoomInfoArray[i].maxEnemies;
            //  data.hazard                  = theRooms.finalRoomInfoArray[0].hazard;
            //  data.hazardSpawnPoints       = theRooms.finalRoomInfoArray[0].hazardSpawnPoints;
            //  data.bottomPlayerSpawn = new Vector2(0, 0);
@@ -203,12 +210,12 @@ public class SaveTest : MonoBehaviour {
            //data.rightPlayerSpawn        = theRooms.finalRoomInfoArray[0].rightPlayerSpawn;
            //data.topPlayerSpawn          = theRooms.finalRoomInfoArray[0].topPlayerSpawn;
            //data.leftPlayerSpawn         = theRooms.finalRoomInfoArray[0].leftPlayerSpawn;
-           data.roominfo[i].entranceDir = theRooms.finalRoomInfoArray[i].entranceDir;
-           data.roominfo[i].exitDir     = theRooms.finalRoomInfoArray[i].exitDir;
+          //data.roominfo[i].entranceDir = theRooms.finalRoomInfoArray[i].entranceDir;
+          //data.roominfo[i].exitDir     = theRooms.finalRoomInfoArray[i].exitDir;
            //  data.chestSpawnLocations     = theRooms.finalRoomInfoArray[0].chestSpawnLocations;  
            data.roominfo[i].beenThere   = theRooms.finalRoomInfoArray[i].beenThere;
-           data.roominfo[i].numEnemies  = theRooms.finalRoomInfoArray[i].numEnemies;
-    data.roominfo[i].comingFromEntrance = theRooms.finalRoomInfoArray[i].comingFromEntrance;
+  //        data.roominfo[i].numEnemies  = theRooms.finalRoomInfoArray[i].numEnemies;
+  // data.roominfo[i].comingFromEntrance = theRooms.finalRoomInfoArray[i].comingFromEntrance;
            //  data.waypointLocations       = theRooms.finalRoomInfoArray[0].waypointLocations;
            data.roominfo[i].roomID      = theRooms.finalRoomInfoArray[i].roomID;
        }
@@ -223,19 +230,15 @@ public class SaveTest : MonoBehaviour {
 		for (int i = 0; i < data.amountofrooms; i++)
 		{
 	        
-			theRooms.finalRoomInfoArray[i].width=                             	data.roominfo[i].width ;        
-			theRooms.finalRoomInfoArray[i].height=                            	data.roominfo[i].height ;    
-     
-			theRooms.finalRoomInfoArray[i].minEnemies=                        	data.roominfo[i].minEnemies ;
-			theRooms.finalRoomInfoArray[i].maxEnemies=                        	data.roominfo[i].maxEnemies ;
-	 
-			theRooms.finalRoomInfoArray[i].entranceDir=                      	data.roominfo[i].entranceDir;
-			theRooms.finalRoomInfoArray[i].exitDir=                          	data.roominfo[i].exitDir ;   
-	 
+			//theRooms.finalRoomInfoArray[i].width=                             	data.roominfo[i].width ;        
+			//theRooms.finalRoomInfoArray[i].height=                            	data.roominfo[i].height ;      
+			//theRooms.finalRoomInfoArray[i].minEnemies=                        	data.roominfo[i].minEnemies ;
+			//theRooms.finalRoomInfoArray[i].maxEnemies=                        	data.roominfo[i].maxEnemies ;
+			//theRooms.finalRoomInfoArray[i].entranceDir=                      	data.roominfo[i].entranceDir;
+			//theRooms.finalRoomInfoArray[i].exitDir=                          	data.roominfo[i].exitDir ;   
 			theRooms.finalRoomInfoArray[i].beenThere=                       	data.roominfo[i].beenThere ; 
-				theRooms.finalRoomInfoArray[i].numEnemies=                       	data.roominfo[i].numEnemies ;
-					theRooms.finalRoomInfoArray[i].comingFromEntrance=               data.roominfo[i].comingFromEntrance;
-  
+		    //theRooms.finalRoomInfoArray[i].numEnemies=                       	data.roominfo[i].numEnemies ;
+			//theRooms.finalRoomInfoArray[i].comingFromEntrance=               data.roominfo[i].comingFromEntrance;
 			theRooms.finalRoomInfoArray[i].roomID=data.roominfo[i].roomID     ;
 		}
 
@@ -263,14 +266,14 @@ public class PlayerData
 [System.Serializable]
 public class RoomData
 {
-    public int width;
-    public int height;
-    public int minEnemies;
-    public int maxEnemies;
-    public int entranceDir;
-    public int exitDir;
+ //public int width;
+ //public int height;
+ //public int minEnemies;
+ //public int maxEnemies;
+ //public int entranceDir;
+ //public int exitDir;
     public bool beenThere;
-    public int numEnemies = 0;
-    public bool comingFromEntrance = true;
+  //  public int numEnemies = 0;
+ //   public bool comingFromEntrance = true;
     public int roomID;
 }
