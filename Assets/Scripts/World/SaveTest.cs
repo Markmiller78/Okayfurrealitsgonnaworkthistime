@@ -123,6 +123,7 @@ public class SaveTest : MonoBehaviour {
 			data.equippedember= (int)eq.equippedEmber;
 			data.equippedboot= (int)eq.equippedBoot;
 			data.currentroom= theRooms.currentRoom;
+
             CopyRooms(data);
            // data.finalRoomInfoArray = theRooms.finalRoomInfoArray;
             bin.Serialize(file, data);
@@ -234,8 +235,8 @@ public class SaveTest : MonoBehaviour {
            //data.rightPlayerSpawn        = theRooms.finalRoomInfoArray[0].rightPlayerSpawn;
            //data.topPlayerSpawn          = theRooms.finalRoomInfoArray[0].topPlayerSpawn;
            //data.leftPlayerSpawn         = theRooms.finalRoomInfoArray[0].leftPlayerSpawn;
-          //data.roominfo[i].entranceDir = theRooms.finalRoomInfoArray[i].entranceDir;
-          //data.roominfo[i].exitDir     = theRooms.finalRoomInfoArray[i].exitDir;
+          data.roominfo[i].entranceDir = theRooms.finalRoomInfoArray[i].entranceDir;
+          data.roominfo[i].exitDir     = theRooms.finalRoomInfoArray[i].exitDir;
            //  data.chestSpawnLocations     = theRooms.finalRoomInfoArray[0].chestSpawnLocations;  
            data.roominfo[i].beenThere   = theRooms.finalRoomInfoArray[i].beenThere;
   //        data.roominfo[i].numEnemies  = theRooms.finalRoomInfoArray[i].numEnemies;
