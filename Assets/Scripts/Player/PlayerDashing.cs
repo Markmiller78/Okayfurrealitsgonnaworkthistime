@@ -126,7 +126,7 @@ public class PlayerDashing : MonoBehaviour
                 }
                 timeRemaining -= Time.deltaTime;
 
-                if (heroEquipment.equippedBoot != boot.Blink)
+                if (heroEquipment.equippedBoot != boot.Blink && heroEquipment.equippedBoot != boot.Decoy)
                 {
                     //Set the dash direction to the direction the player is currently facing
 
@@ -402,7 +402,7 @@ public class PlayerDashing : MonoBehaviour
                 //No ember equipped
                 if (heroEquipment.equippedEmber == ember.None)
                 {
-                    Instantiate(lightDecoy, transform.position, new Quaternion(0, 0, 0, 0));
+                    //Instantiate(lightDecoy, transform.position, new Quaternion(0, 0, 0, 0));
 
                 }
                 //Ice ember equipped
@@ -435,8 +435,9 @@ public class PlayerDashing : MonoBehaviour
                 {
                     Instantiate(earthDecoy, transform.position, new Quaternion(0, 0, 0, 0));
                 }
+                Vector3 temp = (transform.TransformDirection(Vector3.up.normalized) * 1.5f);
 
-
+                controller.Move(temp);
 
             }
         }

@@ -15,6 +15,8 @@ public class PlayerHazard : MonoBehaviour
 
     PlayerEquipment heroEqp;
 
+    public AudioSource aPlayer;
+
 
 
     float timer;
@@ -44,6 +46,11 @@ public class PlayerHazard : MonoBehaviour
                 heroMovement.halfSpeed = 0.8f;
                 heroMovement.fullSpeed = 1.6f;
                 heroHP.LoseHealth(3.0f * Time.deltaTime);
+                if (aPlayer.isPlaying == false)
+                {
+                    aPlayer.Play();
+                }
+
             }
             else
             {
@@ -51,6 +58,11 @@ public class PlayerHazard : MonoBehaviour
                 heroMovement.isinHazard = false;
                 heroMovement.halfSpeed = 1.6f;
                 heroMovement.fullSpeed = 3.1f;
+                if (aPlayer.isPlaying == true)
+                {
+                    aPlayer.Stop();
+                    
+                }
             }
 
             if (isInCloud)
