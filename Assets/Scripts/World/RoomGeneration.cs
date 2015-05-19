@@ -111,8 +111,8 @@ public class RoomGeneration : MonoBehaviour
             }
         }
 
-        finalRoomArray = new GameObject[easyMode ? 22 : 18];
-        finalRoomInfoArray = new Room[easyMode ? 22 : 18];
+        finalRoomArray = new GameObject[easyMode ? 33 : 27];
+        finalRoomInfoArray = new Room[easyMode ? 33 : 27];
         FillDungeon();
 
         //TESTING
@@ -757,312 +757,356 @@ public class RoomGeneration : MonoBehaviour
         {
             finalRoomInfoArray[17].exitDir = Random.Range(0, 3);
         } while (finalRoomInfoArray[17].exitDir == finalRoomInfoArray[17].entranceDir);
-
+        finalRoomArray[18] = easyMode ? checkpointRooms[1] : floorThreeRooms[0];
+        finalRoomInfoArray[18] = easyMode ? checkpointRoomsInfo[1] : floorTwoRoomsInfo[0];
+        switch (finalRoomInfoArray[17].exitDir)
+        {
+            case 0:
+                finalRoomInfoArray[18].entranceDir = 2;
+                break;
+            case 1:
+                finalRoomInfoArray[18].entranceDir = 3;
+                break;
+            case 2:
+                finalRoomInfoArray[18].entranceDir = 0;
+                break;
+            case 3:
+                finalRoomInfoArray[18].entranceDir = 1;
+                break;
+            default:
+                break;
+        }
+        do
+        {
+            finalRoomInfoArray[18].exitDir = Random.Range(0, 3);
+        } while (finalRoomInfoArray[18].exitDir == finalRoomInfoArray[18].entranceDir);
+        finalRoomArray[19] = easyMode ? floorTwoRooms[4] : floorThreeRooms[1];
+        finalRoomInfoArray[19] = easyMode ? floorTwoRoomsInfo[4] : floorTwoRoomsInfo[1];
+        switch (finalRoomInfoArray[18].exitDir)
+        {
+            case 0:
+                finalRoomInfoArray[19].entranceDir = 2;
+                break;
+            case 1:
+                finalRoomInfoArray[19].entranceDir = 3;
+                break;
+            case 2:
+                finalRoomInfoArray[19].entranceDir = 0;
+                break;
+            case 3:
+                finalRoomInfoArray[19].entranceDir = 1;
+                break;
+            default:
+                break;
+        }
+        do
+        {
+            finalRoomInfoArray[19].exitDir = Random.Range(0, 3);
+        } while (finalRoomInfoArray[19].exitDir == finalRoomInfoArray[19].entranceDir);
+        finalRoomArray[20] = easyMode ? floorTwoRooms[5] : floorThreeMazes[0];
+        finalRoomInfoArray[20] = easyMode ? floorTwoRoomsInfo[5] : floorTwoMazesInfo[0];
+        switch (finalRoomInfoArray[19].exitDir)
+        {
+            case 0:
+                finalRoomInfoArray[20].entranceDir = 2;
+                break;
+            case 1:
+                finalRoomInfoArray[20].entranceDir = 3;
+                break;
+            case 2:
+                finalRoomInfoArray[20].entranceDir = 0;
+                break;
+            case 3:
+                finalRoomInfoArray[20].entranceDir = 1;
+                break;
+            default:
+                break;
+        }
+        do
+        {
+            finalRoomInfoArray[20].exitDir = Random.Range(0, 3);
+        } while (finalRoomInfoArray[20].exitDir == finalRoomInfoArray[20].entranceDir);
+        finalRoomArray[21] = easyMode ? lorneRoom : floorThreeRooms[2];
+        finalRoomInfoArray[21] = easyMode ? lorneRoomInfo : floorTwoRoomsInfo[2];
+        switch (finalRoomInfoArray[20].exitDir)
+        {
+            case 0:
+                finalRoomInfoArray[21].entranceDir = 2;
+                break;
+            case 1:
+                finalRoomInfoArray[21].entranceDir = 3;
+                break;
+            case 2:
+                finalRoomInfoArray[21].entranceDir = 0;
+                break;
+            case 3:
+                finalRoomInfoArray[21].entranceDir = 1;
+                break;
+            default:
+                break;
+        }
+        do
+        {
+            finalRoomInfoArray[21].exitDir = Random.Range(0, 3);
+        } while (finalRoomInfoArray[21].exitDir == finalRoomInfoArray[21].entranceDir);
+        finalRoomArray[22] = easyMode ? floorThreeRooms[0] : floorThreeRooms[3];
+        finalRoomInfoArray[22] = easyMode ? floorThreeRoomsInfo[0] : floorTwoRoomsInfo[3];
+        switch (finalRoomInfoArray[21].exitDir)
+        {
+            case 0:
+                finalRoomInfoArray[22].entranceDir = 2;
+                break;
+            case 1:
+                finalRoomInfoArray[22].entranceDir = 3;
+                break;
+            case 2:
+                finalRoomInfoArray[22].entranceDir = 0;
+                break;
+            case 3:
+                finalRoomInfoArray[22].entranceDir = 1;
+                break;
+            default:
+                break;
+        }
+        do
+        {
+            finalRoomInfoArray[22].exitDir = Random.Range(0, 3);
+        } while (finalRoomInfoArray[22].exitDir == finalRoomInfoArray[22].entranceDir);
+        finalRoomArray[23] = easyMode ? floorThreeRooms[1] : floorThreeMazes[1];
+        finalRoomInfoArray[23] = easyMode ? floorThreeRoomsInfo[1] : floorThreeMazesInfo[1];
+        switch (finalRoomInfoArray[22].exitDir)
+        {
+            case 0:
+                finalRoomInfoArray[23].entranceDir = 2;
+                break;
+            case 1:
+                finalRoomInfoArray[23].entranceDir = 3;
+                break;
+            case 2:
+                finalRoomInfoArray[23].entranceDir = 0;
+                break;
+            case 3:
+                finalRoomInfoArray[23].entranceDir = 1;
+                break;
+            default:
+                break;
+        }
+        do
+        {
+            finalRoomInfoArray[23].exitDir = Random.Range(0, 3);
+        } while (finalRoomInfoArray[23].exitDir == finalRoomInfoArray[23].entranceDir);
+        finalRoomArray[24] = easyMode ? floorThreeMazes[0] : floorThreeRooms[4];
+        finalRoomInfoArray[24] = easyMode ? floorThreeMazesInfo[0] : floorTwoRoomsInfo[4];
+        switch (finalRoomInfoArray[23].exitDir)
+        {
+            case 0:
+                finalRoomInfoArray[24].entranceDir = 2;
+                break;
+            case 1:
+                finalRoomInfoArray[24].entranceDir = 3;
+                break;
+            case 2:
+                finalRoomInfoArray[24].entranceDir = 0;
+                break;
+            case 3:
+                finalRoomInfoArray[24].entranceDir = 1;
+                break;
+            default:
+                break;
+        }
+        do
+        {
+            finalRoomInfoArray[24].exitDir = Random.Range(0, 3);
+        } while (finalRoomInfoArray[24].exitDir == finalRoomInfoArray[24].entranceDir);
+        finalRoomArray[25] = easyMode ? checkpointRooms[2] : floorThreeRooms[5];
+        finalRoomInfoArray[25] = easyMode ? checkpointRoomsInfo[2] : floorTwoRoomsInfo[5];
+        switch (finalRoomInfoArray[24].exitDir)
+        {
+            case 0:
+                finalRoomInfoArray[25].entranceDir = 2;
+                break;
+            case 1:
+                finalRoomInfoArray[25].entranceDir = 3;
+                break;
+            case 2:
+                finalRoomInfoArray[25].entranceDir = 0;
+                break;
+            case 3:
+                finalRoomInfoArray[25].entranceDir = 1;
+                break;
+            default:
+                break;
+        }
+        do
+        {
+            finalRoomInfoArray[25].exitDir = Random.Range(0, 3);
+        } while (finalRoomInfoArray[25].exitDir == finalRoomInfoArray[25].entranceDir);
+        finalRoomArray[26] = easyMode ? floorThreeRooms[2] : morriusRoom;
+        finalRoomInfoArray[26] = easyMode ? floorThreeRoomsInfo[2] : morriusRoomInfo;
+        switch (finalRoomInfoArray[25].exitDir)
+        {
+            case 0:
+                finalRoomInfoArray[26].entranceDir = 2;
+                break;
+            case 1:
+                finalRoomInfoArray[26].entranceDir = 3;
+                break;
+            case 2:
+                finalRoomInfoArray[26].entranceDir = 0;
+                break;
+            case 3:
+                finalRoomInfoArray[26].entranceDir = 1;
+                break;
+            default:
+                break;
+        }
+        do
+        {
+            finalRoomInfoArray[26].exitDir = Random.Range(0, 3);
+        } while (finalRoomInfoArray[26].exitDir == finalRoomInfoArray[26].entranceDir);
         //
         if (easyMode)
         {
-            finalRoomArray[18] = checkpointRooms[1];
-            finalRoomInfoArray[18] = checkpointRoomsInfo[1];
-            switch (finalRoomInfoArray[17].exitDir)
+            finalRoomArray[27] = floorThreeRooms[3];
+            finalRoomInfoArray[27] = floorThreeRoomsInfo[3];
+            switch (finalRoomInfoArray[26].exitDir)
             {
                 case 0:
-                    finalRoomInfoArray[18].entranceDir = 2;
+                    finalRoomInfoArray[27].entranceDir = 2;
                     break;
                 case 1:
-                    finalRoomInfoArray[18].entranceDir = 3;
+                    finalRoomInfoArray[27].entranceDir = 3;
                     break;
                 case 2:
-                    finalRoomInfoArray[18].entranceDir = 0;
+                    finalRoomInfoArray[27].entranceDir = 0;
                     break;
                 case 3:
-                    finalRoomInfoArray[18].entranceDir = 1;
+                    finalRoomInfoArray[27].entranceDir = 1;
                     break;
                 default:
                     break;
             }
             do
             {
-                finalRoomInfoArray[18].exitDir = Random.Range(0, 3);
-            } while (finalRoomInfoArray[18].exitDir == finalRoomInfoArray[18].entranceDir);
-            finalRoomArray[19] = floorTwoRooms[4];
-            finalRoomInfoArray[19] = floorTwoRoomsInfo[4];
-            switch (finalRoomInfoArray[18].exitDir)
+                finalRoomInfoArray[27].exitDir = Random.Range(0, 3);
+            } while (finalRoomInfoArray[27].exitDir == finalRoomInfoArray[27].entranceDir);
+            finalRoomArray[28] = floorThreeMazes[1];
+            finalRoomInfoArray[28] = floorThreeMazesInfo[1];
+            switch (finalRoomInfoArray[27].exitDir)
             {
                 case 0:
-                    finalRoomInfoArray[19].entranceDir = 2;
+                    finalRoomInfoArray[28].entranceDir = 2;
                     break;
                 case 1:
-                    finalRoomInfoArray[19].entranceDir = 3;
+                    finalRoomInfoArray[28].entranceDir = 3;
                     break;
                 case 2:
-                    finalRoomInfoArray[19].entranceDir = 0;
+                    finalRoomInfoArray[28].entranceDir = 0;
                     break;
                 case 3:
-                    finalRoomInfoArray[19].entranceDir = 1;
+                    finalRoomInfoArray[28].entranceDir = 1;
                     break;
                 default:
                     break;
             }
             do
             {
-                finalRoomInfoArray[19].exitDir = Random.Range(0, 3);
-            } while (finalRoomInfoArray[19].exitDir == finalRoomInfoArray[19].entranceDir);
-            finalRoomArray[20] = floorTwoRooms[5];
-            finalRoomInfoArray[20] = floorTwoRoomsInfo[5];
-            switch (finalRoomInfoArray[19].exitDir)
+                finalRoomInfoArray[28].exitDir = Random.Range(0, 3);
+            } while (finalRoomInfoArray[28].exitDir == finalRoomInfoArray[28].entranceDir);
+            finalRoomArray[29] = checkpointRooms[2];
+            finalRoomInfoArray[29] = checkpointRoomsInfo[2];
+            switch (finalRoomInfoArray[28].exitDir)
             {
                 case 0:
-                    finalRoomInfoArray[20].entranceDir = 2;
+                    finalRoomInfoArray[29].entranceDir = 2;
                     break;
                 case 1:
-                    finalRoomInfoArray[20].entranceDir = 3;
+                    finalRoomInfoArray[29].entranceDir = 3;
                     break;
                 case 2:
-                    finalRoomInfoArray[20].entranceDir = 0;
+                    finalRoomInfoArray[29].entranceDir = 0;
                     break;
                 case 3:
-                    finalRoomInfoArray[20].entranceDir = 1;
+                    finalRoomInfoArray[29].entranceDir = 1;
                     break;
                 default:
                     break;
             }
             do
             {
-                finalRoomInfoArray[20].exitDir = Random.Range(0, 3);
-            } while (finalRoomInfoArray[20].exitDir == finalRoomInfoArray[20].entranceDir);
-            finalRoomArray[21] = lorneRoom;
-            finalRoomInfoArray[21] = lorneRoomInfo;
-            switch (finalRoomInfoArray[20].exitDir)
+                finalRoomInfoArray[29].exitDir = Random.Range(0, 3);
+            } while (finalRoomInfoArray[29].exitDir == finalRoomInfoArray[29].entranceDir);
+            finalRoomArray[30] = floorThreeRooms[4];
+            finalRoomInfoArray[30] = floorThreeRoomsInfo[4];
+            switch (finalRoomInfoArray[29].exitDir)
             {
                 case 0:
-                    finalRoomInfoArray[21].entranceDir = 2;
+                    finalRoomInfoArray[30].entranceDir = 2;
                     break;
                 case 1:
-                    finalRoomInfoArray[21].entranceDir = 3;
+                    finalRoomInfoArray[30].entranceDir = 3;
                     break;
                 case 2:
-                    finalRoomInfoArray[21].entranceDir = 0;
+                    finalRoomInfoArray[30].entranceDir = 0;
                     break;
                 case 3:
-                    finalRoomInfoArray[21].entranceDir = 1;
+                    finalRoomInfoArray[30].entranceDir = 1;
                     break;
                 default:
                     break;
             }
             do
             {
-                finalRoomInfoArray[21].exitDir = Random.Range(0, 3);
-            } while (finalRoomInfoArray[21].exitDir == finalRoomInfoArray[21].entranceDir);
+                finalRoomInfoArray[30].exitDir = Random.Range(0, 3);
+            } while (finalRoomInfoArray[30].exitDir == finalRoomInfoArray[30].entranceDir);
+            finalRoomArray[31] = floorThreeRooms[5];
+            finalRoomInfoArray[31] = floorThreeRoomsInfo[5];
+            switch (finalRoomInfoArray[30].exitDir)
+            {
+                case 0:
+                    finalRoomInfoArray[31].entranceDir = 2;
+                    break;
+                case 1:
+                    finalRoomInfoArray[31].entranceDir = 3;
+                    break;
+                case 2:
+                    finalRoomInfoArray[31].entranceDir = 0;
+                    break;
+                case 3:
+                    finalRoomInfoArray[31].entranceDir = 1;
+                    break;
+                default:
+                    break;
+            }
+            do
+            {
+                finalRoomInfoArray[31].exitDir = Random.Range(0, 3);
+            } while (finalRoomInfoArray[31].exitDir == finalRoomInfoArray[31].entranceDir);
+            finalRoomArray[32] = morriusRoom;
+            finalRoomInfoArray[32] = morriusRoomInfo;
+            switch (finalRoomInfoArray[31].exitDir)
+            {
+                case 0:
+                    finalRoomInfoArray[32].entranceDir = 2;
+                    break;
+                case 1:
+                    finalRoomInfoArray[32].entranceDir = 3;
+                    break;
+                case 2:
+                    finalRoomInfoArray[32].entranceDir = 0;
+                    break;
+                case 3:
+                    finalRoomInfoArray[32].entranceDir = 1;
+                    break;
+                default:
+                    break;
+            }
+            do
+            {
+                finalRoomInfoArray[32].exitDir = Random.Range(0, 3);
+            } while (finalRoomInfoArray[32].exitDir == finalRoomInfoArray[32].entranceDir);
         }
         //
-        //finalRoomArray[18] = floorThreeRooms[0];
-        //finalRoomInfoArray[18] = floorTwoRoomsInfo[0];
-        //switch (finalRoomInfoArray[17].exitDir)
-        //{
-        //    case 0:
-        //        finalRoomInfoArray[18].entranceDir = 2;
-        //        break;
-        //    case 1:
-        //        finalRoomInfoArray[18].entranceDir = 3;
-        //        break;
-        //    case 2:
-        //        finalRoomInfoArray[18].entranceDir = 0;
-        //        break;
-        //    case 3:
-        //        finalRoomInfoArray[18].entranceDir = 1;
-        //        break;
-        //    default:
-        //        break;
-        //}
-        //do
-        //{
-        //    finalRoomInfoArray[18].exitDir = Random.Range(0, 3);
-        //} while (finalRoomInfoArray[18].exitDir == finalRoomInfoArray[18].entranceDir);
-        //finalRoomArray[19] = floorThreeRooms[1];
-        //finalRoomInfoArray[19] = floorTwoRoomsInfo[1];
-        //switch (finalRoomInfoArray[18].exitDir)
-        //{
-        //    case 0:
-        //        finalRoomInfoArray[19].entranceDir = 2;
-        //        break;
-        //    case 1:
-        //        finalRoomInfoArray[19].entranceDir = 3;
-        //        break;
-        //    case 2:
-        //        finalRoomInfoArray[19].entranceDir = 0;
-        //        break;
-        //    case 3:
-        //        finalRoomInfoArray[19].entranceDir = 1;
-        //        break;
-        //    default:
-        //        break;
-        //}
-        //do
-        //{
-        //    finalRoomInfoArray[19].exitDir = Random.Range(0, 3);
-        //} while (finalRoomInfoArray[19].exitDir == finalRoomInfoArray[19].entranceDir);
-        //finalRoomArray[20] = floorThreeMazes[0];
-        //finalRoomInfoArray[20] = floorTwoMazesInfo[0];
-        //switch (finalRoomInfoArray[19].exitDir)
-        //{
-        //    case 0:
-        //        finalRoomInfoArray[20].entranceDir = 2;
-        //        break;
-        //    case 1:
-        //        finalRoomInfoArray[20].entranceDir = 3;
-        //        break;
-        //    case 2:
-        //        finalRoomInfoArray[20].entranceDir = 0;
-        //        break;
-        //    case 3:
-        //        finalRoomInfoArray[20].entranceDir = 1;
-        //        break;
-        //    default:
-        //        break;
-        //}
-        //do
-        //{
-        //    finalRoomInfoArray[20].exitDir = Random.Range(0, 3);
-        //} while (finalRoomInfoArray[20].exitDir == finalRoomInfoArray[20].entranceDir);
-        //finalRoomArray[21] = floorThreeRooms[2];
-        //finalRoomInfoArray[21] = floorTwoRoomsInfo[2];
-        //switch (finalRoomInfoArray[20].exitDir)
-        //{
-        //    case 0:
-        //        finalRoomInfoArray[21].entranceDir = 2;
-        //        break;
-        //    case 1:
-        //        finalRoomInfoArray[21].entranceDir = 3;
-        //        break;
-        //    case 2:
-        //        finalRoomInfoArray[21].entranceDir = 0;
-        //        break;
-        //    case 3:
-        //        finalRoomInfoArray[21].entranceDir = 1;
-        //        break;
-        //    default:
-        //        break;
-        //}
-        //do
-        //{
-        //    finalRoomInfoArray[21].exitDir = Random.Range(0, 3);
-        //} while (finalRoomInfoArray[21].exitDir == finalRoomInfoArray[21].entranceDir);
-        //finalRoomArray[22] = floorThreeRooms[3];
-        //finalRoomInfoArray[22] = floorTwoRoomsInfo[3];
-        //switch (finalRoomInfoArray[21].exitDir)
-        //{
-        //    case 0:
-        //        finalRoomInfoArray[22].entranceDir = 2;
-        //        break;
-        //    case 1:
-        //        finalRoomInfoArray[22].entranceDir = 3;
-        //        break;
-        //    case 2:
-        //        finalRoomInfoArray[22].entranceDir = 0;
-        //        break;
-        //    case 3:
-        //        finalRoomInfoArray[22].entranceDir = 1;
-        //        break;
-        //    default:
-        //        break;
-        //}
-        //do
-        //{
-        //    finalRoomInfoArray[22].exitDir = Random.Range(0, 3);
-        //} while (finalRoomInfoArray[22].exitDir == finalRoomInfoArray[22].entranceDir);
-        //finalRoomArray[23] = floorThreeMazes[1];
-        //finalRoomInfoArray[23] = floorThreeMazesInfo[1];
-        //switch (finalRoomInfoArray[22].exitDir)
-        //{
-        //    case 0:
-        //        finalRoomInfoArray[23].entranceDir = 2;
-        //        break;
-        //    case 1:
-        //        finalRoomInfoArray[23].entranceDir = 3;
-        //        break;
-        //    case 2:
-        //        finalRoomInfoArray[23].entranceDir = 0;
-        //        break;
-        //    case 3:
-        //        finalRoomInfoArray[23].entranceDir = 1;
-        //        break;
-        //    default:
-        //        break;
-        //}
-        //do
-        //{
-        //    finalRoomInfoArray[23].exitDir = Random.Range(0, 3);
-        //} while (finalRoomInfoArray[23].exitDir == finalRoomInfoArray[23].entranceDir);
-        //finalRoomArray[24] = floorThreeRooms[4];
-        //finalRoomInfoArray[24] = floorTwoRoomsInfo[4];
-        //switch (finalRoomInfoArray[23].exitDir)
-        //{
-        //    case 0:
-        //        finalRoomInfoArray[24].entranceDir = 2;
-        //        break;
-        //    case 1:
-        //        finalRoomInfoArray[24].entranceDir = 3;
-        //        break;
-        //    case 2:
-        //        finalRoomInfoArray[24].entranceDir = 0;
-        //        break;
-        //    case 3:
-        //        finalRoomInfoArray[24].entranceDir = 1;
-        //        break;
-        //    default:
-        //        break;
-        //}
-        //do
-        //{
-        //    finalRoomInfoArray[24].exitDir = Random.Range(0, 3);
-        //} while (finalRoomInfoArray[24].exitDir == finalRoomInfoArray[24].entranceDir);
-        //finalRoomArray[25] = floorThreeRooms[5];
-        //finalRoomInfoArray[25] = floorTwoRoomsInfo[5];
-        //switch (finalRoomInfoArray[24].exitDir)
-        //{
-        //    case 0:
-        //        finalRoomInfoArray[25].entranceDir = 2;
-        //        break;
-        //    case 1:
-        //        finalRoomInfoArray[25].entranceDir = 3;
-        //        break;
-        //    case 2:
-        //        finalRoomInfoArray[25].entranceDir = 0;
-        //        break;
-        //    case 3:
-        //        finalRoomInfoArray[25].entranceDir = 1;
-        //        break;
-        //    default:
-        //        break;
-        //}
-        //do
-        //{
-        //    finalRoomInfoArray[25].exitDir = Random.Range(0, 3);
-        //} while (finalRoomInfoArray[25].exitDir == finalRoomInfoArray[25].entranceDir);
-        //finalRoomArray[26] = morriusRoom;
-        //finalRoomInfoArray[26] = morriusRoomInfo;
-        //switch (finalRoomInfoArray[25].exitDir)
-        //{
-        //    case 0:
-        //        finalRoomInfoArray[26].entranceDir = 2;
-        //        break;
-        //    case 1:
-        //        finalRoomInfoArray[26].entranceDir = 3;
-        //        break;
-        //    case 2:
-        //        finalRoomInfoArray[26].entranceDir = 0;
-        //        break;
-        //    case 3:
-        //        finalRoomInfoArray[26].entranceDir = 1;
-        //        break;
-        //    default:
-        //        break;
-        //}
-        //do
-        //{
-        //    finalRoomInfoArray[26].exitDir = Random.Range(0, 3);
-        //} while (finalRoomInfoArray[26].exitDir == finalRoomInfoArray[26].entranceDir);
-
         for (int i = 0; i < finalRoomInfoArray.Length; i++)
         {
             finalRoomInfoArray[i].comingFromEntrance = true;
