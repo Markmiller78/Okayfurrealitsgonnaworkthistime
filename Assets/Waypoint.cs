@@ -16,7 +16,14 @@ public class Waypoint : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject != null && other.name.Contains("Archer"))
-            other.GetComponent<AISkeletonArcher>().usedWaypoints.pushBack(this.gameObject);
+        if (other != null && other.GetComponent<AISkeletonArcher>() != null)
+        {
+            AISkeletonArcher ai = other.GetComponent<AISkeletonArcher>();
+            if (ai)
+            {
+                ai.usedWaypoints.pushBack(gameObject);
+            }
+            //other.GetComponent<AISkeletonArcher>().usedWaypoints.pushBack(this.gameObject);
+        }
     }
 }
