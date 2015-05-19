@@ -20,12 +20,12 @@ public class AIShadowCloud : MonoBehaviour
     Light heroLight;
 
     float snaredSpeed;
-    float SnareTimer;
-    bool isSnared;
+//    float SnareTimer;
+//    bool isSnared;
 
     void Start()
     {
-        isSnared = false;
+//        isSnared = false;
         infecttimer = 3.0f;
         player = GameObject.FindGameObjectWithTag("Player");
         heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
@@ -131,8 +131,8 @@ public class AIShadowCloud : MonoBehaviour
 
     void Snare()
     {
-        isSnared = true;
-        SnareTimer = 2;
+//        isSnared = true;
+//        SnareTimer = 2;
         snaredSpeed = moveSpeed;
         moveSpeed = 0;
     }

@@ -10,10 +10,10 @@ public class PauseMenu : MonoBehaviour
     PlayerEquipment heroEquipment;
     bool axisChanged = false;
     public GameObject SelectorRemains;
-    Vector3 RemainsPOS;
+//    Vector3 RemainsPOS;
     void Start()
     {
-        RemainsPOS = new Vector3(1, 1, 1);
+//        RemainsPOS = new Vector3(1, 1, 1);
         pauseCanvas = GameObject.FindGameObjectWithTag("PauseCanvas");
         heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
         pauseCanvas.SetActive(false);

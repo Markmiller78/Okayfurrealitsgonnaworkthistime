@@ -21,9 +21,9 @@ public class IntroCutscene : MonoBehaviour
     public GameObject CommandingCommander;
     public GameObject CHero;
 
-    bool FadeInBool;
+//    bool FadeInBool;
     float timer;
-    float textTimer;
+//    float textTimer;
     int Stage;
     int i;
 
@@ -38,9 +38,9 @@ public class IntroCutscene : MonoBehaviour
     void Start()
     {
         RenderSettings.ambientLight = new Color(137f/255f, 147f/255f, 167f/255f);
-        FadeInBool = true;
+//        FadeInBool = true;
         timer = 3f;
-        textTimer = 2f;
+//        textTimer = 2f;
         Stage = 1;
         i = 0;
     }

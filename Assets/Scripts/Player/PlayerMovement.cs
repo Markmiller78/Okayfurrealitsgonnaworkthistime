@@ -10,7 +10,7 @@ public class PlayerMovement : MonoBehaviour
     public bool isinHazard = false;
     float speed;
     float knockbackTimer;
-    GameObject player;
+//    GameObject player;
     public bool stunned = false;
     float stunTimer;
     float sTimerMax;
@@ -29,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         
-        player = GameObject.FindGameObjectWithTag("Player");
+//        player = GameObject.FindGameObjectWithTag("Player");
         anim = gameObject.GetComponent<Animator>();
 		heroEquipment = gameObject.GetComponent<PlayerEquipment>();
         controller = gameObject.GetComponent<CharacterController>();

@@ -17,21 +17,18 @@ public class AILorneImproved : MonoBehaviour {
     public float attackRange;
     public bool isInfected = false;
     float attackCooldown;
-    bool attacking;
+    int currentState;
     public float attackCooldownMax;
     public float moveSpeed;
     public float turnSpeed;
     float distanceToPlayer;
-    float snaredSpeed;
-    float SnareTimer;
-    bool isSnared;
-    public float infectRange;
-    public float infecttimer;
+    bool AttackActive;
+
+
 
     void Start()
     {
-        infecttimer = 3.0f;
-        isSnared = false;
+        AttackActive = false;
         player = GameObject.FindGameObjectWithTag("Player");
         playMove = player.GetComponent<PlayerMovement>();
         playerHealth = player.GetComponent<Health>();
@@ -47,19 +44,34 @@ public class AILorneImproved : MonoBehaviour {
     {
         if (heroEquipment.paused == false)
         {
-            distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
-            if (attacking)
+            switch(currentState)
             {
-                UpdateAttackCooldown();
+                case 0:
+                    {
+                        distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
+                        if (AttackActive)
+                        {
+                            UpdateAttackCooldown();
+                        }
+                        if (distanceToPlayer >= attackRange)
+                            Move();
+
+                        Turn();
+                        break;
+                    }
+                case 1:
+                    {
+
+
+
+                        if (distanceToPlayer <= attackRange && !AttackActive)
+                        {
+                            Attack();
+                        }
+                        break;
+                    }
             }
-            if (distanceToPlayer >= attackRange)
-                Move();
-            Turn();
-            if (distanceToPlayer <= attackRange && !attacking)
-            {
-                Attack();
-                attacking = true;
-            }
+
         }
     }
 
@@ -72,13 +84,11 @@ public class AILorneImproved : MonoBehaviour {
 
     void Turn()
     {
-
         //Vector3 vectorToPlayer = player.transform.position - transform.position;
         //float angle = Mathf.Atan2(vectorToPlayer.y, vectorToPlayer.x) * Mathf.Rad2Deg;
         //angle -= 90.0f;
         //Quaternion rot = Quaternion.AngleAxis(angle, Vector3.forward);w
         //transform.rotation = Quaternion.Slerp(transform.rotation, rot, Time.deltaTime * turnSpeed);
-
     }
 
     void Attack()
@@ -96,7 +106,7 @@ public class AILorneImproved : MonoBehaviour {
         if (attackCooldown <= 0.0f)
         {
             attackCooldown = attackCooldownMax;
-            attacking = false;
+            AttackActive = false;
         }
     }
 
