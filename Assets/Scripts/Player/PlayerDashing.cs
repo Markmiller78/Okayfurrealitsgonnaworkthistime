@@ -21,7 +21,8 @@ public class PlayerDashing : MonoBehaviour
     Animator anim;
 
     public GameObject lightRemains;
-    public GameObject BlinkEffect;
+
+    [Header("Trailblazer")]
     public GameObject FireTrail;
     public GameObject LightTrail;
     public GameObject WindTrail;
@@ -30,6 +31,7 @@ public class PlayerDashing : MonoBehaviour
     public GameObject EarthTrail;
     public GameObject DeathTrail;
 
+    [Header("Decoy")]
 
     public GameObject lightDecoy;
     public GameObject fireDecoy; 
@@ -37,9 +39,20 @@ public class PlayerDashing : MonoBehaviour
     public GameObject windDecoy; 
     public GameObject earthDecoy; 
     public GameObject lifeDecoy;
-    public GameObject deathDecoy; 
+    public GameObject deathDecoy;
 
-    public HUDCooldowns UICD;
+    [Header("Whirlwind")]
+
+    public GameObject lightWhirl;
+    public GameObject fireWhirl;
+    public GameObject iceWhirl;
+    public GameObject windWhirl;
+    public GameObject earthWhirl;
+    public GameObject lifeWhirl;
+    public GameObject deathWhirl; 
+
+
+    [Header("Charge")]
 
     public GameObject FireCharge;
     public GameObject LightCharge;
@@ -49,11 +62,25 @@ public class PlayerDashing : MonoBehaviour
     public GameObject EarthCharge;
     public GameObject DeathCharge;
 
+    [Header("Blink")]
+    public GameObject FireBlink;
+    public GameObject LightBlink;
+    public GameObject WindBlink;
+    public GameObject IceBlink;
+    public GameObject LifeBlink;
+    public GameObject EarthBlink;
+    public GameObject DeathBlink;
+
+    [Header("Audio")]
+
     public AudioClip charge;
     public AudioClip whirl;
     public AudioClip decoy;
     public AudioClip blink;
     public AudioClip trail;
+
+    public HUDCooldowns UICD;
+
 
     AudioSource aPlayer;
 
@@ -87,9 +114,9 @@ public class PlayerDashing : MonoBehaviour
             //If the player is dashing, perform the dash
             if (timeRemaining > 0)
             {
-                if (timeRemaining < 0.15f)
+                if (timeRemaining < 0.08f)
                 {
-                    if (once && heroEquipment.equippedBoot == boot.Charge)
+                    if (once && (heroEquipment.equippedBoot == boot.Charge || heroEquipment.equippedBoot == boot.Blink))
                     {
                         Instantiate(lightRemains, oldPos, new Quaternion(0, 0, 0, 0));
                         once = false;
@@ -127,8 +154,11 @@ public class PlayerDashing : MonoBehaviour
                         MoveDirect *= dashSpeed * Time.deltaTime;
                     }
 
-                    //Actually Move the player
-                    controller.Move(MoveDirect);
+                    if (MoveDirect.SqrMagnitude() > 0.1f)
+                    {
+                        controller.Move(MoveDirect);
+                        
+                    }
 
                     if (heroEquipment.equippedBoot == boot.Trailblazer)
                     {
@@ -182,13 +212,6 @@ public class PlayerDashing : MonoBehaviour
                             }
                             trailBlazerDropTimer = 0.0f;
 
-                        }
-                        if(heroEquipment.equippedBoot==boot.Whirlwind)
-                        {
-                            float tempangle = 180.0f;
-
-                            Quaternion rotation = Quaternion.AngleAxis(tempangle, Vector3.forward);
-                            GetComponent<SpriteRenderer>().transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 4.5f);
                         }
                     }
                 } 
@@ -266,42 +289,50 @@ public class PlayerDashing : MonoBehaviour
             if (heroEquipment.equippedBoot == boot.Blink)
             {
                 aPlayer.PlayOneShot(blink);
+                oldPos = transform.position;
+                once = true;
+                Vector3 temp = (transform.TransformDirection(Vector3.up.normalized) * 3.0f) + transform.position;
 
                 //No ember equipped
                 if (heroEquipment.equippedEmber == ember.None)
                 {
-                    Instantiate(BlinkEffect, transform.position, new Quaternion(0, 0, 0, 0));
-                    Instantiate(lightRemains, transform.position, transform.rotation);
+                    Instantiate(LightBlink, temp, new Quaternion(0, 0, 0, 0));
                   
                 }
                 //Ice ember equipped
                 else if (heroEquipment.equippedEmber == ember.Ice)
                 {
+                    Instantiate(IceBlink, temp, new Quaternion(0, 0, 0, 0));
            
                 }
                 //Fire ember equipped
                 else if (heroEquipment.equippedEmber == ember.Fire)
                 {
-                   
+                    Instantiate(FireBlink, temp, new Quaternion(0, 0, 0, 0));
                 }
                 //Wind ember equipped
                 else if (heroEquipment.equippedEmber == ember.Wind)
                 {
+                    Instantiate(WindBlink, temp, new Quaternion(0, 0, 0, 0));
                  
                 }
                 //Life ember equipped
                 else if (heroEquipment.equippedEmber == ember.Life)
                 {
+                    Instantiate(LifeBlink, temp, new Quaternion(0, 0, 0, 0));
                    
                 }
                 else if (heroEquipment.equippedEmber == ember.Death)
                 {
+                    Instantiate(DeathBlink, temp, new Quaternion(0, 0, 0, 0));
                 }
                 else if (heroEquipment.equippedEmber == ember.Earth)
                 {
+                    Instantiate(EarthBlink, temp, new Quaternion(0, 0, 0, 0));
                 }
-                Vector3 temp = transform.TransformDirection(Vector3.up.normalized);
-                transform.position += temp * 3.0f;
+
+
+
 
             }
             if (heroEquipment.equippedBoot == boot.Whirlwind)
@@ -311,7 +342,7 @@ public class PlayerDashing : MonoBehaviour
                 //No ember equipped
                 if (heroEquipment.equippedEmber == ember.None)
                 {
-                    
+                    Instantiate(lightWhirl, transform.position, transform.rotation);
 
                 }
                 //Ice ember equipped

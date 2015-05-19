@@ -33,7 +33,7 @@ public class SpellChainLightning : MonoBehaviour
 
     bool once;
 
-    bool dood;
+//    bool dood;
 
     public GameObject burns;
 
@@ -52,7 +52,7 @@ public class SpellChainLightning : MonoBehaviour
         ugh = GameObject.Find("EnemiesRemaining").GetComponent<DisplayEnmiesRemaining>();
         once = true;
         cantHit = null;
-        dood = true;
+//        dood = true;
         safetyTimer = 0;
     }
 

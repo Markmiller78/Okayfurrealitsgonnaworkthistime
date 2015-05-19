@@ -19,6 +19,7 @@ public class DarkOrbOfLight : MonoBehaviour {
     {
         heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
         distanceTraveled = 0;
+        range = Random.Range(5, 8);
     }
 
     void FixedUpdate()

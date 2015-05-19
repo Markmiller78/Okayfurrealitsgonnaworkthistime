@@ -7,7 +7,7 @@ public class AILivingDead : MonoBehaviour
 
     GameObject player;
     PlayerMovement playMove;
-    Health playerHealth;
+//    Health playerHealth;
     //    Health playerHealth;
     //    Rigidbody2D rb2d;
 	public bool isReinforced=false;
@@ -37,7 +37,7 @@ public class AILivingDead : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
 		anim = player.GetComponent<Animator> ();
         playMove = player.GetComponent<PlayerMovement>();
-        playerHealth = player.GetComponent<Health>();
+//        playerHealth = player.GetComponent<Health>();
         heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
         //playerHealth = player.GetComponent<Health>();
         attackCooldownMax = 1;

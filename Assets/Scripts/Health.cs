@@ -8,6 +8,7 @@ public class Health : MonoBehaviour
     public float healthPercent;
     public bool isInfected = false;
     GameObject healthBar;
+    public GameObject BossParts;
 
     GameObject dungeon;
     RoomGeneration generator;
@@ -37,8 +38,9 @@ public class Health : MonoBehaviour
         if (this.tag == "Player")
         {
             healthBar = GameObject.FindGameObjectWithTag("HealthBar");
+           
         }
-        healthPercent = currentHP / maxHP * 100;
+        healthPercent = currentHP / maxHP;
 
         dungeon = GameObject.FindGameObjectWithTag("Dungeon");
         if (dungeon != null)
@@ -62,9 +64,9 @@ public class Health : MonoBehaviour
             if (currentHP > maxHP)
                 currentHP = maxHP;
 
+            healthPercent = currentHP / maxHP;
             if (this.tag == "Player")
             {
-                healthPercent = currentHP / maxHP;
                 healthBar.transform.localScale = new Vector3(healthPercent, 1, 1);
            
             }
@@ -75,6 +77,11 @@ public class Health : MonoBehaviour
     {
         if (equipment.paused == false)
         {
+            //Negate Damage
+            if (this.tag == "Invincible")
+                return;
+
+            //Normal Operation
             currentHP -= Amount;
             if (currentHP <= 0)
             {
@@ -82,10 +89,9 @@ public class Health : MonoBehaviour
                 playerDead = true;
                 Die();
             }
-
+            healthPercent = currentHP / maxHP;
             if (this.tag == "Player")
             {
-                healthPercent = currentHP / maxHP;
                 healthBar.transform.localScale = new Vector3(healthPercent, 1, 1);
                 Debug.Log("Animating!");
                 anim.CrossFade("TakingDamage", 0.01f);
@@ -102,6 +108,8 @@ public class Health : MonoBehaviour
 
     void Die()
     {
+        if (this.name == "Dethros(Clone)")
+            Instantiate(BossParts, this.transform.position, this.transform.rotation);
         if (this.tag != "Player")
         {
             theoptions.AddToEnemy();

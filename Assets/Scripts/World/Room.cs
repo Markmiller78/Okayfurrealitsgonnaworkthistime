@@ -36,6 +36,7 @@ public class Room : MonoBehaviour
     public int entranceDir; // 0 = bottom, 1 = left, 2 = top, 3 = right, 4 = TREASURE ROOM!!!
     public int exitDir;
     public Vector2[] chestSpawnLocations;
+    public float[] chestRotations;
     [HideInInspector]
     public bool beenThere;
     public int numEnemies = 0;

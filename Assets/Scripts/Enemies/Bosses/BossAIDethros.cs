@@ -39,6 +39,9 @@ public class BossAIDethros : MonoBehaviour
     //bool Victory;
     //float VictoryTimer;
 
+    public GameObject Healthbar;
+    GameObject HealthRemaining;
+
     void Start()
     {
         //Victory = false;
@@ -60,10 +63,19 @@ public class BossAIDethros : MonoBehaviour
         spawners = GameObject.FindGameObjectsWithTag("DethSpawn");
         specialTimer = sTimerMax;
         spellTimer = spTimerMax;
+
+        Instantiate(Healthbar);
+        HealthRemaining = GameObject.FindGameObjectWithTag("Boss Health");
     }
 
     void Update()
     {
+        if(HealthRemaining != null)
+            HealthRemaining.transform.localScale = new Vector3(myHealth.healthPercent, 1, 1);
+        else
+            HealthRemaining = GameObject.FindGameObjectWithTag("Boss Health");
+
+
         if (transform.position.x < 0f ||
             transform.position.x > 20f ||
             transform.position.y > 0f ||
@@ -310,5 +322,13 @@ public class BossAIDethros : MonoBehaviour
         Vector3 temp = player.transform.position;
         player.transform.position = transform.position;
         transform.position = temp;
+    }
+
+    void Poof()
+    {
+
+
+
+
     }
 }

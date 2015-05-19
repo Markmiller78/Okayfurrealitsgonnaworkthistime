@@ -91,7 +91,7 @@ public class MainMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        print(Mouse);
+        //print(Mouse);
 
         MouseOld = Mouse;
         Mouse = new Vector2(Input.mousePosition.x, Screen.height - Input.mousePosition.y);

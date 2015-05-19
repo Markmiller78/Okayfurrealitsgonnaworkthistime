@@ -34,7 +34,7 @@ public class Pickup : MonoBehaviour
     RawImage ToolTipBack;
     public Vector3 ToolPOS;
     SetToolTipTexts ToolTipTexts;
-    Camera cameras;
+//    Camera cameras;
     public GameObject Temp;
 
     GameObject player;
@@ -51,7 +51,7 @@ public class Pickup : MonoBehaviour
     void Start()
     {
         sendTimer = 1;
-        cameras = GameObject.FindObjectOfType<Camera>();
+//        cameras = GameObject.FindObjectOfType<Camera>();
         player = GameObject.FindGameObjectWithTag("Player");
         Temp = Instantiate(TooltipWindow);
         // TooltipWindow = GameObject.FindGameObjectWithTag("ToolTipCanvas");

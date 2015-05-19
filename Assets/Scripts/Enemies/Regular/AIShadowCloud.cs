@@ -5,11 +5,10 @@ public class AIShadowCloud : MonoBehaviour
 {
     PlayerEquipment heroEquipment;
 
+
     public GameObject target;
     public GameObject player;
     public float moveSpeed;
-    public Texture HazardCookie;
-    public float DamagePerSecond;
     public bool isInfected = false;
     public float infectRange;
     public float infecttimer;
@@ -20,12 +19,12 @@ public class AIShadowCloud : MonoBehaviour
     Light heroLight;
 
     float snaredSpeed;
-    float SnareTimer;
-    bool isSnared;
+//    float SnareTimer;
+//    bool isSnared;
 
     void Start()
     {
-        isSnared = false;
+//        isSnared = false;
         infecttimer = 3.0f;
         player = GameObject.FindGameObjectWithTag("Player");
         heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
@@ -55,30 +54,6 @@ public class AIShadowCloud : MonoBehaviour
 
     }
 
-    //void OnTriggerEnter(Collider other)
-    //{
-    //    if (other.gameObject == player)
-    //    {
-    //    }
-    //}
-
-    void OnTriggerStay(Collider other)
-    {
-        if (other.gameObject == player)
-        {
-            heroLight.cookie = HazardCookie;
-            heroHP.LoseHealth(DamagePerSecond * Time.deltaTime);
-        }
-    }
-
-    void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject == player)
-        {
-            heroLight.cookie = null;
-        }
-    }
-
     public void Slow()
     {
         moveSpeed = moveSpeed * 0.5f;
@@ -92,7 +67,6 @@ public class AIShadowCloud : MonoBehaviour
     {
         if (!isReinforced)
         {
-            DamagePerSecond *= 1.1f;
             moveSpeed *= 1.5f;
             isReinforced = true;
         }
@@ -103,7 +77,6 @@ public class AIShadowCloud : MonoBehaviour
     {
         if (isReinforced)
         {
-            DamagePerSecond/= 1.5f;
             moveSpeed /= 1.5f;
             isReinforced = false;
         }
@@ -131,8 +104,8 @@ public class AIShadowCloud : MonoBehaviour
 
     void Snare()
     {
-        isSnared = true;
-        SnareTimer = 2;
+//        isSnared = true;
+//        SnareTimer = 2;
         snaredSpeed = moveSpeed;
         moveSpeed = 0;
     }
