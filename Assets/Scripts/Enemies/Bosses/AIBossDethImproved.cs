@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class AIWraith : MonoBehaviour
+public class AIBossDethImproved : MonoBehaviour
 {
 
     GameObject player;
@@ -9,11 +9,16 @@ public class AIWraith : MonoBehaviour
     //Need this for knockback maybe? remove if wraith doesnt knock back
     PlayerMovement playMove;
     PlayerEquipment heroEquipment;
-
     Health playerHealth;
     CharacterController controller;
-    public GameObject DarkOrb;
+    public GameObject enemySpawner;
 
+    public GameObject DarkOrb;
+    public GameObject VanishParts;
+    public GameObject AppearParts;
+    bool vanishbool;
+    bool vanishbool2;
+    float vanishTimer;
     Vector3 WayPoint;
     float DistanceToWayPoint;
     float randX, randY;
@@ -21,34 +26,40 @@ public class AIWraith : MonoBehaviour
     public float moveSpeed;
     public float turnSpeed;
     bool attacking;
+
     public bool isInfected = false;
     public bool isReinforced = false;
     float wayPointTimer, timer;
-
+    float angleOffset;
+    bool increaseOffset = true;
     float AttackTimer;
     bool AttackCD;
     float snaredSpeed;
-    float SnareTimer;
-    bool isSnared;
     float TopDoor, LeftDoor, roomWidth, roomHeight;
     public Rect Bounds;
 
     // Use this for initialization
     void Start()
     {
-        isSnared = false;
+        vanishTimer = 1;
         player = GameObject.FindGameObjectWithTag("Player");
         controller = GetComponent<CharacterController>();
         //Random.seed = 8675309;
         attacking = false;
         heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
+        Instantiate(enemySpawner, new Vector3(5, -5, -1), Quaternion.Euler(0, 0, 225));
+        Instantiate(enemySpawner, new Vector3(14, -5, -1), Quaternion.Euler(0, 0, 135));
+        Instantiate(enemySpawner, new Vector3(5, -14, -1), Quaternion.Euler(0, 0, 315));
+        Instantiate(enemySpawner, new Vector3(14, -14, -1), Quaternion.Euler(0, 0, 45));
         wayPointTimer = 8;
         timer = .5f;
         AttackTimer = 2;
         DetermineDoorPositions();
         Bounds = new Rect(TopDoor, LeftDoor, roomWidth, roomHeight);
-
-
+        NewWayPoint();
+        angleOffset = 0;
+        vanishbool = true;
+        vanishbool2 = true;
     }
 
 
@@ -111,10 +122,19 @@ public class AIWraith : MonoBehaviour
             wayPointTimer -= Time.deltaTime;
             timer -= Time.deltaTime;
 
+            if (wayPointTimer < .5f && vanishbool)
+            {
+                VanishEffect();
+                vanishbool = false;
+            }
             if (wayPointTimer < 0)
             {
+                VanishEffect();
+                vanishbool = true;
+                Vanish();
                 wayPointTimer = 8;
                 NewWayPoint();
+                DistanceToWayPoint = Vector3.Distance(transform.position, WayPoint);
             }
 
             if (timer <= 0)
@@ -141,8 +161,40 @@ public class AIWraith : MonoBehaviour
             }
 
 
+            vanishTimer -= Time.deltaTime;
+
+            if (vanishTimer < .3f && vanishbool2 == true)
+            {
+                AppearEffect();
+                vanishbool2 = false;
+            }
+            if (vanishTimer < 0)
+            {
+                vanishTimer = 10000;
+                AppearEffect();
+                Appear();
+            }
+
             Turn();
         }
+
+        if (angleOffset < -50)
+        {
+            increaseOffset = true;
+        }
+        if (angleOffset > 50)
+        {
+            increaseOffset = false;
+        }
+
+
+        if (increaseOffset)
+            angleOffset += Time.deltaTime * 55;
+        else
+            angleOffset -= Time.deltaTime * 55;
+
+
+
     }
 
     void Move()
@@ -153,29 +205,19 @@ public class AIWraith : MonoBehaviour
 
     void Attack()
     {
+
         if (AttackCD)
         {
             AttackCD = false;
-            AttackTimer = 2;
+            AttackTimer = .5f;
         }
         AttackTimer -= Time.deltaTime;
 
         if (AttackCD == false && AttackTimer < 0)
         {
-            AttackTimer = 1.2f;
-            float DistanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
-            Vector3 Target = player.transform.position - transform.position;
-            RaycastHit[] things = Physics.RaycastAll(transform.position, Target, DistanceToPlayer);
-            for (int i = 0; i < things.Length; i++)
-            {
-                if (things[i].collider.gameObject.tag == "Wall")
-                {
-                    NewWayPoint();
-                    return;
-                }
-            }
+
             Instantiate(DarkOrb, transform.position, transform.rotation);
-            AttackTimer = 1.2f;
+            AttackTimer = .5f;
             AttackCD = true;
 
 
@@ -191,7 +233,7 @@ public class AIWraith : MonoBehaviour
 
     void NewWayPoint()
     {
-
+        vanishbool2 = true;
         for (int i = 0; i < 40; i++)
         {
             for (int k = 0; k < 30; k++)
@@ -233,21 +275,8 @@ public class AIWraith : MonoBehaviour
         }
 
 
-
         return;
 
-    }
-
-    void Snare()
-    {
-        isSnared = true;
-        SnareTimer = 2;
-        snaredSpeed = moveSpeed;
-        moveSpeed = 0;
-    }
-    void Unsnare()
-    {
-        moveSpeed = snaredSpeed;
     }
 
     void Turn()
@@ -266,50 +295,36 @@ public class AIWraith : MonoBehaviour
             Vector3 vectorToPlayer = player.transform.position - transform.position;
             float angle = Mathf.Atan2(vectorToPlayer.y, vectorToPlayer.x) * Mathf.Rad2Deg;
             angle -= 90.0f;
-            Quaternion rot = Quaternion.AngleAxis(angle, Vector3.forward);
+
+
+            Quaternion rot = Quaternion.AngleAxis(angle + angleOffset, Vector3.forward);
             transform.rotation = Quaternion.Slerp(transform.rotation, rot, Time.deltaTime * turnSpeed);
+
+            print(angleOffset);
         }
     }
 
-    void Decoy(GameObject decoy)
+    void VanishEffect()
     {
-        player = decoy;
+        Instantiate(VanishParts, transform.position, transform.rotation);
     }
-    void UnDecoy(GameObject decoy)
+    void Vanish()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
-    }
-    void Slow()
-    {
-        moveSpeed = moveSpeed * 0.5f;
-    }
-
-    void Unslow()
-    {
-        moveSpeed = moveSpeed * 2;
-    }
-    void Reinforce()
-    {
-        if (!isReinforced)
-        {
-
-            moveSpeed *= 1.5f;
-            isReinforced = true;
-        }
+        print("Disappeared");
+        transform.position = new Vector3(transform.position.x, transform.position.y, 5);
+        NewWayPoint();
+        vanishTimer = 2;
+        vanishbool2 = true;
 
     }
-
-    void UnReinforce()
+    void AppearEffect()
     {
-        if (isReinforced)
-        {
-            moveSpeed /= 1.5f;
-            isReinforced = false;
-        }
-
+        Vector3 goingToAppear = new Vector3(transform.position.x, transform.position.y, -1);
+        Instantiate(AppearParts, goingToAppear, transform.rotation);
     }
-    void GetInfected()
+    void Appear()
     {
-        isInfected = true;
+        print("Re-appeared");
+        transform.position = new Vector3(transform.position.x, transform.position.y, -1);
     }
 }
