@@ -19,8 +19,8 @@ public class RoomGeneration : MonoBehaviour
     Room lorneRoomInfo;
     public GameObject[] floorThreeRooms;
     Room[] floorThreeRoomsInfo;
-    //public GameObject[] floorThreeMazes;
-    //Room[] floorThreeMazesInfo;
+    public GameObject[] floorThreeMazes;
+    Room[] floorThreeMazesInfo;
     //public GameObject morriusRoom;
     //Room morriusRoomInfo;
     //
@@ -82,7 +82,7 @@ public class RoomGeneration : MonoBehaviour
         }
         lorneRoomInfo = lorneRoom.GetComponent<Room>();
         lorneRoomInfo.setUsed();
-        //Utilities.ArrayShuffle(floorThreeRooms);
+        Utilities.ArrayShuffle(floorThreeRooms);
         floorThreeRoomsInfo = new Room[floorThreeRooms.Length];
         for (int i = 0; i < floorThreeRooms.Length; i++)
         {
@@ -90,12 +90,12 @@ public class RoomGeneration : MonoBehaviour
             floorThreeRoomsInfo[i].setUsed();
         }
         //Utilities.ArrayShuffle(floorThreeMazes);
-        //floorThreeMazesInfo = new Room[floorThreeMazes.Length];
-        //for (int i = 0; i < floorThreeMazes.Length; i++)
-        //{
-        //    floorThreeMazesInfo[i] = floorThreeMazes[i].GetComponent<Room>();
-        //    floorThreeMazesInfo[i].setUsed();
-        //}
+        floorThreeMazesInfo = new Room[floorThreeMazes.Length];
+        for (int i = 0; i < floorThreeMazes.Length; i++)
+        {
+            floorThreeMazesInfo[i] = floorThreeMazes[i].GetComponent<Room>();
+            floorThreeMazesInfo[i].setUsed();
+        }
         //morriusRoomInfo = morriusRoom.GetComponent<Room>();
         //morriusRoomInfo.setUsed();
 
@@ -118,8 +118,8 @@ public class RoomGeneration : MonoBehaviour
         FillDungeon();
 
         //TESTING
-        //finalRoomArray[0] = floorThreeRooms[9];
-        //finalRoomInfoArray[0] = floorThreeRoomsInfo[9];
+        //finalRoomArray[0] = floorThreeMazes[0];
+        //finalRoomInfoArray[0] = floorThreeMazesInfo[0];
         //ENDTESTING
 
         CreateRoom();
