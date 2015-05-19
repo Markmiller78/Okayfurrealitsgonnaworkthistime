@@ -200,13 +200,6 @@ public class PlayerDashing : MonoBehaviour
                             trailBlazerDropTimer = 0.0f;
 
                         }
-                        if(heroEquipment.equippedBoot==boot.Whirlwind)
-                        {
-                            float tempangle = 180.0f;
-
-                            Quaternion rotation = Quaternion.AngleAxis(tempangle, Vector3.forward);
-                            GetComponent<SpriteRenderer>().transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 4.5f);
-                        }
                     }
                 } 
             }
