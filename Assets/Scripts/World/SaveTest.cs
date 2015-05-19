@@ -176,6 +176,7 @@ public class SaveTest : MonoBehaviour {
                theStats.meleeModifier = data.meleeModifier;
                theStats.spellModifier = data.spellModifier;
                data.easymode = options.easyMode;
+			
 
 				//LoadRooms(data);
                // theRooms.finalRoomInfoArray=data.finalRoomInfoArray;
@@ -249,6 +250,7 @@ public class SaveTest : MonoBehaviour {
 
 	}
 }
+
 [System.Serializable]
 public class PlayerData
 {
