@@ -115,6 +115,7 @@ public class SaveTest : MonoBehaviour {
             data.spellModifier = theStats.spellModifier;
 			data.equippedember= (int)eq.equippedEmber;
 			data.equippedboot= (int)eq.equippedBoot;
+			data.currentroom= theRooms.currentRoom;
             CopyRooms(data);
            // data.finalRoomInfoArray = theRooms.finalRoomInfoArray;
             bin.Serialize(file, data);
@@ -182,6 +183,7 @@ public class SaveTest : MonoBehaviour {
                data.easymode = options.easyMode;
 			
 				theRooms.loadedData= data;
+				theRooms.currentRoom= data.currentroom;
 				//LoadRooms(data);
                // theRooms.finalRoomInfoArray=data.finalRoomInfoArray;
     
@@ -266,6 +268,7 @@ public class PlayerData
     public float maxLightModifier ;
     public bool easymode;
     public int amountofrooms;
+	public int currentroom;
     public RoomData[] roominfo ;
 	public int equippedember;
 	public int equippedboot;
