@@ -26,8 +26,9 @@ public class WestDoor : MonoBehaviour
     {
         enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length + GameObject.FindGameObjectsWithTag("ShadowSpawn").Length;
         if (isLocked &&
-            ((generator.currentRoom != 0 && generator.currentRoom != (easyMode ? 11 : 9) && generator.finalRoomInfoArray[generator.currentRoom].entranceDir == 1)
-            || (generator.currentRoom < (easyMode ? 20 : 16) && generator.finalRoomInfoArray[generator.currentRoom].exitDir == 1))
+            ((generator.currentRoom != 0 && generator.currentRoom != (easyMode ? 11 : 9) && generator.currentRoom != (easyMode ? 22 : 18)
+            && generator.finalRoomInfoArray[generator.currentRoom].entranceDir == 1)
+            || (generator.currentRoom < (easyMode ? 33 : 27) && generator.finalRoomInfoArray[generator.currentRoom].exitDir == 1))
             && enemyCount == 0)
         {
             isLocked = false;
