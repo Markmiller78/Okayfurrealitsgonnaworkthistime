@@ -34,10 +34,10 @@ public class PlayerDashing : MonoBehaviour
     [Header("Decoy")]
 
     public GameObject lightDecoy;
-    public GameObject fireDecoy; 
-    public GameObject iceDecoy; 
-    public GameObject windDecoy; 
-    public GameObject earthDecoy; 
+    public GameObject fireDecoy;
+    public GameObject iceDecoy;
+    public GameObject windDecoy;
+    public GameObject earthDecoy;
     public GameObject lifeDecoy;
     public GameObject deathDecoy;
 
@@ -49,7 +49,7 @@ public class PlayerDashing : MonoBehaviour
     public GameObject windWhirl;
     public GameObject earthWhirl;
     public GameObject lifeWhirl;
-    public GameObject deathWhirl; 
+    public GameObject deathWhirl;
 
 
     [Header("Charge")]
@@ -85,6 +85,8 @@ public class PlayerDashing : MonoBehaviour
     AudioSource aPlayer;
 
     Vector3 oldPos;
+
+    Quaternion lockRot;
 
     bool once;
 
@@ -139,9 +141,11 @@ public class PlayerDashing : MonoBehaviour
                         MoveDirect.y = Input.GetAxis("KBVertical");
                     }
 
+
                     //If the player wasn't using the joysticks OR the WASD keys, dash in the direction they are facing
                     if (MoveDirect.x == 0.0f && MoveDirect.y == 0.0f)
                     {
+                        transform.rotation = lockRot;
                         MoveDirect = transform.TransformDirection(Vector3.up);
 
                         //Factor in speed and time
@@ -154,11 +158,9 @@ public class PlayerDashing : MonoBehaviour
                         MoveDirect *= dashSpeed * Time.deltaTime;
                     }
 
-                    if (MoveDirect.SqrMagnitude() > 0.1f)
-                    {
-                        controller.Move(MoveDirect);
-                        
-                    }
+
+                    controller.Move(MoveDirect);
+
 
                     if (heroEquipment.equippedBoot == boot.Trailblazer)
                     {
@@ -202,11 +204,11 @@ public class PlayerDashing : MonoBehaviour
                             }
                             else if (heroEquipment.equippedEmber == ember.Earth)
                             {
-                               earthtrailtime+=Time.deltaTime;
-                            
+                                earthtrailtime += Time.deltaTime;
+
                                 if (earthtrailtime >= 3.0f)
                                 {
-                                   Instantiate(EarthTrail, transform.position, new Quaternion(0, 0, 0, 0));
+                                    Instantiate(EarthTrail, transform.position, new Quaternion(0, 0, 0, 0));
                                     earthtrailtime = 0.0f;
                                 }
                             }
@@ -214,7 +216,7 @@ public class PlayerDashing : MonoBehaviour
 
                         }
                     }
-                } 
+                }
             }
         }
     }
@@ -239,6 +241,8 @@ public class PlayerDashing : MonoBehaviour
             anim.CrossFade("PlayerDashing", 0.01f);
             //Set up the local variables
             trailBlazerDropTimer = 0.1f;
+
+            lockRot = transform.rotation;
 
             if (heroEquipment.equippedBoot == boot.Trailblazer)
             {
@@ -297,13 +301,13 @@ public class PlayerDashing : MonoBehaviour
                 if (heroEquipment.equippedEmber == ember.None)
                 {
                     Instantiate(LightBlink, temp, new Quaternion(0, 0, 0, 0));
-                  
+
                 }
                 //Ice ember equipped
                 else if (heroEquipment.equippedEmber == ember.Ice)
                 {
                     Instantiate(IceBlink, temp, new Quaternion(0, 0, 0, 0));
-           
+
                 }
                 //Fire ember equipped
                 else if (heroEquipment.equippedEmber == ember.Fire)
@@ -314,13 +318,13 @@ public class PlayerDashing : MonoBehaviour
                 else if (heroEquipment.equippedEmber == ember.Wind)
                 {
                     Instantiate(WindBlink, temp, new Quaternion(0, 0, 0, 0));
-                 
+
                 }
                 //Life ember equipped
                 else if (heroEquipment.equippedEmber == ember.Life)
                 {
                     Instantiate(LifeBlink, temp, new Quaternion(0, 0, 0, 0));
-                   
+
                 }
                 else if (heroEquipment.equippedEmber == ember.Death)
                 {
@@ -375,7 +379,7 @@ public class PlayerDashing : MonoBehaviour
                 {
 
                 }
-              
+
 
             }
             if (heroEquipment.equippedBoot == boot.Decoy)
@@ -383,7 +387,7 @@ public class PlayerDashing : MonoBehaviour
 
                 aPlayer.PlayOneShot(decoy);
 
-                 
+
                 //No ember equipped
                 if (heroEquipment.equippedEmber == ember.None)
                 {
@@ -422,7 +426,7 @@ public class PlayerDashing : MonoBehaviour
                 }
 
 
-                
+
             }
         }
     }
