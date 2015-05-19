@@ -54,9 +54,14 @@ public class BGM : MonoBehaviour {
 
         if(Application.loadedLevelName=="Credits")
         {
-            volume = GameObject.FindObjectOfType<Options>().musicVolume;
+			volume = GameObject.FindObjectOfType<Options>().musicVolume;
             audioPlayer.volume = 0;
         }
+		if (Application.loadedLevelName == "LoadScreen")
+		{
+			volume = GameObject.FindObjectOfType<Options>().musicVolume;
+			audioPlayer.volume = 0;
+		}
         if(Application.loadedLevelName=="MainMenu"&&audioPlayer.volume==0 )
         {
             audioPlayer.Stop();
@@ -64,6 +69,14 @@ public class BGM : MonoBehaviour {
             audioPlayer.clip = clips[4];
             audioPlayer.Play();
         }
+		if (Application.loadedLevelName == "IntroCutscene"&&audioPlayer.volume==0)
+		{
+		 
+			volume = GameObject.FindObjectOfType<Options>().musicVolume;
+			audioPlayer.volume = volume*0.01f;
+		 
+		 
+		}
         if (!beenAssigned && Application.loadedLevelName == "Game")
         {
             player = GameObject.FindGameObjectWithTag("Player");
@@ -88,12 +101,12 @@ public class BGM : MonoBehaviour {
                 {
 
 
-                    if (Application.loadedLevelName == "LoadScreen")
-                        audioPlayer.volume = 0;
-                    else if (volume != audioPlayer.volume)
+                  
+                    if (volume != audioPlayer.volume)
                     {
+						GameObject.FindObjectOfType<Options>().musicVolume = volume;
                         audioPlayer.volume = volume * 0.01f;
-                        GameObject.FindObjectOfType<Options>().musicVolume = volume;
+                    
                      
                     }
 
