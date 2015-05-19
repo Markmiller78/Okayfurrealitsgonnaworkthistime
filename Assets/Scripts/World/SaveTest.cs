@@ -21,6 +21,7 @@ public class SaveTest : MonoBehaviour {
     public int enemies=0;
     bool saved = false;
 	PlayerEquipment eq;
+	 
 
 
 	// Use this for initialization
@@ -31,6 +32,8 @@ public class SaveTest : MonoBehaviour {
         dungeon = GameObject.FindGameObjectWithTag("Dungeon");
         theRooms = GameObject.FindGameObjectWithTag("Dungeon").GetComponent<RoomGeneration>();
         theStats = GetComponent<PlayerStats>();
+		if (options.shouldload == true)
+			shouldload = true;
         if (shouldload == true)
         {
             Load();
@@ -85,9 +88,16 @@ public class SaveTest : MonoBehaviour {
             for (int i = 0; i < theRooms.finalRoomInfoArray.Length; i++)
             {
                 string temp= "Room_"+i.ToString()+" been there";
-                 string temps= "RoomID_"+i.ToString();
+                string temps= "RoomID_"+i.ToString();
+				string tempsss= "RoomExitDir_"+ i.ToString();
+				string tempss= "RoomEntryDir_"+i.ToString();
+
                 PlayerPrefs.SetInt(temp, theRooms.finalRoomInfoArray[i].beenThere.GetHashCode());
                 PlayerPrefs.SetInt(temps, theRooms.finalRoomInfoArray[i].roomID);
+				PlayerPrefs.SetInt(tempss,theRooms.finalRoomInfoArray[i].entranceDir);
+				PlayerPrefs.SetInt(tempsss,theRooms.finalRoomInfoArray[i].exitDir);
+				
+
                 
             }
 
@@ -112,6 +122,7 @@ public class SaveTest : MonoBehaviour {
             data.spellModifier = theStats.spellModifier;
 			data.equippedember= (int)eq.equippedEmber;
 			data.equippedboot= (int)eq.equippedBoot;
+			data.currentroom= theRooms.currentRoom;
             CopyRooms(data);
            // data.finalRoomInfoArray = theRooms.finalRoomInfoArray;
             bin.Serialize(file, data);
@@ -144,19 +155,28 @@ public class SaveTest : MonoBehaviour {
 		eq.equippedBoot  =	(boot)PlayerPrefs.GetInt("Boot",0 );
 			//Loading the amount of rooms in the roomgenerator
      int teemplenght = PlayerPrefs.GetInt("RoomArrLenght", 0);
-
+			options.easyMode = PlayerPrefs.GetInt("EasyMode",1) == 1 ? true : false; 
      if (teemplenght != 0)
      {
-         theRooms.finalRoomInfoArray = new Room[teemplenght];
+				PlayerData data= new PlayerData();
+        data.roominfo= new RoomData[teemplenght];
          for (int i = 0; i < teemplenght; i++)
          {
+					data.roominfo[i]= new RoomData();
              string temp = "Room_" + i.ToString() + " been there";
              string temps = "RoomID_" + i.ToString();
-             theRooms.finalRoomInfoArray[i].beenThere = PlayerPrefs.GetInt(temp) == 1 ? true : false;
-             theRooms.finalRoomInfoArray[i].roomID = PlayerPrefs.GetInt(temps);
+			 string tempsss= "RoomExitDir_"+ i.ToString();
+			 string tempss= "RoomEntryDir_"+i.ToString();
+
+             data.roominfo[i].beenThere = PlayerPrefs.GetInt(temp) == 1 ? true : false;
+             data.roominfo[i].roomID = PlayerPrefs.GetInt(temps);
+			 data.roominfo[i].entranceDir= PlayerPrefs.GetInt(tempss,0);
+			 data.roominfo[i].exitDir=PlayerPrefs.GetInt(tempsss,0);
          }
+
+				theRooms.loadedData=data;
      }
-     options.easyMode = PlayerPrefs.GetInt("EasyMode",1) == 1 ? true : false;
+
 
        }
        else
@@ -173,7 +193,10 @@ public class SaveTest : MonoBehaviour {
                theStats.meleeModifier = data.meleeModifier;
                theStats.spellModifier = data.spellModifier;
                data.easymode = options.easyMode;
-				LoadRooms(data);
+				theRooms.currentRoom= data.currentroom;
+			
+				theRooms.loadedData= data;
+		
                // theRooms.finalRoomInfoArray=data.finalRoomInfoArray;
     
                file.Close();
@@ -245,6 +268,7 @@ public class SaveTest : MonoBehaviour {
 
 	}
 }
+
 [System.Serializable]
 public class PlayerData
 {
@@ -256,6 +280,7 @@ public class PlayerData
     public float maxLightModifier ;
     public bool easymode;
     public int amountofrooms;
+	public int currentroom;
     public RoomData[] roominfo ;
 	public int equippedember;
 	public int equippedboot;
@@ -270,8 +295,8 @@ public class RoomData
  //public int height;
  //public int minEnemies;
  //public int maxEnemies;
- //public int entranceDir;
- //public int exitDir;
+ public int entranceDir;
+ public int exitDir;
     public bool beenThere;
   //  public int numEnemies = 0;
  //   public bool comingFromEntrance = true;

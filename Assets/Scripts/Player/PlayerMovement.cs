@@ -85,11 +85,9 @@ public class PlayerMovement : MonoBehaviour
                 speed = halfSpeed;
 
             //Check Left Joysticks for Movement
-            MoveDirect.x = Input.GetAxis("CLSHorizontal");
-           
+            MoveDirect.x = Input.GetAxis("CLSHorizontal");        
             MoveDirect.y = Input.GetAxis("CLSVertical");
-            if (MoveDirect.x == 0)
-                Debug.Log("Working");
+             
 		 
            // if (MoveDirect != Vector2.zero && anim.name != "Spellcasting")
               //  anim.CrossFade("PlayerWalking", 0.01f);
@@ -140,12 +138,9 @@ public class PlayerMovement : MonoBehaviour
             //Check WASD for Movement
             MoveDirect.x = Input.GetAxis("KBHorizontal");
             MoveDirect.y = Input.GetAxis("KBVertical");
-  
-           // if (MoveDirect != Vector2.zero)
-             //   anim.CrossFade("PlayerWalking", 0.01f);
-           // else
-             //   anim.CrossFade("Idle", 0.01f);
+   
             //Normalize the directional vector
+ 
             //Factor in speed and time
 			anim.SetFloat("Speed", MoveDirect.magnitude);
 
