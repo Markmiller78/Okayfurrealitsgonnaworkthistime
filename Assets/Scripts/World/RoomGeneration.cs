@@ -1144,11 +1144,33 @@ public class RoomGeneration : MonoBehaviour
     {
         if (easyMode)
         {
-            
+            finalRoomArray[3] = checkpointRooms[0];
+            finalRoomInfoArray[3] = checkpointRoomsInfo[0];
+            finalRoomArray[7] = checkpointRooms[0];
+            finalRoomInfoArray[7] = checkpointRoomsInfo[0];
+            finalRoomArray[10] = dethrosRoom;
+            finalRoomInfoArray[10] = dethrosRoomInfo;
+            finalRoomArray[14] = checkpointRooms[1];
+            finalRoomInfoArray[14] = checkpointRoomsInfo[1];
+            finalRoomArray[18] = checkpointRooms[1];
+            finalRoomInfoArray[18] = checkpointRoomsInfo[1];
+            finalRoomArray[21] = lorneRoom;
+            finalRoomInfoArray[21] = lorneRoomInfo;
+            finalRoomArray[25] = checkpointRooms[2];
+            finalRoomInfoArray[25] = checkpointRoomsInfo[2];
+            finalRoomArray[29] = checkpointRooms[2];
+            finalRoomInfoArray[29] = checkpointRoomsInfo[2];
+            finalRoomArray[32] = morriusRoom;
+            finalRoomInfoArray[32] = morriusRoomInfo;
         }
         else
         {
-
+            finalRoomArray[8] = dethrosRoom;
+            finalRoomInfoArray[8] = dethrosRoomInfo;
+            finalRoomArray[17] = lorneRoom;
+            finalRoomInfoArray[17] = lorneRoomInfo;
+            finalRoomArray[26] = morriusRoom;
+            finalRoomInfoArray[26] = morriusRoomInfo;
         }
         for (int i = 0; i < finalRoomArray.Length; i++)
         {
