@@ -9,6 +9,7 @@ public class Options : MonoBehaviour
 {
     private static Options _instance;
 
+
     public static Options instance
     {
         get
@@ -49,7 +50,7 @@ public class Options : MonoBehaviour
     int numEnemiesKilled;
 
     public bool[] achievements;
-
+	public bool shouldload = false;
     [HideInInspector]
     public GameObject savedPlayer;
     GameObject player;

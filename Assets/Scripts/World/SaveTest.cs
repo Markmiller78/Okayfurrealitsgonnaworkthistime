@@ -21,6 +21,7 @@ public class SaveTest : MonoBehaviour {
     public int enemies=0;
     bool saved = false;
 	PlayerEquipment eq;
+	 
 
 
 	// Use this for initialization
@@ -31,6 +32,8 @@ public class SaveTest : MonoBehaviour {
         dungeon = GameObject.FindGameObjectWithTag("Dungeon");
         theRooms = GameObject.FindGameObjectWithTag("Dungeon").GetComponent<RoomGeneration>();
         theStats = GetComponent<PlayerStats>();
+		if (options.shouldload == true)
+			shouldload = true;
         if (shouldload == true)
         {
             Load();
@@ -144,7 +147,7 @@ public class SaveTest : MonoBehaviour {
 		eq.equippedBoot  =	(boot)PlayerPrefs.GetInt("Boot",0 );
 			//Loading the amount of rooms in the roomgenerator
      int teemplenght = PlayerPrefs.GetInt("RoomArrLenght", 0);
-
+			options.easyMode = PlayerPrefs.GetInt("EasyMode",1) == 1 ? true : false; 
      if (teemplenght != 0)
      {
          theRooms.finalRoomInfoArray = new Room[teemplenght];
@@ -156,7 +159,7 @@ public class SaveTest : MonoBehaviour {
              theRooms.finalRoomInfoArray[i].roomID = PlayerPrefs.GetInt(temps);
          }
      }
-     options.easyMode = PlayerPrefs.GetInt("EasyMode",1) == 1 ? true : false;
+
 
        }
        else
@@ -173,7 +176,8 @@ public class SaveTest : MonoBehaviour {
                theStats.meleeModifier = data.meleeModifier;
                theStats.spellModifier = data.spellModifier;
                data.easymode = options.easyMode;
-				LoadRooms(data);
+
+				//LoadRooms(data);
                // theRooms.finalRoomInfoArray=data.finalRoomInfoArray;
     
                file.Close();
