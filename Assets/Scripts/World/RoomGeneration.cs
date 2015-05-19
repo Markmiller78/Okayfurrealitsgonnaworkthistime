@@ -45,6 +45,9 @@ public class RoomGeneration : MonoBehaviour
     bool easyMode;
     int enemyMod;
     int prevRoom = -1;
+    bool loading = false;
+
+    public PlayerData loadedData;
 
     void Start()
     {
@@ -113,9 +116,13 @@ public class RoomGeneration : MonoBehaviour
             }
         }
 
+        loading = GameObject.FindObjectOfType<Options>().shouldload;
+
         finalRoomArray = new GameObject[easyMode ? 33 : 27];
         finalRoomInfoArray = new Room[easyMode ? 33 : 27];
-        FillDungeon();
+        if (loading)
+            FillDungeon();
+        else FillLoadedDungeon();
 
         //TESTING
         //finalRoomArray[0] = floorOneRooms[8];
@@ -317,7 +324,7 @@ public class RoomGeneration : MonoBehaviour
                         {
                             Instantiate(chest, new Vector3(finalRoomInfoArray[currentRoom].chestSpawnLocations[i].x,
                                 -finalRoomInfoArray[currentRoom].chestSpawnLocations[i].y, -.9f),// Quaternion.identity);
-                                Quaternion.Euler( 0.0f, 0.0f, finalRoomInfoArray[currentRoom].chestRotations[i]));
+                                Quaternion.Euler(0.0f, 0.0f, finalRoomInfoArray[currentRoom].chestRotations[i]));
                             spawned = true;
                             break;
                         }
@@ -1130,6 +1137,14 @@ public class RoomGeneration : MonoBehaviour
         for (int i = 0; i < finalRoomInfoArray.Length; i++)
         {
             finalRoomInfoArray[i].comingFromEntrance = true;
+        }
+    }
+
+    void FillLoadedDungeon()
+    {
+        for (int i = 0; i < finalRoomArray.Length; i++)
+        {
+            
         }
     }
 
