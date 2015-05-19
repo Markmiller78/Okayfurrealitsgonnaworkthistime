@@ -155,7 +155,7 @@ public class SaveTest : MonoBehaviour {
         data.roominfo= new RoomData[teemplenght];
          for (int i = 0; i < teemplenght; i++)
          {
-					data.roominfo[i]= new RoomData;
+					data.roominfo[i]= new RoomData();
              string temp = "Room_" + i.ToString() + " been there";
              string temps = "RoomID_" + i.ToString();
              data.roominfo[i].beenThere = PlayerPrefs.GetInt(temp) == 1 ? true : false;
