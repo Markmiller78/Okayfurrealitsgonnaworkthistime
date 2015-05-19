@@ -48,6 +48,9 @@ public class SpellLightBolt : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
+        theStats = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>();
+        heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
+
         if (other.tag == "Wall")
         {
             Explode();

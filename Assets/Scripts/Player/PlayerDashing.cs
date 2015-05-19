@@ -118,7 +118,7 @@ public class PlayerDashing : MonoBehaviour
             {
                 if (timeRemaining < 0.08f)
                 {
-                    if (once && (heroEquipment.equippedBoot == boot.Charge || heroEquipment.equippedBoot == boot.Blink))
+                    if (once && (heroEquipment.equippedBoot == boot.Charge || heroEquipment.equippedBoot == boot.Blink || heroEquipment.equippedBoot == boot.Whirlwind))
                     {
                         Instantiate(lightRemains, oldPos, new Quaternion(0, 0, 0, 0));
                         once = false;
@@ -237,8 +237,12 @@ public class PlayerDashing : MonoBehaviour
             heroEquipment.EmberLoseDurability();
             heroCooldowns.dashCooling = true;
             timeRemaining = dashDuration;
-            //Change the animation state into dashing
-            anim.CrossFade("PlayerDashing", 0.01f);
+            if (heroEquipment.equippedBoot != boot.Whirlwind)
+            {
+                //Change the animation state into dashing
+                anim.CrossFade("PlayerDashing", 0.01f);
+            }
+
             //Set up the local variables
             trailBlazerDropTimer = 0.1f;
 
@@ -342,7 +346,8 @@ public class PlayerDashing : MonoBehaviour
             if (heroEquipment.equippedBoot == boot.Whirlwind)
             {
                 aPlayer.PlayOneShot(whirl);
-
+                oldPos = transform.position;
+                once = true;
                 //No ember equipped
                 if (heroEquipment.equippedEmber == ember.None)
                 {
@@ -352,31 +357,37 @@ public class PlayerDashing : MonoBehaviour
                 //Ice ember equipped
                 else if (heroEquipment.equippedEmber == ember.Ice)
                 {
+                    Instantiate(iceWhirl, transform.position, transform.rotation);
 
                 }
                 //Fire ember equipped
                 else if (heroEquipment.equippedEmber == ember.Fire)
                 {
+                    Instantiate(fireWhirl, transform.position, transform.rotation);
 
                 }
                 //Wind ember equipped
                 else if (heroEquipment.equippedEmber == ember.Wind)
                 {
+                    Instantiate(windWhirl, transform.position, transform.rotation);
 
                 }
                 //Life ember equipped
                 else if (heroEquipment.equippedEmber == ember.Life)
                 {
+                    Instantiate(lifeWhirl, transform.position, transform.rotation);
 
                 }
                 //Death ember equipped
                 else if (heroEquipment.equippedEmber == ember.Death)
                 {
+                    Instantiate(deathWhirl, transform.position, transform.rotation);
 
                 }
                 //Earth ember equipped
                 else if (heroEquipment.equippedEmber == ember.Earth)
                 {
+                    Instantiate(earthWhirl, transform.position, transform.rotation);
 
                 }
 
