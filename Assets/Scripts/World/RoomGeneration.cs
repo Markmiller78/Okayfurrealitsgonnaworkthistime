@@ -104,7 +104,12 @@ public class RoomGeneration : MonoBehaviour
 
         //treasureRoomInfo = treasureRoom.GetComponent<Room>();
 
-        easyMode = GameObject.FindObjectOfType<Options>().easyMode;
+        loading = GameObject.FindObjectOfType<Options>().shouldload;
+        if (loading)
+        {
+            easyMode = loadedData.easymode;
+        }
+        else easyMode = GameObject.FindObjectOfType<Options>().easyMode;
 
         if (easyMode)
         {
@@ -116,13 +121,15 @@ public class RoomGeneration : MonoBehaviour
             }
         }
 
-        loading = GameObject.FindObjectOfType<Options>().shouldload;
 
         finalRoomArray = new GameObject[easyMode ? 33 : 27];
         finalRoomInfoArray = new Room[easyMode ? 33 : 27];
-        if (loading)
+        if (!loading)
             FillDungeon();
-        else FillLoadedDungeon();
+        else
+        {
+            FillLoadedDungeon();
+        }
 
         //TESTING
         //finalRoomArray[0] = floorOneRooms[8];

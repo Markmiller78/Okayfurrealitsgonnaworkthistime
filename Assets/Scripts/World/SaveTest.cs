@@ -192,7 +192,8 @@ public class SaveTest : MonoBehaviour {
                theStats.maxLightModifier = data.maxLightModifier;
                theStats.meleeModifier = data.meleeModifier;
                theStats.spellModifier = data.spellModifier;
-               data.easymode = options.easyMode;
+               //data.easymode = options.easyMode;
+               options.easyMode = data.easymode;
 				theRooms.currentRoom= data.currentroom;
 			
 				theRooms.loadedData= data;
