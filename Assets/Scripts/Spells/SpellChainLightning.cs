@@ -109,6 +109,7 @@ public class SpellChainLightning : MonoBehaviour
     {
         heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
         pSpells = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerSpellCasting>();
+        theStats = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>();
 
         if (target == null)
         {
