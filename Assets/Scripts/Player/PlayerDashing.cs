@@ -154,8 +154,11 @@ public class PlayerDashing : MonoBehaviour
                         MoveDirect *= dashSpeed * Time.deltaTime;
                     }
 
-                    //Actually Move the player
-                    controller.Move(MoveDirect);
+                    if (MoveDirect.SqrMagnitude() > 0.1f)
+                    {
+                        controller.Move(MoveDirect);
+                        
+                    }
 
                     if (heroEquipment.equippedBoot == boot.Trailblazer)
                     {
