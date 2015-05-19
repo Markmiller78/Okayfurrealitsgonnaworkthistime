@@ -12,7 +12,6 @@ public class RoomGeneration : MonoBehaviour
     Room dethrosRoomInfo;
     public GameObject[] floorTwoRooms;
     Room[] floorTwoRoomsInfo;
-    //
     public GameObject[] floorTwoMazes;
     Room[] floorTwoMazesInfo;
     public GameObject lorneRoom;
@@ -23,7 +22,6 @@ public class RoomGeneration : MonoBehaviour
     Room[] floorThreeMazesInfo;
     //public GameObject morriusRoom;
     //Room morriusRoomInfo;
-    //
     public GameObject[] finalRoomArray;
     [HideInInspector]
     public Room[] finalRoomInfoArray;
@@ -50,7 +48,7 @@ public class RoomGeneration : MonoBehaviour
     {
         //DontDestroyOnLoad(this);
         player = GameObject.FindGameObjectWithTag("Player");
-        //Utilities.ArrayShuffle(floorOneRooms);
+        Utilities.ArrayShuffle(floorOneRooms);
         floorOneRoomsInfo = new Room[floorOneRooms.Length];
         for (int i = 0; i < floorOneRooms.Length; i++)
         {
@@ -118,8 +116,8 @@ public class RoomGeneration : MonoBehaviour
         FillDungeon();
 
         //TESTING
-        //finalRoomArray[0] = floorThreeMazes[1];
-        //finalRoomInfoArray[0] = floorThreeMazesInfo[1];
+        //finalRoomArray[0] = floorThreeMazes[2];
+        //finalRoomInfoArray[0] = floorThreeMazesInfo[2];
         //ENDTESTING
 
         CreateRoom();
