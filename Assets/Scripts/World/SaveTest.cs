@@ -150,14 +150,18 @@ public class SaveTest : MonoBehaviour {
 			options.easyMode = PlayerPrefs.GetInt("EasyMode",1) == 1 ? true : false; 
      if (teemplenght != 0)
      {
-         theRooms.finalRoomInfoArray = new Room[teemplenght];
+				PlayerData data= new PlayerData();
+        data.roominfo= new RoomData[teemplenght];
          for (int i = 0; i < teemplenght; i++)
          {
+					data.roominfo[i]= new RoomData;
              string temp = "Room_" + i.ToString() + " been there";
              string temps = "RoomID_" + i.ToString();
-             theRooms.finalRoomInfoArray[i].beenThere = PlayerPrefs.GetInt(temp) == 1 ? true : false;
-             theRooms.finalRoomInfoArray[i].roomID = PlayerPrefs.GetInt(temps);
+             data.roominfo[i].beenThere = PlayerPrefs.GetInt(temp) == 1 ? true : false;
+             data.roominfo[i].roomID = PlayerPrefs.GetInt(temps);
          }
+
+				theRooms.loadedData=data;
      }
 
 
@@ -177,7 +181,7 @@ public class SaveTest : MonoBehaviour {
                theStats.spellModifier = data.spellModifier;
                data.easymode = options.easyMode;
 			
-
+				theRooms.loadedData= data;
 				//LoadRooms(data);
                // theRooms.finalRoomInfoArray=data.finalRoomInfoArray;
     
