@@ -36,6 +36,8 @@ public class RoomGeneration : MonoBehaviour
     //public GameObject wDoor;
     public GameObject waypoint;
     public GameObject chest;
+    public GameObject torchWood;
+    public GameObject CPCrystal;
 
     public GameObject[] checkpointRooms;
     Room[] checkpointRoomsInfo;
@@ -138,6 +140,16 @@ public class RoomGeneration : MonoBehaviour
         if (enemyMod <= 0)
         {
             enemyMod = (easyMode ? 11 : 9);
+        }
+
+        // Spawn torches in the checkpoints
+        if (easyMode && (currentRoom == 3 || currentRoom == 7 || currentRoom == 14 || currentRoom == 18 || currentRoom == 25 || currentRoom == 28))
+        {
+            Instantiate(torchWood, new Vector3(1, -1, -.8f), Quaternion.identity);
+            Instantiate(torchWood, new Vector3(1, -8, -.8f), Quaternion.identity);
+            Instantiate(torchWood, new Vector3(16, -8, -.8f), Quaternion.identity);
+            Instantiate(torchWood, new Vector3(16, -1, -.8f), Quaternion.identity);
+            Instantiate(CPCrystal, new Vector3(8.5f, -4.5f, -.8f), Quaternion.identity);
         }
 
         // Spawn north wall and possibly door
