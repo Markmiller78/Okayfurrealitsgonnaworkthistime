@@ -300,7 +300,7 @@ public class AIBossDethImproved : MonoBehaviour
             Quaternion rot = Quaternion.AngleAxis(angle + angleOffset, Vector3.forward);
             transform.rotation = Quaternion.Slerp(transform.rotation, rot, Time.deltaTime * turnSpeed);
 
-            print(angleOffset);
+            //print(angleOffset);
         }
     }
 

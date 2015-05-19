@@ -16,7 +16,7 @@ public class Waypoint : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other != null && other.GetComponent<AISkeletonArcher>() != null)
+        if (other != null && other != this && other.GetComponent<AISkeletonArcher>() != null)
         {
             AISkeletonArcher ai = other.GetComponent<AISkeletonArcher>();
             if (ai)

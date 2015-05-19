@@ -287,7 +287,13 @@ public class RoomGeneration : MonoBehaviour
                 }
             }
             float chanceychance = Random.Range(0f, 1f);
-            if (chanceychance <= .3f)
+            if (currentRoom == (easyMode ? 10 : 8) || currentRoom == (easyMode ? 21 : 17) || currentRoom == (easyMode ? 32 : 26))
+            {
+                Instantiate(chest, new Vector3(finalRoomInfoArray[currentRoom].chestSpawnLocations[0].x,
+                    finalRoomInfoArray[currentRoom].chestSpawnLocations[0].y,
+                    1.0f), Quaternion.identity);
+            }
+            else if (chanceychance <= .3f)
             {
                 bool spawned = false;
                 while (!spawned)
@@ -297,7 +303,9 @@ public class RoomGeneration : MonoBehaviour
                         int c = Random.Range(1, 5);
                         if (c == 1)
                         {
-                            Instantiate(chest, new Vector3(finalRoomInfoArray[currentRoom].chestSpawnLocations[i].x, -finalRoomInfoArray[currentRoom].chestSpawnLocations[i].y, -.9f), Quaternion.identity);
+                            Instantiate(chest, new Vector3(finalRoomInfoArray[currentRoom].chestSpawnLocations[i].x,
+                                -finalRoomInfoArray[currentRoom].chestSpawnLocations[i].y, -.9f), Quaternion.identity);
+                                //Quaternion.Euler( 0.0f, 0.0f, finalRoomInfoArray[currentRoom].chestRotations[i]));
                             spawned = true;
                             break;
                         }
