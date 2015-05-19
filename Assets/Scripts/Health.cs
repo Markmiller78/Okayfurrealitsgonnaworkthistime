@@ -20,7 +20,7 @@ public class Health : MonoBehaviour
    public bool playerDead;
     Animator anim;
     Health playerHealth;
-
+ 
     public GameObject corpse;
 
     Options theoptions;
@@ -66,6 +66,7 @@ public class Health : MonoBehaviour
             {
                 healthPercent = currentHP / maxHP;
                 healthBar.transform.localScale = new Vector3(healthPercent, 1, 1);
+           
             }
         }
     }
@@ -86,6 +87,9 @@ public class Health : MonoBehaviour
             {
                 healthPercent = currentHP / maxHP;
                 healthBar.transform.localScale = new Vector3(healthPercent, 1, 1);
+                Debug.Log("Animating!");
+                anim.CrossFade("TakingDamage", 0.01f);
+
             }
             else if (equipment.equippedEmber == ember.Life)
             {

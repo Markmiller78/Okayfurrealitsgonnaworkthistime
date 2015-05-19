@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
     public bool stunned = false;
     float stunTimer;
     float sTimerMax;
-
+  
     CharacterController controller;
     //Rigidbody2D rb2d;
 	PlayerEquipment heroEquipment;
@@ -45,6 +45,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        Debug.Log(speed);
         if (heroEquipment.paused == false)
         {
             if (stunned)
@@ -85,17 +86,23 @@ public class PlayerMovement : MonoBehaviour
 
             //Check Left Joysticks for Movement
             MoveDirect.x = Input.GetAxis("CLSHorizontal");
+           
             MoveDirect.y = Input.GetAxis("CLSVertical");
-            if (MoveDirect != Vector2.zero && anim.name != "Spellcasting")
-                anim.CrossFade("PlayerWalking", 0.01f);
-            else
-                anim.CrossFade("Idle", 0.01f);
+            if (MoveDirect.x == 0)
+                Debug.Log("Working");
+		 
+           // if (MoveDirect != Vector2.zero && anim.name != "Spellcasting")
+              //  anim.CrossFade("PlayerWalking", 0.01f);
+            //else
+                //anim.CrossFade("Idle", 0.01f);
             //Normalize the directional vector
             //Factor in speed and time
+			anim.SetFloat("Speed", MoveDirect.magnitude);
             MoveDirect.Normalize();
             MoveDirect *= speed * Time.deltaTime;
            
             //Actually Move the player
+		
             controller.Move(MoveDirect);
 
             //Rotate the player to where they are moving
@@ -133,17 +140,20 @@ public class PlayerMovement : MonoBehaviour
             //Check WASD for Movement
             MoveDirect.x = Input.GetAxis("KBHorizontal");
             MoveDirect.y = Input.GetAxis("KBVertical");
-
-            if (MoveDirect != Vector2.zero)
-                anim.CrossFade("PlayerWalking", 0.01f);
-            else
-                anim.CrossFade("Idle", 0.01f);
+  
+           // if (MoveDirect != Vector2.zero)
+             //   anim.CrossFade("PlayerWalking", 0.01f);
+           // else
+             //   anim.CrossFade("Idle", 0.01f);
             //Normalize the directional vector
             //Factor in speed and time
+			anim.SetFloat("Speed", MoveDirect.magnitude);
+
             MoveDirect.Normalize();
             MoveDirect *= speed * Time.deltaTime;
            
             //Actually Move the player
+
             controller.Move(MoveDirect);
         }
     }
@@ -186,7 +196,7 @@ public class PlayerMovement : MonoBehaviour
             // times if Mouse/keyboar is active
             Vector3 pos = Camera.main.WorldToScreenPoint(controller.transform.position);
             Vector3 dir = Input.mousePosition - pos;
-            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90;
+            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg-90;
             controller.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
             //}
