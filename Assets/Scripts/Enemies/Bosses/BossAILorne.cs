@@ -24,20 +24,20 @@ public class BossAILorne : MonoBehaviour {
     state currState = state.happy;
     float retreatTimer;
     int currentcasts;
-    float rTimerMax = 5.0f;
-    float specialTimer;
+//    float rTimerMax = 5.0f;
+//    float specialTimer;
     float spellTimerMax = 5.0f;
     bool hazarding;
     public GameObject LorneHazard;
     public GameObject enemySpawner;
-    GameObject[] spawners;
+//    GameObject[] spawners;
     public GameObject seeking;
     Vector3 posref;
     float spellTimer;
-    float spTimerMax = 2.5f;
+//    float spTimerMax = 2.5f;
     public GameObject hazard;
     float hazardPlacementTimer;
-    float hTimerMax = 1.0f;
+//    float hTimerMax = 1.0f;
 
 
 
@@ -57,13 +57,13 @@ public class BossAILorne : MonoBehaviour {
             Instantiate(enemySpawner, new Vector3(14, -5, -1), Quaternion.Euler(0, 0, 135));
             Instantiate(enemySpawner, new Vector3(5, -14, -1), Quaternion.Euler(0, 0, 315));
             Instantiate(enemySpawner, new Vector3(14, -14, -1), Quaternion.Euler(0, 0, 45));
-            spawners = GameObject.FindGameObjectsWithTag("LorneSpawn");
+ //           spawners = GameObject.FindGameObjectsWithTag("LorneSpawn");
             spellMaxRange = 7.0f;
             spellMinRange = 3.0f;
    spellTimerMax=4.0f;
             spellTimer=spellTimerMax;
-            spTimerMax = 10.0f;
-            specialTimer = spTimerMax;
+//            spTimerMax = 10.0f;
+//            specialTimer = spTimerMax;
         
 	
 	}

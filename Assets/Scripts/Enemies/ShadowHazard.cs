@@ -10,19 +10,19 @@ public class ShadowHazard : MonoBehaviour {
     Health heroHP;
     Light heroLight;
     PlayerMovement heroMovement;
-    PlayerDashing heroDash;
-    GameObject tocheck;
+//    PlayerDashing heroDash;
+//    GameObject tocheck;
     AudioSource audioPlayer;
     public float countertodestroythefriggingbug = 0;
 
     void Start()
     {
-        tocheck = this.gameObject;
+//        tocheck = this.gameObject;
         hero = GameObject.FindGameObjectWithTag("Player");
         heroHP = hero.GetComponent<Health>();
         heroLight = hero.GetComponentInChildren<Light>();
         heroMovement = hero.GetComponent<PlayerMovement>();
-        heroDash = hero.GetComponent<PlayerDashing>();
+//        heroDash = hero.GetComponent<PlayerDashing>();
         audioPlayer = gameObject.GetComponent<AudioSource>();
         if (gameObject.tag == "Temporary")
             Destroy(gameObject, 5);

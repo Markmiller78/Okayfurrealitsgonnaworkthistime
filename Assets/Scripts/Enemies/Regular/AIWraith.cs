@@ -28,15 +28,15 @@ public class AIWraith : MonoBehaviour
     float AttackTimer;
     bool AttackCD;
     float snaredSpeed;
-    float SnareTimer;
-    bool isSnared;
+//    float SnareTimer;
+//    bool isSnared;
     float TopDoor, LeftDoor, roomWidth, roomHeight;
     public Rect Bounds;
 
     // Use this for initialization
     void Start()
     {
-        isSnared = false;
+//        isSnared = false;
         player = GameObject.FindGameObjectWithTag("Player");
         controller = GetComponent<CharacterController>();
         //Random.seed = 8675309;
@@ -240,8 +240,8 @@ public class AIWraith : MonoBehaviour
 
     void Snare()
     {
-        isSnared = true;
-        SnareTimer = 2;
+//        isSnared = true;
+//        SnareTimer = 2;
         snaredSpeed = moveSpeed;
         moveSpeed = 0;
     }
