@@ -18,6 +18,8 @@ public class AIShadowCloud : MonoBehaviour
     Health heroHP;
     Light heroLight;
 
+
+    PlayerMovement hMove;
     float snaredSpeed;
 //    float SnareTimer;
 //    bool isSnared;
@@ -28,6 +30,7 @@ public class AIShadowCloud : MonoBehaviour
         infecttimer = 3.0f;
         player = GameObject.FindGameObjectWithTag("Player");
         heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
+        hMove = player.GetComponent<PlayerMovement>();
         target = player;
         heroHP = target.GetComponent<Health>();
         heroLight = target.GetComponentInChildren<Light>();
@@ -36,7 +39,7 @@ public class AIShadowCloud : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (heroEquipment.paused == false)
+        if (heroEquipment.paused == false && !hMove.transitioning)
         {
             if(isInfected)
             Infect();
@@ -91,15 +94,13 @@ public class AIShadowCloud : MonoBehaviour
         }
     }
 
-    void Decoy(GameObject decoy)
+    void Decoy()
     {
-        player = decoy;
-      //  playMove = decoy.GetComponent<PlayerMovement>();
+        player = GameObject.FindGameObjectWithTag("Decoy");
     }
-    void UnDecoy(GameObject decoy)
+    void UnDecoy()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-     //   playMove = player.GetComponent<PlayerMovement>();
     }
 
     void Snare()

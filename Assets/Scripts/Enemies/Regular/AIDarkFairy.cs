@@ -42,6 +42,8 @@ public class AIDarkFairy : MonoBehaviour
     float SnareTimer;
     bool isSnared;
 
+    PlayerMovement hMove;
+
     public GameObject darkOrb;
     // Use this for initialization
 
@@ -53,7 +55,8 @@ public class AIDarkFairy : MonoBehaviour
         isSnared = false;
         timer = 0.0f;
         player = GameObject.FindGameObjectWithTag("Player");
-        heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
+        heroEquipment = player.GetComponent<PlayerEquipment>();
+        hMove = player.GetComponent<PlayerMovement>();
         currentlight = null;
         TargetTimer = 0;
         attackCD = 3;
@@ -68,7 +71,7 @@ public class AIDarkFairy : MonoBehaviour
     {
         if (transform.position.z != -1)
             transform.position = new Vector3(transform.position.x, transform.position.y, -1);
-        if (heroEquipment.paused == false)
+        if (heroEquipment.paused == false && !hMove.transitioning)
         {
             dodgeTimer -= Time.deltaTime;
             timer -= Time.deltaTime;
@@ -305,6 +308,8 @@ public class AIDarkFairy : MonoBehaviour
         //transform.rotation = Quaternion.Slerp(transform.rotation, rot, Time.deltaTime * 4);
     }
 
+
+
     #region //CROWD CONTROL SECTION
     void Reinforce()
     {
@@ -347,15 +352,13 @@ public class AIDarkFairy : MonoBehaviour
     {
         moveSpeed = snaredSpeed;
     }
-    void Decoy(GameObject decoy)
+    void Decoy()
     {
-        player = decoy;
-        // playMove = decoy.GetComponent<PlayerMovement>();
+        player = GameObject.FindGameObjectWithTag("Decoy");
     }
-    void UnDecoy(GameObject decoy)
+    void UnDecoy()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        //  playMove = player.GetComponent<PlayerMovement>();
     }
     void GetInfected()
     {

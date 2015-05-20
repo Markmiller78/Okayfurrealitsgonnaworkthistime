@@ -48,7 +48,7 @@ public class AILivingDead : MonoBehaviour
 
     void Update()
     {
-        if (heroEquipment.paused == false)
+        if (heroEquipment.paused == false && !playMove.transitioning)
         {
             distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
             if (attacking)
@@ -155,16 +155,17 @@ public class AILivingDead : MonoBehaviour
 		
 	}
  
-
-    void Decoy(GameObject decoy)
+    void Decoy()
     {
-        player = decoy;
-        playMove = decoy.GetComponent<PlayerMovement>();
+        player = GameObject.FindGameObjectWithTag("Decoy");
+        playMove = player.GetComponent<PlayerMovement>();
+
     }
-    void UnDecoy(GameObject decoy)
+    void UnDecoy()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         playMove = player.GetComponent<PlayerMovement>();
+
     }
 
  

@@ -21,6 +21,8 @@ public class AISkeletonArcher : MonoBehaviour
     public GameObject projectile;
     bool hasAttacked = false;
 
+    PlayerMovement hMove;
+
     CharacterController controller;
     [HideInInspector]
     public Utilities.ppList<GameObject> usedWaypoints;
@@ -39,6 +41,7 @@ public class AISkeletonArcher : MonoBehaviour
         infecttimer = 3.0f;
         heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
         player = GameObject.FindGameObjectWithTag("Player");
+        hMove = player.GetComponent<PlayerMovement>();
         attackCooldown = attackCooldownMax;
         controller = GetComponent<CharacterController>();
         usedWaypoints = new Utilities.ppList<GameObject>();
@@ -46,7 +49,7 @@ public class AISkeletonArcher : MonoBehaviour
 
     void Update()
     {
-        if (heroEquipment.paused == false)
+        if (heroEquipment.paused == false && !hMove.transitioning)
         {
             if (forgetTimer >= 10.0f)
             {
@@ -54,7 +57,7 @@ public class AISkeletonArcher : MonoBehaviour
                 forgetTimer = 0.0f;
             }
             if (isInfected)
-                Infect();
+                //Infect();
             if (hasAttacked)
             {
                 UpdateAttackCooldown();
@@ -130,15 +133,13 @@ public class AISkeletonArcher : MonoBehaviour
     }
 
 
-    void Decoy(GameObject decoy)
+    void Decoy()
     {
-        player = decoy;
-        // playMove = decoy.GetComponent<PlayerMovement>();
+        player = GameObject.FindGameObjectWithTag("Decoy");
     }
-    void UnDecoy(GameObject decoy)
+    void UnDecoy()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        //   playMove = player.GetComponent<PlayerMovement>();
     }
     void Reinforce()
     {

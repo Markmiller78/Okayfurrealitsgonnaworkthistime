@@ -28,7 +28,7 @@ public class SouthDoor : MonoBehaviour
 
     void Update()
     {
-        enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length + GameObject.FindGameObjectsWithTag("ShadowSpawn").Length;
+        enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length + GameObject.FindGameObjectsWithTag("ShadowSpawn").Length + GameObject.FindGameObjectsWithTag("Invincible").Length;
         if (movement.transitioning)
         {
             isLocked = false;
