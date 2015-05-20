@@ -1379,6 +1379,7 @@ public class RoomGeneration : MonoBehaviour
                 Destroy(obj);
             }
         }
+		player.GetComponent<SaveTest> ().saved = false;
         CreateRoom();
     }
 }
