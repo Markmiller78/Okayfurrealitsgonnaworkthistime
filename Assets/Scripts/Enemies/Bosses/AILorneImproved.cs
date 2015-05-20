@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class AILorneImproved : MonoBehaviour {
+public class AILorneImproved : MonoBehaviour
+{
 
     PlayerEquipment heroEquipment;
 
@@ -23,12 +24,26 @@ public class AILorneImproved : MonoBehaviour {
     public float turnSpeed;
     float distanceToPlayer;
     bool AttackActive;
-
-
+    GameObject[] Fairies;
+    GameObject[] FairySpawners;
+    Vector3[] WayPoints = new Vector3[4];
+    int currentWaypoint;
+    float stateTimer;
+    float WayPointChangeTimer;
+    float fairieSpawnTimer;
 
     void Start()
     {
+        currentState = 0;
+        currentWaypoint = 1;
+        stateTimer = 5;
+        WayPointChangeTimer = 5;
+        fairieSpawnTimer = 5;
         AttackActive = false;
+        WayPoints[0] = new Vector3(4, -16, -1);
+        WayPoints[1] = new Vector3(4, -4, -1);
+        WayPoints[2] = new Vector3(16, -4, -1);
+        WayPoints[2] = new Vector3(16, -16, -1);
         player = GameObject.FindGameObjectWithTag("Player");
         playMove = player.GetComponent<PlayerMovement>();
         playerHealth = player.GetComponent<Health>();
@@ -44,10 +59,34 @@ public class AILorneImproved : MonoBehaviour {
     {
         if (heroEquipment.paused == false)
         {
-            switch(currentState)
+
+            stateTimer -= Time.deltaTime;
+            WayPointChangeTimer -= Time.deltaTime;
+            fairieSpawnTimer -= Time.deltaTime;
+
+            if (stateTimer < 0)
+            {
+                if (currentState == 0)
+                {
+                    currentState = 1;
+                    fairieSpawnTimer = 1.5f;
+                    stateTimer = 20;
+                }
+                else
+                {
+                    currentState = 0;
+                    fairieSpawnTimer = 5;
+                    stateTimer = 20;
+                }
+
+            }
+
+
+            switch (currentState)
             {
                 case 0:
                     {
+                        moveSpeed = 2;
                         distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
                         if (AttackActive)
                         {
@@ -57,17 +96,36 @@ public class AILorneImproved : MonoBehaviour {
                             Move();
 
                         Turn();
-                        break;
-                    }
-                case 1:
-                    {
-
-
 
                         if (distanceToPlayer <= attackRange && !AttackActive)
                         {
                             Attack();
                         }
+                        break;
+                    }
+                case 1:
+                    {
+                        moveSpeed = 3;
+                        //Switch Waypoints (Not Spawn Fairies)
+                        if (fairieSpawnTimer < 0)
+                        {
+                            SummonFairies();
+                            fairieSpawnTimer = 30;
+                        }
+
+                        if (WayPointChangeTimer < 0)
+                        {
+                            WayPointChangeTimer = 4;
+                            currentWaypoint++;
+                            if (currentWaypoint > 3)
+                                currentWaypoint = 0;
+                        }
+
+                        if(fairieSpawnTimer < 28)
+                        MoveToWayPoint();
+
+
+
                         break;
                     }
             }
@@ -79,6 +137,12 @@ public class AILorneImproved : MonoBehaviour {
     {
         //rb2d.MovePosition(Vector2.MoveTowards(transform.position, player.transform.position, Time.deltaTime * moveSpeed));
         Vector2 moveTo = (player.transform.position - transform.position).normalized;
+        controller.Move(moveTo * Time.deltaTime * moveSpeed);
+    }
+
+    void MoveToWayPoint()
+    {
+        Vector2 moveTo = (WayPoints[currentWaypoint] - transform.position).normalized;
         controller.Move(moveTo * Time.deltaTime * moveSpeed);
     }
 
@@ -109,5 +173,13 @@ public class AILorneImproved : MonoBehaviour {
             AttackActive = false;
         }
     }
+    void SummonFairies()
+    {
+        FairySpawners = GameObject.FindGameObjectsWithTag("DethSpawn");
 
+        foreach (GameObject Spawner in FairySpawners)
+        {
+            Spawner.SendMessage("SpawnFairy", SendMessageOptions.DontRequireReceiver);
+        }
+    }
 }

@@ -13,6 +13,7 @@ public class ShadowHazard : MonoBehaviour {
     PlayerDashing heroDash;
     GameObject tocheck;
     AudioSource audioPlayer;
+    float DestroyAfter = 0;
     public float countertodestroythefriggingbug = 0;
 
     void Start()

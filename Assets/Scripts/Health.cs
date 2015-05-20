@@ -119,6 +119,7 @@ public class Health : MonoBehaviour
 
 
             Destroy(this.gameObject);
+            if(generator != null)
             --generator.finalRoomInfoArray[generator.currentRoom].numEnemies;
         }
         else

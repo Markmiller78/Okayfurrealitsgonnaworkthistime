@@ -295,9 +295,11 @@ public class GenerateLoot : MonoBehaviour
         int StatGen = Random.Range(1, 3);
         RoomGeneration Dunref;
         GameObject Dun = GameObject.FindGameObjectWithTag("Dungeon");
-        Dunref = Dun.GetComponent<RoomGeneration>();
-
-        StatGen += Dunref.currentRoom;
+        if (Dun != null)
+        {
+            Dunref = Dun.GetComponent<RoomGeneration>();
+            StatGen += Dunref.currentRoom;
+        }
 
         return StatGen;
     }
