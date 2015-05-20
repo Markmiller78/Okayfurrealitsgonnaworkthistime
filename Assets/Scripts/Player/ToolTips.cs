@@ -37,7 +37,7 @@ public class ToolTips : MonoBehaviour {
         {
             objects[i].SendMessage("DoNotDisplayTooltip", SendMessageOptions.DontRequireReceiver);
         }
-        if(ShortestDistance < 1.5f)
+        if(ShortestDistance < 0.5f)
         DisplayThisToolTip.SendMessage("DisplayTooltip", SendMessageOptions.DontRequireReceiver);
 	}
 

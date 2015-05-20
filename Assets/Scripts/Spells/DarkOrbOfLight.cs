@@ -52,7 +52,8 @@ public class DarkOrbOfLight : MonoBehaviour {
     void Explode()
     {
         Instantiate(explosion, transform.position, transform.rotation);
-        Instantiate(hazard, transform.position, transform.rotation);
+        if(hazard != null)
+         Instantiate(hazard, transform.position, transform.rotation);
         Destroy(gameObject);
     }
 }

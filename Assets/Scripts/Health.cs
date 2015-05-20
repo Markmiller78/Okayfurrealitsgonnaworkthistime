@@ -22,6 +22,7 @@ public class Health : MonoBehaviour
     Health playerHealth;
  
     public GameObject corpse;
+    public GameObject BossDeathParticles;
 
     Options theoptions;
 
@@ -38,7 +39,7 @@ public class Health : MonoBehaviour
         {
             healthBar = GameObject.FindGameObjectWithTag("HealthBar");
         }
-        healthPercent = currentHP / maxHP * 100;
+        healthPercent = currentHP / maxHP;
 
         dungeon = GameObject.FindGameObjectWithTag("Dungeon");
         if (dungeon != null)
@@ -62,9 +63,9 @@ public class Health : MonoBehaviour
             if (currentHP > maxHP)
                 currentHP = maxHP;
 
+            healthPercent = currentHP / maxHP;
             if (this.tag == "Player")
             {
-                healthPercent = currentHP / maxHP;
                 healthBar.transform.localScale = new Vector3(healthPercent, 1, 1);
            
             }
@@ -82,10 +83,10 @@ public class Health : MonoBehaviour
                 playerDead = true;
                 Die();
             }
-
+            healthPercent = currentHP / maxHP;
             if (this.tag == "Player")
             {
-                healthPercent = currentHP / maxHP;
+
                 healthBar.transform.localScale = new Vector3(healthPercent, 1, 1);
                 anim.CrossFade("TakingDamage", 0.01f);
 
@@ -101,6 +102,14 @@ public class Health : MonoBehaviour
 
     void Die()
     {
+        healthPercent = currentHP / maxHP;
+        if (this.name == "Dethros(Clone)" || this.name == "Lorne(Clone)" || this.name == "Lorne")
+        {
+            Instantiate(BossDeathParticles, this.transform.position, new Quaternion(0, 0, 0, 0));
+            this.SendMessage("DestroyHealthBar", SendMessageOptions.DontRequireReceiver);
+        }
+
+
         if (this.tag != "Player")
         {
             theoptions.AddToEnemy();
@@ -114,6 +123,7 @@ public class Health : MonoBehaviour
 
 
             Destroy(this.gameObject);
+            if(generator != null)
             --generator.finalRoomInfoArray[generator.currentRoom].numEnemies;
         }
         else

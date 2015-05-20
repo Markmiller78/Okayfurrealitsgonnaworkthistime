@@ -42,6 +42,7 @@ public class AIBossDethImproved : MonoBehaviour
     public GameObject Forcefield;
     float DistanceToPlayer;
     public GameObject BossHealthBar;
+    GameObject healthB;
     GameObject HealthRemaining;
 
 
@@ -74,7 +75,7 @@ public class AIBossDethImproved : MonoBehaviour
         vanishbool2 = true;
         Myhealth = gameObject.GetComponent<Health>();
 
-        Instantiate(BossHealthBar);
+        healthB = (GameObject)Instantiate(BossHealthBar);
         HealthRemaining = GameObject.FindGameObjectWithTag("Boss Health");
     }
 
@@ -441,6 +442,9 @@ public class AIBossDethImproved : MonoBehaviour
         }
     }
 
-
+    void DestroyHealthBar()
+    {
+        Destroy(healthB);
+    }
 
 }
