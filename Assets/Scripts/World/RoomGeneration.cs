@@ -46,11 +46,13 @@ public class RoomGeneration : MonoBehaviour
     int enemyMod;
     int prevRoom = -1;
     bool loading = false;
+    bool firstRoom;
 
     public PlayerData loadedData;
 
     void Start()
     {
+        firstRoom = true;
         //DontDestroyOnLoad(this);
         player = GameObject.FindGameObjectWithTag("Player");
 
@@ -144,6 +146,7 @@ public class RoomGeneration : MonoBehaviour
         //ENDTESTING
 
         CreateRoom();
+        firstRoom = false;
         //Reset();
         enemyMod = (easyMode ? 11 : 9);
     }
@@ -358,16 +361,16 @@ public class RoomGeneration : MonoBehaviour
             switch (finalRoomInfoArray[currentRoom].entranceDir)
             {
                 case 0:
-                    player.transform.position = new Vector3(finalRoomInfoArray[currentRoom].bottomPlayerSpawn.x, -finalRoomInfoArray[currentRoom].bottomPlayerSpawn.y, -1.0f);
+                    player.transform.position = new Vector3(finalRoomInfoArray[currentRoom].bottomPlayerSpawn.x, -(finalRoomInfoArray[currentRoom].bottomPlayerSpawn.y + (firstRoom ? 0f : 2f)), -1.0f);
                     break;
                 case 1:
-                    player.transform.position = new Vector3(finalRoomInfoArray[currentRoom].leftPlayerSpawn.x, -finalRoomInfoArray[currentRoom].leftPlayerSpawn.y, -1.0f);
+                    player.transform.position = new Vector3(finalRoomInfoArray[currentRoom].leftPlayerSpawn.x - (firstRoom ? 0f : 2f), -finalRoomInfoArray[currentRoom].leftPlayerSpawn.y, -1.0f);
                     break;
                 case 2:
-                    player.transform.position = new Vector3(finalRoomInfoArray[currentRoom].topPlayerSpawn.x, -finalRoomInfoArray[currentRoom].topPlayerSpawn.y, -1.0f);
+                    player.transform.position = new Vector3(finalRoomInfoArray[currentRoom].topPlayerSpawn.x, -(finalRoomInfoArray[currentRoom].topPlayerSpawn.y - (firstRoom ? 0f : 2f)), -1.0f);
                     break;
                 case 3:
-                    player.transform.position = new Vector3(finalRoomInfoArray[currentRoom].rightPlayerSpawn.x, -finalRoomInfoArray[currentRoom].rightPlayerSpawn.y, -1.0f);
+                    player.transform.position = new Vector3(finalRoomInfoArray[currentRoom].rightPlayerSpawn.x + (firstRoom ? 0f : 2f), -finalRoomInfoArray[currentRoom].rightPlayerSpawn.y, -1.0f);
                     break;
                 default:
                     break;
@@ -378,16 +381,16 @@ public class RoomGeneration : MonoBehaviour
             switch (finalRoomInfoArray[currentRoom].exitDir)
             {
                 case 0:
-                    player.transform.position = new Vector3(finalRoomInfoArray[currentRoom].bottomPlayerSpawn.x, -finalRoomInfoArray[currentRoom].bottomPlayerSpawn.y, -1.0f);
+                    player.transform.position = new Vector3(finalRoomInfoArray[currentRoom].bottomPlayerSpawn.x, -(finalRoomInfoArray[currentRoom].bottomPlayerSpawn.y + (firstRoom ? 0f : 2f)), -1.0f);
                     break;
                 case 1:
-                    player.transform.position = new Vector3(finalRoomInfoArray[currentRoom].leftPlayerSpawn.x, -finalRoomInfoArray[currentRoom].leftPlayerSpawn.y, -1.0f);
+                    player.transform.position = new Vector3(finalRoomInfoArray[currentRoom].leftPlayerSpawn.x - (firstRoom ? 0f : 2f), -finalRoomInfoArray[currentRoom].leftPlayerSpawn.y, -1.0f);
                     break;
                 case 2:
-                    player.transform.position = new Vector3(finalRoomInfoArray[currentRoom].topPlayerSpawn.x, -finalRoomInfoArray[currentRoom].topPlayerSpawn.y, -1.0f);
+                    player.transform.position = new Vector3(finalRoomInfoArray[currentRoom].topPlayerSpawn.x, -(finalRoomInfoArray[currentRoom].topPlayerSpawn.y - (firstRoom ? 0f : 2f)), -1.0f);
                     break;
                 case 3:
-                    player.transform.position = new Vector3(finalRoomInfoArray[currentRoom].rightPlayerSpawn.x, -finalRoomInfoArray[currentRoom].rightPlayerSpawn.y, -1.0f);
+                    player.transform.position = new Vector3(finalRoomInfoArray[currentRoom].rightPlayerSpawn.x + (firstRoom ? 0f : 2f), -finalRoomInfoArray[currentRoom].rightPlayerSpawn.y, -1.0f);
                     break;
                 default:
                     break;
@@ -396,6 +399,7 @@ public class RoomGeneration : MonoBehaviour
         // make sure enemies can't respawn
         finalRoomInfoArray[currentRoom].beenThere = true;
         prevRoom = currentRoom;
+        firstRoom = false;
     }
 
     void FillDungeon()
