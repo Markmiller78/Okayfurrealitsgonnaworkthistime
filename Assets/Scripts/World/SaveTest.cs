@@ -72,7 +72,7 @@ public class SaveTest : MonoBehaviour {
         if (Application.platform == RuntimePlatform.OSXWebPlayer
            || Application.platform == RuntimePlatform.WindowsWebPlayer)
         {
-			Debug.Log("OK");
+			Debug.Log("OK Save");
 			
             PlayerPrefs.SetFloat("PlayerHealth", gameObject.GetComponent<Health>().currentHP);
             PlayerPrefs.SetFloat("PlayerLight", gameObject.GetComponent<PlayerLight>().currentLight);
@@ -84,12 +84,14 @@ public class SaveTest : MonoBehaviour {
             PlayerPrefs.SetInt("EasyMode", options.easyMode.GetHashCode());
 			PlayerPrefs.SetInt("Ember",(int)eq.equippedEmber);
 			PlayerPrefs.SetInt("Boot",(int)eq.equippedBoot);
+			PlayerPrefs.SetInt("CurrentRoom", theRooms.currentRoom);
 
             PlayerPrefs.SetInt("RoomArrLenght", theRooms.finalRoomInfoArray.Length);
+		 
 
             for (int i = 0; i < theRooms.finalRoomInfoArray.Length; i++)
             {
-                string temp= "Room_"+i.ToString()+" been there";
+                string temp= "Room_"+i.ToString()+"_been there";
                 string temps= "RoomID_"+i.ToString();
 				string tempsss= "RoomExitDir_"+ i.ToString();
 				string tempss= "RoomEntryDir_"+i.ToString();
@@ -143,7 +145,7 @@ public class SaveTest : MonoBehaviour {
        if (Application.platform == RuntimePlatform.OSXWebPlayer
    || Application.platform == RuntimePlatform.WindowsWebPlayer)
        {
-			Debug.Log("OK");
+			Debug.Log("OK Load");
 			//Loading Hp and Light
 
       gameObject.GetComponent<Health>().currentHP=      PlayerPrefs.GetFloat("PlayerHealth", 100);
@@ -153,21 +155,24 @@ public class SaveTest : MonoBehaviour {
 		theStats.spellModifier   =	PlayerPrefs.GetFloat("SpellMod",0 );
 		theStats.maxLightModifier=	PlayerPrefs.GetFloat("LightMod",0 );
 		theStats.maxHPModifier   =	PlayerPrefs.GetFloat("LifeMod", 0 );
+			PlayerData data= new PlayerData();
 
 			//Loading boot and embers
 		eq.equippedEmber=(ember)	PlayerPrefs.GetInt("Ember",0);
 		eq.equippedBoot  =	(boot)PlayerPrefs.GetInt("Boot",0 );
+			data.currentroom= PlayerPrefs.GetInt("CurrentRoom", 0);
 			//Loading the amount of rooms in the roomgenerator
      int teemplenght = PlayerPrefs.GetInt("RoomArrLenght", 0);
+			Debug.Log(teemplenght);
 			options.easyMode = PlayerPrefs.GetInt("EasyMode",1) == 1 ? true : false; 
      if (teemplenght != 0)
      {
-				PlayerData data= new PlayerData();
+			
         data.roominfo= new RoomData[teemplenght];
          for (int i = 0; i < teemplenght; i++)
          {
 					data.roominfo[i]= new RoomData();
-             string temp = "Room_" + i.ToString() + " been there";
+             string temp = "Room_" + i.ToString() + "_been there";
              string temps = "RoomID_" + i.ToString();
 			 string tempsss= "RoomExitDir_"+ i.ToString();
 			 string tempss= "RoomEntryDir_"+i.ToString();
@@ -178,6 +183,7 @@ public class SaveTest : MonoBehaviour {
 			 data.roominfo[i].exitDir=PlayerPrefs.GetInt(tempsss,0);
          }
 
+				theRooms.currentRoom= data.currentroom;
 				theRooms.loadedData=data;
      }
 
@@ -190,16 +196,21 @@ public class SaveTest : MonoBehaviour {
                BinaryFormatter bin = new BinaryFormatter();
                FileStream file = File.Open(Application.persistentDataPath + "/playerinfo.dat", FileMode.Open);
                PlayerData data = (PlayerData)bin.Deserialize(file);
+
                player.GetComponent<Health>().currentHP = data.health;
                player.GetComponent<PlayerLight>().currentLight = data.theLight;
+
                theStats.maxHPModifier = data.maxHPModifier;
                theStats.maxLightModifier = data.maxLightModifier;
                theStats.meleeModifier = data.meleeModifier;
                theStats.spellModifier = data.spellModifier;
-              
-               options.easyMode = data.easymode;
+
+				eq.equippedEmber= data.equippedember;
+				eq.equippedBoot= data.equippedboot; 
+
+                options.easyMode = data.easymode;
+
 				theRooms.currentRoom= data.currentroom;
-			
 				theRooms.loadedData= data;
 		
      
