@@ -33,6 +33,8 @@ public class AIWraith : MonoBehaviour
     float TopDoor, LeftDoor, roomWidth, roomHeight;
     public Rect Bounds;
 
+    PlayerMovement hMove;
+
     // Use this for initialization
     void Start()
     {
@@ -42,6 +44,7 @@ public class AIWraith : MonoBehaviour
         //Random.seed = 8675309;
         attacking = false;
         heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
+        hMove = player.GetComponent<PlayerMovement>();
         wayPointTimer = 8;
         timer = .5f;
         AttackTimer = 2;
@@ -106,7 +109,7 @@ public class AIWraith : MonoBehaviour
     {
 
 
-        if (heroEquipment.paused == false)
+        if (heroEquipment.paused == false && !hMove.transitioning)
         {
             wayPointTimer -= Time.deltaTime;
             timer -= Time.deltaTime;
@@ -271,11 +274,11 @@ public class AIWraith : MonoBehaviour
         }
     }
 
-    void Decoy(GameObject decoy)
+    void Decoy()
     {
-        player = decoy;
+        player = GameObject.FindGameObjectWithTag("Decoy");
     }
-    void UnDecoy(GameObject decoy)
+    void UnDecoy()
     {
         player = GameObject.FindGameObjectWithTag("Player");
     }

@@ -37,13 +37,22 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
+        if (tag != "Decoy")
+        {
 
-        //        player = GameObject.FindGameObjectWithTag("Player");
-        anim = gameObject.GetComponent<Animator>();
-        heroEquipment = gameObject.GetComponent<PlayerEquipment>();
-        controller = gameObject.GetComponent<CharacterController>();
-        heroCooldowns = gameObject.GetComponent<PlayerCooldowns>();
-        //rb2d = GetComponent<Rigidbody2D>();
+
+            //        player = GameObject.FindGameObjectWithTag("Player");
+            anim = gameObject.GetComponent<Animator>();
+            heroEquipment = gameObject.GetComponent<PlayerEquipment>();
+            controller = gameObject.GetComponent<CharacterController>();
+            heroCooldowns = gameObject.GetComponent<PlayerCooldowns>();
+            //rb2d = GetComponent<Rigidbody2D>();
+        }
+        else
+        {
+            heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
+
+        }
         fullSpeed = 3.1f;
         halfSpeed = 1.6f;
         knockbackTimer = 0;
@@ -56,7 +65,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         Debug.Log(speed);
-        if (heroEquipment.paused == false)
+        if (heroEquipment.paused == false && tag != "Decoy")
         {
             if (stunned)
             {
@@ -161,7 +170,7 @@ public class PlayerMovement : MonoBehaviour
 
     void CMove()
     {
-        if (heroEquipment.paused == false && !stunned && !transitioning)
+        if (heroEquipment.paused == false && !stunned && !transitioning && tag != "Decoy")
         {
 
             //Check for Left Stick Axis to 
@@ -214,7 +223,7 @@ public class PlayerMovement : MonoBehaviour
 
     void KBMove()
     {
-        if (heroEquipment.paused == false && !stunned && !transitioning)
+        if (heroEquipment.paused == false && !stunned && !transitioning && tag != "Decoy")
         {
 
             //Check for WASD to 
@@ -247,7 +256,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Rotate()
     {
-        if (heroEquipment.paused == false && !stunned)
+        if (heroEquipment.paused == false && !stunned && tag != "Decoy")
         {
 
             //Check Right sticks for Rotation
@@ -274,7 +283,7 @@ public class PlayerMovement : MonoBehaviour
     }
     void MouseRotate()
     {
-        if (!stunned && heroEquipment.paused == false || (heroCooldowns.dashCooling == true && heroEquipment.equippedBoot == boot.Whirlwind))
+        if (!stunned && tag != "Decoy" && heroEquipment.paused == false || (heroCooldowns.dashCooling == true && heroEquipment.equippedBoot == boot.Whirlwind))
         {
 
             //if (heroEquipment.equippedBoot!=boot.Whirlwind)
@@ -291,20 +300,28 @@ public class PlayerMovement : MonoBehaviour
     }
     public void KnockBack(Vector3 Direction)
     {
+        if (tag != "Decoy")
+        {
+            
+        
         knockbackTimer = .1f;
         KnockbackVec = transform.position - Direction;
         KnockbackVec.Normalize();
+        }
     }
     public void PullThePlayer(Vector3 Direction)
     {
-        knockbackTimer = .3f;
-        KnockbackVec = Direction - transform.position;
-        KnockbackVec.Normalize();
+        if (tag != "Decoy")
+        {
+            knockbackTimer = .3f;
+            KnockbackVec = Direction - transform.position;
+            KnockbackVec.Normalize();
+        }
     }
 
     public void LeaveRoom(bool thruExit)
     {
-        if (!hasLeft)
+        if (!hasLeft && tag != "Decoy")
         {
             transitioning = true;
             if (thruExit)

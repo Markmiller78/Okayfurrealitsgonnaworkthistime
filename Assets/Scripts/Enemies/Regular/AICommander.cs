@@ -32,6 +32,7 @@ public class AICommander : MonoBehaviour
     public float infectRange;
     public float infecttimer;
     // Use this for initialization
+    PlayerMovement hMove;
     void Start()
     {
         timer = 2.0f;
@@ -42,6 +43,7 @@ public class AICommander : MonoBehaviour
         isSnared = false;
         player = GameObject.FindGameObjectWithTag("Player");
         list = GameObject.FindGameObjectsWithTag("Enemy");
+        hMove = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
         heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
         controller = GetComponent<CharacterController>();
         movementspeed = 1.2f;
@@ -51,7 +53,7 @@ public class AICommander : MonoBehaviour
 
     void Update()
     {
-        if (heroEquipment.paused == false)
+        if (heroEquipment.paused == false && !hMove.transitioning)
         {
             if (isInfected)
                 Infect();
@@ -205,15 +207,13 @@ public class AICommander : MonoBehaviour
     {
         movementspeed = snaredSpeed;
     }
-    void Decoy(GameObject decoy)
+    void Decoy()
     {
-        player = decoy;
-        // playMove = decoy.GetComponent<PlayerMovement>();
+        player = GameObject.FindGameObjectWithTag("Decoy");
     }
-    void UnDecoy(GameObject decoy)
+    void UnDecoy()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        //  playMove = player.GetComponent<PlayerMovement>();
     }
     void GetInfected()
     {
