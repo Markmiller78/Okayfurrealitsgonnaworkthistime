@@ -58,7 +58,7 @@ public class PlayerHazard : MonoBehaviour
                 heroMovement.isinHazard = false;
                 heroMovement.halfSpeed = 1.6f;
                 heroMovement.fullSpeed = 3.1f;
-                if (aPlayer.isPlaying == true)
+                if (aPlayer && aPlayer.isPlaying == true)
                 {
                     aPlayer.Stop();
                     
