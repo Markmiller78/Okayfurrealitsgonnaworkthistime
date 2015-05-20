@@ -26,7 +26,7 @@ public class DisplayEnmiesRemaining : MonoBehaviour
         if (timer <= 0)
         {
             timer = 1;
-            count = GameObject.FindGameObjectsWithTag("Enemy").Length + GameObject.FindGameObjectsWithTag("ShadowSpawn").Length;
+            count = GameObject.FindGameObjectsWithTag("Enemy").Length + GameObject.FindGameObjectsWithTag("ShadowSpawn").Length + GameObject.FindGameObjectsWithTag("Invincible").Length;
             if (count > 0)
             {
                 Ghosty.SetActive(true);
