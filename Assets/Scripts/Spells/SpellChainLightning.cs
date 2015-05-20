@@ -33,7 +33,7 @@ public class SpellChainLightning : MonoBehaviour
 
     bool once;
 
-    bool dood;
+//    bool dood;
 
     public GameObject burns;
 
@@ -52,7 +52,7 @@ public class SpellChainLightning : MonoBehaviour
         ugh = GameObject.Find("EnemiesRemaining").GetComponent<DisplayEnmiesRemaining>();
         once = true;
         cantHit = null;
-        dood = true;
+//        dood = true;
         safetyTimer = 0;
     }
 
@@ -109,6 +109,7 @@ public class SpellChainLightning : MonoBehaviour
     {
         heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
         pSpells = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerSpellCasting>();
+        theStats = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>();
 
         if (target == null)
         {

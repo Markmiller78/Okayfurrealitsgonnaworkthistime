@@ -840,7 +840,8 @@ public class MainMenu : MonoBehaviour
                     {
                         //CONTINUE PREVIOUS GAME
                         //  LoadStats();
-                        Application.LoadLevel("TonyScene");
+				theOptions.shouldload=true;
+				LevelManager.Load("IntroCutscene");
                         break;
                     }
                 case 1:

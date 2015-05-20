@@ -37,7 +37,8 @@ public class Knockback : MonoBehaviour
         if (heroEquipment.paused == false)
         {
             //Knockback extra far
-            if ((heroEquipment.equippedAccessory == accessory.BlastOfLight && heroEquipment.equippedEmber == ember.Wind) || heroCds.meleeCooling)
+            //                       wind ember equipped                                    blast of light                      melee                           whirlwind boot
+            if (heroEquipment.equippedEmber == ember.Wind && (heroEquipment.equippedAccessory == accessory.BlastOfLight || heroCds.meleeCooling || (heroEquipment.equippedBoot == boot.Whirlwind && heroCds.dashCooling)))
             {
                 if (once)
                 {

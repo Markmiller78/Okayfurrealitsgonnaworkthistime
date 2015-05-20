@@ -36,6 +36,8 @@ public class RoomGeneration : MonoBehaviour
     //public GameObject wDoor;
     public GameObject waypoint;
     public GameObject chest;
+    public GameObject torchWood;
+    public GameObject CPCrystal;
 
     public GameObject[] checkpointRooms;
     Room[] checkpointRoomsInfo;
@@ -43,19 +45,32 @@ public class RoomGeneration : MonoBehaviour
     bool easyMode;
     int enemyMod;
     int prevRoom = -1;
+    bool loading = false;
+
+    public PlayerData loadedData;
 
     void Start()
     {
         //DontDestroyOnLoad(this);
         player = GameObject.FindGameObjectWithTag("Player");
-        Utilities.ArrayShuffle(floorOneRooms);
+
+        loading = GameObject.FindObjectOfType<Options>().shouldload;
+        if (loading)
+        {
+            easyMode = loadedData.easymode;
+        }
+        else easyMode = GameObject.FindObjectOfType<Options>().easyMode;
+
+        if (!loading)
+            Utilities.ArrayShuffle(floorOneRooms);
         floorOneRoomsInfo = new Room[floorOneRooms.Length];
         for (int i = 0; i < floorOneRooms.Length; i++)
         {
             floorOneRoomsInfo[i] = floorOneRooms[i].GetComponent<Room>();
             floorOneRoomsInfo[i].setUsed();
         }
-        Utilities.ArrayShuffle(floorOneMazes, 100);
+        if (!loading)
+            Utilities.ArrayShuffle(floorOneMazes, 100);
         floorOneMazesInfo = new Room[floorOneMazes.Length];
         for (int i = 0; i < floorOneMazes.Length; i++)
         {
@@ -64,14 +79,16 @@ public class RoomGeneration : MonoBehaviour
         }
         dethrosRoomInfo = dethrosRoom.GetComponent<Room>();
         dethrosRoomInfo.setUsed();
-        Utilities.ArrayShuffle(floorTwoRooms);
+        if (!loading)
+            Utilities.ArrayShuffle(floorTwoRooms);
         floorTwoRoomsInfo = new Room[floorTwoRooms.Length];
         for (int i = 0; i < floorTwoRooms.Length; i++)
         {
             floorTwoRoomsInfo[i] = floorTwoRooms[i].GetComponent<Room>();
             floorTwoRoomsInfo[i].setUsed();
         }
-        Utilities.ArrayShuffle(floorTwoMazes);
+        if (!loading)
+            Utilities.ArrayShuffle(floorTwoMazes);
         floorTwoMazesInfo = new Room[floorTwoMazes.Length];
         for (int i = 0; i < floorTwoMazes.Length; i++)
         {
@@ -80,14 +97,16 @@ public class RoomGeneration : MonoBehaviour
         }
         lorneRoomInfo = lorneRoom.GetComponent<Room>();
         lorneRoomInfo.setUsed();
-        Utilities.ArrayShuffle(floorThreeRooms);
+        if (!loading)
+            Utilities.ArrayShuffle(floorThreeRooms);
         floorThreeRoomsInfo = new Room[floorThreeRooms.Length];
         for (int i = 0; i < floorThreeRooms.Length; i++)
         {
             floorThreeRoomsInfo[i] = floorThreeRooms[i].GetComponent<Room>();
             floorThreeRoomsInfo[i].setUsed();
         }
-        Utilities.ArrayShuffle(floorThreeMazes);
+        if (!loading)
+            Utilities.ArrayShuffle(floorThreeMazes);
         floorThreeMazesInfo = new Room[floorThreeMazes.Length];
         for (int i = 0; i < floorThreeMazes.Length; i++)
         {
@@ -99,8 +118,6 @@ public class RoomGeneration : MonoBehaviour
 
         //treasureRoomInfo = treasureRoom.GetComponent<Room>();
 
-        easyMode = GameObject.FindObjectOfType<Options>().easyMode;
-
         if (easyMode)
         {
             checkpointRoomsInfo = new Room[checkpointRooms.Length];
@@ -111,13 +128,19 @@ public class RoomGeneration : MonoBehaviour
             }
         }
 
+
         finalRoomArray = new GameObject[easyMode ? 33 : 27];
         finalRoomInfoArray = new Room[easyMode ? 33 : 27];
-        FillDungeon();
+        if (!loading)
+            FillDungeon();
+        else
+        {
+            FillLoadedDungeon();
+        }
 
         //TESTING
-        //finalRoomArray[0] = floorThreeMazes[3];
-        //finalRoomInfoArray[0] = floorThreeMazesInfo[3];
+        //finalRoomArray[0] = floorOneRooms[8];
+        //finalRoomInfoArray[0] = floorOneRoomsInfo[8];
         //ENDTESTING
 
         CreateRoom();
@@ -138,6 +161,16 @@ public class RoomGeneration : MonoBehaviour
         if (enemyMod <= 0)
         {
             enemyMod = (easyMode ? 11 : 9);
+        }
+
+        // Spawn torches in the checkpoints
+        if (easyMode && (currentRoom == 3 || currentRoom == 7 || currentRoom == 14 || currentRoom == 18 || currentRoom == 25 || currentRoom == 28))
+        {
+            Instantiate(torchWood, new Vector3(1, -1, -.8f), Quaternion.identity);
+            Instantiate(torchWood, new Vector3(1, -8, -.8f), Quaternion.identity);
+            Instantiate(torchWood, new Vector3(16, -8, -.8f), Quaternion.identity);
+            Instantiate(torchWood, new Vector3(16, -1, -.8f), Quaternion.identity);
+            Instantiate(CPCrystal, new Vector3(8.5f, -4.5f, -.8f), Quaternion.identity);
         }
 
         // Spawn north wall and possibly door
@@ -304,8 +337,8 @@ public class RoomGeneration : MonoBehaviour
                         if (c == 1)
                         {
                             Instantiate(chest, new Vector3(finalRoomInfoArray[currentRoom].chestSpawnLocations[i].x,
-                                -finalRoomInfoArray[currentRoom].chestSpawnLocations[i].y, -.9f), Quaternion.identity);
-                                //Quaternion.Euler( 0.0f, 0.0f, finalRoomInfoArray[currentRoom].chestRotations[i]));
+                                -finalRoomInfoArray[currentRoom].chestSpawnLocations[i].y, -.9f),// Quaternion.identity);
+                                Quaternion.Euler(0.0f, 0.0f, finalRoomInfoArray[currentRoom].chestRotations[i]));
                             spawned = true;
                             break;
                         }
@@ -1121,6 +1154,219 @@ public class RoomGeneration : MonoBehaviour
         }
     }
 
+    void FillLoadedDungeon()
+    {
+        if (easyMode)
+        {
+            finalRoomArray[3] = checkpointRooms[0];
+            finalRoomInfoArray[3] = checkpointRoomsInfo[0];
+            finalRoomArray[7] = checkpointRooms[0];
+            finalRoomInfoArray[7] = checkpointRoomsInfo[0];
+            finalRoomArray[10] = dethrosRoom;
+            finalRoomInfoArray[10] = dethrosRoomInfo;
+            finalRoomArray[14] = checkpointRooms[1];
+            finalRoomInfoArray[14] = checkpointRoomsInfo[1];
+            finalRoomArray[18] = checkpointRooms[1];
+            finalRoomInfoArray[18] = checkpointRoomsInfo[1];
+            finalRoomArray[21] = lorneRoom;
+            finalRoomInfoArray[21] = lorneRoomInfo;
+            finalRoomArray[25] = checkpointRooms[2];
+            finalRoomInfoArray[25] = checkpointRoomsInfo[2];
+            finalRoomArray[29] = checkpointRooms[2];
+            finalRoomInfoArray[29] = checkpointRoomsInfo[2];
+            finalRoomArray[32] = morriusRoom;
+            finalRoomInfoArray[32] = morriusRoomInfo;
+        }
+        else
+        {
+            finalRoomArray[8] = dethrosRoom;
+            finalRoomInfoArray[8] = dethrosRoomInfo;
+            finalRoomArray[17] = lorneRoom;
+            finalRoomInfoArray[17] = lorneRoomInfo;
+            finalRoomArray[26] = morriusRoom;
+            finalRoomInfoArray[26] = morriusRoomInfo;
+        }
+        for (int i = 0; i < finalRoomArray.Length; i++)
+        {
+            switch (loadedData.roominfo[i].roomID)
+            {
+                case 1:
+                    finalRoomArray[i] = floorOneRooms[0];
+                    finalRoomInfoArray[i] = floorOneRoomsInfo[0];
+                    break;
+                case 2:
+                    finalRoomArray[i] = floorOneRooms[1];
+                    finalRoomInfoArray[i] = floorOneRoomsInfo[1];
+                    break;
+                case 3:
+                    finalRoomArray[i] = floorOneRooms[2];
+                    finalRoomInfoArray[i] = floorOneRoomsInfo[2];
+                    break;
+                case 4:
+                    finalRoomArray[i] = floorOneRooms[3];
+                    finalRoomInfoArray[i] = floorOneRoomsInfo[3];
+                    break;
+                case 5:
+                    finalRoomArray[i] = floorOneRooms[4];
+                    finalRoomInfoArray[i] = floorOneRoomsInfo[4];
+                    break;
+                case 6:
+                    finalRoomArray[i] = floorOneRooms[5];
+                    finalRoomInfoArray[i] = floorOneRoomsInfo[5];
+                    break;
+                case 7:
+                    finalRoomArray[i] = floorOneRooms[6];
+                    finalRoomInfoArray[i] = floorOneRoomsInfo[6];
+                    break;
+                case 8:
+                    finalRoomArray[i] = floorOneRooms[7];
+                    finalRoomInfoArray[i] = floorOneRoomsInfo[7];
+                    break;
+                case 9:
+                    finalRoomArray[i] = floorOneRooms[8];
+                    finalRoomInfoArray[i] = floorOneRoomsInfo[8];
+                    break;
+                case 10:
+                    finalRoomArray[i] = floorOneRooms[9];
+                    finalRoomInfoArray[i] = floorOneRoomsInfo[9];
+                    break;
+                case 11:
+                    finalRoomArray[i] = floorOneMazes[0];
+                    finalRoomInfoArray[i] = floorOneMazesInfo[0];
+                    break;
+                case 12:
+                    finalRoomArray[i] = floorOneMazes[1];
+                    finalRoomInfoArray[i] = floorOneMazesInfo[1];
+                    break;
+                case 13:
+                    finalRoomArray[i] = floorOneMazes[2];
+                    finalRoomInfoArray[i] = floorOneMazesInfo[2];
+                    break;
+                case 14:
+                    finalRoomArray[i] = floorOneMazes[3];
+                    finalRoomInfoArray[i] = floorOneMazesInfo[3];
+                    break;
+                case 15:
+                    finalRoomArray[i] = floorTwoRooms[0];
+                    finalRoomInfoArray[i] = floorTwoRoomsInfo[0];
+                    break;
+                case 16:
+                    finalRoomArray[i] = floorTwoRooms[1];
+                    finalRoomInfoArray[i] = floorTwoRoomsInfo[1];
+                    break;
+                case 17:
+                    finalRoomArray[i] = floorTwoRooms[2];
+                    finalRoomInfoArray[i] = floorTwoRoomsInfo[2];
+                    break;
+                case 18:
+                    finalRoomArray[i] = floorTwoRooms[3];
+                    finalRoomInfoArray[i] = floorTwoRoomsInfo[3];
+                    break;
+                case 19:
+                    finalRoomArray[i] = floorTwoRooms[4];
+                    finalRoomInfoArray[i] = floorTwoRoomsInfo[4];
+                    break;
+                case 20:
+                    finalRoomArray[i] = floorTwoRooms[5];
+                    finalRoomInfoArray[i] = floorTwoRoomsInfo[5];
+                    break;
+                case 21:
+                    finalRoomArray[i] = floorTwoRooms[6];
+                    finalRoomInfoArray[i] = floorTwoRoomsInfo[6];
+                    break;
+                case 22:
+                    finalRoomArray[i] = floorTwoRooms[7];
+                    finalRoomInfoArray[i] = floorTwoRoomsInfo[7];
+                    break;
+                case 23:
+                    finalRoomArray[i] = floorTwoRooms[8];
+                    finalRoomInfoArray[i] = floorTwoRoomsInfo[8];
+                    break;
+                case 24:
+                    finalRoomArray[i] = floorTwoRooms[9];
+                    finalRoomInfoArray[i] = floorTwoRoomsInfo[9];
+                    break;
+                case 25:
+                    finalRoomArray[i] = floorTwoMazes[0];
+                    finalRoomInfoArray[i] = floorTwoMazesInfo[0];
+                    break;
+                case 26:
+                    finalRoomArray[i] = floorTwoMazes[1];
+                    finalRoomInfoArray[i] = floorTwoMazesInfo[1];
+                    break;
+                case 27:
+                    finalRoomArray[i] = floorTwoMazes[2];
+                    finalRoomInfoArray[i] = floorTwoMazesInfo[2];
+                    break;
+                case 28:
+                    finalRoomArray[i] = floorTwoMazes[3];
+                    finalRoomInfoArray[i] = floorTwoMazesInfo[3];
+                    break;
+                case 29:
+                    finalRoomArray[i] = floorThreeRooms[0];
+                    finalRoomInfoArray[i] = floorTwoRoomsInfo[0];
+                    break;
+                case 30:
+                    finalRoomArray[i] = floorThreeRooms[1];
+                    finalRoomInfoArray[i] = floorTwoRoomsInfo[1];
+                    break;
+                case 31:
+                    finalRoomArray[i] = floorThreeRooms[2];
+                    finalRoomInfoArray[i] = floorTwoRoomsInfo[2];
+                    break;
+                case 32:
+                    finalRoomArray[i] = floorThreeRooms[3];
+                    finalRoomInfoArray[i] = floorTwoRoomsInfo[3];
+                    break;
+                case 33:
+                    finalRoomArray[i] = floorThreeRooms[4];
+                    finalRoomInfoArray[i] = floorTwoRoomsInfo[4];
+                    break;
+                case 34:
+                    finalRoomArray[i] = floorThreeRooms[5];
+                    finalRoomInfoArray[i] = floorTwoRoomsInfo[5];
+                    break;
+                case 35:
+                    finalRoomArray[i] = floorThreeRooms[6];
+                    finalRoomInfoArray[i] = floorTwoRoomsInfo[6];
+                    break;
+                case 36:
+                    finalRoomArray[i] = floorThreeRooms[7];
+                    finalRoomInfoArray[i] = floorTwoRoomsInfo[7];
+                    break;
+                case 37:
+                    finalRoomArray[i] = floorThreeRooms[8];
+                    finalRoomInfoArray[i] = floorTwoRoomsInfo[8];
+                    break;
+                case 38:
+                    finalRoomArray[i] = floorThreeRooms[9];
+                    finalRoomInfoArray[i] = floorTwoRoomsInfo[9];
+                    break;
+                case 39:
+                    finalRoomArray[i] = floorThreeMazes[0];
+                    finalRoomInfoArray[i] = floorTwoMazesInfo[0];
+                    break;
+                case 40:
+                    finalRoomArray[i] = floorThreeMazes[1];
+                    finalRoomInfoArray[i] = floorTwoMazesInfo[1];
+                    break;
+                case 41:
+                    finalRoomArray[i] = floorThreeMazes[2];
+                    finalRoomInfoArray[i] = floorTwoMazesInfo[2];
+                    break;
+                case 42:
+                    finalRoomArray[i] = floorThreeMazes[3];
+                    finalRoomInfoArray[i] = floorTwoMazesInfo[3];
+                    break;
+                default:
+                    break;
+            }
+            finalRoomInfoArray[i].entranceDir = loadedData.roominfo[i].entranceDir;
+            finalRoomInfoArray[i].exitDir = loadedData.roominfo[i].exitDir;
+            finalRoomInfoArray[i].beenThere = loadedData.roominfo[i].beenThere;
+        }
+    }
+
     public void Reset()
     {
         GameObject[] objArray = GameObject.FindObjectsOfType<GameObject>();
@@ -1133,6 +1379,7 @@ public class RoomGeneration : MonoBehaviour
                 Destroy(obj);
             }
         }
+		player.GetComponent<SaveTest> ().saved = false;
         CreateRoom();
     }
 }
