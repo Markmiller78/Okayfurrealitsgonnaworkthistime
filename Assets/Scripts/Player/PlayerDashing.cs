@@ -397,47 +397,48 @@ public class PlayerDashing : MonoBehaviour
             {
 
                 aPlayer.PlayOneShot(decoy);
+                oldPos = transform.position;
 
+                Vector3 temp = (transform.TransformDirection(Vector3.up.normalized));
+
+                controller.Move(temp);
 
                 //No ember equipped
                 if (heroEquipment.equippedEmber == ember.None)
                 {
-                    //Instantiate(lightDecoy, transform.position, new Quaternion(0, 0, 0, 0));
+                    Instantiate(lightDecoy, oldPos, transform.rotation);
 
                 }
                 //Ice ember equipped
                 else if (heroEquipment.equippedEmber == ember.Ice)
                 {
-                    Instantiate(iceDecoy, transform.position, new Quaternion(0, 0, 0, 0));
+                    Instantiate(iceDecoy, oldPos, new Quaternion(0, 0, 0, 0));
                 }
                 //Fire ember equipped
                 else if (heroEquipment.equippedEmber == ember.Fire)
                 {
-                    Instantiate(fireDecoy, transform.position, new Quaternion(0, 0, 0, 0));
+                    Instantiate(fireDecoy, oldPos, new Quaternion(0, 0, 0, 0));
                 }
                 //Wind ember equipped
                 else if (heroEquipment.equippedEmber == ember.Wind)
                 {
-                    Instantiate(windDecoy, transform.position, new Quaternion(0, 0, 0, 0));
+                    Instantiate(windDecoy, oldPos, new Quaternion(0, 0, 0, 0));
                 }
                 //Life ember equipped
                 else if (heroEquipment.equippedEmber == ember.Life)
                 {
-                    Instantiate(lifeDecoy, transform.position, new Quaternion(0, 0, 0, 0));
+                    Instantiate(lifeDecoy, oldPos, new Quaternion(0, 0, 0, 0));
                 }
                 //Death ember equipped
                 else if (heroEquipment.equippedEmber == ember.Death)
                 {
-                    Instantiate(deathDecoy, transform.position, new Quaternion(0, 0, 0, 0));
+                    Instantiate(deathDecoy, oldPos, new Quaternion(0, 0, 0, 0));
                 }
                 //Earth ember equipped
                 else if (heroEquipment.equippedEmber == ember.Earth)
                 {
-                    Instantiate(earthDecoy, transform.position, new Quaternion(0, 0, 0, 0));
+                    Instantiate(earthDecoy, oldPos, new Quaternion(0, 0, 0, 0));
                 }
-                Vector3 temp = (transform.TransformDirection(Vector3.up.normalized) * 1.5f);
-
-                controller.Move(temp);
 
             }
         }
