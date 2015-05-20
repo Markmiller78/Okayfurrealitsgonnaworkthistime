@@ -20,17 +20,23 @@ public class BossAIMorrius : MonoBehaviour
 
     //Spells
     public GameObject MorriusOrb;
+    GameObject[] WallCheck;
+    public GameObject MorriusExplosion;
 
     Health playerHealth;
     CharacterController controller;
     Vector3 WayPoint;
+    Vector3 Orgin;
     float DistanceToWayPoint;
+    float DistanceToPlayer;
     public float moveSpeed;
     public float turnSpeed;
     float timer;
-    bool attacking;
-    float AttackTimer;
-    bool AttackCD;
+    int currentState;
+    float AttackCD;
+    bool castingDarkPULL, castingDarkPUSH, CastingMorriusOrb, Charging;
+
+    float EndSpellTimer;
 
 
     // Use this for initialization
@@ -38,12 +44,15 @@ public class BossAIMorrius : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
         controller = GetComponent<CharacterController>();
-        attacking = false;
+        AttackCD = 0;
+        castingDarkPULL = castingDarkPUSH = CastingMorriusOrb = Charging = false;
         timer = 3;
+        currentState = 0;
         heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
-        AttackTimer = 2;
         NewWayPoint();
-
+        EndSpellTimer = 10;
+        Orgin = transform.position;
+        WayPoint = new Vector3(player.transform.position.x, player.transform.position.y - 10, -1);
     }
 
 
@@ -52,13 +61,37 @@ public class BossAIMorrius : MonoBehaviour
     void Update()
     {
         timer -= Time.deltaTime;
-
-        if(timer < 0)
+        EndSpellTimer -= Time.deltaTime;
+        //Run Spells if they're on
+        if (timer < 0)
         {
-            timer = .15f;
-            DarkWavePull();
-        }
 
+            timer = .15f;
+            if (castingDarkPULL)
+                DarkWavePull();
+            if (castingDarkPUSH)
+                DarkWavePush();
+            if (CastingMorriusOrb)
+                Attack(); //CD is in function
+
+        }
+        if(currentState == 0)
+            Charge();
+
+
+
+        print(currentState);
+
+
+
+
+
+
+        if(EndSpellTimer < 0)
+        {
+            castingDarkPUSH = castingDarkPULL = CastingMorriusOrb = Charging = false;
+            currentState++;
+        }
     }
 
     void Move()
@@ -69,37 +102,19 @@ public class BossAIMorrius : MonoBehaviour
 
     void Attack()
     {
-        if (AttackCD)
+        AttackCD -= Time.deltaTime;
+        if (AttackCD < 0)
         {
-            AttackCD = false;
-            AttackTimer = 2;
+            Vector3 temp = player.transform.position - transform.position;
+            float angle = Mathf.Atan2(temp.y, temp.x) * Mathf.Rad2Deg + 270;
+            Quaternion rot = Quaternion.AngleAxis(angle, Vector3.forward);
+            Instantiate(MorriusOrb, transform.position, rot);
+            AttackCD = 1;
         }
-        AttackTimer -= Time.deltaTime;
-
-        if (AttackCD == false && AttackTimer < 0)
-        {
-            AttackTimer = 1.2f;
-            float DistanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
-            Vector3 Target = player.transform.position - transform.position;
-            RaycastHit[] things = Physics.RaycastAll(transform.position, Target, DistanceToPlayer);
-            for (int i = 0; i < things.Length; i++)
-            {
-                if (things[i].collider.gameObject.tag == "Wall")
-                {
-                    NewWayPoint();
-                    return;
-                }
-            }
-            Instantiate(MorriusOrb, transform.position, transform.rotation);
-            AttackTimer = 1.2f;
-            AttackCD = true;
-        }
-
     }
 
     void NewWayPoint()
     {
-
 
     }
 
@@ -119,7 +134,6 @@ public class BossAIMorrius : MonoBehaviour
         Destroy(temp, 3);
         Vector3 AboveMorrius = new Vector3(transform.position.x, transform.position.y + 10, transform.position.z);
         playMove.KnockBack(AboveMorrius);
-
     }
 
     void DarkWavePull()
@@ -133,9 +147,31 @@ public class BossAIMorrius : MonoBehaviour
 
     void Charge()
     {
+        //Check if Charge has hit anything
+        DistanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
+        if(DistanceToPlayer < 3)
+            endCharge(player.transform.position);
 
+        WallCheck = GameObject.FindGameObjectsWithTag("Wall");
+        for (int i = 0; i < WallCheck.Length; i++ )
+        {
+            if(Vector3.Distance(transform.position, WallCheck[i].transform.position) < 2.6)
+            {
+                endCharge(WallCheck[i].transform.position);
+                return;
+            }
+        }
+
+        //Continue Charging if nothing hit
+        moveSpeed = 10;
+        Vector2 moveTo = (WayPoint - transform.position).normalized;
+        controller.Move(moveTo * Time.deltaTime * moveSpeed);
     }
-
+    void endCharge(Vector3 ExplodeOnSpot)
+    {
+        EndSpellTimer = -1;
+        Instantiate(MorriusExplosion, ExplodeOnSpot, transform.rotation);
+    }
     void ShadowSwap()
     {
 
