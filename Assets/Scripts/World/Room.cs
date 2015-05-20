@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 [System.Serializable]
@@ -42,6 +43,7 @@ public class Room : MonoBehaviour
     public int numEnemies = 0;
     public bool comingFromEntrance = true;
     public Vector2[] waypointLocations;
+    public Text entryText;
     public int roomID;
 
     public void setUsed()
