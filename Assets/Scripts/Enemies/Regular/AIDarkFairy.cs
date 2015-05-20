@@ -6,52 +6,60 @@ public class AIDarkFairy : MonoBehaviour
 {
 
     GameObject player;
-    public GameObject currentlight = null;
-    public List<GameObject> list = new List<GameObject>();
+    GameObject[] AllLight;
+    GameObject currentlight;
+    GameObject[] SpellDodge;
+    public GameObject Forcefield;
 
+    public GameObject AbsorbParts;
+    float AbsorbTimer;
     CharacterController controller;
     public float atkdmg;
     public float atkrange;
-    public float atkcooldown;
-    public float atkcooldownref;
     public float stealrange = 0.2f;
     PlayerEquipment heroEquipment;
-    public float movementspeed;
-    public float[] distance;
+    public float moveSpeed;
     public bool isReinforced = false;
     public bool isCasting = false;
     public bool isInfected = false;
-    public float dist;
-    public Vector3 vectotarget;
-    public Vector3 vectoplayer;
-    public Vector3 IdleVec;
-    public int size;
+    bool ResetAbsorbCastingTime = true;
+    GameObject Target;
+    Vector3 IdleOrgin;
+    public GameObject IdleTarget;
+    float timer;
+    float dodgeTimer;
+    float InvincibleTimer;
+    float TargetTimer;
+    int currentState;
+    bool HIncrease;
+    bool VIncrease;
+    float distanceToPlayer;
+    float distanceToTarget;
+    float attackCD;
     public float infectRange;
     public float infecttimer;
-
     float snaredSpeed;
     float SnareTimer;
     bool isSnared;
-    public float timer;
+
     public GameObject darkOrb;
     // Use this for initialization
 
     void Start()
     {
+        distanceToPlayer = 0;
+        currentState = 0;
         infecttimer = 3.0f;
         isSnared = false;
-        IdleVec = new Vector3(1, 1, 0);
         timer = 0.0f;
         player = GameObject.FindGameObjectWithTag("Player");
         heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
-        GameObject[] temp = GameObject.FindGameObjectsWithTag("LightDrop");
         currentlight = null;
-
-        for (int i = 0; i < temp.Length; i++)
-        {
-            list.Add(temp[i]);
-
-        }
+        TargetTimer = 0;
+        attackCD = 0;
+        distanceToTarget = 0;
+        dodgeTimer = 0;
+        AbsorbTimer = 1000000;
         controller = GetComponent<CharacterController>();
     }
 
@@ -60,166 +68,231 @@ public class AIDarkFairy : MonoBehaviour
     {
         if (heroEquipment.paused == false)
         {
-            if(isCasting)
+            dodgeTimer -= Time.deltaTime;
+            timer -= Time.deltaTime;
+            TargetTimer -= Time.deltaTime;
+            attackCD -= Time.deltaTime;
+            InvincibleTimer -= Time.deltaTime;
+
+
+            SpellDodge = GameObject.FindGameObjectsWithTag("Spell");
+
+            distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
+
+            if (InvincibleTimer < 0)
             {
-                atkcooldown -= Time.deltaTime;
-                if (atkcooldown <= 0.0f)
+                tag = "Enemy";
+                Forcefield.SetActive(false);
+            }
+            if (SpellDodge.Length > 0 && dodgeTimer < 0)
+            {
+                ResetAbsorbCastingTime = true;
+                Dodge();
+            }
+            if (timer < 0)
+            {
+                timer = 1;
+                if (LocateNearestLight() && currentState != 2)
                 {
-                    atkcooldown = atkcooldownref;
-                    isCasting = false;
+                    currentState = 1;
                 }
-            }
-            if (!isCasting)
-            {
-                SpellCast();
-            }
-
-            if (currentlight == null)
-            {
-                FaceTarget(player);
-
-
-                movementspeed = 2.0f;
-                if (vectoplayer.magnitude < 3.0f)
-                    RunAway();
                 else
-                    Idle();
-                if (list.Count > 0)
                 {
-                    float tempdist = 10000000.0f;
-                    foreach (GameObject lightdrop in list)
+                    if (distanceToPlayer < 4 && attackCD > 0)
                     {
-                        if ((transform.position - lightdrop.transform.position).magnitude < tempdist)
-                        {
-                            tempdist = (transform.position - lightdrop.transform.position).magnitude;
-                            currentlight = lightdrop;
-
-                        }
-
-
+                        currentState = 3;
+                    }
+                    else if (attackCD < 0 && currentState != 2)
+                    {
+                        currentState = 4;
+                    }
+                    else
+                    {
+                        currentState = 0;
                     }
                 }
             }
-            else
+
+
+            if (currentState == 1)
             {
-                movementspeed = 3.0f;
-                FaceTarget(currentlight);
-                MoveTowardsLight(currentlight);
-                StealLightDrop();
+                if (distanceToTarget < 2)
+                    currentState = 2;
             }
 
-            if (isSnared)
+            if (distanceToTarget > 1)
+                AbsorbParts.SetActive(false);
+            switch (currentState)
             {
-                SnareTimer -= Time.deltaTime;
-
-                if (SnareTimer < 0)
-                {
-                    Unsnare();
-                    isSnared = false;
-                }
+                case 0:
+                    {
+                        //IDLE
+                        if (TargetTimer < 0)
+                        {
+                            TargetTimer = 3;
+                            Idle();
+                        }
+                        moveSpeed = .5f;
+                        MoveToTarget();
+                        break;
+                    }
+                case 1:
+                    {
+                        moveSpeed = 2;
+                        if (TargetTimer < 0)
+                        {
+                            TargetTimer = 2.5f;
+                            Target = currentlight;
+                        }
+                        MoveToTarget();
+                        //RACE TO LIGHT
+                        break;
+                    }
+                case 2:
+                    {
+                        moveSpeed = 2;
+                        StealLightDrop();
+                        Target = currentlight;
+                        MoveToTarget();
+                        //OBSORB LIGHT
+                        break;
+                    }
+                case 3:
+                    {
+                        moveSpeed = 2;
+                        Target = player;
+                        MoveFromTarget();
+                        //AVOID PLAYER
+                        break;
+                    }
+                case 4:
+                    {
+                        moveSpeed = 3;
+                        Target = player;
+                        if (distanceToPlayer < 5)
+                        {
+                            if (attackCD < 0)
+                                SpellCast();
+                        }
+                        MoveToTarget();
+                        if (attackCD > .5f)
+                            currentState = 3;
+                        //FIRE SPELLS
+                        break;
+                    }
             }
 
         }
+
+        print(currentState);
     }
 
-    void MoveTowardsLight(GameObject lightdrop)
+
+    bool LocateNearestLight()
     {
-        Vector2 tempdir = (lightdrop.transform.position - transform.position).normalized;
-        controller.Move(tempdir * Time.deltaTime * movementspeed);
-    }
+        float DistanceCheck = 10000;
+        AllLight = GameObject.FindGameObjectsWithTag("LightDrop");
 
-    void RunAway()
+        for (int i = 0; i < AllLight.Length; i++)
+        {
+            distanceToTarget = Vector3.Distance(transform.position, AllLight[i].transform.position);
+            if (distanceToTarget < DistanceCheck)
+            {
+                distanceToTarget = DistanceCheck;
+                currentlight = AllLight[i];
+            }
+        }
+
+
+        distanceToTarget = Vector3.Distance(transform.position, currentlight.transform.position);
+        if (AllLight.Length > 0)
+            return true;
+        else
+            return false;
+
+    }
+    void MoveToTarget()
     {
-        Vector2 tempdir = (player.transform.position - transform.position);
-
-        controller.Move(tempdir.normalized * Time.deltaTime * -movementspeed);
+        Vector2 moveTo = (Target.transform.position - transform.position).normalized;
+        controller.Move(moveTo * Time.deltaTime * moveSpeed);
     }
+
+    void MoveFromTarget()
+    {
+        Vector2 moveTo = (transform.position - Target.transform.position).normalized;
+        controller.Move(moveTo * Time.deltaTime * moveSpeed);
+    }
+
 
     void StealLightDrop()
     {
+        float distanceToCurrentLight = Vector3.Distance(currentlight.transform.position, transform.position);
 
-        if ((transform.position - currentlight.transform.position).magnitude < stealrange)
+        if (distanceToTarget < 2 && ResetAbsorbCastingTime == true)
         {
-            list.Remove(currentlight);
-            Destroy(currentlight);
-            currentlight = null;
-
+            ResetAbsorbCastingTime = false;
+            AbsorbParts.SetActive(true);
+            AbsorbTimer = 1;
         }
+        if (ResetAbsorbCastingTime == false)
+        AbsorbTimer -= Time.deltaTime;
+        if (AbsorbTimer < 0 && distanceToTarget < 2 && ResetAbsorbCastingTime == false)
+        {
+            ResetAbsorbCastingTime = true;
+            AbsorbParts.SetActive(false);
+            Destroy(currentlight);
+            AbsorbTimer = 1000000;
+        }
+    }
 
 
+    void Dodge()
+    {
+        this.tag = "Invincible";
+
+        Forcefield.SetActive(true);
+
+        InvincibleTimer = 1;
+        dodgeTimer = 10;
 
     }
     void SpellCast()
     {
-        vectoplayer = transform.position - player.transform.position;
-
-        if (!Physics.Raycast(transform.position, vectoplayer.normalized, atkrange))
-        {
-            if (Random.value > 0.5f)
-            {
-                Instantiate(darkOrb, transform.position, transform.rotation);
-                isCasting = true;
-            }
-        }
-
-
-
-
+        AbsorbTimer = 1;
+        Vector3 temp = player.transform.position - transform.position;
+        float angle = Mathf.Atan2(temp.y, temp.x) * Mathf.Rad2Deg + 270;
+        Quaternion rot = Quaternion.AngleAxis(angle, Vector3.forward);
+        Instantiate(darkOrb, transform.position, rot);
+        attackCD = 3;
     }
 
     void Idle()
     {
+        int RandX = Random.Range(-10, 10);
+        int RandY = Random.Range(-10, 10);
 
-
-        timer -= Time.deltaTime;
-        if (timer <= 0.0f)
-        {
-
-            IdleVec.x = Random.value;
-            if (Random.value > 0.5f)
-                IdleVec.x = -IdleVec.x;
-            IdleVec.y = Random.value;
-            if (Random.value > 0.5f)
-                IdleVec.y = -IdleVec.y;
-            timer = 2.0f;
-        }
-        controller.Move(IdleVec.normalized * Time.deltaTime * movementspeed);
+        Target = IdleTarget;
+        IdleTarget.transform.position = new Vector3(transform.position.x + RandX, transform.position.y + RandY, -1);
 
     }
-    void FaceTarget(GameObject target)
+    void Turn()
     {
-        //float tempangle=Vector3.Angle (transform.up,disttoplayer);
-        //transform.Rotate (Vector3.back,tempangle+180);
-        float tempangle;
-        if (target.tag == "Player")
-            tempangle = Mathf.Atan2(vectoplayer.y, vectoplayer.x) * Mathf.Rad2Deg;
-        else
-        {
-            vectotarget = transform.position - target.transform.position;
-            tempangle = Mathf.Atan2(vectoplayer.y, vectoplayer.x) * Mathf.Rad2Deg;
-        }
-        tempangle += 90.0f;
-        Quaternion rotation = Quaternion.AngleAxis(tempangle, Vector3.forward);
-        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 2.5f);
+        //Vector3 vectorToPlayer = player.transform.position - transform.position;
+        //float angle = Mathf.Atan2(vectorToPlayer.y, vectorToPlayer.x) * Mathf.Rad2Deg;
+        //angle -= 90.0f;
+        //transform.position = new Vector3(transform.position.x, transform.position.y, -1);
 
-    }
-    void AddDrop(GameObject lightdrop)
-    {
-        list.Add(lightdrop);
-
-    }
-    void RemoveDrop(GameObject lightdrop)
-    {
-        list.Remove(lightdrop);
-
+        //Quaternion rot = Quaternion.AngleAxis(angle, Vector3.forward);
+        //transform.rotation = Quaternion.Slerp(transform.rotation, rot, Time.deltaTime * 4);
     }
 
+    #region //CROWD CONTROL SECTION
     void Reinforce()
     {
         if (!isReinforced)
         {
             stealrange *= 1.2f;
-            movementspeed *= 1.2f;
+            moveSpeed *= 1.2f;
             isReinforced = true;
         }
 
@@ -230,40 +303,40 @@ public class AIDarkFairy : MonoBehaviour
         if (isReinforced)
         {
             stealrange /= 1.2f;
-            movementspeed /= 1.2f;
+            moveSpeed /= 1.2f;
             isReinforced = false;
         }
 
     }
     void Slow()
     {
-        movementspeed = movementspeed * 0.5f;
+        moveSpeed = moveSpeed * 0.5f;
     }
 
     void Unslow()
     {
-        movementspeed = movementspeed * 2;
+        moveSpeed = moveSpeed * 2;
     }
     void Snare()
     {
         isSnared = true;
         SnareTimer = 2;
-        snaredSpeed = movementspeed;
-        movementspeed = 0;
+        snaredSpeed = moveSpeed;
+        moveSpeed = 0;
     }
     void Unsnare()
     {
-        movementspeed = snaredSpeed;
+        moveSpeed = snaredSpeed;
     }
     void Decoy(GameObject decoy)
     {
         player = decoy;
-       // playMove = decoy.GetComponent<PlayerMovement>();
+        // playMove = decoy.GetComponent<PlayerMovement>();
     }
     void UnDecoy(GameObject decoy)
     {
         player = GameObject.FindGameObjectWithTag("Player");
-      //  playMove = player.GetComponent<PlayerMovement>();
+        //  playMove = player.GetComponent<PlayerMovement>();
     }
     void GetInfected()
     {
@@ -282,5 +355,6 @@ public class AIDarkFairy : MonoBehaviour
         }
 
     }
+    #endregion
 
 }
