@@ -11,20 +11,35 @@ public class EastDoor : MonoBehaviour
     int enemyCount;
     bool iHopeThisWorks;
     bool easyMode;
+    PlayerMovement movement;
+    bool hasTransitioned = false;
 
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        movement = player.GetComponent<PlayerMovement>();
         dungeon = GameObject.FindGameObjectWithTag("Dungeon");
         generator = dungeon.GetComponent<RoomGeneration>();
         isLocked = true;
         iHopeThisWorks = true;
         easyMode = GameObject.FindObjectOfType<Options>().easyMode;
+        hasTransitioned = false;
     }
 
     void Update()
     {
         enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length + GameObject.FindGameObjectsWithTag("ShadowSpawn").Length;
+        if (movement.transitioning)
+        {
+            isLocked = false;
+            Unlock();
+        }
+        else if (!hasTransitioned)
+        {
+            hasTransitioned = true;
+            isLocked = true;
+            Lock();
+        }
         if (isLocked &&
             ((generator.currentRoom != 0 && generator.currentRoom != (easyMode ? 11 : 9) && generator.currentRoom != (easyMode ? 22 : 18)
             && generator.finalRoomInfoArray[generator.currentRoom].entranceDir == 3)
@@ -60,19 +75,22 @@ public class EastDoor : MonoBehaviour
         if (iHopeThisWorks)
         {
             if (other.gameObject == player
+                && !movement.transitioning
                 && generator.finalRoomInfoArray[generator.currentRoom].exitDir == 3
                 && generator.currentRoom < (easyMode ? 33 : 27))
             {
-                ++generator.currentRoom;
-                generator.finalRoomInfoArray[generator.currentRoom].comingFromEntrance = true;
-                generator.Reset();
+                movement.LeaveRoom(true);
+                //++generator.currentRoom;
+                //generator.finalRoomInfoArray[generator.currentRoom].comingFromEntrance = true;
+                //generator.Reset();
                 iHopeThisWorks = false;
             }
-            else if (other.gameObject == player && generator.currentRoom > 0)
+            else if (other.gameObject == player && !movement.transitioning && generator.currentRoom > 0)
             {
-                --generator.currentRoom;
-                generator.finalRoomInfoArray[generator.currentRoom].comingFromEntrance = false;
-                generator.Reset();
+                movement.LeaveRoom(false);
+                //--generator.currentRoom;
+                //generator.finalRoomInfoArray[generator.currentRoom].comingFromEntrance = false;
+                //generator.Reset();
                 iHopeThisWorks = false;
             }
         }
