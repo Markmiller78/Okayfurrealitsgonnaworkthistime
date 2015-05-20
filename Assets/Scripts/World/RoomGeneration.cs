@@ -1363,6 +1363,7 @@ public class RoomGeneration : MonoBehaviour
             }
             finalRoomInfoArray[i].entranceDir = loadedData.roominfo[i].entranceDir;
             finalRoomInfoArray[i].exitDir = loadedData.roominfo[i].exitDir;
+            finalRoomInfoArray[i].beenThere = loadedData.roominfo[i].beenThere;
         }
     }
 
