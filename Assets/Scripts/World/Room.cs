@@ -42,6 +42,7 @@ public class Room : MonoBehaviour
     public int numEnemies = 0;
     public bool comingFromEntrance = true;
     public Vector2[] waypointLocations;
+    public GameObject entryText;
     public int roomID;
 
     public void setUsed()
