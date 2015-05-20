@@ -549,8 +549,8 @@ public class RoomGeneration : MonoBehaviour
         {
             finalRoomInfoArray[6].exitDir = Random.Range(0, 3);
         } while (finalRoomInfoArray[6].exitDir == finalRoomInfoArray[6].entranceDir);
-        finalRoomArray[7] = easyMode ? checkpointRooms[0] : floorOneRooms[5];
-        finalRoomInfoArray[7] = easyMode ? checkpointRoomsInfo[0] : floorOneRoomsInfo[5];
+        finalRoomArray[7] = easyMode ? checkpointRooms[1] : floorOneRooms[5];
+        finalRoomInfoArray[7] = easyMode ? checkpointRoomsInfo[1] : floorOneRoomsInfo[5];
         switch (finalRoomInfoArray[6].exitDir)
         {
             case 0:
@@ -710,8 +710,8 @@ public class RoomGeneration : MonoBehaviour
         {
             finalRoomInfoArray[13].exitDir = Random.Range(0, 3);
         } while (finalRoomInfoArray[13].exitDir == finalRoomInfoArray[13].entranceDir);
-        finalRoomArray[14] = easyMode ? checkpointRooms[1] : floorTwoMazes[1];
-        finalRoomInfoArray[14] = easyMode ? checkpointRoomsInfo[1] : floorTwoMazesInfo[1];
+        finalRoomArray[14] = easyMode ? checkpointRooms[2] : floorTwoMazes[1];
+        finalRoomInfoArray[14] = easyMode ? checkpointRoomsInfo[2] : floorTwoMazesInfo[1];
         switch (finalRoomInfoArray[13].exitDir)
         {
             case 0:
@@ -802,8 +802,8 @@ public class RoomGeneration : MonoBehaviour
         {
             finalRoomInfoArray[17].exitDir = Random.Range(0, 3);
         } while (finalRoomInfoArray[17].exitDir == finalRoomInfoArray[17].entranceDir);
-        finalRoomArray[18] = easyMode ? checkpointRooms[1] : floorThreeRooms[0];
-        finalRoomInfoArray[18] = easyMode ? checkpointRoomsInfo[1] : floorTwoRoomsInfo[0];
+        finalRoomArray[18] = easyMode ? checkpointRooms[3] : floorThreeRooms[0];
+        finalRoomInfoArray[18] = easyMode ? checkpointRoomsInfo[3] : floorTwoRoomsInfo[0];
         switch (finalRoomInfoArray[17].exitDir)
         {
             case 0:
@@ -963,8 +963,8 @@ public class RoomGeneration : MonoBehaviour
         {
             finalRoomInfoArray[24].exitDir = Random.Range(0, 3);
         } while (finalRoomInfoArray[24].exitDir == finalRoomInfoArray[24].entranceDir);
-        finalRoomArray[25] = easyMode ? checkpointRooms[2] : floorThreeRooms[5];
-        finalRoomInfoArray[25] = easyMode ? checkpointRoomsInfo[2] : floorTwoRoomsInfo[5];
+        finalRoomArray[25] = easyMode ? checkpointRooms[4] : floorThreeRooms[5];
+        finalRoomInfoArray[25] = easyMode ? checkpointRoomsInfo[4] : floorTwoRoomsInfo[5];
         switch (finalRoomInfoArray[24].exitDir)
         {
             case 0:
@@ -1058,8 +1058,8 @@ public class RoomGeneration : MonoBehaviour
             {
                 finalRoomInfoArray[28].exitDir = Random.Range(0, 3);
             } while (finalRoomInfoArray[28].exitDir == finalRoomInfoArray[28].entranceDir);
-            finalRoomArray[29] = checkpointRooms[2];
-            finalRoomInfoArray[29] = checkpointRoomsInfo[2];
+            finalRoomArray[29] = checkpointRooms[5];
+            finalRoomInfoArray[29] = checkpointRoomsInfo[5];
             switch (finalRoomInfoArray[28].exitDir)
             {
                 case 0:
@@ -1164,20 +1164,20 @@ public class RoomGeneration : MonoBehaviour
         {
             finalRoomArray[3] = checkpointRooms[0];
             finalRoomInfoArray[3] = checkpointRoomsInfo[0];
-            finalRoomArray[7] = checkpointRooms[0];
-            finalRoomInfoArray[7] = checkpointRoomsInfo[0];
+            finalRoomArray[7] = checkpointRooms[1];
+            finalRoomInfoArray[7] = checkpointRoomsInfo[1];
             finalRoomArray[10] = dethrosRoom;
             finalRoomInfoArray[10] = dethrosRoomInfo;
-            finalRoomArray[14] = checkpointRooms[1];
-            finalRoomInfoArray[14] = checkpointRoomsInfo[1];
-            finalRoomArray[18] = checkpointRooms[1];
-            finalRoomInfoArray[18] = checkpointRoomsInfo[1];
+            finalRoomArray[14] = checkpointRooms[2];
+            finalRoomInfoArray[14] = checkpointRoomsInfo[2];
+            finalRoomArray[18] = checkpointRooms[3];
+            finalRoomInfoArray[18] = checkpointRoomsInfo[3];
             finalRoomArray[21] = lorneRoom;
             finalRoomInfoArray[21] = lorneRoomInfo;
-            finalRoomArray[25] = checkpointRooms[2];
-            finalRoomInfoArray[25] = checkpointRoomsInfo[2];
-            finalRoomArray[29] = checkpointRooms[2];
-            finalRoomInfoArray[29] = checkpointRoomsInfo[2];
+            finalRoomArray[25] = checkpointRooms[4];
+            finalRoomInfoArray[25] = checkpointRoomsInfo[4];
+            finalRoomArray[29] = checkpointRooms[5];
+            finalRoomInfoArray[29] = checkpointRoomsInfo[5];
             finalRoomArray[32] = morriusRoom;
             finalRoomInfoArray[32] = morriusRoomInfo;
         }
