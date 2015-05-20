@@ -203,4 +203,10 @@ public class PlayerMovement : MonoBehaviour
         KnockbackVec = transform.position - Direction;
         KnockbackVec.Normalize();
     }
+    public void PullThePlayer(Vector3 Direction)
+    {
+        knockbackTimer = .3f;
+        KnockbackVec = Direction - transform.position;
+        KnockbackVec.Normalize();
+    }
 }

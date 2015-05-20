@@ -6,6 +6,7 @@ public class FairyOrbExplosion : MonoBehaviour
 
     Light theLight;
     PlayerEquipment heroEquipment;
+    PlayerMovement playMove;
     float timeAlive;
     GameObject player;
     float maxLife;
@@ -16,11 +17,12 @@ public class FairyOrbExplosion : MonoBehaviour
     {
         maxLife = 0.6f;
         player = GameObject.FindGameObjectWithTag("Player");
+        playMove = player.GetComponent<PlayerMovement>();
         heroEquipment = player.GetComponent<PlayerEquipment>();
         theLight = gameObject.GetComponent<Light>();
         Camera.main.SendMessage("ScreenShake");
     }
-
+    
     // Update is called once per frame
     void Update()
     {
@@ -37,11 +39,14 @@ public class FairyOrbExplosion : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        player = GameObject.FindGameObjectWithTag("Player");
+        playMove = player.GetComponent<PlayerMovement>();
         heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
         if (other.tag == "Player")
         {
+            print("Sent!");
             other.GetComponent<Health>().LoseHealth(explodedamage);
-            player.SendMessage("KnockBack", SendMessageOptions.DontRequireReceiver);
+            playMove.KnockBack(transform.position);
         }
     }
 }

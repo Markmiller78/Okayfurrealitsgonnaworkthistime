@@ -3,14 +3,18 @@ using System.Collections;
 
 public class LorneSpawners : MonoBehaviour {
 
+    GameObject ParentObject;
     public GameObject SumFairies;
     public GameObject SumParts;
+
+    bool phase;
     //public float maxTime;
     //float currTime;
     //PlayerEquipment equipment;
 
     void Start()
     {
+        phase = false;
         SumParts.SetActive(false);
         //currTime = maxTime;
         //equipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
@@ -18,23 +22,28 @@ public class LorneSpawners : MonoBehaviour {
 
     void Update()
     {
-
+        ParentObject = transform.parent.gameObject;
+        if(phase)
+            transform.RotateAround(ParentObject.transform.position, new Vector3(0, 0, 1), Time.deltaTime * -45f);        
+        else
+        transform.RotateAround(ParentObject.transform.position,new Vector3(0,0,1), Time.deltaTime * 180f);
     }
 
     void SpawnFairy()
     {
-        Instantiate(SumFairies, transform.position, transform.rotation);
+        Vector3 SpawnPOS = new Vector3(transform.position.x, transform.position.y, -1);
 
-        GameObject tmp = (GameObject)Instantiate(SumParts, transform.position, transform.rotation);
+        Instantiate(SumFairies, SpawnPOS, new Quaternion(0,0,0,0));
+        GameObject tmp = (GameObject)Instantiate(SumParts, SpawnPOS, transform.rotation);
         Destroy(tmp, 2);
     }
 
-    //void TurnOnSummoning()
-    //{
-    //    SumParts.SetActive(true);
-    //}
-    //void TurnOffSummoning()
-    //{
-    //    SumParts.SetActive(false);
-    //}
+    void ReverseRotate()
+    {
+        phase = true;
+    }
+    void SpinNormal()
+    {
+        phase = false;
+    }
 }

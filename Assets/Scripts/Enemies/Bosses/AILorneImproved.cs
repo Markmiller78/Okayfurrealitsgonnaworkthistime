@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class AILorneImproved : MonoBehaviour
 {
@@ -12,6 +13,11 @@ public class AILorneImproved : MonoBehaviour
     //    Health playerHealth;
     //    Rigidbody2D rb2d;
     public bool isReinforced = false;
+    public GameObject LorneSignature;
+    GameObject LornSig;
+    Health MyHealth;
+    public GameObject LightRemainsDropped;
+    public GameObject LightRemainExplosion;
 
     CharacterController controller;
     public float attackDamage;
@@ -26,14 +32,22 @@ public class AILorneImproved : MonoBehaviour
     bool AttackActive;
     GameObject[] Fairies;
     GameObject[] FairySpawners;
-    Vector3[] WayPoints = new Vector3[4];
+    Vector3[] WayPoints = new Vector3[5];
     int currentWaypoint;
     float stateTimer;
     float WayPointChangeTimer;
     float fairieSpawnTimer;
+    public GameObject PullParticles;
+    bool doOnce;
+    bool DoOnce2;
+    public GameObject BossHealthBar;
+    GameObject HealthRemaining;
+    GameObject healthB;
 
     void Start()
     {
+        DoOnce2 = true;
+        doOnce = true;
         currentState = 0;
         currentWaypoint = 1;
         stateTimer = 5;
@@ -43,20 +57,34 @@ public class AILorneImproved : MonoBehaviour
         WayPoints[0] = new Vector3(4, -16, -1);
         WayPoints[1] = new Vector3(4, -4, -1);
         WayPoints[2] = new Vector3(16, -4, -1);
-        WayPoints[2] = new Vector3(16, -16, -1);
+        WayPoints[3] = new Vector3(16, -16, -1);
+        WayPoints[4] = new Vector3(10, -10, -1);
         player = GameObject.FindGameObjectWithTag("Player");
         playMove = player.GetComponent<PlayerMovement>();
         playerHealth = player.GetComponent<Health>();
         heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
+        MyHealth = gameObject.GetComponent<Health>();
         //playerHealth = player.GetComponent<Health>();
         attackCooldownMax = 1;
         attackCooldown = attackCooldownMax;
         //rb2d = GetComponent<Rigidbody2D>();
         controller = GetComponent<CharacterController>();
+        LornSig = (GameObject)Instantiate(LorneSignature, new Vector3(10, -10, -1), new Quaternion(0, 0, 0, 0));
+
+
+        healthB = (GameObject)Instantiate(BossHealthBar);
+        HealthRemaining = GameObject.FindGameObjectWithTag("Boss Health");
+
     }
 
     void Update()
     {
+
+        if (HealthRemaining != null)
+            HealthRemaining.transform.localScale = new Vector3(MyHealth.healthPercent, 1, 1);
+        else
+            HealthRemaining = GameObject.FindGameObjectWithTag("Boss Health");
+
         if (heroEquipment.paused == false)
         {
 
@@ -68,15 +96,37 @@ public class AILorneImproved : MonoBehaviour
             {
                 if (currentState == 0)
                 {
+                    FairySpawners = GameObject.FindGameObjectsWithTag("DethSpawn");
+
+                    foreach (GameObject Spawner in FairySpawners)
+                    {
+                        Spawner.SendMessage("ReverseRotate", SendMessageOptions.DontRequireReceiver);
+                    }
                     currentState = 1;
-                    fairieSpawnTimer = 1.5f;
-                    stateTimer = 20;
+                    currentWaypoint = 4;
+                    WayPointChangeTimer = 5;
+                    fairieSpawnTimer = 5f;
+                    stateTimer = 25;
                 }
                 else
                 {
+                    FairySpawners = GameObject.FindGameObjectsWithTag("DethSpawn");
+
+                    foreach (GameObject Spawner in FairySpawners)
+                    {
+                        Spawner.SendMessage("SpinNormal", SendMessageOptions.DontRequireReceiver);
+                    }
+                    DoOnce2 = true;
+                    doOnce = true;
+                    this.tag = "Enemy";
+                    LornSig.SetActive(false);
                     currentState = 0;
                     fairieSpawnTimer = 5;
                     stateTimer = 20;
+                    if (MyHealth.healthPercent > .50f)
+                        moveSpeed = 3;
+                    else
+                        moveSpeed = 4f;
                 }
 
             }
@@ -105,27 +155,41 @@ public class AILorneImproved : MonoBehaviour
                     }
                 case 1:
                     {
-                        moveSpeed = 3;
+
                         //Switch Waypoints (Not Spawn Fairies)
+                        if (fairieSpawnTimer < 2)
+                        {
+                            this.tag = "Invincible";
+                            SignatureMove();
+                        }
+                        if (fairieSpawnTimer < 1)
+                        {
+                            if(DoOnce2)
+                            {
+                                DoOnce2 = false; 
+                                ExplodeLightReamins();
+                            }
+                         
+                            LornSig.SetActive(true);
+                        }
+
                         if (fairieSpawnTimer < 0)
                         {
+                            moveSpeed = 7;
+                            if (MyHealth.healthPercent < .50f)
+                                SummonFairies();
                             SummonFairies();
                             fairieSpawnTimer = 30;
                         }
 
                         if (WayPointChangeTimer < 0)
                         {
-                            WayPointChangeTimer = 4;
+                            WayPointChangeTimer = 1.8f;
                             currentWaypoint++;
                             if (currentWaypoint > 3)
                                 currentWaypoint = 0;
                         }
-
-                        if(fairieSpawnTimer < 28)
                         MoveToWayPoint();
-
-
-
                         break;
                     }
             }
@@ -157,7 +221,7 @@ public class AILorneImproved : MonoBehaviour
 
     void Attack()
     {
-        if (playMove != null)
+        if (playMove != null && currentState == 0)
         {
             playMove.KnockBack(transform.position);
             player.GetComponent<Health>().LoseHealth(attackDamage);
@@ -182,4 +246,46 @@ public class AILorneImproved : MonoBehaviour
             Spawner.SendMessage("SpawnFairy", SendMessageOptions.DontRequireReceiver);
         }
     }
+
+    void SignatureMove()
+    {
+        playMove = player.GetComponent<PlayerMovement>();
+        if (playMove != null)
+        {
+
+            PlayerLight playHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerLight>();
+            playHealth.currentLight = 0;
+
+
+
+            playMove.PullThePlayer(transform.position);
+            if (doOnce)
+            {
+                Instantiate(PullParticles, player.transform.position, new Quaternion(0, 0, 0, 0));
+                doOnce = false;
+
+            }
+        }
+
+    }
+
+
+    void ExplodeLightReamins()
+    {
+
+        Instantiate(LightRemainExplosion, player.transform.position, new Quaternion(0, 0, 0, 0));
+        for (int i = 0; i < 20; i++)
+        {
+            float RandX = Random.Range(-5, 5);
+            float RandY = Random.Range(-5, 5);
+            Instantiate(LightRemainsDropped, new Vector3(player.transform.position.x + RandX, player.transform.position.y + RandY, -1f), new Quaternion(0, 0, 0, 0));
+        }
+    }
+    void DestroyHealthBar()
+    {
+        LornSig.SetActive(false);
+        Destroy(healthB);
+    }
+
 }
+

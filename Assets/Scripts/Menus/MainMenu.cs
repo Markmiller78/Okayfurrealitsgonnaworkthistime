@@ -841,7 +841,7 @@ public class MainMenu : MonoBehaviour
                         //CONTINUE PREVIOUS GAME
                         //  LoadStats();
 				theOptions.shouldload=true;
-				LevelManager.Load("IntroCutscene");
+				LevelManager.Load("Game");
                         break;
                     }
                 case 1:
