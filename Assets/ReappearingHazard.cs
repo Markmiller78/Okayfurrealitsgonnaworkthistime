@@ -37,15 +37,15 @@ public class ReappearingHazard : MonoBehaviour {
         }
         else if (timeOffset == timeOffsets.one)
         {
-            timer = -1;
+            timer = -3;
         }
         else if (timeOffset == timeOffsets.two)
         {
-            timer = -2;
+            timer = -6;
         }
         else if (timeOffset == timeOffsets.three)
         {
-            timer = -3;
+            timer = -9;
         }
 	}
 	

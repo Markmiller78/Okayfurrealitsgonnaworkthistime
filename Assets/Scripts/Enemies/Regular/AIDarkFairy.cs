@@ -56,7 +56,7 @@ public class AIDarkFairy : MonoBehaviour
         heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
         currentlight = null;
         TargetTimer = 0;
-        attackCD = 0;
+        attackCD = 3;
         distanceToTarget = 0;
         dodgeTimer = 0;
         AbsorbTimer = 1000000;
@@ -81,47 +81,58 @@ public class AIDarkFairy : MonoBehaviour
 
             if (InvincibleTimer < 0)
             {
-                tag = "Enemy";
+                this.tag = "Enemy";
                 Forcefield.SetActive(false);
             }
             if (SpellDodge.Length > 0 && dodgeTimer < 0)
             {
-                ResetAbsorbCastingTime = true;
-                Dodge();
+                for (int i = 0; i < SpellDodge.Length; i++)
+                {
+                    if (Vector3.Distance(transform.position, SpellDodge[i].transform.position) < 2)
+                    {
+                        AbsorbParts.SetActive(false);
+                        ResetAbsorbCastingTime = true;
+                        Dodge();
+                    }
+                }
             }
+
+            //DETERMINE STATE
             if (timer < 0)
             {
-                timer = 1;
+                timer = .25f;
                 if (LocateNearestLight() && currentState != 2)
                 {
-                    currentState = 1;
+                    if (currentlight != null)
+                        if (Vector3.Distance(currentlight.transform.position, transform.position) < 5)
+                            currentState = 1;
                 }
-                else
+                if (distanceToPlayer < 4 && attackCD > 0 && (currentState != 1 || currentState != 2))
                 {
-                    if (distanceToPlayer < 4 && attackCD > 0)
-                    {
-                        currentState = 3;
-                    }
-                    else if (attackCD < 0 && currentState != 2)
-                    {
-                        currentState = 4;
-                    }
-                    else
-                    {
-                        currentState = 0;
-                    }
+                    currentState = 3;
+                }
+                else if (attackCD < 0 && (currentState != 1 || currentState != 2))
+                {
+                    currentState = 4;
+                }
+                else if (currentState != 1 && currentState != 2)
+                {
+                    currentState = 0;
+                }
+                if ((currentState == 1 || currentState == 2) && currentlight == null)
+                {
+                    currentState = 0;
+                }
+                if (currentState == 1)
+                {
+                    if (distanceToTarget < 1)
+                        currentState = 2;
                 }
             }
 
 
-            if (currentState == 1)
-            {
-                if (distanceToTarget < 2)
-                    currentState = 2;
-            }
 
-            if (distanceToTarget > 1)
-                AbsorbParts.SetActive(false);
+
             switch (currentState)
             {
                 case 0:
@@ -159,6 +170,8 @@ public class AIDarkFairy : MonoBehaviour
                     }
                 case 3:
                     {
+                        ResetAbsorbCastingTime = true;
+                        AbsorbParts.SetActive(false);
                         moveSpeed = 2;
                         Target = player;
                         MoveFromTarget();
@@ -175,8 +188,6 @@ public class AIDarkFairy : MonoBehaviour
                                 SpellCast();
                         }
                         MoveToTarget();
-                        if (attackCD > .5f)
-                            currentState = 3;
                         //FIRE SPELLS
                         break;
                     }
@@ -203,8 +214,8 @@ public class AIDarkFairy : MonoBehaviour
             }
         }
 
-
-        distanceToTarget = Vector3.Distance(transform.position, currentlight.transform.position);
+        if (currentlight != null)
+            distanceToTarget = Vector3.Distance(transform.position, currentlight.transform.position);
         if (AllLight.Length > 0)
             return true;
         else
@@ -213,8 +224,11 @@ public class AIDarkFairy : MonoBehaviour
     }
     void MoveToTarget()
     {
-        Vector2 moveTo = (Target.transform.position - transform.position).normalized;
-        controller.Move(moveTo * Time.deltaTime * moveSpeed);
+        if (Target != null)
+        {
+            Vector2 moveTo = (Target.transform.position - transform.position).normalized;
+            controller.Move(moveTo * Time.deltaTime * moveSpeed);
+        }
     }
 
     void MoveFromTarget()
@@ -226,22 +240,25 @@ public class AIDarkFairy : MonoBehaviour
 
     void StealLightDrop()
     {
-        float distanceToCurrentLight = Vector3.Distance(currentlight.transform.position, transform.position);
+        if (currentlight != null)
+        {
+            float distanceToCurrentLight = Vector3.Distance(currentlight.transform.position, transform.position);
 
-        if (distanceToTarget < 2 && ResetAbsorbCastingTime == true)
-        {
-            ResetAbsorbCastingTime = false;
-            AbsorbParts.SetActive(true);
-            AbsorbTimer = 1;
-        }
-        if (ResetAbsorbCastingTime == false)
-        AbsorbTimer -= Time.deltaTime;
-        if (AbsorbTimer < 0 && distanceToTarget < 2 && ResetAbsorbCastingTime == false)
-        {
-            ResetAbsorbCastingTime = true;
-            AbsorbParts.SetActive(false);
-            Destroy(currentlight);
-            AbsorbTimer = 1000000;
+            if (distanceToTarget < 1 && ResetAbsorbCastingTime == true)
+            {
+                ResetAbsorbCastingTime = false;
+                AbsorbParts.SetActive(true);
+                AbsorbTimer = 1;
+            }
+            if (ResetAbsorbCastingTime == false)
+                AbsorbTimer -= Time.deltaTime;
+            if (AbsorbTimer < 0 && distanceToTarget < 1 && ResetAbsorbCastingTime == false)
+            {
+                ResetAbsorbCastingTime = true;
+                AbsorbParts.SetActive(false);
+                Destroy(currentlight);
+                AbsorbTimer = 1000000;
+            }
         }
     }
 
@@ -253,7 +270,7 @@ public class AIDarkFairy : MonoBehaviour
         Forcefield.SetActive(true);
 
         InvincibleTimer = 1;
-        dodgeTimer = 10;
+        dodgeTimer = 3;
 
     }
     void SpellCast()
