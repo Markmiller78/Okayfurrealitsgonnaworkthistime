@@ -412,32 +412,32 @@ public class PlayerDashing : MonoBehaviour
                 //Ice ember equipped
                 else if (heroEquipment.equippedEmber == ember.Ice)
                 {
-                    Instantiate(iceDecoy, oldPos, new Quaternion(0, 0, 0, 0));
+                    Instantiate(iceDecoy, oldPos, transform.rotation);
                 }
                 //Fire ember equipped
                 else if (heroEquipment.equippedEmber == ember.Fire)
                 {
-                    Instantiate(fireDecoy, oldPos, new Quaternion(0, 0, 0, 0));
+                    Instantiate(fireDecoy, oldPos, transform.rotation);
                 }
                 //Wind ember equipped
                 else if (heroEquipment.equippedEmber == ember.Wind)
                 {
-                    Instantiate(windDecoy, oldPos, new Quaternion(0, 0, 0, 0));
+                    Instantiate(windDecoy, oldPos, transform.rotation);
                 }
                 //Life ember equipped
                 else if (heroEquipment.equippedEmber == ember.Life)
                 {
-                    Instantiate(lifeDecoy, oldPos, new Quaternion(0, 0, 0, 0));
+                    Instantiate(lifeDecoy, oldPos, transform.rotation);
                 }
                 //Death ember equipped
                 else if (heroEquipment.equippedEmber == ember.Death)
                 {
-                    Instantiate(deathDecoy, oldPos, new Quaternion(0, 0, 0, 0));
+                    Instantiate(deathDecoy, oldPos, transform.rotation);
                 }
                 //Earth ember equipped
                 else if (heroEquipment.equippedEmber == ember.Earth)
                 {
-                    Instantiate(earthDecoy, oldPos, new Quaternion(0, 0, 0, 0));
+                    Instantiate(earthDecoy, oldPos, transform.rotation);
                 }
 
             }
