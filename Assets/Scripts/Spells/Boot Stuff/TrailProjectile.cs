@@ -13,15 +13,19 @@ public class TrailProjectile : MonoBehaviour
     public GameObject TrailLightRemains;
 
     PlayerEquipment eqp;
-    public float damage;
+    float damage;
     bool once;
     public bool isWindEmber;
     PlayerStats theStats;
 
+    public GameObject debuff;
+
+
+
     void Start()
     {
         theStats = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>();
-        damage = 3.0f;
+        damage = 1.0f;
         //Orient the thing to look correct
         if (isWindEmber)
         {
@@ -68,12 +72,47 @@ public class TrailProjectile : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        eqp = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
+
+
         //If the trail is still in its damage phase
         if (timeAlive < (MaxTimeActive - 0.7))
         {
             if (other.tag == "Enemy")
             {
-                other.GetComponent<Health>().LoseHealth(damage+theStats.spellModifier/2.0f);
+
+
+                if (eqp.equippedEmber == ember.None)
+                {
+                }
+                else if (eqp.equippedEmber == ember.Fire)
+                {
+                    GameObject tempObj = (GameObject)Instantiate(debuff, other.transform.position, other.transform.rotation);
+                    tempObj.GetComponent<DebuffFire>().target = other.gameObject;
+                }
+                else if (eqp.equippedEmber == ember.Ice)
+                {
+                    GameObject tempObj = (GameObject)Instantiate(debuff, other.transform.position, other.transform.rotation);
+                    tempObj.GetComponent<DebuffFrost>().target = other.gameObject;
+                }
+                else if (eqp.equippedEmber == ember.Wind)
+                {
+                    other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
+                }
+
+                else if (eqp.equippedEmber == ember.Earth)
+                {
+                    other.GetComponent<Health>().LoseHealth(0.3f);
+                }
+                else if (eqp.equippedEmber == ember.Death)
+                {
+                    other.SendMessage("GetInfected", SendMessageOptions.DontRequireReceiver);
+                }
+                else if (eqp.equippedEmber == ember.Life)
+                {
+                }
+
+                other.GetComponent<Health>().LoseHealth(damage + theStats.spellModifier / 3.0f);
                 timeAlive = (MaxTimeActive - 0.7f);
             }
         }
