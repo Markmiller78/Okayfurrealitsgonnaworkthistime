@@ -16,6 +16,8 @@ public class AILorneImproved : MonoBehaviour
     public GameObject LorneSignature;
     GameObject LornSig;
     Health MyHealth;
+    public GameObject LightRemainsDropped;
+    public GameObject LightRemainExplosion;
 
     CharacterController controller;
     public float attackDamage;
@@ -35,13 +37,17 @@ public class AILorneImproved : MonoBehaviour
     float stateTimer;
     float WayPointChangeTimer;
     float fairieSpawnTimer;
-
+    public GameObject PullParticles;
+    bool doOnce;
+    bool DoOnce2;
     public GameObject BossHealthBar;
     GameObject HealthRemaining;
     GameObject healthB;
 
     void Start()
     {
+        DoOnce2 = true;
+        doOnce = true;
         currentState = 0;
         currentWaypoint = 1;
         stateTimer = 5;
@@ -68,7 +74,7 @@ public class AILorneImproved : MonoBehaviour
 
         healthB = (GameObject)Instantiate(BossHealthBar);
         HealthRemaining = GameObject.FindGameObjectWithTag("Boss Health");
-       
+
     }
 
     void Update()
@@ -110,11 +116,17 @@ public class AILorneImproved : MonoBehaviour
                     {
                         Spawner.SendMessage("SpinNormal", SendMessageOptions.DontRequireReceiver);
                     }
+                    DoOnce2 = true;
+                    doOnce = true;
+                    this.tag = "Enemy";
                     LornSig.SetActive(false);
                     currentState = 0;
                     fairieSpawnTimer = 5;
                     stateTimer = 20;
-                    moveSpeed = 3;
+                    if (MyHealth.healthPercent > .50f)
+                        moveSpeed = 3;
+                    else
+                        moveSpeed = 4f;
                 }
 
             }
@@ -143,22 +155,31 @@ public class AILorneImproved : MonoBehaviour
                     }
                 case 1:
                     {
-                        
+
                         //Switch Waypoints (Not Spawn Fairies)
-                        if(fairieSpawnTimer < 2)
+                        if (fairieSpawnTimer < 2)
                         {
+                            this.tag = "Invincible";
                             SignatureMove();
                         }
                         if (fairieSpawnTimer < 1)
                         {
+                            if(DoOnce2)
+                            {
+                                DoOnce2 = false; 
+                                ExplodeLightReamins();
+                            }
+                         
                             LornSig.SetActive(true);
                         }
 
                         if (fairieSpawnTimer < 0)
                         {
                             moveSpeed = 7;
+                            if (MyHealth.healthPercent < .50f)
+                                SummonFairies();
                             SummonFairies();
-                            fairieSpawnTimer = 30;   
+                            fairieSpawnTimer = 30;
                         }
 
                         if (WayPointChangeTimer < 0)
@@ -200,7 +221,7 @@ public class AILorneImproved : MonoBehaviour
 
     void Attack()
     {
-        if (playMove != null && currentState == 1)
+        if (playMove != null && currentState == 0)
         {
             playMove.KnockBack(transform.position);
             player.GetComponent<Health>().LoseHealth(attackDamage);
@@ -231,11 +252,40 @@ public class AILorneImproved : MonoBehaviour
         playMove = player.GetComponent<PlayerMovement>();
         if (playMove != null)
         {
+
+            PlayerLight playHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerLight>();
+            playHealth.currentLight = 0;
+
+
+
             playMove.PullThePlayer(transform.position);
+            if (doOnce)
+            {
+                Instantiate(PullParticles, player.transform.position, new Quaternion(0, 0, 0, 0));
+                doOnce = false;
+
+            }
+        }
+
+    }
+
+
+    void ExplodeLightReamins()
+    {
+
+        Instantiate(LightRemainExplosion, player.transform.position, new Quaternion(0, 0, 0, 0));
+        for (int i = 0; i < 20; i++)
+        {
+            float RandX = Random.Range(-5, 5);
+            float RandY = Random.Range(-5, 5);
+            Instantiate(LightRemainsDropped, new Vector3(player.transform.position.x + RandX, player.transform.position.y + RandY, -1f), new Quaternion(0, 0, 0, 0));
         }
     }
     void DestroyHealthBar()
     {
+        LornSig.SetActive(false);
         Destroy(healthB);
     }
+
 }
+

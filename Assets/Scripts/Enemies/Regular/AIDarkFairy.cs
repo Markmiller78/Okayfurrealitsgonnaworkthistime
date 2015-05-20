@@ -66,6 +66,8 @@ public class AIDarkFairy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (transform.position.z != -1)
+            transform.position = new Vector3(transform.position.x, transform.position.y, -1);
         if (heroEquipment.paused == false)
         {
             dodgeTimer -= Time.deltaTime;

@@ -103,7 +103,7 @@ public class Health : MonoBehaviour
     void Die()
     {
         healthPercent = currentHP / maxHP;
-        if (this.name == "Dethros(Clone)" || this.name == "Lorne(Clone)")
+        if (this.name == "Dethros(Clone)" || this.name == "Lorne(Clone)" || this.name == "Lorne")
         {
             Instantiate(BossDeathParticles, this.transform.position, new Quaternion(0, 0, 0, 0));
             this.SendMessage("DestroyHealthBar", SendMessageOptions.DontRequireReceiver);

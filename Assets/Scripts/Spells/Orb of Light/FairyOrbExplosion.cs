@@ -22,7 +22,7 @@ public class FairyOrbExplosion : MonoBehaviour
         theLight = gameObject.GetComponent<Light>();
         Camera.main.SendMessage("ScreenShake");
     }
-
+    
     // Update is called once per frame
     void Update()
     {
