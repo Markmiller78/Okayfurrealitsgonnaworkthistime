@@ -176,6 +176,117 @@ public class RoomGeneration : MonoBehaviour
             Instantiate(CPCrystal, new Vector3(8.5f, -4.5f, -.8f), Quaternion.identity);
         }
 
+        if (finalRoomInfoArray[currentRoom].entryText != null)
+        {
+            //finalRoomInfoArray[currentRoom].entryText.SetActive(true);
+            //finalRoomInfoArray[currentRoom].entryText.GetComponent<RoomEntryText>().enabled = true;
+            switch (currentRoom)
+            {
+                case 0:
+                    finalRoomInfoArray[currentRoom].entryText.GetComponent<RoomEntryText>().toDisplay = "-Forest-";
+                    Instantiate(finalRoomInfoArray[currentRoom].entryText);
+                    break;
+                case 3:
+                    if (easyMode)
+                    {
+                        finalRoomInfoArray[currentRoom].entryText.GetComponent<RoomEntryText>().toDisplay = "-Checkpoint-";
+                        Instantiate(finalRoomInfoArray[currentRoom].entryText);
+                    }
+                    break;
+                case 7:
+                    if (easyMode)
+                    {
+                        finalRoomInfoArray[currentRoom].entryText.GetComponent<RoomEntryText>().toDisplay = "-Checkpoint-";
+                        Instantiate(finalRoomInfoArray[currentRoom].entryText);
+                    }
+                    break;
+                case 8:
+                    if (!easyMode)
+                    {
+                        finalRoomInfoArray[currentRoom].entryText.GetComponent<RoomEntryText>().toDisplay = "-Dethros-";
+                        Instantiate(finalRoomInfoArray[currentRoom].entryText);
+                    }
+                    break;
+                case 9:
+                    if (!easyMode)
+                    {
+                        finalRoomInfoArray[currentRoom].entryText.GetComponent<RoomEntryText>().toDisplay = "-Cave-";
+                        Instantiate(finalRoomInfoArray[currentRoom].entryText);
+                    }
+                    break;
+                case 10:
+                    if (easyMode)
+                    {
+                        finalRoomInfoArray[currentRoom].entryText.GetComponent<RoomEntryText>().toDisplay = "-Dethros-";
+                        Instantiate(finalRoomInfoArray[currentRoom].entryText);
+                    }
+                    break;
+                case 11:
+                    if (easyMode)
+                    {
+                        finalRoomInfoArray[currentRoom].entryText.GetComponent<RoomEntryText>().toDisplay = "-Cave-";
+                        Instantiate(finalRoomInfoArray[currentRoom].entryText);
+                    }
+                    break;
+                case 14:
+                    if (easyMode)
+                    {
+                        finalRoomInfoArray[currentRoom].entryText.GetComponent<RoomEntryText>().toDisplay = "-Checkpoint-";
+                        Instantiate(finalRoomInfoArray[currentRoom].entryText);
+                    }
+                    break;
+                case 18:
+                    if (easyMode)
+                    {
+                        finalRoomInfoArray[currentRoom].entryText.GetComponent<RoomEntryText>().toDisplay = "-Checkpoint-";
+                        Instantiate(finalRoomInfoArray[currentRoom].entryText);
+                    }
+                    else
+                    {
+                        finalRoomInfoArray[currentRoom].entryText.GetComponent<RoomEntryText>().toDisplay = "-Dungeon-";
+                        Instantiate(finalRoomInfoArray[currentRoom].entryText);
+                    }
+                    break;
+                case 22:
+                    if (easyMode)
+                    {
+                        finalRoomInfoArray[currentRoom].entryText.GetComponent<RoomEntryText>().toDisplay = "-Dungeon-";
+                        Instantiate(finalRoomInfoArray[currentRoom].entryText);
+                    }
+                    break;
+                case 25:
+                    if (easyMode)
+                    {
+                        finalRoomInfoArray[currentRoom].entryText.GetComponent<RoomEntryText>().toDisplay = "-Checkpoint-";
+                        Instantiate(finalRoomInfoArray[currentRoom].entryText);
+                    }
+                    break;
+                case 26:
+                    if (!easyMode)
+                    {
+                        finalRoomInfoArray[currentRoom].entryText.GetComponent<RoomEntryText>().toDisplay = "-Morrius-";
+                        Instantiate(finalRoomInfoArray[currentRoom].entryText);
+                    }
+                    break;
+                case 29:
+                    if (easyMode)
+                    {
+                        finalRoomInfoArray[currentRoom].entryText.GetComponent<RoomEntryText>().toDisplay = "-Checkpoint-";
+                        Instantiate(finalRoomInfoArray[currentRoom].entryText);
+                    }
+                    break;
+                case 32:
+                    if (easyMode)
+                    {
+                        finalRoomInfoArray[currentRoom].entryText.GetComponent<RoomEntryText>().toDisplay = "-Morrius-";
+                        Instantiate(finalRoomInfoArray[currentRoom].entryText);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
         // Spawn north wall and possibly door
         for (int i = 0; i < finalRoomInfoArray[currentRoom].width; i++)
         {
@@ -1383,7 +1494,7 @@ public class RoomGeneration : MonoBehaviour
                 Destroy(obj);
             }
         }
-		player.GetComponent<SaveTest> ().saved = false;
+        player.GetComponent<SaveTest>().saved = false;
         CreateRoom();
     }
 }
