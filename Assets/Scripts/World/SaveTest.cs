@@ -19,7 +19,7 @@ public class SaveTest : MonoBehaviour {
     PlayerStats theStats;
     public bool shouldsave = true;
     public int enemies=0;
-    bool saved = false;
+    public bool saved = false;
 	PlayerEquipment eq;
 	 
 
@@ -72,6 +72,8 @@ public class SaveTest : MonoBehaviour {
         if (Application.platform == RuntimePlatform.OSXWebPlayer
            || Application.platform == RuntimePlatform.WindowsWebPlayer)
         {
+			Debug.Log("OK");
+			
             PlayerPrefs.SetFloat("PlayerHealth", gameObject.GetComponent<Health>().currentHP);
             PlayerPrefs.SetFloat("PlayerLight", gameObject.GetComponent<PlayerLight>().currentLight);
 			PlayerPrefs.SetFloat("MeleeMod",theStats.meleeModifier);
@@ -141,7 +143,8 @@ public class SaveTest : MonoBehaviour {
        if (Application.platform == RuntimePlatform.OSXWebPlayer
    || Application.platform == RuntimePlatform.WindowsWebPlayer)
        {
-			//Loading Hp and Liht
+			Debug.Log("OK");
+			//Loading Hp and Light
 
       gameObject.GetComponent<Health>().currentHP=      PlayerPrefs.GetFloat("PlayerHealth", 100);
       gameObject.GetComponent<PlayerLight>().currentLight=      PlayerPrefs.GetFloat("PlayerLight", 100);
@@ -193,13 +196,13 @@ public class SaveTest : MonoBehaviour {
                theStats.maxLightModifier = data.maxLightModifier;
                theStats.meleeModifier = data.meleeModifier;
                theStats.spellModifier = data.spellModifier;
-               //data.easymode = options.easyMode;
+              
                options.easyMode = data.easymode;
 				theRooms.currentRoom= data.currentroom;
 			
 				theRooms.loadedData= data;
 		
-               // theRooms.finalRoomInfoArray=data.finalRoomInfoArray;
+     
     
                file.Close();
            
