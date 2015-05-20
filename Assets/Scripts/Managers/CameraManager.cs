@@ -15,6 +15,7 @@ public class CameraManager : MonoBehaviour
 
     GameObject dungeon;
     RoomGeneration generator;
+    int lastFrameRoom = 0;
 
     void Start()
     {
@@ -22,12 +23,12 @@ public class CameraManager : MonoBehaviour
         //ScreenshakeOn = false;
         alternate = false;
         player = GameObject.FindGameObjectWithTag("Player");
-        if(player != null)
-        transform.position = new Vector3(player.transform.position.x, player.transform.position.y, -20.0f);
+        if (player != null)
+            transform.position = new Vector3(player.transform.position.x, player.transform.position.y, -20.0f);
         Screen.SetResolution(1280, 720, false);
         dungeon = GameObject.FindGameObjectWithTag("Dungeon");
-        if(dungeon != null)
-        generator = dungeon.GetComponent<RoomGeneration>();
+        if (dungeon != null)
+            generator = dungeon.GetComponent<RoomGeneration>();
     }
 
     void Update()
@@ -70,6 +71,11 @@ public class CameraManager : MonoBehaviour
 
             transform.position = Vector3.SmoothDamp(transform.position, destination, ref velocity, damp);
 
+            if (lastFrameRoom != generator.currentRoom)
+            {
+                transform.position = new Vector3(player.transform.position.x, player.transform.position.y, -20f);
+            }
+
             if (transform.position.x < 7.75f)
             {
                 transform.position = new Vector3(7.75f, transform.position.y, transform.position.z);
@@ -105,6 +111,8 @@ public class CameraManager : MonoBehaviour
             else
                 transform.position = new Vector3(transform.position.x, transform.position.y, -20.0f);
         }
+        if (generator)
+            lastFrameRoom = generator.currentRoom;
     }
 
     public void ScreenShake()
