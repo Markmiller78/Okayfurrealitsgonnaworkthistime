@@ -424,15 +424,16 @@ public class RoomGeneration : MonoBehaviour
             //}
             finalRoomInfoArray[currentRoom].numEnemies = Random.Range(min, max);
             Instantiate(finalRoomInfoArray[currentRoom].enemiesThatCanSpawn[0], new Vector3(finalRoomInfoArray[currentRoom].enemySpawnPoints[0].x, -finalRoomInfoArray[currentRoom].enemySpawnPoints[0].y, -1f), Quaternion.identity);
-            int enemiesSpawned = 1;
+            Instantiate(finalRoomInfoArray[currentRoom].enemiesThatCanSpawn[1], new Vector3(finalRoomInfoArray[currentRoom].enemySpawnPoints[1].x, -finalRoomInfoArray[currentRoom].enemySpawnPoints[1].y, -1f), Quaternion.identity);
+            int enemiesSpawned = 2;
             while (enemiesSpawned < finalRoomInfoArray[currentRoom].numEnemies)
             {
-                for (int i = 1; i < finalRoomInfoArray[currentRoom].enemySpawnPoints.Length; i++)
+                for (int i = 2; i < finalRoomInfoArray[currentRoom].enemySpawnPoints.Length; i++)
                 {
                     int chance = Random.Range(1, 50);
                     if (!finalRoomInfoArray[currentRoom].enemySpawnPointUsed[i] && chance == 1)
                     {
-                        Instantiate(finalRoomInfoArray[currentRoom].enemiesThatCanSpawn[Random.Range(1, finalRoomInfoArray[currentRoom].enemiesThatCanSpawn.Length)], new Vector3(finalRoomInfoArray[currentRoom].enemySpawnPoints[i].x, -finalRoomInfoArray[currentRoom].enemySpawnPoints[i].y, -1f), Quaternion.identity);
+                        Instantiate(finalRoomInfoArray[currentRoom].enemiesThatCanSpawn[Random.Range(2, finalRoomInfoArray[currentRoom].enemiesThatCanSpawn.Length)], new Vector3(finalRoomInfoArray[currentRoom].enemySpawnPoints[i].x, -finalRoomInfoArray[currentRoom].enemySpawnPoints[i].y, -1f), Quaternion.identity);
                         finalRoomInfoArray[currentRoom].enemySpawnPointUsed[i] = true;
                         ++enemiesSpawned;
                         if (enemiesSpawned == finalRoomInfoArray[currentRoom].numEnemies)
