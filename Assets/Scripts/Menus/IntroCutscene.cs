@@ -265,7 +265,7 @@ public class IntroCutscene : MonoBehaviour
 
     void NextLevel()
     {
-        LevelManager.Load("Game");
+        LevelManager.Load("Tutorial");
     }
 
 
