@@ -38,5 +38,9 @@ public class RoomEntryText : MonoBehaviour
                 }
             }
         }
+        else
+        {
+            theText.color = new Color(theText.color.r, theText.color.g, theText.color.b, 0f);
+        }
     }
 }

@@ -85,7 +85,7 @@ public class PauseMenu : MonoBehaviour
                     #endregion
                 case 1:
                     #region Saving
-                    SelectorRemains.transform.localPosition = new Vector3(-77f, -4.7f, -5.1f);
+                    SelectorRemains.transform.localPosition = new Vector3(-77f, -4.5f, -5.1f);
                     if (InputManager.controller && Input.GetButtonDown("CMenuAccept"))
                     {
                         // Save Code Here
