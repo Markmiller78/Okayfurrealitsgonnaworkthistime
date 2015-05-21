@@ -205,8 +205,8 @@ public class SaveTest : MonoBehaviour {
                theStats.meleeModifier = data.meleeModifier;
                theStats.spellModifier = data.spellModifier;
 
-				eq.equippedEmber= data.equippedember;
-				eq.equippedBoot= data.equippedboot; 
+				eq.equippedEmber= (ember)data.equippedember;
+				eq.equippedBoot= (boot)data.equippedboot; 
 
                 options.easyMode = data.easymode;
 
