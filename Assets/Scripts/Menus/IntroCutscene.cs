@@ -55,7 +55,7 @@ public class IntroCutscene : MonoBehaviour
 
         if (Input.GetButtonDown("KBPause") || Input.GetButtonDown("CPause"))
         {
-            LevelManager.Load("Game");
+            LevelManager.Load("Tutorial");
         }
         //Begin Text
         if (Stage == 1 && timer < 0 && i < Text1.Length)

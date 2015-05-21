@@ -7,6 +7,8 @@ public class TutorialScript : MonoBehaviour
 
 
     public Text TutorialText;
+    public Text TutorialText2;
+    public GameObject DoorToOpen;
     float timer;
     float standardTimeStep;
     int Step;
@@ -453,7 +455,7 @@ public class TutorialScript : MonoBehaviour
                 }
             case 30:
                 {
-                    FadeOut();
+                   // FadeOut();
                     if (timer < 0)
                     {
                         Step++;
@@ -463,8 +465,8 @@ public class TutorialScript : MonoBehaviour
                 }
             case 31:
                 {
-                    ChangeText("Gold Light restores health");
-                    FadeIn();
+                    ChangeText2("Gold Light restores health");
+                    FadeIn2();
                     if (timer < 0)
                     {
                         Step++;
@@ -475,6 +477,7 @@ public class TutorialScript : MonoBehaviour
             case 32:
                 {
                     FadeOut();
+                    FadeOut2();
                     if (timer < 0)
                     {
                         GameObject[] EnemyCount = GameObject.FindGameObjectsWithTag("Enemy");
@@ -509,7 +512,10 @@ public class TutorialScript : MonoBehaviour
                 }
             case 35:
                 {
-                    ChangeText("Use Absorb to Steal your light back");
+                    if (InputManager.controller)
+                        ChangeText("Use Absorb(RB) to Steal your light back");
+                    else
+                        ChangeText("Use Absorb(Q) to Steal your light back");
                     FadeIn();
                     if (timer < 0)
                     {
@@ -520,7 +526,6 @@ public class TutorialScript : MonoBehaviour
                 }
             case 36:
                 {
-                    FadeOut();
                     if (timer < 0)
                     {
                         Step++;
@@ -530,17 +535,19 @@ public class TutorialScript : MonoBehaviour
                 }
             case 37:
                 {
-                    ChangeText("This deals extra damage");
-                    FadeIn();
+                    ChangeText2("This deals extra damage");
+                    FadeIn2();
                     if (timer < 0)
                     {
-
+                        Step++;
+                        timer = standardTimeStep;
                     }
                     break;
                 }
             case 38:
                 {
                     FadeOut();
+                    FadeOut2();
                     if (timer < 0)
                     {
                         Step++;
@@ -564,6 +571,8 @@ public class TutorialScript : MonoBehaviour
                 }
             case 40:
                 {
+                    if (DoorToOpen != null)
+                        Destroy(DoorToOpen);
                     if (InputManager.controller)
                         ChangeText("Press X to Open Chests");
                     else
@@ -609,7 +618,8 @@ public class TutorialScript : MonoBehaviour
                     FadeIn();
                     if (timer < 0)
                     {
-
+                        Step++;
+                        timer = standardTimeStep;
                     }
                     break;
                 }
@@ -629,13 +639,14 @@ public class TutorialScript : MonoBehaviour
                     FadeIn();
                     if (timer < 0)
                     {
-
+                        Step++;
+                        timer = standardTimeStep;
                     }
                     break;
                 }
             case 45:
                 {
-                    FadeOut();
+                    //FadeOut();
                     if (timer < 0)
                     {
                         Step++;
@@ -645,11 +656,23 @@ public class TutorialScript : MonoBehaviour
                 }
             case 46:
                 {
-                    ChangeText("Embers Augment your spells with elemental effects");
-                    FadeIn();
+                    ChangeText2("Embers Augment your spells with elemental effects");
+                    FadeIn2();
                     if (timer < 0)
                     {
-
+                        Step++;
+                        timer = 5;
+                    }
+                    break;
+                }
+            case 47:
+                {
+                    FadeOut();
+                    FadeOut2();
+                    if (timer < 0)
+                    {
+                        Step++;
+                        timer = standardTimeStep;
                     }
                     break;
                 }
@@ -671,6 +694,10 @@ public class TutorialScript : MonoBehaviour
     {
         TutorialText.text = theText;
     }
+    void ChangeText2(string theText)
+    {
+        TutorialText2.text = theText;
+    }
 
     void FadeIn()
     {
@@ -683,4 +710,15 @@ public class TutorialScript : MonoBehaviour
         if (TutorialText.color.a > 0)
             TutorialText.color -= new Color(0, 0, 0, 1 * Time.deltaTime);
     }
+    void FadeIn2()
+    {
+        if (TutorialText2.color.a < 1)
+            TutorialText2.color += new Color(0, 0, 0, 1 * Time.deltaTime);
+    }
+    void FadeOut2()
+    {
+        if (TutorialText2.color.a > 0)
+            TutorialText2.color -= new Color(0, 0, 0, 1 * Time.deltaTime);
+    }
+
 }
