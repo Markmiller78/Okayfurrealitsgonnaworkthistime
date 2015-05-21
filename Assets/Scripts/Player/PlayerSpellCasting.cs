@@ -119,38 +119,69 @@ public class PlayerSpellCasting : MonoBehaviour
         //If the orb of light is equipped, fire the orb of light ability
         if (heroEquipment.equippedAccessory == accessory.OrbOfLight)
         {
+            GameObject myOrb = null;
+
+            Vector3 orbRot1 = transform.rotation.eulerAngles;
+            orbRot1 = new Vector3(orbRot1.x, orbRot1.y, orbRot1.z - 20);
+            Quaternion rot1 = transform.rotation;
+            rot1.eulerAngles = orbRot1;
+
+            Vector3 orbRot2 = transform.rotation.eulerAngles;
+            orbRot1 = new Vector3(orbRot2.x, orbRot2.y, orbRot2.z + 20);
+            Quaternion rot2 = transform.rotation;
+            rot2.eulerAngles = orbRot1;
+
             if (heroEquipment.equippedEmber == ember.None)
             {
-                Instantiate(lightOrb, transform.position, transform.rotation);
+                Instantiate(lightOrb, transform.position, rot1);
+                Instantiate(lightOrb, transform.position, rot2);
+                myOrb = (GameObject)Instantiate(lightOrb, transform.position, transform.rotation);
             }
             else if (heroEquipment.equippedEmber == ember.Fire)
             {
-                Instantiate(fireOrb, transform.position, transform.rotation);
+                Instantiate(fireOrb, transform.position, rot1);
+                Instantiate(fireOrb, transform.position, rot2);
+                myOrb = (GameObject)Instantiate(fireOrb, transform.position, transform.rotation);
             }
             else if (heroEquipment.equippedEmber == ember.Wind)
             {
-                Instantiate(windOrb, transform.position, transform.rotation);
+                Instantiate(windOrb, transform.position, rot1);
+                Instantiate(windOrb, transform.position, rot2);
+                myOrb = (GameObject)Instantiate(windOrb, transform.position, transform.rotation);
 
             }
             else if (heroEquipment.equippedEmber == ember.Ice)
             {
-                Instantiate(frostOrb, transform.position, transform.rotation);
+                Instantiate(frostOrb, transform.position, rot1);
+                Instantiate(frostOrb, transform.position, rot2);
+                myOrb = (GameObject)Instantiate(frostOrb, transform.position, transform.rotation);
 
             }
             else if (heroEquipment.equippedEmber == ember.Life)
             {
-                Instantiate(lifeOrb, transform.position, transform.rotation);
+                Instantiate(lifeOrb, transform.position, rot1);
+                Instantiate(lifeOrb, transform.position, rot2);
+                myOrb = (GameObject)Instantiate(lifeOrb, transform.position, transform.rotation);
 
             }
             else if (heroEquipment.equippedEmber == ember.Death)
             {
-                Instantiate(deathOrb, transform.position, transform.rotation);
+                Instantiate(deathOrb, transform.position, rot1);
+                Instantiate(deathOrb, transform.position, rot2);
+                myOrb = (GameObject)Instantiate(deathOrb, transform.position, transform.rotation);
 
             }
             else if (heroEquipment.equippedEmber == ember.Earth)
             {
-                Instantiate(earthOrb, transform.position, transform.rotation);
+                Instantiate(earthOrb, transform.position, rot1);
+                Instantiate(earthOrb, transform.position, rot2);
+                myOrb = (GameObject)Instantiate(earthOrb, transform.position, transform.rotation);
 
+            }
+            if (myOrb != null)
+            {
+                myOrb.GetComponent<SpellOrbOfLight>().dropLight = true;
+                
             }
         }
         else if (heroEquipment.equippedAccessory == accessory.Singularity)
@@ -298,6 +329,7 @@ public class PlayerSpellCasting : MonoBehaviour
 
         else if (heroEquipment.equippedAccessory == accessory.Snare)
         {
+            chained = false;
             if (heroEquipment.equippedEmber == ember.None)
             {
                 Instantiate(lightSnare, transform.position, transform.rotation);

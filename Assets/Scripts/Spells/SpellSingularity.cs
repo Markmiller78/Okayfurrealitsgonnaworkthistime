@@ -13,19 +13,20 @@ public class SpellSingularity : MonoBehaviour
     Light theLight;
     public GameObject theExplosion;
     //GameObject player;
-
+    Vector3 dir;
     void Start()
     {
         lifeTimer = 0;
         theLight = gameObject.GetComponent<Light>();
         heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
+        dir = transform.up;
         //player = GameObject.FindGameObjectWithTag("Player");
     }
     void Update()
     {
         if (heroEquipment.paused == false)
         {
-            //transform.position = player.transform.position;
+            transform.position += dir * 1.5f * Time.deltaTime;
             transform.Rotate(new Vector3(0, 0, 150f * Time.deltaTime));
 
             lifeTimer += Time.deltaTime;
@@ -34,7 +35,7 @@ public class SpellSingularity : MonoBehaviour
                 theLight.range -= Time.deltaTime * 2;
             }
 
-            if (lifeTimer >= 2.5)
+            if (lifeTimer >= 2.1)
             {
                 Instantiate(theExplosion, transform.position, new Quaternion(0, 0, 0, 0));
                 Destroy(gameObject);
