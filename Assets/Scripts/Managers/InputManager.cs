@@ -8,7 +8,7 @@ public class InputManager : MonoBehaviour
     PlayerCooldowns cooldowns;
     PlayerMeleeAttack melee;
     public static bool controller = false;
-    bool isPaused = false;
+    public bool isPaused = false;
     bool mapMenu = false;
     Animator anim;
 
