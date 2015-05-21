@@ -97,7 +97,7 @@ public class InputManager : MonoBehaviour
                 }
             }
             // Back for map/stats
-            if (!isPaused && Input.GetButtonDown("CMapAndStats"))
+            if (Application.loadedLevelName != "Tutorial" && !isPaused && Input.GetButtonDown("CMapAndStats"))
             {
                 GameObject[] allObjects;
                 allObjects = GameObject.FindObjectsOfType<GameObject>();
@@ -192,7 +192,7 @@ public class InputManager : MonoBehaviour
                 }
             }
             // ~ for map/stats
-            if (!isPaused && Input.GetButtonDown("KBMapAndStats"))
+            if (Application.loadedLevelName != "Tutorial" && !isPaused && Input.GetButtonDown("KBMapAndStats"))
             {
                 GameObject[] allObjects;
                 allObjects = GameObject.FindObjectsOfType<GameObject>();
