@@ -48,7 +48,7 @@ public class PlayerEquipment : MonoBehaviour
         audioPlayer = gameObject.GetComponent<AudioSource>();
       
         paused = false;
-		savenload = GameObject.FindObjectOfType<Options> ().GetComponent<SaveTest> ();
+		savenload = GameObject.FindObjectOfType<Options>().GetComponent<SaveTest>();
 		if (!savenload.shouldload) {
 			emberDurability = 0;
  

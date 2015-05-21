@@ -187,6 +187,7 @@ public class RoomGeneration : MonoBehaviour
                 case 0:
                     finalRoomInfoArray[currentRoom].entryText.GetComponent<RoomEntryText>().toDisplay = "-Forest-";
                     Instantiate(finalRoomInfoArray[currentRoom].entryText);
+                    GameObject.Find("TheOptions").GetComponent<Options>().CompleteTutorial();
                     break;
                 case 3:
                     if (easyMode)

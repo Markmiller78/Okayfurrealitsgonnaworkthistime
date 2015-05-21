@@ -7,6 +7,9 @@ public class LeaveTheTutorial : MonoBehaviour
 
     public Text LeaveText;
     bool start;
+
+    
+
     // Use this for initialization
     void Start()
     {
@@ -26,6 +29,7 @@ public class LeaveTheTutorial : MonoBehaviour
     {
         if (Other.tag == "Player")
         {
+
             start = true;
             LevelManager.Load("Game");
         }
