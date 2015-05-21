@@ -1,0 +1,23 @@
+﻿using UnityEngine;
+using System.Collections;
+
+public class TutorialSpawnShadow : MonoBehaviour {
+
+    public GameObject Shadow;
+
+	// Use this for initialization
+	void Start () {
+	
+	}
+	
+	// Update is called once per frame
+	void Update () {
+	
+	}
+   
+    void OnTriggerEnter()
+    {
+        Instantiate(Shadow, new Vector3(20, -7, -1), new Quaternion(0, 0, 0, 0));
+        Destroy(gameObject);
+    }
+}

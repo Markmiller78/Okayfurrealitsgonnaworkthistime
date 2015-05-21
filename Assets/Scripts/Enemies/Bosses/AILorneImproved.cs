@@ -19,6 +19,7 @@ public class AILorneImproved : MonoBehaviour
     public GameObject LightRemainsDropped;
     public GameObject LightRemainExplosion;
 
+
     CharacterController controller;
     public float attackDamage;
     public float attackRange;
@@ -71,7 +72,6 @@ public class AILorneImproved : MonoBehaviour
         controller = GetComponent<CharacterController>();
         LornSig = (GameObject)Instantiate(LorneSignature, new Vector3(10, -10, -1), new Quaternion(0, 0, 0, 0));
 
-
         healthB = (GameObject)Instantiate(BossHealthBar);
         HealthRemaining = GameObject.FindGameObjectWithTag("Boss Health");
 
@@ -79,6 +79,7 @@ public class AILorneImproved : MonoBehaviour
 
     void Update()
     {
+
 
         if (HealthRemaining != null)
             HealthRemaining.transform.localScale = new Vector3(MyHealth.healthPercent, 1, 1);
