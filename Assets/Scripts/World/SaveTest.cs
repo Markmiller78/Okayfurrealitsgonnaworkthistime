@@ -106,15 +106,15 @@ public class SaveTest : MonoBehaviour {
 			PlayerPrefs.SetString("EmberName", eq.AccessoryName);
 			PlayerPrefs.SetString("BootName",eq.BootName);
 			PlayerPrefs.SetInt("Spell", (int)eq.equippedAccessory);
-			PlayerPrefs.SetInt("EmberStat1",eq.AccessoryStat1.StatAmount);
-			PlayerPrefs.SetInt("EmberStat1t",(int)eq.EmberStat1.TheStat);
-			PlayerPrefs.SetInt("EmberStat2",eq.AccessoryStat2.StatAmount);
-			PlayerPrefs.SetInt("EmberStat2t",(int)eq.EmberStat2.TheStat);
-			PlayerPrefs.SetInt("BootStat1",eq.BootStat1.StatAmount);
-			PlayerPrefs.SetInt("BootStat1t",(int)eq.BootStat1.TheStat);
-			PlayerPrefs.SetInt("BootStat2",eq.BootStat2.StatAmount);
-			PlayerPrefs.SetInt("BootStat2t",(int)eq.BootStat2.TheStat);
-			PlayerPrefs.SetInt("Durability",eq.emberDurability);
+            PlayerPrefs.SetFloat("EmberStat1", eq.AccessoryStat1.StatAmount);
+            PlayerPrefs.SetInt("EmberStat1t", (int)eq.EmberStat1.TheStat);
+            PlayerPrefs.SetFloat("EmberStat2", eq.AccessoryStat2.StatAmount);
+            PlayerPrefs.SetInt("EmberStat2t", (int)eq.EmberStat2.TheStat);
+            PlayerPrefs.SetFloat("BootStat1", eq.BootStat1.StatAmount);
+            PlayerPrefs.SetInt("BootStat1t", (int)eq.BootStat1.TheStat);
+            PlayerPrefs.SetFloat("BootStat2", eq.BootStat2.StatAmount);
+            PlayerPrefs.SetInt("BootStat2t", (int)eq.BootStat2.TheStat);
+            PlayerPrefs.SetFloat("Durability", eq.emberDurability);
 	 
 			if(options.easyMode==true)
 				PlayerPrefs.SetInt("EasyMode", 1);
@@ -345,13 +345,13 @@ public class SaveTest : MonoBehaviour {
 		data.maxLightModifier=	PlayerPrefs.GetFloat("LightMod",0 );
 		data.maxHPModifier   =	PlayerPrefs.GetFloat("LifeMod", 0 );
 		data.embername           = 		PlayerPrefs.GetString("EmberName", "NoName");
-		data.emberstat1    = 		PlayerPrefs.GetInt("EmberStat1", 0);
-		data.emberstat2=   PlayerPrefs.GetInt("EmberStat1t",0);
+        data.emberstat1 = PlayerPrefs.GetFloat("EmberStat1", 0);
+        data.emberstat2 = PlayerPrefs.GetFloat("EmberStat1t", 0);
 		data.emberstattype1   = 		PlayerPrefs.GetInt("EmberStat2", 0);
 		data.emberstattype2=   PlayerPrefs.GetInt("EmberStat2t",0);
 		data.bootname                = 		PlayerPrefs.GetString("BootName","NoName");
-		data.bootstat1     = 		PlayerPrefs.GetInt("BootStat1",  0);
-		data.bootstat2=   PlayerPrefs.GetInt("BootStat1t",0);
+        data.bootstat1 = PlayerPrefs.GetFloat("BootStat1", 0);
+        data.bootstat2 = PlayerPrefs.GetFloat("BootStat1t", 0);
 		data.boottattype1     = 		PlayerPrefs.GetInt("BootStat2",  0);
 		data.boottattype2=  PlayerPrefs.GetInt("BootStat2t",0);
 		data.equippedspell=  PlayerPrefs.GetInt("Spell",0);
@@ -423,10 +423,10 @@ public class PlayerData
     public bool easymode;
 	public string embername;
 	public string bootname;
-	public int bootstat1;
-	public int bootstat2;
-	public int emberstat1;
-	public int emberstat2;
+	public float bootstat1;
+	public float bootstat2;
+	public float emberstat1;
+	public float emberstat2;
 	public int emberdurability;
     public int amountofrooms;
 	public int currentroom;

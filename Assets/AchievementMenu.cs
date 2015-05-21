@@ -8,6 +8,9 @@ public class AchievementMenu : MonoBehaviour {
     public GameObject lock3;
     public GameObject lock4;
     public GameObject lock5;
+    public GameObject lock6;
+    public GameObject lock7;
+    public GameObject lock8;
 
     float timer;
 	// Use this for initialization
@@ -68,6 +71,33 @@ public class AchievementMenu : MonoBehaviour {
             else
             {
                 lock5.SetActive(true);
+            }
+
+            if (theoptions.achievements[5] == true)
+            {
+                lock6.SetActive(false);
+            }
+            else
+            {
+                lock6.SetActive(true);
+            }
+
+            if (theoptions.achievements[6] == true)
+            {
+                lock7.SetActive(false);
+            }
+            else
+            {
+                lock7.SetActive(true);
+            }
+
+            if (theoptions.achievements[7] == true)
+            {
+                lock8.SetActive(false);
+            }
+            else
+            {
+                lock8.SetActive(true);
             }
 
 

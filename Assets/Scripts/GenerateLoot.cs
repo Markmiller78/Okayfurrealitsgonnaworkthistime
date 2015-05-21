@@ -137,7 +137,7 @@ public class GenerateLoot : MonoBehaviour
         if (gameObject.tag == "Enemy")
         {
             int MoarLootz = Random.Range(0, 100);
-            if (MoarLootz > 10)
+            if (MoarLootz > 86)
             {
                 //transform.position += new Vector3(0, .6f, 0);
                 int RandNum = Random.Range(1, 19);

@@ -182,16 +182,11 @@ public class PauseMenu : MonoBehaviour
             }
             else
             {
-                Debug.Log("Controller: " + InputManager.controller);
-                Debug.Log("axisChanged" + axisChanged);
-                Debug.Log("CLSHoriz: " + Input.GetAxis("CLSHorizontal"));
-                //Debug.Log("DPadHoriz: " + Input.GetAxis("CDPadHorizontal"));
-                //Debug.Log("KBHoriz: " + Input.GetAxis("KBHorizontal"));
                 switch (currOptionOption)
                 {
                     case 0:
                         #region SFX
-                        SelectorRemains.transform.localPosition = new Vector3(-140f, 130f, -5.1f);
+                        SelectorRemains.transform.localPosition = new Vector3(-150f, 130f, -5.1f);
                         if (InputManager.controller && !axisChanged && (Input.GetAxis("CLSHorizontal") < 0.0f || Input.GetAxis("CDPadHorizontal") < 0.0f))
                         {
                             // Decrease SFX Volume
@@ -224,7 +219,7 @@ public class PauseMenu : MonoBehaviour
                         break;
                     case 1:
                         #region Music
-                        SelectorRemains.transform.localPosition = new Vector3(-140f, 80f, -5.1f);
+                        SelectorRemains.transform.localPosition = new Vector3(-160f, 80f, -5.1f);
                         if (InputManager.controller && !axisChanged && (Input.GetAxis("CLSHorizontal") < 0.0f || Input.GetAxis("CDPadHorizontal") < 0.0f))
                         {
                             // Decrease Music Volume

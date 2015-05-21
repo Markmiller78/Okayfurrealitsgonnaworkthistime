@@ -112,7 +112,15 @@ public class Health : MonoBehaviour
 
             if (this.name == "Morrius(Clone)" || this.name == "Morrius")
             {
-                
+                theoptions.MorriusDie();
+            }
+            else if (this.name == "Lorne(Clone)" || this.name == "Lorne")
+            {
+                theoptions.LorneDie();
+            }
+            else if (this.name == "Dethros(Clone)" || this.name == "Dethros")
+            {
+                theoptions.DethrosDie();
             }
 
         }

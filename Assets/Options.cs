@@ -67,14 +67,14 @@ public class Options : MonoBehaviour
         achievements = new bool[8];
 
 
-        achievements[0] = false; // Morrius defeated
+        achievements[0] = false; // Defeat 100 enemies
         achievements[1] = false; // Melee
         achievements[2] = false; // Chest
         achievements[3] = false; // Dash
-        achievements[4] = false; // Defeat 100 Enemies
-        achievements[5] = false; // Defeat 100 Enemies
-        achievements[6] = false; // Defeat 100 Enemies
-        achievements[7] = false; // Defeat 100 Enemies
+        achievements[4] = false; // Complete Tutorial
+        achievements[5] = false; // Defeat Dethros
+        achievements[6] = false; // Defeat Lorne
+        achievements[7] = false; // Defeat Morrius
         Load();
         DontDestroyOnLoad(gameObject);
         sfxInt.text = sfxVolume.ToString();
@@ -93,6 +93,21 @@ public class Options : MonoBehaviour
 
     }
 
+
+
+
+    public void AddToEnemy()
+    {
+        numEnemiesKilled++;
+        if (numEnemiesKilled >= 100 && achievements[0] == false)
+        {
+            GameObject.Find("EnemyAchv").GetComponent<Image>().enabled = true;
+            achievements[0] = true;
+            aPlayer.PlayOneShot(achvSound);
+            Save();
+        }
+    }
+
     public void AddToMelee()
     {
         numMelee++;
@@ -101,6 +116,18 @@ public class Options : MonoBehaviour
             GameObject.Find("MeleeAchv").GetComponent<Image>().enabled = true;
             achievements[1] = true;
             aPlayer.PlayOneShot(achvSound);
+            Save();
+        }
+    }
+
+    public void OpenChest()
+    {
+        if (achievements[2] == false)
+        {
+            GameObject.Find("ChestAchv").GetComponent<Image>().enabled = true;
+            achievements[2] = true;
+            aPlayer.PlayOneShot(achvSound);
+
             Save();
         }
     }
@@ -117,40 +144,51 @@ public class Options : MonoBehaviour
         }
     }
 
-    public void AddToEnemy()
+    public void CompleteTutorial()
     {
-        numEnemiesKilled++;
-        if (numEnemiesKilled >= 100 && achievements[4] == false)
+        if (achievements[4] == false)
         {
-            GameObject.Find("EnemyAchv").GetComponent<Image>().enabled = true;
+            GameObject.Find("TutorialAchv").GetComponent<Image>().enabled = true;
+
             achievements[4] = true;
             aPlayer.PlayOneShot(achvSound);
             Save();
         }
     }
-
-    public void OpenChest()
+    public void DethrosDie()
     {
-        if (achievements[2] == false)
+        if (achievements[5] == false)
         {
-            GameObject.Find("ChestAchv").GetComponent<Image>().enabled = true;
-            achievements[2] = true;
+            GameObject.Find("DethrosAchv").GetComponent<Image>().enabled = true;
+            achievements[5] = true;
             aPlayer.PlayOneShot(achvSound);
-            
+            Save();
+        }
+    }
+
+
+    public void LorneDie()
+    {
+        if (achievements[6] == false)
+        {
+            GameObject.Find("LorneAchv").GetComponent<Image>().enabled = true;
+            achievements[6] = true;
+            aPlayer.PlayOneShot(achvSound);
             Save();
         }
     }
 
     public void MorriusDie()
     {
-        if (achievements[0] == false)
+        if (achievements[7] == false)
         {
-            GameObject.Find("WinAchv").GetComponent<Image>().enabled = true;
-            achievements[0] = true;
+            GameObject.Find("MorriusAchv").GetComponent<Image>().enabled = true;
+            achievements[7] = true;
             aPlayer.PlayOneShot(achvSound);
             Save();
         }
     }
+
 
     void Update()
     {
@@ -294,6 +332,9 @@ public class Options : MonoBehaviour
             data.achieve2 = achievements[2];
             data.achieve3 = achievements[3];
             data.achieve4 = achievements[4];
+            data.achieve5 = achievements[5];
+            data.achieve6 = achievements[6];
+            data.achieve7 = achievements[7];
             bin.Serialize(file, data);
             file.Close();
         }
@@ -323,6 +364,9 @@ public class Options : MonoBehaviour
                 achievements[2] = data.achieve2;
                 achievements[3] = data.achieve3;
                 achievements[4] = data.achieve4;
+                achievements[5] = data.achieve5;
+                achievements[6] = data.achieve6;
+                achievements[7] = data.achieve7;
 
                 file.Close();
 
@@ -341,6 +385,9 @@ public class OptionData
     public bool achieve2;
     public bool achieve3;
     public bool achieve4;
+    public bool achieve5;
+    public bool achieve6;
+    public bool achieve7;
 
 
 }
