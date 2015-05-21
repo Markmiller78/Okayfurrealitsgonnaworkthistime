@@ -371,6 +371,7 @@ public class AIShadowSpawn : MonoBehaviour
         if (ShadowHealth != null)
             ShadowHealth.LoseHealth(StoredLight);
 
+        StoredLight += 15;
         Instantiate(BlindedParts, transform.position, transform.rotation);
         Instantiate(ReturningParts, transform.position, transform.rotation);
         ReturnLight.currentLight += StoredLight;
