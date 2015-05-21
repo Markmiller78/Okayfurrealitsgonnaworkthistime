@@ -59,12 +59,13 @@ public class PlayerMovement : MonoBehaviour
         stunned = false;
         sTimerMax = .5f;
         stunTimer = sTimerMax;
-        generator = GameObject.FindGameObjectWithTag("Dungeon").GetComponent<RoomGeneration>();
+        if (GameObject.FindGameObjectWithTag("Dungeon"))
+            generator = GameObject.FindGameObjectWithTag("Dungeon").GetComponent<RoomGeneration>();
     }
 
     void Update()
     {
-      
+
         if (heroEquipment.paused == false && tag != "Decoy")
         {
             if (stunned)
@@ -302,11 +303,11 @@ public class PlayerMovement : MonoBehaviour
     {
         if (tag != "Decoy")
         {
-            
-        
-        knockbackTimer = .1f;
-        KnockbackVec = transform.position - Direction;
-        KnockbackVec.Normalize();
+
+
+            knockbackTimer = .1f;
+            KnockbackVec = transform.position - Direction;
+            KnockbackVec.Normalize();
         }
     }
     public void PullThePlayer(Vector3 Direction)
