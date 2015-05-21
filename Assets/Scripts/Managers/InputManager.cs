@@ -8,7 +8,7 @@ public class InputManager : MonoBehaviour
     PlayerCooldowns cooldowns;
     PlayerMeleeAttack melee;
     public static bool controller = false;
-    bool isPaused = false;
+    public bool isPaused = false;
     bool mapMenu = false;
     Animator anim;
 
@@ -133,9 +133,7 @@ public class InputManager : MonoBehaviour
                 {
                     anim.SetFloat("Speed", 0);
 					if(anim.GetCurrentAnimatorStateInfo(0).IsName("PlayerWalking"))
-					   anim.CrossFade("Idle",0.01f);
-                
-
+					   anim.CrossFade("Idle",0.01f);       
                 }
                 // Mouse to rotate
                 player.SendMessage("MouseRotate");

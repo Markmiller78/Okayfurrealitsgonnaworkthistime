@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class PauseMenu : MonoBehaviour
@@ -10,14 +11,35 @@ public class PauseMenu : MonoBehaviour
     PlayerEquipment heroEquipment;
     bool axisChanged = false;
     public GameObject SelectorRemains;
-//    Vector3 RemainsPOS;
+
+    int currOptionOption = 0;
+    int numOptionOptions = 5;
+
+    public Text resume;
+    public Text options;
+    public Text quit;
+
+    public Text sfxVolume;
+    public Text musicVolume;
+    public Text fullscreen;
+    public Text controlMode;
+    public Text back;
+
+    bool optionsMode = false;
+
+    //    Vector3 RemainsPOS;
     void Start()
     {
-//        RemainsPOS = new Vector3(1, 1, 1);
+        //        RemainsPOS = new Vector3(1, 1, 1);
         pauseCanvas = GameObject.FindGameObjectWithTag("PauseCanvas");
         heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
         pauseCanvas.SetActive(false);
         isPaused = false;
+        sfxVolume.enabled = false;
+        musicVolume.enabled = false;
+        fullscreen.enabled = false;
+        controlMode.enabled = false;
+        back.enabled = false;
     }
 
     void Update()
@@ -27,18 +49,24 @@ public class PauseMenu : MonoBehaviour
             if (InputManager.controller)
             {
                 #region Controller Input
-                if (axisChanged && Input.GetAxis("CLSVertical") == 0.0f && Input.GetAxis("CDPadVertical") == 0.0f)
+                if (axisChanged && Input.GetAxis("CLSVertical") == 0.0f && Input.GetAxis("CDPadVertical") == 0.0f && Input.GetAxis("CLSHorizontal") == 0.0f && Input.GetAxis("CDPadHorizontal") == 0.0f)
                 {
                     axisChanged = false;
                 }
                 if (!axisChanged && (Input.GetAxis("CLSVertical") > 0.0f || Input.GetAxis("CDPadVertical") > 0.0f))
                 {
-                    currOption--;
+                    if (!optionsMode)
+                        currOption--;
+                    else
+                        currOptionOption--;
                     axisChanged = true;
                 }
                 if (!axisChanged && (Input.GetAxis("CLSVertical") < 0.0f || Input.GetAxis("CDPadVertical") < 0.0f))
                 {
-                    currOption++;
+                    if (!optionsMode)
+                        currOption++;
+                    else
+                        currOptionOption++;
                     axisChanged = true;
                 }
                 #endregion
@@ -46,18 +74,24 @@ public class PauseMenu : MonoBehaviour
             else
             {
                 #region KB/M Input
-                if (axisChanged && Input.GetAxis("KBVertical") == 0.0f)
+                if (axisChanged && Input.GetAxis("KBVertical") == 0.0f && Input.GetAxis("KBHorizontal") == 0f)
                 {
                     axisChanged = false;
                 }
                 if (!axisChanged && Input.GetAxis("KBVertical") > 0.0f)
                 {
-                    currOption--;
+                    if (!optionsMode)
+                        currOption--;
+                    else
+                        currOptionOption--;
                     axisChanged = true;
                 }
                 if (!axisChanged && Input.GetAxis("KBVertical") < 0.0f)
                 {
-                    currOption++;
+                    if (!optionsMode)
+                        currOption++;
+                    else
+                        currOptionOption++;
                     axisChanged = true;
                 }
                 #endregion
@@ -67,57 +101,228 @@ public class PauseMenu : MonoBehaviour
                 currOption = numOptions - 1;
             else if (currOption >= numOptions)
                 currOption = 0;
+
+            if (currOptionOption < 0)
+                currOptionOption = numOptionOptions - 1;
+            else if (currOptionOption >= numOptionOptions)
+                currOptionOption = 0;
             #endregion
-            switch (currOption)
+
+            if (!optionsMode)
             {
-                case 0:
-                    #region Options Menu Stuff
-                    SelectorRemains.transform.localPosition = new Vector3(-106f, 37f, -5.1f);
-                    if (InputManager.controller && Input.GetButtonDown("CMenuAccept"))
-                    {
-                        // Options Code Here                       
-                    }
-                    else if (!InputManager.controller && Input.GetButtonDown("KBMenuAccept"))
-                    {
-                        // Options Code Here
-                    }
-                    break;
-                    #endregion
-                case 1:
-                    #region Saving
-                    SelectorRemains.transform.localPosition = new Vector3(-77f, -4.5f, -5.1f);
-                    if (InputManager.controller && Input.GetButtonDown("CMenuAccept"))
-                    {
-                        // Save Code Here
-                        GameObject.FindGameObjectWithTag("Player").SendMessage("Save", SendMessageOptions.DontRequireReceiver);
-                    }
-                    else if (!InputManager.controller && Input.GetButtonDown("KBMenuAccept"))
-                    {
-                        // Save Code Here
-                        GameObject.FindGameObjectWithTag("Player").SendMessage("Save", SendMessageOptions.DontRequireReceiver);
-                    }
-                    break;
-                    #endregion
-                case 2:
-                    #region Save & Quit
-                    SelectorRemains.transform.localPosition = new Vector3(-147f, -42f, -5.1f);
-                    if (InputManager.controller && Input.GetButtonDown("CMenuAccept"))
-                    {
-                        // Save & Quit Code Here
-                        GameObject.FindGameObjectWithTag("Player").SendMessage("Save", SendMessageOptions.DontRequireReceiver);
-                        Application.Quit();
-                    }
-                    else if (!InputManager.controller && Input.GetButtonDown("KBMenuAccept"))
-                    {
-                        // Save & Quit Code Here
-                        GameObject.FindGameObjectWithTag("Player").SendMessage("Save", SendMessageOptions.DontRequireReceiver);
-                        Application.Quit();
-                    }
-                    break;
-                    #endregion
-                default:
-                    break;
+                switch (currOption)
+                {
+                    case 0:
+                        #region Resume
+                        SelectorRemains.transform.localPosition = new Vector3(-100f, 80f, -5.1f);
+                        if (InputManager.controller && Input.GetButtonDown("CMenuAccept"))
+                        {
+                            // Resume Code Here
+                            GameObject[] allObjects;
+                            allObjects = GameObject.FindObjectsOfType<GameObject>();
+                            //isPaused = !isPaused;
+                            foreach (GameObject obj in allObjects)
+                            {
+                                obj.SendMessage("UnPause", SendMessageOptions.DontRequireReceiver);
+                            }
+                            GameObject.Find("InputManager").GetComponent<InputManager>().isPaused = false;
+                        }
+                        else if (!InputManager.controller && Input.GetButtonDown("KBMenuAccept"))
+                        {
+                            // Resume Code Here
+                            GameObject[] allObjects;
+                            allObjects = GameObject.FindObjectsOfType<GameObject>();
+                            //isPaused = !isPaused;
+                            foreach (GameObject obj in allObjects)
+                            {
+                                obj.SendMessage("UnPause", SendMessageOptions.DontRequireReceiver);
+                            }
+                            GameObject.Find("InputManager").GetComponent<InputManager>().isPaused = false;
+                        }
+                        break;
+                        #endregion
+                    case 1:
+                        #region Options Menu Stuff
+                        SelectorRemains.transform.localPosition = new Vector3(-105f, 30f, -5.1f);
+                        if (InputManager.controller && Input.GetButtonDown("CMenuAccept"))
+                        {
+                            //    // Options Code Here
+                            SwapMode();
+                        }
+                        else if (!InputManager.controller && Input.GetButtonDown("KBMenuAccept"))
+                        {
+                            // Options Code Here
+                            SwapMode();
+                        }
+                        break;
+                        #endregion
+                    case 2:
+                        #region Quit
+                        SelectorRemains.transform.localPosition = new Vector3(-70f, -85f, -5.1f);
+                        if (InputManager.controller && Input.GetButtonDown("CMenuAccept"))
+                        {
+                            // Save & Quit Code Here
+                            //GameObject.FindGameObjectWithTag("Player").SendMessage("Save", SendMessageOptions.DontRequireReceiver);
+                            //Application.Quit();
+                            Application.LoadLevel("MainMenu");
+                        }
+                        else if (!InputManager.controller && Input.GetButtonDown("KBMenuAccept"))
+                        {
+                            // Save & Quit Code Here
+                            //GameObject.FindGameObjectWithTag("Player").SendMessage("Save", SendMessageOptions.DontRequireReceiver);
+                            //Application.Quit();
+                            Application.LoadLevel("MainMenu");
+                        }
+                        break;
+                        #endregion
+                    default:
+                        break;
+                }
             }
+            else
+            {
+                switch (currOptionOption)
+                {
+                    case 0:
+                        #region SFX
+                        SelectorRemains.transform.localPosition = new Vector3(-120f, 130f, -5.1f);
+                        if (InputManager.controller && !axisChanged && Input.GetAxis("CLSHorizontal") < 0.0f)
+                        {
+                            // Decrease SFX Volume
+                        }
+                        else if (InputManager.controller && !axisChanged && Input.GetAxis("CLSHorizontal") > 0.0f)
+                        {
+                            // Increase SFX Volume
+                        }
+                        else if (!InputManager.controller && !axisChanged && Input.GetAxis("KBHorizontal") < 0.0f)
+                        {
+                            // Decrease SFX Volume
+                        }
+                        else if (!InputManager.controller && !axisChanged && Input.GetAxis("KBHorizontal") > 0.0f)
+                        {
+                            // Increase SFX Volume
+                        }
+                        #endregion
+                        break;
+                    case 1:
+                        #region Music
+                        SelectorRemains.transform.localPosition = new Vector3(-130f, 80f, -5.1f);
+                        if (InputManager.controller && !axisChanged && Input.GetAxis("CLSHorizontal") < 0.0f)
+                        {
+                            // Decrease Music Volume
+                        }
+                        else if (InputManager.controller && !axisChanged && Input.GetAxis("CLSHorizontal") > 0.0f)
+                        {
+                            // Increase Music Volume
+                        }
+                        else if (!InputManager.controller && !axisChanged && Input.GetAxis("KBHorizontal") < 0.0f)
+                        {
+                            // Decrease Music Volume
+                        }
+                        else if (!InputManager.controller && !axisChanged && Input.GetAxis("KBHorizontal") > 0.0f)
+                        {
+                            // Increase Music Volume
+                        }
+                        #endregion
+                        break;
+                    case 2:
+                        #region Fullscreen
+                        SelectorRemains.transform.localPosition = new Vector3(-100f, 30f, -5.1f);
+                        if (InputManager.controller && Input.GetButtonDown("CMenuAccept"))
+                        {
+                            if (Screen.fullScreen)
+                            {
+                                Screen.SetResolution(1280, 720, !Screen.fullScreen);
+                            }
+                            else
+                            {
+                                Screen.SetResolution(1280, 720, Screen.fullScreen);
+                            }
+                            Screen.fullScreen = !Screen.fullScreen;
+                        }
+                        else if (!InputManager.controller && Input.GetButtonDown("KBMenuAccept"))
+                        {
+                            if (Screen.fullScreen)
+                            {
+                                Screen.SetResolution(1280, 720, !Screen.fullScreen);
+                            }
+                            else
+                            {
+                                Screen.SetResolution(1280, 720, Screen.fullScreen);
+                            }
+                            Screen.fullScreen = !Screen.fullScreen;
+                        }
+                        #endregion
+                        break;
+                    case 3:
+                        #region Control Mode
+                        SelectorRemains.transform.localPosition = new Vector3(-180f,-25f, -5.1f);
+                        if (Input.GetButtonDown("CMenuAccept"))
+                        {
+                            InputManager.controller = !InputManager.controller;
+                            controlMode.text = "Controls: " + (InputManager.controller ? "Controller" : "KB/Mouse");
+                        }
+                        else if (Input.GetButtonDown("KBMenuAccept"))
+                        {
+                            InputManager.controller = !InputManager.controller;
+                            controlMode.text = "Controls: " + (InputManager.controller ? "Controller" : "KB/Mouse");
+                        }
+                        #endregion
+                        break;
+                    case 4:
+                        #region Back
+                        SelectorRemains.transform.localPosition = new Vector3(-70f, -85f, -5.1f);
+                        if (InputManager.controller && Input.GetButtonDown("CMenuAccept"))
+                        {
+                            SwapMode();
+                        }
+                        else if (!InputManager.controller && Input.GetButtonDown("KBMenuAccept"))
+                        {
+                            SwapMode();
+                        }
+                        #endregion
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+    }
+
+    void SwapMode()
+    {
+        optionsMode = !optionsMode;
+        if (optionsMode)
+        {
+            resume.enabled = false;
+            options.enabled = false;
+            quit.enabled = false;
+
+            sfxVolume.enabled = true;
+            musicVolume.enabled = true;
+            fullscreen.enabled = true;
+            controlMode.enabled = true;
+            if (!InputManager.controller)
+            {
+                controlMode.text += " KB/Mouse";
+            }
+            else
+            {
+                controlMode.text += " Controller";
+            }
+            back.enabled = true;
+        }
+        else
+        {
+            resume.enabled = true;
+            options.enabled = true;
+            quit.enabled = true;
+
+            sfxVolume.enabled = false;
+            musicVolume.enabled = false;
+            fullscreen.enabled = false;
+            controlMode.enabled = false;
+            back.enabled = false;
         }
     }
 

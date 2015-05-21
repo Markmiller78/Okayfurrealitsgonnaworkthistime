@@ -5,6 +5,7 @@ public class SkeletonProjectile : MonoBehaviour
 {
     GameObject player;
     Health playerHealth;
+    PlayerEquipment eq;
     public float speed;
     public float damage;
     bool isActive = true;
@@ -13,9 +14,10 @@ public class SkeletonProjectile : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Decoy");
-        if(player==null)
+        if (player == null)
             player = GameObject.FindGameObjectWithTag("Player");
         playerHealth = player.GetComponent<Health>();
+        eq = player.GetComponent<PlayerEquipment>();
     }
 
     void OnTriggerEnter(Collider other)
@@ -33,13 +35,14 @@ public class SkeletonProjectile : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (isActive)
+        if (isActive && !eq.paused)
             transform.position += transform.up * speed * Time.deltaTime;
     }
 
     void Update()
     {
-        timer += Time.deltaTime;
+        if (!eq.paused)
+            timer += Time.deltaTime;
 
         if (timer >= 10.0f)
         {
