@@ -9,7 +9,7 @@ public class DarkOrbExplosion : MonoBehaviour {
     GameObject player;
     float maxLife;
     public float explodedamage;
-
+    public float expRadius;
     // Use this for initialization
     void Start()
     {
@@ -18,6 +18,12 @@ public class DarkOrbExplosion : MonoBehaviour {
         heroEquipment = player.GetComponent<PlayerEquipment>();
         theLight = gameObject.GetComponent<Light>();
         Camera.main.SendMessage("ScreenShake");
+
+        if (Vector3.Distance(transform.position, player.transform.position) <= expRadius)
+        {
+            player.GetComponent<Health>().LoseHealth(explodedamage);
+
+        }
     }
 
     // Update is called once per frame
@@ -34,12 +40,4 @@ public class DarkOrbExplosion : MonoBehaviour {
         }
     }
 
-    void OnTriggerEnter(Collider other)
-    {
-        heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
-        if (other.tag == "Player")
-        {
-            other.GetComponent<Health>().LoseHealth(explodedamage);
-        }
-    }
 }

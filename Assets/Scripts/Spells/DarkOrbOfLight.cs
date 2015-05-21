@@ -51,7 +51,18 @@ public class DarkOrbOfLight : MonoBehaviour {
 
     void Explode()
     {
-        Instantiate(explosion, transform.position, transform.rotation);
+        GameObject exp = (GameObject)Instantiate(explosion, transform.position, transform.rotation);
+
+        if (this.name.Contains("Morrius"))
+        {
+            exp.GetComponent<DarkOrbExplosion>().expRadius = 2.4f;
+        }
+        else
+        {
+            exp.GetComponent<DarkOrbExplosion>().expRadius = 1.2f;
+        }
+
+
         if(hazard != null)
          Instantiate(hazard, transform.position, transform.rotation);
         Destroy(gameObject);
