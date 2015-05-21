@@ -97,10 +97,13 @@ public class AIShadowCloud : MonoBehaviour
     void Decoy()
     {
         player = GameObject.FindGameObjectWithTag("Decoy");
+        target = player;
     }
     void UnDecoy()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        target = player;
+
     }
 
     void Snare()

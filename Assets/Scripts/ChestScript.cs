@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class ChestScript : MonoBehaviour {
 
@@ -8,6 +9,11 @@ public class ChestScript : MonoBehaviour {
 	public GameObject loot;
     PlayerLight heroLight;
     Camera cameras;
+	public GameObject TooltipWindow;
+	RawImage ToolTipBack;
+	public Vector3 ToolPOS;
+	SetToolTipTexts ToolTipTexts;
+	public GameObject temp;
 
     Options theoptions;
 	
@@ -17,22 +23,24 @@ public class ChestScript : MonoBehaviour {
 		heroLight=player.gameObject.GetComponent<PlayerLight>();
         cameras = GameObject.FindObjectOfType<Camera>();
         theoptions = GameObject.Find("TheOptions").GetComponent<Options>();
+		temp = Instantiate (TooltipWindow);
 
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update () 
+	{
 	
 	}
 
 	void OnGUI()
 	{
-		if (displaytooltips)
-		{
-        string temp="Press E to open";
-            GUI.Box(new Rect(cameras.WorldToScreenPoint(player.transform.position).x + 32, Screen.height - cameras.WorldToScreenPoint(player.transform.position).y, 100, 40), temp);
+	//	if (displaytooltips)
+	//	{
+     //   string temp="Press E to open";
+       //     GUI.Box(new Rect(cameras.WorldToScreenPoint(player.transform.position).x + 32, Screen.height - cameras.WorldToScreenPoint(player.transform.position).y, 100, 40), temp);
 
-		}
+		//}
 
 	}
 
@@ -52,12 +60,21 @@ public class ChestScript : MonoBehaviour {
 	void DisplayTooltip()
 	{
 		displaytooltips = true;
+		if (temp != null)
+		{
+			temp.SetActive(true);
+			ToolTipBack = temp.GetComponentInChildren<RawImage>();
+			ToolTipBack.SendMessage("ToolSetTexts", ToolTipTexts, SendMessageOptions.DontRequireReceiver);
+		}
 
 	 	}
 
 	void DoNotDisplayTooltip()
 	{
 		displaytooltips = false;
+        if (temp != null)
+			temp.SetActive(false);
+		
 	}
 
 	}
