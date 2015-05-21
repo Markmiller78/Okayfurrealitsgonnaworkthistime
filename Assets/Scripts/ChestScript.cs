@@ -72,6 +72,8 @@ public class ChestScript : MonoBehaviour {
 			heroLight.LoseLight (5);
             gameObject.GetComponent<GenerateLoot>().Generateloot();
 			//Instantiate (loot, transform.position, new Quaternion (0, 0, 0, 0));
+			temp.SetActive(false);
+			Destroy (temp);
 			Destroy (this.gameObject);
 		}
 

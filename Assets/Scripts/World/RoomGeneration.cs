@@ -52,7 +52,7 @@ public class RoomGeneration : MonoBehaviour
 
     void Start()
     {
-		savenload = GameObject.FindObjectOfType<SaveTest> ();
+		savenload = GameObject.FindObjectOfType<Options>().GetComponent<SaveTest> ();
         firstRoom = true;
         //DontDestroyOnLoad(this);
         player = GameObject.FindGameObjectWithTag("Player");
@@ -60,7 +60,7 @@ public class RoomGeneration : MonoBehaviour
         loading = GameObject.FindObjectOfType<Options>().shouldload;
         if (loading)
         {
-			//savenload.Load();
+			savenload.LoadDungeon();
             easyMode = loadedData.easymode;
         }
         else easyMode = GameObject.FindObjectOfType<Options>().easyMode;

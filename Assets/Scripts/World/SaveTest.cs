@@ -13,62 +13,39 @@ public class SaveTest : MonoBehaviour {
 	public float life;
 	public float lightss;
     public bool shouldload = false;
-    GameObject dungeon;
-    RoomGeneration theRooms;
+    public GameObject dungeon;
+    public RoomGeneration theRooms;
     Options options;
     PlayerStats theStats;
-    public bool shouldsave = true;
+	PlayerData data;
     public int enemies=0;
     public bool saved = false;
 	PlayerEquipment eq;
 
 	
-	private static SaveTest _instance;
-	
-	public static SaveTest instance
-	{
-		get
-		{
-			if (_instance == null)
-			{
-				_instance = GameObject.FindObjectOfType<SaveTest>();
-				DontDestroyOnLoad(_instance.gameObject);
-			}
-			return _instance;
-		}
-	}
-	void Awake()
-	{
-		if (_instance == null)
-		{
-			_instance = this;
-			DontDestroyOnLoad(this);
-		}
-		else if (this != _instance)
-		{
-			Destroy(this.gameObject);
-		}
-	}
-	
-	
+
 	
 	// Use this for initialization
 	void Start ()
-		
+
+
 	{
+		data = new PlayerData ();
         options = GameObject.FindObjectOfType<Options>();
         player = GameObject.FindGameObjectWithTag("Player");
         dungeon = GameObject.FindGameObjectWithTag("Dungeon");
 		if(dungeon!=null)
 			theRooms = dungeon.GetComponent<RoomGeneration>();
 
-		if (options.shouldload == true)
-			shouldload = true;
+ 
+
+		LoadData ();
       
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		shouldload = options.shouldload;
 		if(player==null)
 		{
 			player = GameObject.FindGameObjectWithTag("Player");
@@ -92,23 +69,29 @@ public class SaveTest : MonoBehaviour {
 
         else
             if (theRooms != null)
-                if (enemies <= 0&&shouldsave==true&&saved==false)
+                if (enemies <= 0&&saved==false)
                     
                     {
                         Save();
                         Debug.Log("Saved!");
-                        shouldsave = false;
+                      
                         saved = true;
                     }
-
-                    else
-                        shouldsave = true;
+ 
 
 	
 	}
  
    public void Save()
     {
+		player = GameObject.FindGameObjectWithTag("Player");
+		if(player!=null)
+		{
+			eq=player.GetComponent<PlayerEquipment>();
+			theStats = player.GetComponent<PlayerStats>();
+			
+		}
+
         if (Application.platform == RuntimePlatform.OSXWebPlayer
            || Application.platform == RuntimePlatform.WindowsWebPlayer)
         {
@@ -173,34 +156,37 @@ public class SaveTest : MonoBehaviour {
             else
                 file = File.Open(Application.persistentDataPath + "/playerinfo.dat", FileMode.Open);
          
-            PlayerData data = new PlayerData();
+           
             data.health = player.GetComponent<Health>().currentHP;
             data.theLight = player.GetComponent<PlayerLight>().currentLight;
+
             data.easymode = options.easyMode;
+
             data.maxHPModifier = theStats.maxHPModifier;
             data.maxLightModifier = theStats.maxLightModifier;
             data.meleeModifier = theStats.meleeModifier;
             data.spellModifier = theStats.spellModifier;
+
 			data.equippedember= (int)eq.equippedEmber;
 			data.equippedboot= (int)eq.equippedBoot;
+
 			data.embername= eq.AccessoryName;
 			Debug.Log(data.embername);
+
 			data.emberstat1=eq.EmberStat1.StatAmount;
 			data.emberstattype1= (int)eq.EmberStat1.TheStat;
 			data.emberstat2= eq.EmberStat2.StatAmount;
 			data.emberstattype2= (int)eq.EmberStat2.TheStat;
 			data.emberdurability= eq.emberDurability;
-			data.bootname= eq.BootName;
-			Debug.Log (data.bootname);
+
+			data.bootname= eq.BootName;		
 			data.bootstat1= eq.BootStat1.StatAmount;
 			data.boottattype1= (int)eq.BootStat1.TheStat;
 			data.bootstat2=eq.BootStat2.StatAmount;
 			data.boottattype2= (int)eq.BootStat2.TheStat;
+			Debug.Log (data.bootname);
 			data.currentroom= theRooms.currentRoom;
 			data.equippedspell= (int)eq.equippedAccessory;
-
-		
-
             CopyRooms(data);
            
             bin.Serialize(file, data);
@@ -215,117 +201,57 @@ public class SaveTest : MonoBehaviour {
 
    public void Load()
    {
-       if (Application.platform == RuntimePlatform.OSXWebPlayer
-   || Application.platform == RuntimePlatform.WindowsWebPlayer)
-       {
-			Debug.Log("OK Load");
-			//Loading Hp and Light
-
-      player.gameObject.GetComponent<Health>().currentHP=      PlayerPrefs.GetFloat("PlayerHealth", 100);
-      player.gameObject.GetComponent<PlayerLight>().currentLight=      PlayerPrefs.GetFloat("PlayerLight", 100);
-			//Loading stats
-		theStats.meleeModifier   =	PlayerPrefs.GetFloat("MeleeMod",0 );
-		theStats.spellModifier   =	PlayerPrefs.GetFloat("SpellMod",0 );
-		theStats.maxLightModifier=	PlayerPrefs.GetFloat("LightMod",0 );
-		theStats.maxHPModifier   =	PlayerPrefs.GetFloat("LifeMod", 0 );
-
-	eq.AccessoryName           = 		PlayerPrefs.GetString("EmberName", "NoName");
-	eq.EmberStat1.StatAmount    = 		PlayerPrefs.GetInt("EmberStat1", 0);
-			eq.EmberStat1.TheStat= (StatType) PlayerPrefs.GetInt("EmberStat1t",0);
-	eq.EmberStat2.StatAmount   = 		PlayerPrefs.GetInt("EmberStat2", 0);
-			eq.EmberStat2.TheStat= (StatType) PlayerPrefs.GetInt("EmberStat2t",0);
-	eq.BootName                = 		PlayerPrefs.GetString("BootName","NoName");
-	eq.BootStat1.StatAmount     = 		PlayerPrefs.GetInt("BootStat1",  0);
-			eq.BootStat1.TheStat= (StatType) PlayerPrefs.GetInt("BootStat1t",0);
-	eq.BootStat2.StatAmount     = 		PlayerPrefs.GetInt("BootStat2",  0);
-			eq.BootStat2.TheStat= (StatType) PlayerPrefs.GetInt("BootStat2t",0);
-			eq.equippedAccessory=(accessory) PlayerPrefs.GetInt("Spell",0);
-			eq.emberDurability= PlayerPrefs.GetInt("Durability",8);
-			PlayerData data= new PlayerData();
-
-			//Loading boot and embers
-		eq.equippedEmber=(ember)	PlayerPrefs.GetInt("Ember",0);
-		eq.equippedBoot  =	(boot)PlayerPrefs.GetInt("Boot",0 );
-			data.currentroom= PlayerPrefs.GetInt("CurrentRoom", 0);
-			//Loading the amount of rooms in the roomgenerator
-     int teemplenght = PlayerPrefs.GetInt("RoomArrLenght", 0);
-			Debug.Log("This is the lenght of the array ");
-			Debug.Log(teemplenght);
-			options.easyMode = PlayerPrefs.GetInt("EasyMode",1) == 1 ? true : false; 
-     if (teemplenght != 0)
-     {
+		player = GameObject.FindGameObjectWithTag("Player");
+		if(player!=null)
+		{
+			eq=player.GetComponent<PlayerEquipment>();
+			theStats = player.GetComponent<PlayerStats>();
 			
-        data.roominfo= new RoomData[teemplenght];
-         for (int i = 0; i < teemplenght; i++)
-         {
-					data.roominfo[i]= new RoomData();
-             string temp = "Room_" + i.ToString() + "_been there";
-             string temps = "RoomID_" + i.ToString();
-			 string tempsss= "RoomExitDir_"+ i.ToString();
-			 string tempss= "RoomEntryDir_"+i.ToString();
-
-             data.roominfo[i].beenThere = PlayerPrefs.GetInt(temp,0) == 1 ? true : false;
-             data.roominfo[i].roomID = PlayerPrefs.GetInt(temps,0);
-			 data.roominfo[i].entranceDir= PlayerPrefs.GetInt(tempss,0);
-			 data.roominfo[i].exitDir=PlayerPrefs.GetInt(tempsss,0);
-         }
-
-				theRooms.currentRoom= data.currentroom;
-				theRooms.loadedData=data;
-				Debug.Log("THIS SHOULD BE LOADING OK?! I AM REALLY UPPERCASY SO YOU CAN SPOT ME EASIER =D");
-     }
-
-
-       }
-       else
-       {
-           if (File.Exists(Application.persistentDataPath + "/playerinfo.dat"))
-           {
-               BinaryFormatter bin = new BinaryFormatter();
-               FileStream file = File.Open(Application.persistentDataPath + "/playerinfo.dat", FileMode.Open);
-               PlayerData data = (PlayerData)bin.Deserialize(file);
-
-               player.GetComponent<Health>().currentHP = data.health;
+		}
+               player.GetComponent<Health>().currentHP         = data.health;
                player.GetComponent<PlayerLight>().currentLight = data.theLight;
 
-               theStats.maxHPModifier = data.maxHPModifier;
+               theStats.maxHPModifier    = data.maxHPModifier;
                theStats.maxLightModifier = data.maxLightModifier;
-               theStats.meleeModifier = data.meleeModifier;
-               theStats.spellModifier = data.spellModifier;
+               theStats.meleeModifier    = data.meleeModifier;
+               theStats.spellModifier    = data.spellModifier;
 				Debug.Log(data.embername);
 				Debug.Log(data.bootname);
 
-				eq.equippedEmber=  		(ember)data.equippedember ;
-				eq.equippedBoot=    		(boot)data.equippedboot;   
-				eq.equippedAccessory= (accessory)data.equippedspell;
-				eq.AccessoryName           = 	data.embername;
-				eq.EmberStat1.StatAmount    = 	data.emberstat1;
-				eq.EmberStat1.TheStat=(StatType) data.emberstattype1;
-				eq.EmberStat2.StatAmount   = 	data.emberstat2;
-				eq.EmberStat1.TheStat=(StatType) data.emberstattype1;
+				eq.equippedEmber          =  		(ember)data.equippedember ;
+				eq.equippedBoot           =    		(boot)data.equippedboot;   
+				eq.equippedAccessory      = (accessory)data.equippedspell;
+				eq.AccessoryName          = 	data.embername;
+				eq.EmberStat1.StatAmount  = 	data.emberstat1;
+				eq.EmberStat1.TheStat     =(StatType) data.emberstattype1;
+				eq.EmberStat2.StatAmount  = 	data.emberstat2;
+				eq.EmberStat1.TheStat     =(StatType) data.emberstattype1;
 				
-				eq.BootName                = 	data.bootname;  
-				eq.BootStat1.StatAmount     = 	data.bootstat1;
-				eq.BootStat1.TheStat=(StatType) data.boottattype1;
+				eq.BootName               = 	data.bootname;  
+				eq.BootStat1.StatAmount   = 	data.bootstat1;
+				eq.BootStat1.TheStat      =(StatType) data.boottattype1;
 				
-				eq.BootStat2.StatAmount     = 	data.bootstat2; 
-				eq.BootStat2.TheStat=(StatType) data.boottattype2;
-				eq.emberDurability= data.emberdurability;
+				eq.BootStat2.StatAmount   = 	data.bootstat2; 
+				eq.BootStat2.TheStat      =(StatType) data.boottattype2;
+				eq.emberDurability        = data.emberdurability;
 				Debug.Log (eq.BootName);
 				Debug.Log (eq.AccessoryName);
 
-                options.easyMode = data.easymode;
+                options.easyMode          = data.easymode;
+				if(theRooms!=null)
 
-				theRooms.currentRoom= data.currentroom;
+				{				
+					theRooms.currentRoom= data.currentroom;
 				theRooms.loadedData= data;
+				}
 		
      
     
-               file.Close();
+               
            
 
-           }
-       }
+           
+       
    }
     void CopyRooms(PlayerData data)
    {
@@ -349,47 +275,15 @@ public class SaveTest : MonoBehaviour {
 
 	public void LoadPlayer()
 	{
-		if (Application.platform == RuntimePlatform.OSXWebPlayer
-			|| Application.platform == RuntimePlatform.WindowsWebPlayer) {
-			Debug.Log ("OK Load");
-			//Loading Hp and Light
+		 
+		player = GameObject.FindGameObjectWithTag("Player");
+		if(player!=null)
+		{
+			eq=player.GetComponent<PlayerEquipment>();
+			theStats = player.GetComponent<PlayerStats>();
 			
-			player.gameObject.GetComponent<Health> ().currentHP = PlayerPrefs.GetFloat ("PlayerHealth", 100);
-			player.gameObject.GetComponent<PlayerLight> ().currentLight = PlayerPrefs.GetFloat ("PlayerLight", 100);
-			//Loading stats
-			theStats.meleeModifier = PlayerPrefs.GetFloat ("MeleeMod", 0);
-			theStats.spellModifier = PlayerPrefs.GetFloat ("SpellMod", 0);
-			theStats.maxLightModifier = PlayerPrefs.GetFloat ("LightMod", 0);
-			theStats.maxHPModifier = PlayerPrefs.GetFloat ("LifeMod", 0);
-			
-			eq.AccessoryName = PlayerPrefs.GetString ("EmberName", "NoName");
-			eq.EmberStat1.StatAmount = PlayerPrefs.GetInt ("EmberStat1", 0);
-			eq.EmberStat1.TheStat = (StatType)PlayerPrefs.GetInt ("EmberStat1t", 0);
-			eq.EmberStat2.StatAmount = PlayerPrefs.GetInt ("EmberStat2", 0);
-			eq.EmberStat2.TheStat = (StatType)PlayerPrefs.GetInt ("EmberStat2t", 0);
-			eq.BootName = PlayerPrefs.GetString ("BootName", "NoName");
-			eq.BootStat1.StatAmount = PlayerPrefs.GetInt ("BootStat1", 0);
-			eq.BootStat1.TheStat = (StatType)PlayerPrefs.GetInt ("BootStat1t", 0);
-			eq.BootStat2.StatAmount = PlayerPrefs.GetInt ("BootStat2", 0);
-			eq.BootStat2.TheStat = (StatType)PlayerPrefs.GetInt ("BootStat2t", 0);
-			eq.equippedAccessory = (accessory)PlayerPrefs.GetInt ("Spell", 0);
-			eq.emberDurability = PlayerPrefs.GetInt ("Durability", 8);
-			PlayerData data = new PlayerData ();
-			
-			//Loading boot and embers
-			eq.equippedEmber = (ember)PlayerPrefs.GetInt ("Ember", 0);
-			eq.equippedBoot = (boot)PlayerPrefs.GetInt ("Boot", 0);
-			data.currentroom = PlayerPrefs.GetInt ("CurrentRoom", 0);
-			//Loading the amount of rooms in the roomgenerator
-			int teemplenght = PlayerPrefs.GetInt ("RoomArrLenght", 0);
-			Debug.Log ("This is the lenght of the array ");
-			Debug.Log (teemplenght);
-			options.easyMode = PlayerPrefs.GetInt ("EasyMode", 1) == 1 ? true : false; 
-		} else {
-			if (File.Exists (Application.persistentDataPath + "/playerinfo.dat")) {
-				BinaryFormatter bin = new BinaryFormatter ();
-				FileStream file = File.Open (Application.persistentDataPath + "/playerinfo.dat", FileMode.Open);
-				PlayerData data = (PlayerData)bin.Deserialize (file);
+		}
+
 			
 				player.GetComponent<Health> ().currentHP = data.health;
 				player.GetComponent<PlayerLight> ().currentLight = data.theLight;
@@ -421,20 +315,57 @@ public class SaveTest : MonoBehaviour {
 				Debug.Log (eq.AccessoryName);
 			
 				options.easyMode = data.easymode;
-				file.Close ();
+			 	  
+			
+
 			}
 
-		}
-	}
+
 	public void LoadDungeon()
+	{ 
+		theRooms = GameObject.FindGameObjectWithTag("Dungeon").GetComponent<RoomGeneration>();
+				options.easyMode = data.easymode;
+				theRooms.currentRoom = data.currentroom;
+				theRooms.loadedData = data;
+	}
+
+	public void LoadData()
 	{
 		if (Application.platform == RuntimePlatform.OSXWebPlayer
-			|| Application.platform == RuntimePlatform.WindowsWebPlayer) {
-			Debug.Log ("OK Load");
-			PlayerData data= new PlayerData();
+		    || Application.platform == RuntimePlatform.WindowsWebPlayer)
+		{
+			Debug.Log("OK Load");
+			//Loading Hp and Light
+			
+		  data.health=      PlayerPrefs.GetFloat("PlayerHealth", 100);
+		  data.theLight=      PlayerPrefs.GetFloat("PlayerLight", 100);
+			//Loading stats
+		data.meleeModifier   =	PlayerPrefs.GetFloat("MeleeMod",0 );
+		data.spellModifier   =	PlayerPrefs.GetFloat("SpellMod",0 );
+		data.maxLightModifier=	PlayerPrefs.GetFloat("LightMod",0 );
+		data.maxHPModifier   =	PlayerPrefs.GetFloat("LifeMod", 0 );
+		data.embername           = 		PlayerPrefs.GetString("EmberName", "NoName");
+		data.emberstat1    = 		PlayerPrefs.GetInt("EmberStat1", 0);
+		data.emberstat2=   PlayerPrefs.GetInt("EmberStat1t",0);
+		data.emberstattype1   = 		PlayerPrefs.GetInt("EmberStat2", 0);
+		data.emberstattype2=   PlayerPrefs.GetInt("EmberStat2t",0);
+		data.bootname                = 		PlayerPrefs.GetString("BootName","NoName");
+		data.bootstat1     = 		PlayerPrefs.GetInt("BootStat1",  0);
+		data.bootstat2=   PlayerPrefs.GetInt("BootStat1t",0);
+		data.boottattype1     = 		PlayerPrefs.GetInt("BootStat2",  0);
+		data.boottattype2=  PlayerPrefs.GetInt("BootStat2t",0);
+		data.equippedspell=  PlayerPrefs.GetInt("Spell",0);
+		data.emberdurability= PlayerPrefs.GetInt("Durability",8);
+			
+			
+			//Loading boot and embers
+			data.equippedember=	PlayerPrefs.GetInt("Ember",0);
+			data.equippedboot  =PlayerPrefs.GetInt("Boot",0 );
 			data.currentroom= PlayerPrefs.GetInt("CurrentRoom", 0);
 			//Loading the amount of rooms in the roomgenerator
 			int teemplenght = PlayerPrefs.GetInt("RoomArrLenght", 0);
+
+			data.amountofrooms=teemplenght;
 			Debug.Log("This is the lenght of the array ");
 			Debug.Log(teemplenght);
 			options.easyMode = PlayerPrefs.GetInt("EasyMode",1) == 1 ? true : false; 
@@ -456,27 +387,27 @@ public class SaveTest : MonoBehaviour {
 					data.roominfo[i].exitDir=PlayerPrefs.GetInt(tempsss,0);
 				}
 				
-				theRooms.currentRoom= data.currentroom;
-				theRooms.loadedData=data;
+				 
 				Debug.Log("THIS SHOULD BE LOADING OK?! I AM REALLY UPPERCASY SO YOU CAN SPOT ME EASIER =D");
-
 			}
-
-		} 
-
+			
+			
+		}
 		else
 		{
-			if (File.Exists (Application.persistentDataPath + "/playerinfo.dat")) {
-				BinaryFormatter bin = new BinaryFormatter ();
-				FileStream file = File.Open (Application.persistentDataPath + "/playerinfo.dat", FileMode.Open);
-				PlayerData data = (PlayerData)bin.Deserialize (file);
+			if (File.Exists(Application.persistentDataPath + "/playerinfo.dat"))
+			{
+				BinaryFormatter bin = new BinaryFormatter();
+				FileStream file = File.Open(Application.persistentDataPath + "/playerinfo.dat", FileMode.Open);
+				data = (PlayerData)bin.Deserialize(file);			
 				options.easyMode = data.easymode;
-				theRooms.currentRoom = data.currentroom;
-				theRooms.loadedData = data;
-				file.Close ();
+				file.Close();
+				
+				
 			}
-
 		}
+
+
 	}
 }
 
