@@ -13,6 +13,8 @@ public class ExpPlacer : MonoBehaviour
 
     bool once;
 
+    public bool returnsLight;
+
     // Use this for initialization
     void Start()
     {
@@ -31,21 +33,24 @@ public class ExpPlacer : MonoBehaviour
     {
         if (once)
         {
+            GameObject expl;
 
             if (timer <= 0.05f)
             {
-                Instantiate(smlExp, transform.position, transform.rotation);
+                expl = (GameObject)Instantiate(smlExp, transform.position, transform.rotation);
             }
             else if (timer <= 0.1f)
             {
-                Instantiate(medExp, transform.position, transform.rotation);
+                expl = (GameObject)Instantiate(medExp, transform.position, transform.rotation);
 
             }
             else
             {
-                Instantiate(lrgExp, transform.position, transform.rotation);
+                expl = (GameObject)Instantiate(lrgExp, transform.position, transform.rotation);
 
             }
+
+            expl.GetComponent<BoltExp>().dropLight = returnsLight;
 
             once = false;
             Destroy(gameObject);

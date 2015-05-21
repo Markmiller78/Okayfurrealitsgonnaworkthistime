@@ -6,9 +6,14 @@ public class BoltExp : MonoBehaviour
 
     public GameObject lightRemains;
     // Use this for initialization
+    public bool dropLight;
     void Start()
     {
-        Instantiate(lightRemains, transform.position, new Quaternion(0, 0, 0, 0));
+        if (dropLight)
+        {
+            Instantiate(lightRemains, transform.position, new Quaternion(0, 0, 0, 0));
+            
+        }
         Destroy(gameObject, 3);
     }
 
