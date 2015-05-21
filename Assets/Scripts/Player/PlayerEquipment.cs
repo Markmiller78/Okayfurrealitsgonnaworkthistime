@@ -31,7 +31,7 @@ public class PlayerEquipment : MonoBehaviour
     public ItemStat EmberStat2;
 	SaveTest savenload;
 
-    int TotalSP, TotalAD, MaxHP, MaxLight;
+    float TotalSP, TotalAD, MaxHP, MaxLight;
 
 
     AudioSource audioPlayer;
@@ -48,14 +48,14 @@ public class PlayerEquipment : MonoBehaviour
         audioPlayer = gameObject.GetComponent<AudioSource>();
       
         paused = false;
-		savenload = GameObject.FindObjectOfType<Options>().GetComponent<SaveTest>();
-		if (!savenload.shouldload) {
+		savenload = GameObject.FindObjectOfType<Options> ().GetComponent<SaveTest> ();
+		if (savenload && !savenload.shouldload) {
 			emberDurability = 0;
  
 			BootName = "Starter Charging Boot";
 	 
 			AccessoryName = "Starter Orb of Light";
-		} else
+		} else if (savenload)
 			savenload.LoadPlayer();
 
     }

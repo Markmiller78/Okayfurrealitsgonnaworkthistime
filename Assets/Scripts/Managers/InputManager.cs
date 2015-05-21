@@ -26,10 +26,10 @@ public class InputManager : MonoBehaviour
     void Update()
     {
         // Toggle between KB/M and Controller modes with 0 (zero) key
-        if (Input.GetKeyDown(KeyCode.Alpha0))
-        {
-            controller = !controller;
-        }
+        //if (Input.GetKeyDown(KeyCode.Alpha0))
+        //{
+        //    controller = !controller;
+        //}
         if (controller)
         {
             #region Controller Input
