@@ -220,6 +220,7 @@ public class Options : MonoBehaviour
 
     public void musicIncrease()
     {
+        print("mIncrease");
         musicVolume += 5;
         if (musicVolume > 100)
         {
@@ -247,6 +248,8 @@ public class Options : MonoBehaviour
 
     public void musicDecrease()
     {
+        print("mDecrease");
+
         musicVolume -= 5;
         if (musicVolume < 0)
         {

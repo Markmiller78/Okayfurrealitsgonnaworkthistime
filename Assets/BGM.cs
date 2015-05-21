@@ -8,7 +8,7 @@ public class BGM : MonoBehaviour {
     GameObject player;
   public AudioSource audioPlayer;
     bool beenAssigned;
-    public int volume;
+   // public int volume;
 
 
     private static BGM _instance;
@@ -50,40 +50,66 @@ public class BGM : MonoBehaviour {
 	// Update is called once per frame
     void Update()
     {
-   
+        //***************************************************************   
+        //This volume code was breaking the pause menu, the volume is managaed entirely in the MusicVolumeManager Script
+        //*************************************************************
 
-        if(Application.loadedLevelName=="Credits")
+        //if(Application.loadedLevelName=="Credits")
+        //{
+        //    volume = GameObject.FindObjectOfType<Options>().musicVolume;
+        //    audioPlayer.volume = 0;
+        //}
+        //if (Application.loadedLevelName == "LoadScreen")
+        //{
+        //    volume = GameObject.FindObjectOfType<Options>().musicVolume;
+        //    audioPlayer.volume = 0;
+        //}
+        //if(Application.loadedLevelName=="MainMenu"&&audioPlayer.volume==0 )
+        //{
+        //    audioPlayer.Stop();
+        //   audioPlayer.volume = volume*0.01f;
+        //    audioPlayer.clip = clips[4];
+        //    audioPlayer.Play();
+        //}
+        //if (Application.loadedLevelName == "IntroCutscene"&&audioPlayer.volume==0)
+        //{
+		 
+        //    volume = GameObject.FindObjectOfType<Options>().musicVolume;
+        //    audioPlayer.volume = volume*0.01f;
+		 
+		 
+        //}
+
+
+        if (Application.loadedLevelName=="MainMenu")
         {
-			volume = GameObject.FindObjectOfType<Options>().musicVolume;
-            audioPlayer.volume = 0;
+            if (!audioPlayer.clip.Equals(clips[4]))
+            {
+                audioPlayer.Stop();
+                audioPlayer.clip = clips[4];
+                audioPlayer.Play();
+            }
+
         }
-		if (Application.loadedLevelName == "LoadScreen")
-		{
-			volume = GameObject.FindObjectOfType<Options>().musicVolume;
-			audioPlayer.volume = 0;
-		}
-        if(Application.loadedLevelName=="MainMenu"&&audioPlayer.volume==0 )
-        {
-            audioPlayer.Stop();
-           audioPlayer.volume = volume*0.01f;
-            audioPlayer.clip = clips[4];
-            audioPlayer.Play();
-        }
-		if (Application.loadedLevelName == "IntroCutscene"&&audioPlayer.volume==0)
-		{
-		 
-			volume = GameObject.FindObjectOfType<Options>().musicVolume;
-			audioPlayer.volume = volume*0.01f;
-		 
-		 
-		}
         if (!beenAssigned && Application.loadedLevelName == "Game")
         {
             player = GameObject.FindGameObjectWithTag("Player");
             beenAssigned = true;
         }
-        
-    
+        if (Application.loadedLevelName == "LoadScreen")
+        {
+            audioPlayer.Stop();
+        }
+        if (Application.loadedLevelName == "IntroCutscene")
+        {
+            if (!audioPlayer.isPlaying)
+            {
+                audioPlayer.Play();
+                
+            }
+
+
+        }
 
         if( dungeon==null)
         {
@@ -102,13 +128,13 @@ public class BGM : MonoBehaviour {
 
 
                   
-                    if (volume != audioPlayer.volume)
-                    {
-						GameObject.FindObjectOfType<Options>().musicVolume = volume;
-                        audioPlayer.volume = volume * 0.01f;
+                    //if (volume != audioPlayer.volume)
+                    //{
+                    //    GameObject.FindObjectOfType<Options>().musicVolume = volume;
+                    //    audioPlayer.volume = volume * 0.01f;
                     
                      
-                    }
+                    //}
 
                     if (!GameObject.FindObjectOfType<Options>().easyMode)
                     {
