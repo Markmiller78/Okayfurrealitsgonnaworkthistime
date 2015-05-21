@@ -26,6 +26,8 @@ public class Health : MonoBehaviour
 
     Options theoptions;
 
+    public AudioClip loseSound;
+
     void Start()
     {
         theoptions = GameObject.Find("TheOptions").GetComponent<Options>();
@@ -107,12 +109,20 @@ public class Health : MonoBehaviour
         {
             Instantiate(BossDeathParticles, this.transform.position, new Quaternion(0, 0, 0, 0));
             this.SendMessage("DestroyHealthBar", SendMessageOptions.DontRequireReceiver);
+
+            if (this.name == "Morrius(Clone)" || this.name == "Morrius")
+            {
+                
+            }
+
         }
 
 
         if (this.tag != "Player")
         {
             theoptions.AddToEnemy();
+			if(this.GetComponent<AICommander>()!=null)
+				this.GetComponent<AICommander>().commandercount-=1;
             Instantiate(lightRemains, transform.position, transform.rotation);
             Instantiate(corpse, new Vector3(transform.position.x, transform.position.y, -0.5f), transform.rotation);
             gameObject.GetComponent<GenerateLoot>().Generateloot();
@@ -133,6 +143,7 @@ public class Health : MonoBehaviour
                 anim.CrossFade("Dying", 0.01f);
                 GameObject.FindObjectOfType<BGM>().SendMessage("SetToMenu", SendMessageOptions.DontRequireReceiver);
                // GameObject.FindObjectOfType<BGM>().audioPlayer.Stop();
+                player.GetComponent<AudioSource>().PlayOneShot(loseSound);
                 equipment.paused = true;
                 playerDead = true;
                 Instantiate(LoseText);

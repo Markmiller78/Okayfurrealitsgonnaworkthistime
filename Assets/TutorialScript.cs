@@ -674,13 +674,13 @@ public class TutorialScript : MonoBehaviour
 
     void FadeIn()
     {
-        if (TutorialText.color.a < 255)
+        if (TutorialText.color.a < 1)
             TutorialText.color += new Color(0, 0, 0, 1 * Time.deltaTime);
     }
 
     void FadeOut()
     {
         if (TutorialText.color.a > 0)
-            TutorialText.color -= new Color(0, 0, 0, 2 * Time.deltaTime);
+            TutorialText.color -= new Color(0, 0, 0, 1 * Time.deltaTime);
     }
 }
