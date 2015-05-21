@@ -972,12 +972,14 @@ public class MainMenu : MonoBehaviour
                     {
                         //EASY DIFFICULTY
                         LevelManager.Load("IntroCutscene");
+				theOptions.shouldload=false;
                         GameObject.FindObjectOfType<Options>().easyMode = true;
                         break;
                     }
                 case 1:
                     {
                         //NORMAL DIFFICULTY
+				theOptions.shouldload=false;
                         LevelManager.Load("IntroCutscene");
                         GameObject.FindObjectOfType<Options>().easyMode = false;
                         break;

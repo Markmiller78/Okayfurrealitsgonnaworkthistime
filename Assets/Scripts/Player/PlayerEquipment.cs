@@ -48,14 +48,15 @@ public class PlayerEquipment : MonoBehaviour
         audioPlayer = gameObject.GetComponent<AudioSource>();
       
         paused = false;
-		savenload = GameObject.FindObjectOfType<SaveTest> ();
+		savenload = GameObject.FindObjectOfType<Options> ().GetComponent<SaveTest> ();
 		if (!savenload.shouldload) {
 			emberDurability = 0;
  
 			BootName = "Starter Charging Boot";
 	 
 			AccessoryName = "Starter Orb of Light";
-		}
+		} else
+			savenload.LoadPlayer();
 
     }
 
