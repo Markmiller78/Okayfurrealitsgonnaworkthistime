@@ -9,8 +9,10 @@ public class MapAndStatsMenu : MonoBehaviour
     GameObject canvas;
     GUIStyle style;
     GUIStyle crStyle;
+    GUIStyle doorStyle;
     GameObject dungeon;
     RoomGeneration generator;
+    bool easyMode;
 
     public Text SpellPower;
     public Text AttackDamage;
@@ -65,8 +67,17 @@ public class MapAndStatsMenu : MonoBehaviour
         crStyle = new GUIStyle();
         crStyle.normal.background = texture2;
 
+        Texture2D door = new Texture2D(1, 1);
+        door.wrapMode = TextureWrapMode.Repeat;
+        door.SetPixel(1, 1, Color.magenta);
+        door.Apply();
+        doorStyle = new GUIStyle();
+        doorStyle.normal.background = door;
+        
+
         dungeon = GameObject.FindGameObjectWithTag("Dungeon");
         generator = dungeon.GetComponent<RoomGeneration>();
+        easyMode = GameObject.FindObjectOfType<Options>().easyMode;
     }
 
     void Update()
@@ -83,9 +94,34 @@ public class MapAndStatsMenu : MonoBehaviour
     {
         if (showing)
         {
-            Vector2 offset = new Vector2((Screen.width / 2) - (generator.finalRoomInfoArray[0].width / 2) * 5,
-                (Screen.height / 2) - (generator.finalRoomInfoArray[0].height / 2) * 5);
-            for (int i = 1; i <= generator.currentRoom; i++)
+            int offsetIndex = 0;
+            if (easyMode)
+            {
+                if (generator.currentRoom < 11)
+                {
+                    offsetIndex = 0;
+                }
+                else if (generator.currentRoom < 22)
+                {
+                    offsetIndex = 11;
+                }
+                else offsetIndex = 22;
+            }
+            else
+            {
+                if (generator.currentRoom < 9)
+                {
+                    offsetIndex = 0;
+                }
+                else if (generator.currentRoom < 18)
+                {
+                    offsetIndex = 9;
+                }
+                else offsetIndex = 18;
+            }
+            Vector2 offset = new Vector2((Screen.width / 2) - (generator.finalRoomInfoArray[offsetIndex].width / 2) * 5,
+                (Screen.height / 2) - (generator.finalRoomInfoArray[offsetIndex].height / 2) * 5);
+            for (int i = offsetIndex + 1; i <= generator.currentRoom; i++)
             {
                 switch (generator.finalRoomInfoArray[i -1].exitDir)
                     {
@@ -105,7 +141,7 @@ public class MapAndStatsMenu : MonoBehaviour
                             break;
                     }
             }
-            for (int i = 0; i < generator.finalRoomInfoArray.Length; i++)
+            for (int i = offsetIndex; i < generator.finalRoomInfoArray.Length; i++)
             {
                 if (generator.finalRoomInfoArray[i].beenThere)
                 {
@@ -115,19 +151,48 @@ public class MapAndStatsMenu : MonoBehaviour
                         generator.finalRoomInfoArray[i].width * 5,
                         generator.finalRoomInfoArray[i].height * 5),
                         "", i == generator.currentRoom ? crStyle : style);
+                    switch (generator.finalRoomInfoArray[i].entranceDir)
+                    {
+                        case 0:
+                            GUI.Label(new Rect(offset.x + (generator.finalRoomInfoArray[i].width / 2) * 5, Screen.height - (offset.y + 5), 5, 5),
+                                "", doorStyle);
+                            break;
+                        case 1:
+                            GUI.Label(new Rect(offset.x, Screen.height - (offset.y + (generator.finalRoomInfoArray[i].height / 2) * 5), 5, 5),
+                                "", doorStyle);
+                            break;
+                        case 2:
+                            GUI.Label(new Rect(offset.x + (generator.finalRoomInfoArray[i].width / 2) * 5, Screen.height - (offset.y + generator.finalRoomInfoArray[i].height * 5), 5, 5),
+                                "", doorStyle);
+                            break;
+                        case 3:
+                            GUI.Label(new Rect(offset.x - 5 + generator.finalRoomInfoArray[i].width * 5, Screen.height - (offset.y + (generator.finalRoomInfoArray[i].height / 2) * 5), 5, 5),
+                                "", doorStyle);
+                            break;
+                        default:
+                            break;
+                    }
                     switch (generator.finalRoomInfoArray[i].exitDir)
                     {
                         case 0:
-                            offset.y -= 25 + generator.finalRoomInfoArray[i].height * 5;
+                            GUI.Label(new Rect(offset.x + (generator.finalRoomInfoArray[i].width / 2) * 5, Screen.height - (offset.y + 5), 5, 5),
+                                "", doorStyle);
+                            offset.y -= 25 + generator.finalRoomInfoArray[i].height * 6;
                             break;
                         case 1:
-                            offset.x -= 25 + generator.finalRoomInfoArray[i].width * 5;
+                            GUI.Label(new Rect(offset.x, Screen.height - (offset.y + (generator.finalRoomInfoArray[i].height / 2) * 5), 5, 5),
+                                "", doorStyle);
+                            offset.x -= 25 + generator.finalRoomInfoArray[i].width * 6;
                             break;
                         case 2:
-                            offset.y += 25 + generator.finalRoomInfoArray[i].height * 5;
+                            GUI.Label(new Rect(offset.x + (generator.finalRoomInfoArray[i].width / 2) * 5, Screen.height - (offset.y + generator.finalRoomInfoArray[i].height * 5), 5, 5),
+                                "", doorStyle);
+                            offset.y += 25 + generator.finalRoomInfoArray[i].height * 6;
                             break;
                         case 3:
-                            offset.x += 25 + generator.finalRoomInfoArray[i].width * 5;
+                            GUI.Label(new Rect(offset.x - 5 + generator.finalRoomInfoArray[i].width * 5, Screen.height - (offset.y + (generator.finalRoomInfoArray[i].height / 2) * 5), 5, 5),
+                                "", doorStyle);
+                            offset.x += 25 + generator.finalRoomInfoArray[i].width * 6;
                             break;
                         default:
                             break;

@@ -914,7 +914,7 @@ public class RoomGeneration : MonoBehaviour
             finalRoomInfoArray[17].exitDir = Random.Range(0, 3);
         } while (finalRoomInfoArray[17].exitDir == finalRoomInfoArray[17].entranceDir);
         finalRoomArray[18] = easyMode ? checkpointRooms[3] : floorThreeRooms[0];
-        finalRoomInfoArray[18] = easyMode ? checkpointRoomsInfo[3] : floorTwoRoomsInfo[0];
+        finalRoomInfoArray[18] = easyMode ? checkpointRoomsInfo[3] : floorThreeRoomsInfo[0];
         switch (finalRoomInfoArray[17].exitDir)
         {
             case 0:
@@ -937,7 +937,7 @@ public class RoomGeneration : MonoBehaviour
             finalRoomInfoArray[18].exitDir = Random.Range(0, 3);
         } while (finalRoomInfoArray[18].exitDir == finalRoomInfoArray[18].entranceDir);
         finalRoomArray[19] = easyMode ? floorTwoRooms[4] : floorThreeRooms[1];
-        finalRoomInfoArray[19] = easyMode ? floorTwoRoomsInfo[4] : floorTwoRoomsInfo[1];
+        finalRoomInfoArray[19] = easyMode ? floorTwoRoomsInfo[4] : floorThreeRoomsInfo[1];
         switch (finalRoomInfoArray[18].exitDir)
         {
             case 0:
@@ -960,7 +960,7 @@ public class RoomGeneration : MonoBehaviour
             finalRoomInfoArray[19].exitDir = Random.Range(0, 3);
         } while (finalRoomInfoArray[19].exitDir == finalRoomInfoArray[19].entranceDir);
         finalRoomArray[20] = easyMode ? floorTwoRooms[5] : floorThreeMazes[0];
-        finalRoomInfoArray[20] = easyMode ? floorTwoRoomsInfo[5] : floorTwoMazesInfo[0];
+        finalRoomInfoArray[20] = easyMode ? floorTwoRoomsInfo[5] : floorThreeMazesInfo[0];
         switch (finalRoomInfoArray[19].exitDir)
         {
             case 0:
@@ -983,7 +983,7 @@ public class RoomGeneration : MonoBehaviour
             finalRoomInfoArray[20].exitDir = Random.Range(0, 3);
         } while (finalRoomInfoArray[20].exitDir == finalRoomInfoArray[20].entranceDir);
         finalRoomArray[21] = easyMode ? lorneRoom : floorThreeRooms[2];
-        finalRoomInfoArray[21] = easyMode ? lorneRoomInfo : floorTwoRoomsInfo[2];
+        finalRoomInfoArray[21] = easyMode ? lorneRoomInfo : floorThreeRoomsInfo[2];
         switch (finalRoomInfoArray[20].exitDir)
         {
             case 0:
@@ -1006,7 +1006,7 @@ public class RoomGeneration : MonoBehaviour
             finalRoomInfoArray[21].exitDir = Random.Range(0, 3);
         } while (finalRoomInfoArray[21].exitDir == finalRoomInfoArray[21].entranceDir);
         finalRoomArray[22] = easyMode ? floorThreeRooms[0] : floorThreeRooms[3];
-        finalRoomInfoArray[22] = easyMode ? floorThreeRoomsInfo[0] : floorTwoRoomsInfo[3];
+        finalRoomInfoArray[22] = easyMode ? floorThreeRoomsInfo[0] : floorThreeRoomsInfo[3];
         switch (finalRoomInfoArray[21].exitDir)
         {
             case 0:
@@ -1052,7 +1052,7 @@ public class RoomGeneration : MonoBehaviour
             finalRoomInfoArray[23].exitDir = Random.Range(0, 3);
         } while (finalRoomInfoArray[23].exitDir == finalRoomInfoArray[23].entranceDir);
         finalRoomArray[24] = easyMode ? floorThreeMazes[0] : floorThreeRooms[4];
-        finalRoomInfoArray[24] = easyMode ? floorThreeMazesInfo[0] : floorTwoRoomsInfo[4];
+        finalRoomInfoArray[24] = easyMode ? floorThreeMazesInfo[0] : floorThreeRoomsInfo[4];
         switch (finalRoomInfoArray[23].exitDir)
         {
             case 0:
@@ -1075,7 +1075,7 @@ public class RoomGeneration : MonoBehaviour
             finalRoomInfoArray[24].exitDir = Random.Range(0, 3);
         } while (finalRoomInfoArray[24].exitDir == finalRoomInfoArray[24].entranceDir);
         finalRoomArray[25] = easyMode ? checkpointRooms[4] : floorThreeRooms[5];
-        finalRoomInfoArray[25] = easyMode ? checkpointRoomsInfo[4] : floorTwoRoomsInfo[5];
+        finalRoomInfoArray[25] = easyMode ? checkpointRoomsInfo[4] : floorThreeRoomsInfo[5];
         switch (finalRoomInfoArray[24].exitDir)
         {
             case 0:
@@ -1419,59 +1419,59 @@ public class RoomGeneration : MonoBehaviour
                     break;
                 case 29:
                     finalRoomArray[i] = floorThreeRooms[0];
-                    finalRoomInfoArray[i] = floorTwoRoomsInfo[0];
+                    finalRoomInfoArray[i] = floorThreeRoomsInfo[0];
                     break;
                 case 30:
                     finalRoomArray[i] = floorThreeRooms[1];
-                    finalRoomInfoArray[i] = floorTwoRoomsInfo[1];
+                    finalRoomInfoArray[i] = floorThreeRoomsInfo[1];
                     break;
                 case 31:
                     finalRoomArray[i] = floorThreeRooms[2];
-                    finalRoomInfoArray[i] = floorTwoRoomsInfo[2];
+                    finalRoomInfoArray[i] = floorThreeRoomsInfo[2];
                     break;
                 case 32:
                     finalRoomArray[i] = floorThreeRooms[3];
-                    finalRoomInfoArray[i] = floorTwoRoomsInfo[3];
+                    finalRoomInfoArray[i] = floorThreeRoomsInfo[3];
                     break;
                 case 33:
                     finalRoomArray[i] = floorThreeRooms[4];
-                    finalRoomInfoArray[i] = floorTwoRoomsInfo[4];
+                    finalRoomInfoArray[i] = floorThreeRoomsInfo[4];
                     break;
                 case 34:
                     finalRoomArray[i] = floorThreeRooms[5];
-                    finalRoomInfoArray[i] = floorTwoRoomsInfo[5];
+                    finalRoomInfoArray[i] = floorThreeRoomsInfo[5];
                     break;
                 case 35:
                     finalRoomArray[i] = floorThreeRooms[6];
-                    finalRoomInfoArray[i] = floorTwoRoomsInfo[6];
+                    finalRoomInfoArray[i] = floorThreeRoomsInfo[6];
                     break;
                 case 36:
                     finalRoomArray[i] = floorThreeRooms[7];
-                    finalRoomInfoArray[i] = floorTwoRoomsInfo[7];
+                    finalRoomInfoArray[i] = floorThreeRoomsInfo[7];
                     break;
                 case 37:
                     finalRoomArray[i] = floorThreeRooms[8];
-                    finalRoomInfoArray[i] = floorTwoRoomsInfo[8];
+                    finalRoomInfoArray[i] = floorThreeRoomsInfo[8];
                     break;
                 case 38:
                     finalRoomArray[i] = floorThreeRooms[9];
-                    finalRoomInfoArray[i] = floorTwoRoomsInfo[9];
+                    finalRoomInfoArray[i] = floorThreeRoomsInfo[9];
                     break;
                 case 39:
                     finalRoomArray[i] = floorThreeMazes[0];
-                    finalRoomInfoArray[i] = floorTwoMazesInfo[0];
+                    finalRoomInfoArray[i] = floorThreeMazesInfo[0];
                     break;
                 case 40:
                     finalRoomArray[i] = floorThreeMazes[1];
-                    finalRoomInfoArray[i] = floorTwoMazesInfo[1];
+                    finalRoomInfoArray[i] = floorThreeMazesInfo[1];
                     break;
                 case 41:
                     finalRoomArray[i] = floorThreeMazes[2];
-                    finalRoomInfoArray[i] = floorTwoMazesInfo[2];
+                    finalRoomInfoArray[i] = floorThreeMazesInfo[2];
                     break;
                 case 42:
                     finalRoomArray[i] = floorThreeMazes[3];
-                    finalRoomInfoArray[i] = floorTwoMazesInfo[3];
+                    finalRoomInfoArray[i] = floorThreeMazesInfo[3];
                     break;
                 default:
                     break;
