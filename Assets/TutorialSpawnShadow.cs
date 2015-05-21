@@ -15,9 +15,12 @@ public class TutorialSpawnShadow : MonoBehaviour {
 	
 	}
    
-    void OnTriggerEnter()
+    void OnTriggerEnter(Collider Other)
     {
+        if(Other.tag == "Player")
+        { 
         Instantiate(Shadow, new Vector3(20, -7, -1), new Quaternion(0, 0, 0, 0));
         Destroy(gameObject);
+        }
     }
 }

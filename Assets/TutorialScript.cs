@@ -513,7 +513,8 @@ public class TutorialScript : MonoBehaviour
                     FadeIn();
                     if (timer < 0)
                     {
-
+                        Step++;
+                        timer = standardTimeStep;
                     }
                     break;
                 }
@@ -563,6 +564,34 @@ public class TutorialScript : MonoBehaviour
                 }
             case 40:
                 {
+                    if (InputManager.controller)
+                        ChangeText("Press X to Open Chests");
+                    else
+                        ChangeText("Press E to Open Chests");
+                    FadeIn();
+                    if (timer < 0)
+                    {
+                        if (InputManager.controller)
+                        {
+                            if (Input.GetButtonDown("CInteract"))
+                            {
+                                Step++;
+                                timer = standardTimeStep;
+                            }
+                        }
+                        else
+                        {
+                            if (Input.GetButtonDown("KBInteract"))
+                            {
+                                Step++;
+                                timer = standardTimeStep;
+                            }
+                        }
+                    }
+                    break;
+                }
+            case 41:
+                {
                     FadeOut();
                     if (timer < 0)
                     {
@@ -571,31 +600,56 @@ public class TutorialScript : MonoBehaviour
                     }
                     break;
                 }
-            case 41:
+            case 42:
                 {
                     if (InputManager.controller)
-                        ChangeText("Left Bumper to use Equipped Dash Spell");
+                        ChangeText("X also equips items");
                     else
-                        ChangeText("Press E to Equip Items");
+                        ChangeText("E also equips items");
                     FadeIn();
                     if (timer < 0)
                     {
-                        if (InputManager.controller)
-                        {
-                            if (Input.GetButtonDown("CDash"))
-                            {
-                                Step++;
-                                timer = standardTimeStep;
-                            }
-                        }
-                        else
-                        {
-                            if (Input.GetButtonDown("KBDash"))
-                            {
-                                Step++;
-                                timer = standardTimeStep;
-                            }
-                        }
+
+                    }
+                    break;
+                }
+            case 43:
+                {
+                    FadeOut();
+                    if (timer < 0)
+                    {
+                        Step++;
+                        timer = standardTimeStep;
+                    }
+                    break;
+                }
+            case 44:
+                {
+                    ChangeText("Boots and Accessories Change your equipped spell");
+                    FadeIn();
+                    if (timer < 0)
+                    {
+
+                    }
+                    break;
+                }
+            case 45:
+                {
+                    FadeOut();
+                    if (timer < 0)
+                    {
+                        Step++;
+                        timer = standardTimeStep;
+                    }
+                    break;
+                }
+            case 46:
+                {
+                    ChangeText("Embers Augment your spells with elemental effects");
+                    FadeIn();
+                    if (timer < 0)
+                    {
+
                     }
                     break;
                 }
@@ -609,6 +663,7 @@ public class TutorialScript : MonoBehaviour
         {
             Step = 28;
         }
+
         print(Step);
     }
 
