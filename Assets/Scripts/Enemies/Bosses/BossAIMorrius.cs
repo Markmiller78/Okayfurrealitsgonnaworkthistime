@@ -30,6 +30,7 @@ public class BossAIMorrius : MonoBehaviour
     public GameObject RemainsDropEffect;
     public GameObject SummonShadowSpawn;
 
+    Vector2 ChargeTo;
     Health playerHealth;
     CharacterController controller;
     Vector3 WayPoint;
@@ -84,7 +85,7 @@ public class BossAIMorrius : MonoBehaviour
         TheDark = (GameObject)Instantiate(DarknessParts3, new Vector3(10, -10, -6), new Quaternion(0, 0, 0, 0));
         TheDark.SetActive(false);
         currentState = 555;
-
+        RenderSettings.ambientLight = new Color(42f / 255f, 42f / 255f, 42f / 255f);
         Myhealth = gameObject.GetComponent<Health>();
         //healthB = (GameObject)Instantiate(BossHealthBar);
         //HealthRemaining = GameObject.FindGameObjectWithTag("Boss Health");
@@ -95,169 +96,178 @@ public class BossAIMorrius : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if ((Vector3.Distance(transform.position, player.transform.position) < 6 || Myhealth.healthPercent <= .99) && currentState == 555)
-        {
-            healthB = (GameObject)Instantiate(BossHealthBar);
-            HealthRemaining = GameObject.FindGameObjectWithTag("Boss Health");
-            currentState = 0;
-        }
-        if (currentState == 555)// DO NOTHING until the player approaches
-            return;
 
-        if (HealthRemaining != null)
-            HealthRemaining.transform.localScale = new Vector3(Myhealth.healthPercent, 1, 1);
-        else
-            HealthRemaining = GameObject.FindGameObjectWithTag("Boss Health");
+        if (!heroEquipment.paused)
+        {
 
-        timer -= Time.deltaTime;
-        EndSpellTimer -= Time.deltaTime;
-        castTimer -= Time.deltaTime;
-        returnOrginTimer -= Time.deltaTime;
 
-        if (currentState == 9001)
-        {
-            transform.position = new Vector3(transform.position.x, transform.position.y, 10);
-        }
-        //CAST SPELLS (if they're active) ////////////////////////////////////////////////////////////////////////////
-        if (timer < 0)
-        {
-            timer = .15f;
-            if (castingDarkPUSH)
-                DarkWavePush();
-        }
-        if (timer < .5f)
-        {
-            if (CastingMorriusOrb)
-                Attack(); //CD is in function
-            if (Charging)
-                Charge();
-        }
-        if (Returning)
-        {
-            if (Vector3.Distance(transform.position, Orgin) < 4)
-                EndSpellTimer = -1;
-            if (returnOrginTimer < .1f)
+            if ((Vector3.Distance(transform.position, player.transform.position) < 6 || Myhealth.healthPercent <= .99) && currentState == 555)
             {
-                ReturnToOrgin();
-            }
-
-            if (returnOrginTimer < 0)
-            {
-                Camera.main.SendMessage("ScreenShake");
-                returnOrginTimer = .4f;
-            }
-
-        }
-        if (FirstShadowSwap && timer < .2f && castingDarkPULL == true) // FIRST SHADOWSWAP
-        {
-            castingDarkPULL = false;
-            ShadowSwap();
-        }
-        if (SecondShadowSwap && timer < .2f && castingDarkPULL == true)// SECOND SHADOWSWAP
-        {
-            castingDarkPULL = false;
-            ShadowSwap();
-        }
-        if (castingDarkPULL)   // PULL RIGHT BEFORE SWAP
-            DarkWavePull();
-        if (currentState == 0)
-            EndSpellTimer = -1;
-        //STATE 1 (Controlling the Durations) Activate and set the duration of preperation and casting//////////////////////////////
-        if (currentState == 1 && CastingMorriusOrb == false) //CASTING ORBS
-        {
-            WayPoint = WayPointRight;
-            SpellCasting(3, 0); //prep
-            CastingMorriusOrb = true;
-            EndSpellTimer = 15; // duration
-        }
-        if (currentState == 2) // IDLE
-        {
-            EndSpellTimer = -1;
-        }
-        if (currentState == 3 && castingDarkPUSH == false) //CASTING PUSH
-        {
-            SpellCasting(1, 0); //prep
-            castingDarkPUSH = true;
-            EndSpellTimer = 2; // duration
-        }
-        if (currentState == 4 && Charging == false)//CHARGING!
-        {
-            WayPoint = player.transform.position;
-            SpellCasting(2, 0); //prep
-            Charging = true;
-            EndSpellTimer = 8; //duration
-        }
-        if (currentState == 5)//IDLE
-        {
-            EndSpellTimer = -1;
-        }
-        if (currentState == 6 && Returning == false) // RETURNING FROM CHARGE
-        {
-            returnOrginTimer = 0;
-            SpellCasting(.6f, 0);
-            Returning = true;
-            EndSpellTimer = 8; // duration (noprep)
-        }
-        if (currentState == 7) // IDLE
-        {
-            EndSpellTimer = -1;
-        }
-
-
-        if (Myhealth.healthPercent <= .65f && FirstShadowSwap == false) // FIRST SHADOW SWAP
-        {
-            currentState = 9001; // yup.
-            FirstShadowSwap = true;
-            SpellCasting(5, 1);
-            EndSpellTimer = 20000;
-        }
-        if (Myhealth.healthPercent <= .35f && SecondShadowSwap == false) //  SECOND SHADOW SWAP
-        {
-            currentState = 9001;
-            SecondShadowSwap = true;
-            SpellCasting(5, 1);
-            EndSpellTimer = 20000;
-        }
-
-        if (currentState == 9001)
-            EndSpellTimer = 1000;
-        EnemyCount = GameObject.FindGameObjectsWithTag("Enemy"); // IF ALL ADDS ARE DEAD, RESUME FIGHT
-        if (EnemyCount.Length <= 1 && EndShadowSwap == false)
-        {
-            print("sTUFF");
-            EndShadowSwap = true;
-            EndTheSwap();
-        }
-
-        if (castTimer < 0) // END PREP CASTING
-        {
-            StopCasting();
-        }
-        if (EndSpellTimer < 0) // END SPELLS
-        {
-            castingDarkPUSH = castingDarkPULL = CastingMorriusOrb = Charging = Returning = false;
-            CastingEffects.SetActive(false);
-            EndSpellTimer = 10000;
-            currentState++;
-            if (currentState == 7)
+                healthB = (GameObject)Instantiate(BossHealthBar);
+                HealthRemaining = GameObject.FindGameObjectWithTag("Boss Health");
                 currentState = 0;
-        }
-        print(currentState);
-        print(EndSpellTimer);
-       // print(Vector3.Distance(transform.position, Orgin));
-        //Left and right movement
-        if (!Charging)
-        {
-            if (Vector3.Distance(transform.position, WayPointLeft) < 3)
-                WayPoint = WayPointRight;
-            if (Vector3.Distance(transform.position, WayPointRight) < 3)
-                WayPoint = WayPointLeft;
-        }
-        //PUSH PLAYER IF HE GETS TOO CLOSE
+            }
+            if (currentState == 555)// DO NOTHING until the player approaches
+                return;
 
-        DistanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
-        if (DistanceToPlayer < 2 && castingDarkPULL == false)
-            PushPlayerAway();
+            if (HealthRemaining != null)
+                HealthRemaining.transform.localScale = new Vector3(Myhealth.healthPercent, 1, 1);
+            else
+                HealthRemaining = GameObject.FindGameObjectWithTag("Boss Health");
+
+            timer -= Time.deltaTime;
+            EndSpellTimer -= Time.deltaTime;
+            castTimer -= Time.deltaTime;
+            returnOrginTimer -= Time.deltaTime;
+
+            if (currentState == 9001)
+            {
+                transform.position = new Vector3(transform.position.x, transform.position.y, 10);
+            }
+            //CAST SPELLS (if they're active) ////////////////////////////////////////////////////////////////////////////
+            if (timer < 0)
+            {
+                timer = .15f;
+                if (castingDarkPUSH)
+                    DarkWavePush();
+            }
+            if (timer < .5f)
+            {
+                if (CastingMorriusOrb)
+                    Attack(); //CD is in function
+                if (Charging)
+                    Charge();
+            }
+            if (Returning)
+            {
+                if (Vector3.Distance(transform.position, Orgin) < 4)
+                    EndSpellTimer = -1;
+                if (returnOrginTimer < .1f)
+                {
+                    ReturnToOrgin();
+                }
+
+                if (returnOrginTimer < 0)
+                {
+                    Camera.main.SendMessage("ScreenShake");
+                    returnOrginTimer = .4f;
+                }
+
+            }
+            if (FirstShadowSwap && timer < .2f && castingDarkPULL == true) // FIRST SHADOWSWAP
+            {
+                castingDarkPULL = false;
+                ShadowSwap();
+            }
+            if (SecondShadowSwap && timer < .2f && castingDarkPULL == true)// SECOND SHADOWSWAP
+            {
+                castingDarkPULL = false;
+                ShadowSwap();
+            }
+            if (castingDarkPULL)   // PULL RIGHT BEFORE SWAP
+                DarkWavePull();
+            if (currentState == 0)
+                EndSpellTimer = -1;
+            //STATE 1 (Controlling the Durations) Activate and set the duration of preperation and casting//////////////////////////////
+            if (currentState == 1 && CastingMorriusOrb == false) //CASTING ORBS
+            {
+                WayPoint = WayPointRight;
+                SpellCasting(3, 0); //prep
+                CastingMorriusOrb = true;
+                EndSpellTimer = 15; // duration
+            }
+            if (currentState == 2) // IDLE
+            {
+                EndSpellTimer = -1;
+            }
+            if (currentState == 3 && castingDarkPUSH == false) //CASTING PUSH
+            {
+                SpellCasting(1, 0); //prep
+                castingDarkPUSH = true;
+                EndSpellTimer = 2; // duration
+            }
+            if (currentState == 4 && Charging == false)//CHARGING!
+            {
+                WayPoint = player.transform.position;
+                SpellCasting(2, 0); //prep
+                Charging = true;
+                ChargeTo = (WayPoint - transform.position).normalized;
+                EndSpellTimer = 8; //duration
+            }
+            if (currentState == 5)//IDLE
+            {
+                EndSpellTimer = -1;
+            }
+            if (currentState == 6 && Returning == false) // RETURNING FROM CHARGE
+            {
+                returnOrginTimer = 0;
+                SpellCasting(.6f, 0);
+                Returning = true;
+                EndSpellTimer = 8; // duration (noprep)
+            }
+            if (currentState == 7) // IDLE
+            {
+                EndSpellTimer = -1;
+            }
+
+
+            if (Myhealth.healthPercent <= .65f && FirstShadowSwap == false) // FIRST SHADOW SWAP
+            {
+                currentState = 9001; // yup.
+                castingDarkPUSH = castingDarkPULL = CastingMorriusOrb = Charging = Returning = false;
+                FirstShadowSwap = true;
+                SpellCasting(5, 1);
+                EndSpellTimer = 20000;
+            }
+            if (Myhealth.healthPercent <= .35f && SecondShadowSwap == false) //  SECOND SHADOW SWAP
+            {
+                currentState = 9001;
+                castingDarkPUSH = castingDarkPULL = CastingMorriusOrb = Charging = Returning = false;
+                SecondShadowSwap = true;
+                SpellCasting(5, 1);
+                EndSpellTimer = 20000;
+            }
+
+            if (currentState == 9001)
+                EndSpellTimer = 1000;
+            EnemyCount = GameObject.FindGameObjectsWithTag("Enemy"); // IF ALL ADDS ARE DEAD, RESUME FIGHT
+            if (EnemyCount.Length <= 1 && EndShadowSwap == false && timer < .2f)
+            {
+                //print("sTUFF");
+                EndShadowSwap = true;
+                EndTheSwap();
+            }
+
+            if (castTimer < 0) // END PREP CASTING
+            {
+                StopCasting();
+            }
+            if (EndSpellTimer < 0) // END SPELLS
+            {
+                castingDarkPUSH = castingDarkPULL = CastingMorriusOrb = Charging = Returning = false;
+                CastingEffects.SetActive(false);
+                EndSpellTimer = 10000;
+                currentState++;
+                if (currentState == 7)
+                    currentState = 0;
+            }
+            //print(currentState);
+            //print(EndSpellTimer);
+            // print(Vector3.Distance(transform.position, Orgin));
+            //Left and right movement
+            if (!Charging)
+            {
+                if (Vector3.Distance(transform.position, WayPointLeft) < 3)
+                    WayPoint = WayPointRight;
+                if (Vector3.Distance(transform.position, WayPointRight) < 3)
+                    WayPoint = WayPointLeft;
+            }
+            //PUSH PLAYER IF HE GETS TOO CLOSE
+
+            DistanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
+            if (DistanceToPlayer < 2 && castingDarkPULL == false)
+                PushPlayerAway();
+        }
     }
 
     void Move()
@@ -353,7 +363,7 @@ public class BossAIMorrius : MonoBehaviour
             Destroy(temp, 10);
             castingDarkPULL = true;
         }
-        print("Active");
+       // print("Active");
     }
     void StopCasting()
     {
@@ -383,13 +393,13 @@ public class BossAIMorrius : MonoBehaviour
     {
         //Check if Charge has hit anything
         DistanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
-        if (DistanceToPlayer < 3)
+        if (DistanceToPlayer < 2)
             endCharge(player.transform.position);
 
         WallCheck = GameObject.FindGameObjectsWithTag("Wall");
         for (int i = 0; i < WallCheck.Length; i++)
         {
-            if (Vector3.Distance(transform.position, WallCheck[i].transform.position) < 2.9f)
+            if (Vector3.Distance(transform.position, WallCheck[i].transform.position) < 2f)
             {
                 endCharge(WallCheck[i].transform.position);
                 ExplodeLightReamins();
@@ -399,8 +409,7 @@ public class BossAIMorrius : MonoBehaviour
 
         //Continue Charging if nothing hit
         moveSpeed = 10;
-        Vector2 moveTo = (WayPoint - transform.position).normalized;
-        controller.Move(moveTo * Time.deltaTime * moveSpeed);
+        controller.Move(ChargeTo * Time.deltaTime * moveSpeed);
     }
     void endCharge(Vector3 ExplodeOnSpot)
     {
@@ -429,16 +438,16 @@ public class BossAIMorrius : MonoBehaviour
             Instantiate(SummonShadowSpawn, new Vector3(player.transform.position.x + 3, player.transform.position.y, -1), new Quaternion(0, 0, 0, 0));
             Instantiate(SummonShadowSpawn, new Vector3(player.transform.position.x + 3, player.transform.position.y, -1), new Quaternion(0, 0, 0, 0));
         }
-
+        timer = 3;
         EndShadowSwap = false;
 
 
     }
     void EndTheSwap()
     {
-        print("ENDED");
+        //print("ENDED");
         transform.position = Orgin;
-        RenderSettings.ambientLight = new Color(37f / 255f, 37f / 255f, 37f / 255f);
+        RenderSettings.ambientLight = new Color(42f / 255f, 42f / 255f, 42f / 255f);
         currentState = 0;
         EndSpellTimer = 3;
         TheDark.SetActive(false);

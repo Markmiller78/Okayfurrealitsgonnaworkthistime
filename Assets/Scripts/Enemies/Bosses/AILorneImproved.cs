@@ -14,12 +14,12 @@ public class AILorneImproved : MonoBehaviour
     //    Rigidbody2D rb2d;
     public bool isReinforced = false;
     public GameObject LorneSignature;
+    public GameObject LorneSigHazards;
     GameObject LornSig;
+    GameObject LornSigHaz;
     Health MyHealth;
     public GameObject LightRemainsDropped;
     public GameObject LightRemainExplosion;
-
-
     CharacterController controller;
     public float attackDamage;
     public float attackRange;
@@ -70,8 +70,8 @@ public class AILorneImproved : MonoBehaviour
         attackCooldown = attackCooldownMax;
         //rb2d = GetComponent<Rigidbody2D>();
         controller = GetComponent<CharacterController>();
-        LornSig = (GameObject)Instantiate(LorneSignature, new Vector3(10, -10, -1), new Quaternion(0, 0, 0, 0));
-
+        LornSig = (GameObject)Instantiate(LorneSignature, new Vector3(10, -10f, -1), new Quaternion(0, 0, 0, 0));
+        LornSigHaz = (GameObject)Instantiate(LorneSigHazards, new Vector3(7.25f, -9.55f, -1), new Quaternion(0, 0, 0, 0));
         healthB = (GameObject)Instantiate(BossHealthBar);
         HealthRemaining = GameObject.FindGameObjectWithTag("Boss Health");
 
