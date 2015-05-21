@@ -29,6 +29,7 @@ public class PlayerEquipment : MonoBehaviour
     public string EmberName;
     public ItemStat EmberStat1;
     public ItemStat EmberStat2;
+	SaveTest savenload;
 
     int TotalSP, TotalAD, MaxHP, MaxLight;
 
@@ -45,11 +46,16 @@ public class PlayerEquipment : MonoBehaviour
     {
         TotalSP = TotalAD = MaxHP = MaxLight = 0;
         audioPlayer = gameObject.GetComponent<AudioSource>();
-        emberDurability = 0;
+      
         paused = false;
-
-        BootName = "Starter Charging Boot";
-        AccessoryName = "Starter Orb of Light";
+		savenload = GameObject.FindObjectOfType<SaveTest> ();
+		if (!savenload.shouldload) {
+			emberDurability = 0;
+ 
+			BootName = "Starter Charging Boot";
+	 
+			AccessoryName = "Starter Orb of Light";
+		}
 
     }
 

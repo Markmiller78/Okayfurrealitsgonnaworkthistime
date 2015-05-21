@@ -59,6 +59,9 @@ public class Options : MonoBehaviour
     [HideInInspector]
     public bool easyMode;
 
+    public AudioClip achvSound;
+    AudioSource aPlayer;
+
     void Start()
     {
         achievements = new bool[5];
@@ -81,6 +84,9 @@ public class Options : MonoBehaviour
         numEnemiesKilled = 0;
         numDash = 0;
 
+        aPlayer = GetComponent<AudioSource>();
+        aPlayer.volume = sfxVolume * 0.01f;
+
 
     }
 
@@ -91,6 +97,7 @@ public class Options : MonoBehaviour
         {
             GameObject.Find("MeleeAchv").GetComponent<Image>().enabled = true;
             achievements[1] = true;
+            aPlayer.PlayOneShot(achvSound);
             Save();
         }
     }
@@ -102,6 +109,7 @@ public class Options : MonoBehaviour
         {
             GameObject.Find("DashAchv").GetComponent<Image>().enabled = true;
             achievements[3] = true;
+            aPlayer.PlayOneShot(achvSound);
             Save();
         }
     }
@@ -113,6 +121,7 @@ public class Options : MonoBehaviour
         {
             GameObject.Find("EnemyAchv").GetComponent<Image>().enabled = true;
             achievements[4] = true;
+            aPlayer.PlayOneShot(achvSound);
             Save();
         }
     }
@@ -123,6 +132,19 @@ public class Options : MonoBehaviour
         {
             GameObject.Find("ChestAchv").GetComponent<Image>().enabled = true;
             achievements[2] = true;
+            aPlayer.PlayOneShot(achvSound);
+            
+            Save();
+        }
+    }
+
+    public void MorriusDie()
+    {
+        if (achievements[0] == false)
+        {
+            GameObject.Find("WinAchv").GetComponent<Image>().enabled = true;
+            achievements[0] = true;
+            aPlayer.PlayOneShot(achvSound);
             Save();
         }
     }
@@ -164,6 +186,8 @@ public class Options : MonoBehaviour
             objects[i].BroadcastMessage("ChangeVolume", SendMessageOptions.DontRequireReceiver);
         }
 
+        aPlayer.volume = sfxVolume * 0.01f;
+
     }
 
     public void sfxDecrease()
@@ -189,10 +213,14 @@ public class Options : MonoBehaviour
         {
             objects[i].BroadcastMessage("ChangeVolume", SendMessageOptions.DontRequireReceiver);
         }
+
+        aPlayer.volume = sfxVolume * 0.01f;
+
     }
 
     public void musicIncrease()
     {
+        print("mIncrease");
         musicVolume += 5;
         if (musicVolume > 100)
         {
@@ -220,6 +248,8 @@ public class Options : MonoBehaviour
 
     public void musicDecrease()
     {
+        print("mDecrease");
+
         musicVolume -= 5;
         if (musicVolume < 0)
         {

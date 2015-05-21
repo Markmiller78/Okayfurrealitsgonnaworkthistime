@@ -24,18 +24,37 @@ public class ChestScript : MonoBehaviour {
         cameras = GameObject.FindObjectOfType<Camera>();
         theoptions = GameObject.Find("TheOptions").GetComponent<Options>();
 		temp = Instantiate (TooltipWindow);
+		temp.SetActive (false);
+		ToolTipTexts._ItemName = "Press E to open!";
 
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
-	
+		Vector3 dist = transform.position - player.transform.position;
+		if (dist.magnitude < 1.0f)
+		{
+			displaytooltips = true;
+			temp.SetActive (true);
+		} 
+		else
+		{
+			displaytooltips = false;
+			temp.SetActive(false);
+		}
+			
+		if (ToolTipBack != null && displaytooltips == true)
+		{
+			ToolPOS = Camera.main.WorldToScreenPoint(transform.position);
+			float offsetY = Screen.height - 310;
+			ToolTipBack.transform.localPosition = new Vector3(ToolPOS.x - 550, ToolPOS.y - offsetY, -5);
+		}
 	}
-
+	
 	void OnGUI()
 	{
-	//	if (displaytooltips)
+		//	if (displaytooltips)
 	//	{
      //   string temp="Press E to open";
        //     GUI.Box(new Rect(cameras.WorldToScreenPoint(player.transform.position).x + 32, Screen.height - cameras.WorldToScreenPoint(player.transform.position).y, 100, 40), temp);
@@ -48,6 +67,7 @@ public class ChestScript : MonoBehaviour {
 	{
 		Vector3 dist = transform.position - player.transform.position;
 		if (dist.magnitude < 1.0f) {
+		
             theoptions.OpenChest();
 			heroLight.LoseLight (5);
             gameObject.GetComponent<GenerateLoot>().Generateloot();
@@ -64,6 +84,7 @@ public class ChestScript : MonoBehaviour {
 		{
 			temp.SetActive(true);
 			ToolTipBack = temp.GetComponentInChildren<RawImage>();
+
 			ToolTipBack.SendMessage("ToolSetTexts", ToolTipTexts, SendMessageOptions.DontRequireReceiver);
 		}
 

@@ -33,10 +33,13 @@ public class AICommander : MonoBehaviour
     public float infecttimer;
     // Use this for initialization
     PlayerMovement hMove;
+	GameObject[] Commanders;
+	public int commandercount;
     void Start()
     {
-        timer = 2.0f;
-
+		Commanders = new GameObject[20];
+		timer = 2.0f;
+		commandercount = 0;
         path = Vector3.zero;
         MoveTo = Vector3.zero;
         infecttimer = 3.0f;
@@ -70,7 +73,7 @@ public class AICommander : MonoBehaviour
             dist = vectoplayer.magnitude;
             FacePlayer();
             size = list.Length;
-            if (size == 1)
+            if (size == 1||size==commandercount)
             {
                 MoveTowardsPlayer();
                 AttackPlayer();
@@ -120,6 +123,23 @@ public class AICommander : MonoBehaviour
 
                     foreach (GameObject obj in list)
                     {
+						if(obj.GetComponent<AICommander>()!=null)
+						{
+							bool shouldadd=false;
+                        for (int i = 0; i < 20; i++)
+						{
+								if(obj!=Commanders[i])
+									shouldadd=true;
+								else
+									shouldadd=false;
+
+                         }
+						if(shouldadd==true)
+							{
+								Commanders[commandercount]=obj;
+							++commandercount;
+							}
+						}
                         obj.SendMessage("Reinforce", SendMessageOptions.DontRequireReceiver);
                     }
 

@@ -19,8 +19,8 @@ public class PauseMenu : MonoBehaviour
     public Text options;
     public Text quit;
 
-    public Text sfxVolume;
-    public Text musicVolume;
+    public Text sVolume;
+    public Text mVolume;
     public Text fullscreen;
     public Text controlMode;
     public Text back;
@@ -35,8 +35,8 @@ public class PauseMenu : MonoBehaviour
         heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
         pauseCanvas.SetActive(false);
         isPaused = false;
-        sfxVolume.enabled = false;
-        musicVolume.enabled = false;
+        sVolume.enabled = false;
+        mVolume.enabled = false;
         fullscreen.enabled = false;
         controlMode.enabled = false;
         back.enabled = false;
@@ -182,72 +182,108 @@ public class PauseMenu : MonoBehaviour
             }
             else
             {
+                Debug.Log("Controller: " + InputManager.controller);
+                Debug.Log("axisChanged" + axisChanged);
+                Debug.Log("CLSHoriz: " + Input.GetAxis("CLSHorizontal"));
+                //Debug.Log("DPadHoriz: " + Input.GetAxis("CDPadHorizontal"));
+                //Debug.Log("KBHoriz: " + Input.GetAxis("KBHorizontal"));
                 switch (currOptionOption)
                 {
                     case 0:
                         #region SFX
-                        SelectorRemains.transform.localPosition = new Vector3(-120f, 130f, -5.1f);
+                        SelectorRemains.transform.localPosition = new Vector3(-140f, 130f, -5.1f);
                         if (InputManager.controller && !axisChanged && (Input.GetAxis("CLSHorizontal") < 0.0f || Input.GetAxis("CDPadHorizontal") < 0.0f))
                         {
                             // Decrease SFX Volume
                             GameObject.FindObjectOfType<Options>().sfxDecrease();
-                            sfxVolume.text = "SFX Volume: " + GameObject.FindObjectOfType<Options>().sfxVolume.ToString();
+                            sVolume.text = "SFX Volume: " + GameObject.FindObjectOfType<Options>().sfxVolume.ToString();
                             axisChanged = true;
                         }
                         else if (InputManager.controller && !axisChanged && (Input.GetAxis("CLSHorizontal") > 0.0f || Input.GetAxis("CDPadHorizontal") > 0.0f))
                         {
                             // Increase SFX Volume
                             GameObject.FindObjectOfType<Options>().sfxIncrease();
-                            sfxVolume.text = "SFX Volume: " + GameObject.FindObjectOfType<Options>().sfxVolume.ToString();
+                            sVolume.text = "SFX Volume: " + GameObject.FindObjectOfType<Options>().sfxVolume.ToString();
                             axisChanged = true;
                         }
                         else if (!InputManager.controller && !axisChanged && Input.GetAxis("KBHorizontal") < 0.0f)
                         {
                             // Decrease SFX Volume
                             GameObject.FindObjectOfType<Options>().sfxDecrease();
-                            sfxVolume.text = "SFX Volume: " + GameObject.FindObjectOfType<Options>().sfxVolume.ToString();
+                            sVolume.text = "SFX Volume: " + GameObject.FindObjectOfType<Options>().sfxVolume.ToString();
                             axisChanged = true;
                         }
                         else if (!InputManager.controller && !axisChanged && Input.GetAxis("KBHorizontal") > 0.0f)
                         {
                             // Increase SFX Volume
                             GameObject.FindObjectOfType<Options>().sfxIncrease();
-                            sfxVolume.text = "SFX Volume: " + GameObject.FindObjectOfType<Options>().sfxVolume.ToString();
+                            sVolume.text = "SFX Volume: " + GameObject.FindObjectOfType<Options>().sfxVolume.ToString();
                             axisChanged = true;
                         }
                         #endregion
                         break;
                     case 1:
                         #region Music
-                        SelectorRemains.transform.localPosition = new Vector3(-130f, 80f, -5.1f);
+                        SelectorRemains.transform.localPosition = new Vector3(-140f, 80f, -5.1f);
                         if (InputManager.controller && !axisChanged && (Input.GetAxis("CLSHorizontal") < 0.0f || Input.GetAxis("CDPadHorizontal") < 0.0f))
                         {
                             // Decrease Music Volume
                             GameObject.FindObjectOfType<Options>().musicDecrease();
-                            musicVolume.text = "Music Volume: " + GameObject.FindObjectOfType<Options>().musicVolume.ToString();
+                            mVolume.text = "Music Volume: " + GameObject.FindObjectOfType<Options>().musicVolume.ToString();
                             axisChanged = true;
                         }
                         else if (InputManager.controller && !axisChanged && (Input.GetAxis("CLSHorizontal") > 0.0f || Input.GetAxis("CDPadHorizontal") > 0.0f))
                         {
                             // Increase Music Volume
                             GameObject.FindObjectOfType<Options>().musicIncrease();
-                            musicVolume.text = "Music Volume: " + GameObject.FindObjectOfType<Options>().musicVolume.ToString();
+                            mVolume.text = "Music Volume: " + GameObject.FindObjectOfType<Options>().musicVolume.ToString();
                             axisChanged = true;
                         }
                         else if (!InputManager.controller && !axisChanged && Input.GetAxis("KBHorizontal") < 0.0f)
                         {
                             // Decrease Music Volume
                             GameObject.FindObjectOfType<Options>().musicDecrease();
-                            musicVolume.text = "Music Volume: " + GameObject.FindObjectOfType<Options>().musicVolume.ToString();
+                            mVolume.text = "Music Volume: " + GameObject.FindObjectOfType<Options>().musicVolume.ToString();
                             axisChanged = true;
                         }
                         else if (!InputManager.controller && !axisChanged && Input.GetAxis("KBHorizontal") > 0.0f)
                         {
                             // Increase Music Volume
                             GameObject.FindObjectOfType<Options>().musicIncrease();
-                            musicVolume.text = "Music Volume: " + GameObject.FindObjectOfType<Options>().musicVolume.ToString();
+                            mVolume.text = "Music Volume: " + GameObject.FindObjectOfType<Options>().musicVolume.ToString();
                             axisChanged = true;
                         }
+
+
+                        //SelectorRemains.transform.localPosition = new Vector3(-130f, 80f, -5.1f);
+                        //if (InputManager.controller && !axisChanged && (Input.GetAxis("CLSHorizontal") < 0.0f || Input.GetAxis("CDPadHorizontal") < 0.0f))
+                        //{
+                        //    // Decrease Music Volume
+                        //    GameObject.FindObjectOfType<Options>().musicDecrease();
+                        //    musicVolume.text = "Music Volume: " + GameObject.FindObjectOfType<Options>().musicVolume.ToString();
+                        //    axisChanged = true;
+                        //}
+                        //else if (InputManager.controller && !axisChanged && (Input.GetAxis("CLSHorizontal") > 0.0f || Input.GetAxis("CDPadHorizontal") > 0.0f))
+                        //{
+                        //    // Increase Music Volume
+                        //    GameObject.FindObjectOfType<Options>().musicIncrease();
+                        //    musicVolume.text = "Music Volume: " + GameObject.FindObjectOfType<Options>().musicVolume.ToString();
+                        //    axisChanged = true;
+                        //}
+                        //else if (!InputManager.controller && !axisChanged && Input.GetAxis("KBHorizontal") < 0.0f)
+                        //{
+                        //    // Decrease Music Volume
+                        //    GameObject.FindObjectOfType<Options>().musicDecrease();
+                        //    musicVolume.text = "Music Volume: " + GameObject.FindObjectOfType<Options>().musicVolume.ToString();
+                        //    axisChanged = true;
+                        //}
+                        //else if (!InputManager.controller && !axisChanged && Input.GetAxis("KBHorizontal") > 0.0f)
+                        //{
+                        //    // Increase Music Volume
+                        //    GameObject.FindObjectOfType<Options>().musicIncrease();
+                        //    musicVolume.text = "Music Volume: " + GameObject.FindObjectOfType<Options>().musicVolume.ToString();
+                        //    axisChanged = true;
+                        //}
                         #endregion
                         break;
                     case 2:
@@ -323,10 +359,10 @@ public class PauseMenu : MonoBehaviour
             options.enabled = false;
             quit.enabled = false;
 
-            sfxVolume.enabled = true;
-            sfxVolume.text = "SFX Volume: "  + GameObject.FindObjectOfType<Options>().sfxVolume.ToString();
-            musicVolume.enabled = true;
-            musicVolume.text = "Music Volume: " + GameObject.FindObjectOfType<Options>().sfxVolume.ToString();
+            sVolume.enabled = true;
+            sVolume.text = "SFX Volume: "  + GameObject.FindObjectOfType<Options>().sfxVolume.ToString();
+            mVolume.enabled = true;
+            mVolume.text = "Music Volume: " + GameObject.FindObjectOfType<Options>().musicVolume.ToString();
             fullscreen.enabled = true;
             controlMode.enabled = true;
             if (!InputManager.controller)
@@ -345,8 +381,8 @@ public class PauseMenu : MonoBehaviour
             options.enabled = true;
             quit.enabled = true;
 
-            sfxVolume.enabled = false;
-            musicVolume.enabled = false;
+            sVolume.enabled = false;
+            mVolume.enabled = false;
             fullscreen.enabled = false;
             controlMode.enabled = false;
             back.enabled = false;

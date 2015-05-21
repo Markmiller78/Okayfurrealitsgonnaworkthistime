@@ -38,7 +38,7 @@ public class RoomGeneration : MonoBehaviour
     public GameObject chest;
     public GameObject torchWood;
     public GameObject CPCrystal;
-
+	public SaveTest savenload;
     public GameObject[] checkpointRooms;
     Room[] checkpointRoomsInfo;
 
@@ -52,6 +52,7 @@ public class RoomGeneration : MonoBehaviour
 
     void Start()
     {
+		savenload = GameObject.FindObjectOfType<SaveTest> ();
         firstRoom = true;
         //DontDestroyOnLoad(this);
         player = GameObject.FindGameObjectWithTag("Player");
@@ -59,6 +60,7 @@ public class RoomGeneration : MonoBehaviour
         loading = GameObject.FindObjectOfType<Options>().shouldload;
         if (loading)
         {
+			//savenload.Load();
             easyMode = loadedData.easymode;
         }
         else easyMode = GameObject.FindObjectOfType<Options>().easyMode;
@@ -1494,7 +1496,8 @@ public class RoomGeneration : MonoBehaviour
                 Destroy(obj);
             }
         }
-        player.GetComponent<SaveTest>().saved = false;
+       // player.GetComponent<SaveTest>().saved = false;
+		savenload.saved = false;
         CreateRoom();
     }
 }
