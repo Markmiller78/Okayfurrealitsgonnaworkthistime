@@ -61,7 +61,7 @@ public class IntroCutscene : MonoBehaviour
         if (Stage == 1 && timer < 0 && i < Text1.Length)
         {
             SkipText.text = " ";
-            timer = .03f;
+            timer = .04f;
             ScrollingText();
             i++;
         }
@@ -79,7 +79,7 @@ public class IntroCutscene : MonoBehaviour
         {
             if(i == 0)
             FirstText.text = " ";
-            timer = .03f;
+            timer = .04f;
             ScrollingText();
             i++;
         }
@@ -125,7 +125,7 @@ public class IntroCutscene : MonoBehaviour
         {
             ScrollingText();
             i++;
-            timer = .03f;
+            timer = .04f;
 
             if (i == 50)
             {
@@ -149,7 +149,7 @@ public class IntroCutscene : MonoBehaviour
 
         if(Stage == 7 && timer < 0 )
         {
-            timer = .03f;
+            timer = .04f;
             ScrollingText();
             i++;
         }
@@ -176,7 +176,7 @@ public class IntroCutscene : MonoBehaviour
                 FirstText.text = " ";
             ScrollingText();
             i++;
-            timer = .03f;
+            timer = .04f;
         }
 
         if(Stage == 9 && i == Text5.Length)
