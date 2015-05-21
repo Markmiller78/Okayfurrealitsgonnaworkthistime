@@ -50,7 +50,7 @@ public class Options : MonoBehaviour
     int numEnemiesKilled;
 
     public bool[] achievements;
-	public bool shouldload = false;
+    public bool shouldload = false;
     [HideInInspector]
     public GameObject savedPlayer;
     GameObject player;
@@ -58,6 +58,9 @@ public class Options : MonoBehaviour
 
     [HideInInspector]
     public bool easyMode;
+
+    public AudioClip achvSound;
+    AudioSource aPlayer;
 
     void Start()
     {
@@ -81,6 +84,9 @@ public class Options : MonoBehaviour
         numEnemiesKilled = 0;
         numDash = 0;
 
+        aPlayer = GetComponent<AudioSource>();
+        aPlayer.volume = sfxVolume * 0.01f;
+
 
     }
 
@@ -91,6 +97,7 @@ public class Options : MonoBehaviour
         {
             GameObject.Find("MeleeAchv").GetComponent<Image>().enabled = true;
             achievements[1] = true;
+            aPlayer.PlayOneShot(achvSound);
             Save();
         }
     }
@@ -102,6 +109,7 @@ public class Options : MonoBehaviour
         {
             GameObject.Find("DashAchv").GetComponent<Image>().enabled = true;
             achievements[3] = true;
+            aPlayer.PlayOneShot(achvSound);
             Save();
         }
     }
@@ -113,6 +121,7 @@ public class Options : MonoBehaviour
         {
             GameObject.Find("EnemyAchv").GetComponent<Image>().enabled = true;
             achievements[4] = true;
+            aPlayer.PlayOneShot(achvSound);
             Save();
         }
     }
@@ -123,6 +132,19 @@ public class Options : MonoBehaviour
         {
             GameObject.Find("ChestAchv").GetComponent<Image>().enabled = true;
             achievements[2] = true;
+            aPlayer.PlayOneShot(achvSound);
+            
+            Save();
+        }
+    }
+
+    public void MorriusDie()
+    {
+        if (achievements[0] == false)
+        {
+            GameObject.Find("WinAchv").GetComponent<Image>().enabled = true;
+            achievements[0] = true;
+            aPlayer.PlayOneShot(achvSound);
             Save();
         }
     }
@@ -151,8 +173,10 @@ public class Options : MonoBehaviour
         {
             sfxVolume = 100;
         }
-        sfxInt.text = sfxVolume.ToString();
-        sfxInt2.text = sfxVolume.ToString();
+        if (sfxInt)
+            sfxInt.text = sfxVolume.ToString();
+        if (sfxInt2)
+            sfxInt2.text = sfxVolume.ToString();
         Save();
 
         GameObject[] objects = (GameObject[])GameObject.FindObjectsOfType(typeof(GameObject));
@@ -161,6 +185,8 @@ public class Options : MonoBehaviour
         {
             objects[i].BroadcastMessage("ChangeVolume", SendMessageOptions.DontRequireReceiver);
         }
+
+        aPlayer.volume = sfxVolume * 0.01f;
 
     }
 
@@ -171,8 +197,14 @@ public class Options : MonoBehaviour
         {
             sfxVolume = 0;
         }
-        sfxInt.text = sfxVolume.ToString();
-        sfxInt2.text = sfxVolume.ToString();
+        if (sfxInt)
+        {
+            sfxInt.text = sfxVolume.ToString();
+        }
+        if (sfxInt2)
+        {
+            sfxInt2.text = sfxVolume.ToString();
+        }
         Save();
 
         GameObject[] objects = (GameObject[])GameObject.FindObjectsOfType(typeof(GameObject));
@@ -181,6 +213,9 @@ public class Options : MonoBehaviour
         {
             objects[i].BroadcastMessage("ChangeVolume", SendMessageOptions.DontRequireReceiver);
         }
+
+        aPlayer.volume = sfxVolume * 0.01f;
+
     }
 
     public void musicIncrease()
@@ -190,8 +225,16 @@ public class Options : MonoBehaviour
         {
             musicVolume = 100;
         }
-        musicInt.text = musicVolume.ToString();
-        musicInt2.text = musicVolume.ToString();
+        if (musicInt != null)
+        {
+
+            musicInt.text = musicVolume.ToString();
+        }
+        if (musicInt2 != null)
+        {
+            musicInt2.text = musicVolume.ToString();
+        }
+
         Save();
 
         GameObject[] objects = (GameObject[])GameObject.FindObjectsOfType(typeof(GameObject));
@@ -209,8 +252,10 @@ public class Options : MonoBehaviour
         {
             musicVolume = 0;
         }
-        musicInt.text = musicVolume.ToString();
-        musicInt2.text = musicVolume.ToString();
+        if (musicInt)
+            musicInt.text = musicVolume.ToString();
+        if (musicInt2)
+            musicInt2.text = musicVolume.ToString();
         Save();
 
         GameObject[] objects = (GameObject[])GameObject.FindObjectsOfType(typeof(GameObject));
@@ -285,11 +330,11 @@ public class OptionData
 {
     public int sfxVolume;
     public int musicVolume;
-   public bool achieve;
-   public bool achieve1;
-   public bool achieve2;
-   public bool achieve3;
-   public bool achieve4;
+    public bool achieve;
+    public bool achieve1;
+    public bool achieve2;
+    public bool achieve3;
+    public bool achieve4;
 
 
 }
