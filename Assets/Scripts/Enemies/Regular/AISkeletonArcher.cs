@@ -21,6 +21,8 @@ public class AISkeletonArcher : MonoBehaviour
     public GameObject projectile;
     bool hasAttacked = false;
 
+    AudioSource aPlayer;
+
     PlayerMovement hMove;
 
     CharacterController controller;
@@ -45,6 +47,7 @@ public class AISkeletonArcher : MonoBehaviour
         attackCooldown = attackCooldownMax;
         controller = GetComponent<CharacterController>();
         usedWaypoints = new Utilities.ppList<GameObject>();
+        aPlayer = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -119,6 +122,7 @@ public class AISkeletonArcher : MonoBehaviour
 
     void Attack()
     {
+        aPlayer.Play();
         Instantiate(projectile, transform.position, transform.rotation);
     }
 
