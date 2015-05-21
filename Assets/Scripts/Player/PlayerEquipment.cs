@@ -31,7 +31,7 @@ public class PlayerEquipment : MonoBehaviour
     public ItemStat EmberStat2;
 	SaveTest savenload;
 
-    int TotalSP, TotalAD, MaxHP, MaxLight;
+    float TotalSP, TotalAD, MaxHP, MaxLight;
 
 
     AudioSource audioPlayer;
