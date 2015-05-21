@@ -102,7 +102,6 @@ public class Health : MonoBehaviour
 
     void Die()
     {
-        print(this.name);
         healthPercent = currentHP / maxHP;
         if (this.name == "Dethros(Clone)" || this.name == "Dethros" || this.name == "Lorne(Clone)" || this.name == "Lorne" || this.name == "Morrius(Clone)" || this.name == "Morrius")
         {
