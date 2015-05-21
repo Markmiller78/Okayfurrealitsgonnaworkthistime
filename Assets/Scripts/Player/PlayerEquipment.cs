@@ -45,11 +45,16 @@ public class PlayerEquipment : MonoBehaviour
     {
         TotalSP = TotalAD = MaxHP = MaxLight = 0;
         audioPlayer = gameObject.GetComponent<AudioSource>();
-        emberDurability = 0;
+      
         paused = false;
 
-        BootName = "Starter Charging Boot";
-        AccessoryName = "Starter Orb of Light";
+		if (!this.GetComponent<SaveTest> ().shouldload) {
+			emberDurability = 0;
+ 
+			BootName = "Starter Charging Boot";
+	 
+			AccessoryName = "Starter Orb of Light";
+		}
 
     }
 

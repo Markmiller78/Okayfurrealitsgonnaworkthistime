@@ -113,6 +113,8 @@ public class Health : MonoBehaviour
         if (this.tag != "Player")
         {
             theoptions.AddToEnemy();
+			if(this.GetComponent<AICommander>()!=null)
+				this.GetComponent<AICommander>().commandercount-=1;
             Instantiate(lightRemains, transform.position, transform.rotation);
             Instantiate(corpse, new Vector3(transform.position.x, transform.position.y, -0.5f), transform.rotation);
             gameObject.GetComponent<GenerateLoot>().Generateloot();
