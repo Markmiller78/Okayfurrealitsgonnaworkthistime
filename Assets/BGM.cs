@@ -138,6 +138,12 @@ public class BGM : MonoBehaviour {
 
                     if (!GameObject.FindObjectOfType<Options>().easyMode)
                     {
+                        if (!audioPlayer.isPlaying)
+                        {
+                            audioPlayer.clip = clips[0];
+                            audioPlayer.Play();
+                        }
+
                         if (theRooms.currentRoom < 8 && audioPlayer.clip != clips[0])
                         {
                             audioPlayer.Stop();

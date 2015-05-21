@@ -22,7 +22,7 @@ public class MainMenu : MonoBehaviour
     bool ControllerOptionToggle;
     bool AxisChanged = false;
 
-    public SpriteRenderer backgroundScroll;
+    SpriteRenderer backgroundScroll;
 
     public enum Menu { Main = 0, Options, Achievements, Credits, Continue, AreYouSure, SelectDifficulty };
     Menu CurrMenu = Menu.Main;
@@ -88,6 +88,8 @@ public class MainMenu : MonoBehaviour
         //     playerlight.text = light.ToString();
         //soundSource = GetComponent<AudioSource>();
         theOptions = GameObject.Find("TheOptions").GetComponent<Options>();
+
+        backgroundScroll = GetComponentInChildren<SpriteRenderer>();
     }
 
     // Update is called once per frame
