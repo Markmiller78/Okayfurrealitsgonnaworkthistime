@@ -56,7 +56,7 @@ public class AISkeletonArcher : MonoBehaviour
                 usedWaypoints.Forget();
                 forgetTimer = 0.0f;
             }
-            if (isInfected)
+            //if (isInfected)
                 //Infect();
             if (hasAttacked)
             {

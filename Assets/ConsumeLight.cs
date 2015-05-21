@@ -19,7 +19,17 @@ public class ConsumeLight : MonoBehaviour {
     {
         playSounds = gameObject.GetComponent<AudioSource>();
         heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
-        shadow = GameObject.FindGameObjectWithTag("ShadowSpawn");
+
+        GameObject[] Enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+        for (int i = 0; i < Enemies.Length; i++ )
+        {
+            if (Enemies[i].name == "ShadowSpawn" || Enemies[i].name == "ShadowSpawn(Clone)")
+            {   
+                shadow = Enemies[i];
+                break;
+            }
+        }
         theParts = gameObject.GetComponent<ParticleSystem>();
         distanceToShadow = 1;
         doOnce = true;
