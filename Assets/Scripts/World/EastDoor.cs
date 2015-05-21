@@ -53,7 +53,14 @@ public class EastDoor : MonoBehaviour
 
     void Lock()
     {
-        GetComponentInChildren<BoxCollider>().enabled = true;
+        BoxCollider[] tryingThis = GetComponentsInChildren<BoxCollider>();
+        foreach (BoxCollider box in tryingThis)
+        {
+            if (box.gameObject.name == "Lock")
+            {
+                box.enabled = true;
+            }
+        }
         GetComponentInChildren<SpriteRenderer>().enabled = true;
     }
 
