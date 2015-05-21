@@ -57,16 +57,6 @@ public class Utilities
 
         public void pushBack(T item)
         {
-            //Mark's attempt at fixing the waypoint thing
-            for (int i = 0; i < arr.Length; i++)
-            {
-                if (arr[i].Equals(item))
-                {
-                    return;
-                }
-            }
-            //Bottom of Mark's attempt
-
             if (arr.Length == maxLength)
             {
                 popFront();

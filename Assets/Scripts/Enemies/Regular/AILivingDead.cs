@@ -29,6 +29,8 @@ public class AILivingDead : MonoBehaviour
     public float infecttimer;
 	Animator anim;
 
+    AudioSource aPlayer;
+
     void Start()
     {
         infecttimer = 3.0f;
@@ -44,6 +46,7 @@ public class AILivingDead : MonoBehaviour
         attackCooldown = attackCooldownMax;
         //rb2d = GetComponent<Rigidbody2D>();
         controller = GetComponent<CharacterController>();
+        aPlayer = gameObject.GetComponent<AudioSource>();
     }
 
     void Update()
@@ -96,7 +99,7 @@ public class AILivingDead : MonoBehaviour
     {
         if (playMove != null)
         {
-		 
+            aPlayer.Play();
             playMove.KnockBack(transform.position);
             player.GetComponent<Health>().LoseHealth(attackDamage);
 		 

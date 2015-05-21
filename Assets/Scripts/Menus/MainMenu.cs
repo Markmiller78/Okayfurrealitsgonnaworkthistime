@@ -22,6 +22,8 @@ public class MainMenu : MonoBehaviour
     bool ControllerOptionToggle;
     bool AxisChanged = false;
 
+    public SpriteRenderer backgroundScroll;
+
     public enum Menu { Main = 0, Options, Achievements, Credits, Continue, AreYouSure, SelectDifficulty };
     Menu CurrMenu = Menu.Main;
     public GameObject MainMenuText;
@@ -117,7 +119,17 @@ public class MainMenu : MonoBehaviour
 
 
         timer -= Time.deltaTime;
-        SelectIcon.transform.position = new Vector3(-2.2f, choices[currentSelection], -5);
+
+        if (Achievements.activeSelf == false)
+        {
+            SelectIcon.transform.position = new Vector3(-2.2f, choices[currentSelection], -5);
+            backgroundScroll.enabled = true;
+        }
+        else
+        {
+            SelectIcon.transform.position = new Vector3(-1.2f, choices[currentSelection], -5);
+            backgroundScroll.enabled = false;
+        }
         if ((Input.GetAxis("CLSVertical") > .7f || Input.GetAxis("KBVertical") > 0 || Input.GetAxis("CDPadVertical") > .7f) && AxisChanged == false && currentSelection < 8)
         {
             if (currentSelection > 0)
@@ -696,7 +708,7 @@ public class MainMenu : MonoBehaviour
     void AchievementsMenu()
     {
         maxchoices = 0;
-        choices[0] = -2.72f;
+        choices[0] = -4.25f;
         Achievements.SetActive(true);
 
         switch (currentSelection)

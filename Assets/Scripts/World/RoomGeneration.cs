@@ -43,7 +43,7 @@ public class RoomGeneration : MonoBehaviour
     Room[] checkpointRoomsInfo;
 
     bool easyMode;
-    int enemyMod;
+    //int enemyMod;
     int prevRoom = -1;
     bool loading = false;
     bool firstRoom;
@@ -150,7 +150,7 @@ public class RoomGeneration : MonoBehaviour
         CreateRoom();
         firstRoom = false;
         //Reset();
-        enemyMod = (easyMode ? 11 : 9);
+        //enemyMod = (easyMode ? 11 : 9);
     }
 
     void CreateRoom()
@@ -158,15 +158,15 @@ public class RoomGeneration : MonoBehaviour
         bool skip = false;
         bool hasSkipped = false;
 
-        if (prevRoom > currentRoom)
-            ++enemyMod;
-        else
-            --enemyMod;
-
-        if (enemyMod <= 0)
-        {
-            enemyMod = (easyMode ? 11 : 9);
-        }
+        //if (prevRoom > currentRoom)
+        //    ++enemyMod;
+        //else
+        //    --enemyMod;
+        //
+        //if (enemyMod <= 0)
+        //{
+        //    enemyMod = (easyMode ? 11 : 9);
+        //}
 
         // Spawn torches in the checkpoints
         if (easyMode && (currentRoom == 3 || currentRoom == 7 || currentRoom == 14 || currentRoom == 18 || currentRoom == 25 || currentRoom == 28))
@@ -409,15 +409,19 @@ public class RoomGeneration : MonoBehaviour
         {
             Utilities.ArrayShuffle(finalRoomInfoArray[currentRoom].enemySpawnPoints);
             int min = finalRoomInfoArray[currentRoom].minEnemies;
-            if (min - enemyMod > 0)
-            {
-                min -= enemyMod;
-            }
+            //if (min - enemyMod > 0)
+            //{
+            //    min -= enemyMod;
+            //}
             int max = finalRoomInfoArray[currentRoom].maxEnemies;
-            if (max - enemyMod > min)
-            {
-                max -= enemyMod;
-            }
+            if (max + (currentRoom % (easyMode ? 11 : 9)) > finalRoomInfoArray[currentRoom].enemySpawnPoints.Length)
+                max = finalRoomInfoArray[currentRoom].enemySpawnPoints.Length;
+            else
+                max += (currentRoom % (easyMode ? 11 : 9));
+            //if (max - enemyMod > min)
+            //{
+            //    max -= enemyMod;
+            //}
             finalRoomInfoArray[currentRoom].numEnemies = Random.Range(min, max);
             int enemiesSpawned = 0;
             while (enemiesSpawned < finalRoomInfoArray[currentRoom].numEnemies)
