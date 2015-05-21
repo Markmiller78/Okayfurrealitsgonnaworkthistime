@@ -423,15 +423,16 @@ public class RoomGeneration : MonoBehaviour
             //    max -= enemyMod;
             //}
             finalRoomInfoArray[currentRoom].numEnemies = Random.Range(min, max);
-            int enemiesSpawned = 0;
+            Instantiate(finalRoomInfoArray[currentRoom].enemiesThatCanSpawn[0], new Vector3(finalRoomInfoArray[currentRoom].enemySpawnPoints[0].x, -finalRoomInfoArray[currentRoom].enemySpawnPoints[0].y, -1f), Quaternion.identity);
+            int enemiesSpawned = 1;
             while (enemiesSpawned < finalRoomInfoArray[currentRoom].numEnemies)
             {
-                for (int i = 0; i < finalRoomInfoArray[currentRoom].enemySpawnPoints.Length; i++)
+                for (int i = 1; i < finalRoomInfoArray[currentRoom].enemySpawnPoints.Length; i++)
                 {
                     int chance = Random.Range(1, 50);
                     if (!finalRoomInfoArray[currentRoom].enemySpawnPointUsed[i] && chance == 1)
                     {
-                        Instantiate(finalRoomInfoArray[currentRoom].enemiesThatCanSpawn[Random.Range(0, finalRoomInfoArray[currentRoom].enemiesThatCanSpawn.Length)], new Vector3(finalRoomInfoArray[currentRoom].enemySpawnPoints[i].x, -finalRoomInfoArray[currentRoom].enemySpawnPoints[i].y, -1f), Quaternion.identity);
+                        Instantiate(finalRoomInfoArray[currentRoom].enemiesThatCanSpawn[Random.Range(1, finalRoomInfoArray[currentRoom].enemiesThatCanSpawn.Length)], new Vector3(finalRoomInfoArray[currentRoom].enemySpawnPoints[i].x, -finalRoomInfoArray[currentRoom].enemySpawnPoints[i].y, -1f), Quaternion.identity);
                         finalRoomInfoArray[currentRoom].enemySpawnPointUsed[i] = true;
                         ++enemiesSpawned;
                         if (enemiesSpawned == finalRoomInfoArray[currentRoom].numEnemies)
