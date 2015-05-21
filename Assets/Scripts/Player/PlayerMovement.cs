@@ -64,7 +64,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(speed);
+      
         if (heroEquipment.paused == false && tag != "Decoy")
         {
             if (stunned)

@@ -9,6 +9,7 @@ public class Credits : MonoBehaviour {
 	public GameObject[] Buttons= new GameObject[3];
 	public AudioClip clip;
 	public bool playing=false;
+
 	// Use this for initialization
 	void Start () 
     {
@@ -28,7 +29,7 @@ public class Credits : MonoBehaviour {
 
 			}
 			creds[i].transform.Translate (scrolling);
-			scrolling.y += 100.0f * Time.deltaTime;
+			scrolling.y += 60.0f * Time.deltaTime;
 	 
 			if (creds[i].transform.position.y >= Screen.height * 4.5f) {
 				scrolling.y = -130.0f;
