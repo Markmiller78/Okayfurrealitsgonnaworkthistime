@@ -29,6 +29,7 @@ public class PlayerEquipment : MonoBehaviour
     public string EmberName;
     public ItemStat EmberStat1;
     public ItemStat EmberStat2;
+	SaveTest savenload;
 
     int TotalSP, TotalAD, MaxHP, MaxLight;
 
@@ -47,8 +48,8 @@ public class PlayerEquipment : MonoBehaviour
         audioPlayer = gameObject.GetComponent<AudioSource>();
       
         paused = false;
-
-		if (!this.GetComponent<SaveTest> ().shouldload) {
+		savenload = GameObject.FindObjectOfType<SaveTest> ();
+		if (!savenload.shouldload) {
 			emberDurability = 0;
  
 			BootName = "Starter Charging Boot";
