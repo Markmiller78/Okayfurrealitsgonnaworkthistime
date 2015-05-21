@@ -49,13 +49,13 @@ public class PlayerEquipment : MonoBehaviour
       
         paused = false;
 		savenload = GameObject.FindObjectOfType<Options> ().GetComponent<SaveTest> ();
-		if (!savenload.shouldload) {
+		if (savenload && !savenload.shouldload) {
 			emberDurability = 0;
  
 			BootName = "Starter Charging Boot";
 	 
 			AccessoryName = "Starter Orb of Light";
-		} else
+		} else if (savenload)
 			savenload.LoadPlayer();
 
     }

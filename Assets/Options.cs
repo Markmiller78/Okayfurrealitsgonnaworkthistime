@@ -64,14 +64,17 @@ public class Options : MonoBehaviour
 
     void Start()
     {
-        achievements = new bool[5];
+        achievements = new bool[8];
 
 
-        achievements[0] = false; // Game Beaten
+        achievements[0] = false; // Morrius defeated
         achievements[1] = false; // Melee
         achievements[2] = false; // Chest
         achievements[3] = false; // Dash
         achievements[4] = false; // Defeat 100 Enemies
+        achievements[5] = false; // Defeat 100 Enemies
+        achievements[6] = false; // Defeat 100 Enemies
+        achievements[7] = false; // Defeat 100 Enemies
         Load();
         DontDestroyOnLoad(gameObject);
         sfxInt.text = sfxVolume.ToString();
