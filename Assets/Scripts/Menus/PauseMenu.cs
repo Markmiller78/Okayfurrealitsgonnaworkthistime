@@ -46,11 +46,12 @@ public class PauseMenu : MonoBehaviour
     {
         if (isPaused)
         {
-            if (InputManager.controller)
+            //if (InputManager.controller)
             {
                 #region Controller Input
                 if (axisChanged && Input.GetAxis("CLSVertical") == 0.0f && Input.GetAxis("CDPadVertical") == 0.0f
-                    && Input.GetAxis("CLSHorizontal") == 0.0f && Input.GetAxis("CDPadHorizontal") == 0.0f)
+                    && Input.GetAxis("CLSHorizontal") == 0.0f && Input.GetAxis("CDPadHorizontal") == 0.0f
+                    && Input.GetAxis("KBVertical") == 0.0f && Input.GetAxis("KBHorizontal") == 0f)
                 {
                     axisChanged = false;
                 }
@@ -72,13 +73,9 @@ public class PauseMenu : MonoBehaviour
                 }
                 #endregion
             }
-            else
+            //else
             {
                 #region KB/M Input
-                if (axisChanged && Input.GetAxis("KBVertical") == 0.0f && Input.GetAxis("KBHorizontal") == 0f)
-                {
-                    axisChanged = false;
-                }
                 if (!axisChanged && Input.GetAxis("KBVertical") > 0.0f)
                 {
                     if (!optionsMode)
@@ -116,7 +113,7 @@ public class PauseMenu : MonoBehaviour
                     case 0:
                         #region Resume
                         SelectorRemains.transform.localPosition = new Vector3(-100f, 80f, -5.1f);
-                        if (InputManager.controller && Input.GetButtonDown("CMenuAccept"))
+                        if (Input.GetButtonDown("CMenuAccept"))
                         {
                             // Resume Code Here
                             GameObject[] allObjects;
@@ -128,7 +125,7 @@ public class PauseMenu : MonoBehaviour
                             }
                             GameObject.Find("InputManager").GetComponent<InputManager>().isPaused = false;
                         }
-                        else if (!InputManager.controller && Input.GetButtonDown("KBMenuAccept"))
+                        else if (Input.GetButtonDown("KBMenuAccept"))
                         {
                             // Resume Code Here
                             GameObject[] allObjects;
@@ -145,12 +142,12 @@ public class PauseMenu : MonoBehaviour
                     case 1:
                         #region Options Menu Stuff
                         SelectorRemains.transform.localPosition = new Vector3(-105f, 30f, -5.1f);
-                        if (InputManager.controller && Input.GetButtonDown("CMenuAccept"))
+                        if (Input.GetButtonDown("CMenuAccept"))
                         {
                             // Options Code Here
                             SwapMode();
                         }
-                        else if (!InputManager.controller && Input.GetButtonDown("KBMenuAccept"))
+                        else if (Input.GetButtonDown("KBMenuAccept"))
                         {
                             // Options Code Here
                             SwapMode();
@@ -160,14 +157,14 @@ public class PauseMenu : MonoBehaviour
                     case 2:
                         #region Quit
                         SelectorRemains.transform.localPosition = new Vector3(-70f, -85f, -5.1f);
-                        if (InputManager.controller && Input.GetButtonDown("CMenuAccept"))
+                        if (Input.GetButtonDown("CMenuAccept"))
                         {
                             // Save & Quit Code Here
                             //GameObject.FindGameObjectWithTag("Player").SendMessage("Save", SendMessageOptions.DontRequireReceiver);
                             //Application.Quit();
                             Application.LoadLevel("MainMenu");
                         }
-                        else if (!InputManager.controller && Input.GetButtonDown("KBMenuAccept"))
+                        else if (Input.GetButtonDown("KBMenuAccept"))
                         {
                             // Save & Quit Code Here
                             //GameObject.FindGameObjectWithTag("Player").SendMessage("Save", SendMessageOptions.DontRequireReceiver);
@@ -187,28 +184,28 @@ public class PauseMenu : MonoBehaviour
                     case 0:
                         #region SFX
                         SelectorRemains.transform.localPosition = new Vector3(-150f, 130f, -5.1f);
-                        if (InputManager.controller && !axisChanged && (Input.GetAxis("CLSHorizontal") < 0.0f || Input.GetAxis("CDPadHorizontal") < 0.0f))
+                        if (!axisChanged && (Input.GetAxis("CLSHorizontal") < 0.0f || Input.GetAxis("CDPadHorizontal") < 0.0f))
                         {
                             // Decrease SFX Volume
                             GameObject.FindObjectOfType<Options>().sfxDecrease();
                             sVolume.text = "SFX Volume: " + GameObject.FindObjectOfType<Options>().sfxVolume.ToString();
                             axisChanged = true;
                         }
-                        else if (InputManager.controller && !axisChanged && (Input.GetAxis("CLSHorizontal") > 0.0f || Input.GetAxis("CDPadHorizontal") > 0.0f))
+                        else if (!axisChanged && (Input.GetAxis("CLSHorizontal") > 0.0f || Input.GetAxis("CDPadHorizontal") > 0.0f))
                         {
                             // Increase SFX Volume
                             GameObject.FindObjectOfType<Options>().sfxIncrease();
                             sVolume.text = "SFX Volume: " + GameObject.FindObjectOfType<Options>().sfxVolume.ToString();
                             axisChanged = true;
                         }
-                        else if (!InputManager.controller && !axisChanged && Input.GetAxis("KBHorizontal") < 0.0f)
+                        else if (!axisChanged && Input.GetAxis("KBHorizontal") < 0.0f)
                         {
                             // Decrease SFX Volume
                             GameObject.FindObjectOfType<Options>().sfxDecrease();
                             sVolume.text = "SFX Volume: " + GameObject.FindObjectOfType<Options>().sfxVolume.ToString();
                             axisChanged = true;
                         }
-                        else if (!InputManager.controller && !axisChanged && Input.GetAxis("KBHorizontal") > 0.0f)
+                        else if (!axisChanged && Input.GetAxis("KBHorizontal") > 0.0f)
                         {
                             // Increase SFX Volume
                             GameObject.FindObjectOfType<Options>().sfxIncrease();
@@ -220,71 +217,40 @@ public class PauseMenu : MonoBehaviour
                     case 1:
                         #region Music
                         SelectorRemains.transform.localPosition = new Vector3(-160f, 80f, -5.1f);
-                        if (InputManager.controller && !axisChanged && (Input.GetAxis("CLSHorizontal") < 0.0f || Input.GetAxis("CDPadHorizontal") < 0.0f))
+                        if (!axisChanged && (Input.GetAxis("CLSHorizontal") < 0.0f || Input.GetAxis("CDPadHorizontal") < 0.0f))
                         {
                             // Decrease Music Volume
                             GameObject.FindObjectOfType<Options>().musicDecrease();
                             mVolume.text = "Music Volume: " + GameObject.FindObjectOfType<Options>().musicVolume.ToString();
                             axisChanged = true;
                         }
-                        else if (InputManager.controller && !axisChanged && (Input.GetAxis("CLSHorizontal") > 0.0f || Input.GetAxis("CDPadHorizontal") > 0.0f))
+                        else if (!axisChanged && (Input.GetAxis("CLSHorizontal") > 0.0f || Input.GetAxis("CDPadHorizontal") > 0.0f))
                         {
                             // Increase Music Volume
                             GameObject.FindObjectOfType<Options>().musicIncrease();
                             mVolume.text = "Music Volume: " + GameObject.FindObjectOfType<Options>().musicVolume.ToString();
                             axisChanged = true;
                         }
-                        else if (!InputManager.controller && !axisChanged && Input.GetAxis("KBHorizontal") < 0.0f)
+                        else if (!axisChanged && Input.GetAxis("KBHorizontal") < 0.0f)
                         {
                             // Decrease Music Volume
                             GameObject.FindObjectOfType<Options>().musicDecrease();
                             mVolume.text = "Music Volume: " + GameObject.FindObjectOfType<Options>().musicVolume.ToString();
                             axisChanged = true;
                         }
-                        else if (!InputManager.controller && !axisChanged && Input.GetAxis("KBHorizontal") > 0.0f)
+                        else if (!axisChanged && Input.GetAxis("KBHorizontal") > 0.0f)
                         {
                             // Increase Music Volume
                             GameObject.FindObjectOfType<Options>().musicIncrease();
                             mVolume.text = "Music Volume: " + GameObject.FindObjectOfType<Options>().musicVolume.ToString();
                             axisChanged = true;
                         }
-
-
-                        //SelectorRemains.transform.localPosition = new Vector3(-130f, 80f, -5.1f);
-                        //if (InputManager.controller && !axisChanged && (Input.GetAxis("CLSHorizontal") < 0.0f || Input.GetAxis("CDPadHorizontal") < 0.0f))
-                        //{
-                        //    // Decrease Music Volume
-                        //    GameObject.FindObjectOfType<Options>().musicDecrease();
-                        //    musicVolume.text = "Music Volume: " + GameObject.FindObjectOfType<Options>().musicVolume.ToString();
-                        //    axisChanged = true;
-                        //}
-                        //else if (InputManager.controller && !axisChanged && (Input.GetAxis("CLSHorizontal") > 0.0f || Input.GetAxis("CDPadHorizontal") > 0.0f))
-                        //{
-                        //    // Increase Music Volume
-                        //    GameObject.FindObjectOfType<Options>().musicIncrease();
-                        //    musicVolume.text = "Music Volume: " + GameObject.FindObjectOfType<Options>().musicVolume.ToString();
-                        //    axisChanged = true;
-                        //}
-                        //else if (!InputManager.controller && !axisChanged && Input.GetAxis("KBHorizontal") < 0.0f)
-                        //{
-                        //    // Decrease Music Volume
-                        //    GameObject.FindObjectOfType<Options>().musicDecrease();
-                        //    musicVolume.text = "Music Volume: " + GameObject.FindObjectOfType<Options>().musicVolume.ToString();
-                        //    axisChanged = true;
-                        //}
-                        //else if (!InputManager.controller && !axisChanged && Input.GetAxis("KBHorizontal") > 0.0f)
-                        //{
-                        //    // Increase Music Volume
-                        //    GameObject.FindObjectOfType<Options>().musicIncrease();
-                        //    musicVolume.text = "Music Volume: " + GameObject.FindObjectOfType<Options>().musicVolume.ToString();
-                        //    axisChanged = true;
-                        //}
                         #endregion
                         break;
                     case 2:
                         #region Fullscreen
                         SelectorRemains.transform.localPosition = new Vector3(-100f, 30f, -5.1f);
-                        if (InputManager.controller && Input.GetButtonDown("CMenuAccept"))
+                        if (Input.GetButtonDown("CMenuAccept"))
                         {
                             if (Screen.fullScreen)
                             {
@@ -296,7 +262,7 @@ public class PauseMenu : MonoBehaviour
                             }
                             Screen.fullScreen = !Screen.fullScreen;
                         }
-                        else if (!InputManager.controller && Input.GetButtonDown("KBMenuAccept"))
+                        else if (Input.GetButtonDown("KBMenuAccept"))
                         {
                             if (Screen.fullScreen)
                             {

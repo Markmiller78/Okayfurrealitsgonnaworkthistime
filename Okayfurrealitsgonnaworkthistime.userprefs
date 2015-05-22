@@ -1,24 +1,14 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\World\SaveTest.cs">
-    <Files>
-      <File FileName="Assets\Scripts\ChestScript.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\World\SaveTest.cs" Line="214" Column="22" />
-      <File FileName="Assets\Scripts\World\Credits.cs" Line="7" Column="9" />
-      <File FileName="Assets\Scripts\Enemies\Regular\AICommander.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\UpdateToolText.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Player\ToolTips.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Health.cs" Line="165" Column="1" />
-      <File FileName="Assets\Options.cs" Line="340" Column="2" />
-      <File FileName="Assets\Scripts\World\Pickup.cs" Line="118" Column="62" />
-      <File FileName="Assets\Scripts\World\RoomGeneration.cs" Line="63" Column="22" />
-      <File FileName="Assets\Scripts\Player\PlayerEquipment.cs" Line="53" Column="3" />
-    </Files>
-  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="C:\Users\Jean-Francois\Desktop\Luminescence\Okayfurrealitsgonnaworkthistime\Assets\Scripts\ChestScript.cs" line="65" />
-      <Breakpoint file="C:\Users\Jean-Francois\Desktop\Luminescence\Okayfurrealitsgonnaworkthistime\Assets\Scripts\Player\PlayerDashing.cs" line="139" />
+      <Breakpoint file="C:\Users\Jean-Francois\Desktop\Luminescence\Okayfurrealitsgonnaworkthistime\Assets\Scripts\World\SaveTest.cs" line="184" />
+      <Breakpoint file="C:\Users\Jean-Francois\Desktop\Luminescence\Okayfurrealitsgonnaworkthistime\Assets\Scripts\Player\PlayerEquipment.cs" line="59" />
+      <Breakpoint file="C:\Users\Jean-Francois\Desktop\Luminescence\Okayfurrealitsgonnaworkthistime\Assets\Scripts\World\SaveTest.cs" line="180" />
+      <Breakpoint file="C:\Users\Jean-Francois\Desktop\Luminescence\Okayfurrealitsgonnaworkthistime\Assets\Scripts\World\SaveTest.cs" line="191" />
+      <Breakpoint file="C:\Users\Jean-Francois\Desktop\Luminescence\Okayfurrealitsgonnaworkthistime\Assets\BGM.cs" line="160" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

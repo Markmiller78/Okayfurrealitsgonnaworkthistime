@@ -54,11 +54,12 @@ public class BGM : MonoBehaviour {
         //This volume code was breaking the pause menu, the volume is managaed entirely in the MusicVolumeManager Script
         //*************************************************************
 
-        //if(Application.loadedLevelName=="Credits")
-        //{
-        //    volume = GameObject.FindObjectOfType<Options>().musicVolume;
-        //    audioPlayer.volume = 0;
-        //}
+        if(Application.loadedLevelName=="Credits")
+       {
+			audioPlayer.Stop();
+//volume = GameObject.FindObjectOfType<Options>().musicVolume;
+  //         audioPlayer.volume = 0;
+       }
         //if (Application.loadedLevelName == "LoadScreen")
         //{
         //    volume = GameObject.FindObjectOfType<Options>().musicVolume;
@@ -83,12 +84,13 @@ public class BGM : MonoBehaviour {
 
         if (Application.loadedLevelName=="MainMenu")
         {
-            if (!audioPlayer.clip.Equals(clips[4]))
-            {
+         if(!audioPlayer.isPlaying)
+			   {
                 audioPlayer.Stop();
                 audioPlayer.clip = clips[4];
                 audioPlayer.Play();
-            }
+			}
+            
 
         }
         if (!beenAssigned && Application.loadedLevelName == "Game")

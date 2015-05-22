@@ -136,7 +136,7 @@ public class InputManager : MonoBehaviour
 					   anim.CrossFade("Idle",0.01f);       
                 }
                 // Mouse to rotate
-                player.SendMessage("MouseRotate");
+                player.SendMessage("MouseRotate",SendMessageOptions.DontRequireReceiver);
                 // Space to melee
                 if (Input.GetButton("KBMelee") && !cooldowns.meleeCooling)
                 {
