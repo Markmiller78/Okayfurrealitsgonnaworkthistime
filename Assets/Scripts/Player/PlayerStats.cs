@@ -15,18 +15,18 @@ public class PlayerStats : MonoBehaviour
 
     void GetMeleeMod(float meleeMod)
     {
-        meleeModifier = meleeMod;
+        meleeModifier = meleeMod * .3f;
     }
     void GetSpellMod(float spellMod)
     {
-        spellModifier = spellMod;
+        spellModifier = spellMod * .3f;
     }
     void GetMaxHPMod(float hpMod)
     {
-        maxHPModifier = hpMod;
+        maxHPModifier = hpMod * 2;
     }
     void GetMaxLightMod(float lightMod)
     {
-        maxLightModifier = lightMod;
+        maxLightModifier = lightMod * 1.3f;
     }
 }
