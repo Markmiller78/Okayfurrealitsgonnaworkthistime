@@ -197,7 +197,7 @@ public class IntroCutscene : MonoBehaviour
 
 
 
-        Particlecircle.transform.Rotate(new Vector3(0, 0, 1), 1);
+        Particlecircle.transform.Rotate(new Vector3(0, 0, 1), 1 * Time.deltaTime);
     }
     void FadeIn()
     {

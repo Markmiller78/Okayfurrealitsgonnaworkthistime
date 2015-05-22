@@ -25,7 +25,6 @@ public class CameraManager : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
             transform.position = new Vector3(player.transform.position.x, player.transform.position.y, -20.0f);
-        Screen.SetResolution(1280, 720, false);
         dungeon = GameObject.FindGameObjectWithTag("Dungeon");
         if (dungeon != null)
             generator = dungeon.GetComponent<RoomGeneration>();
