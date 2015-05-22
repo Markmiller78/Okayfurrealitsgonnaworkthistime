@@ -84,27 +84,27 @@ public class AIShadowSpawn : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		if (turningr == false)
-		{
-			timerforfacingvectorupdate -= Time.deltaTime;
-			if(timerforfacingvectorupdate<=0)
-			{
-				turningr=true;
-				timerforfacingvectorupdate2=2.0f;
+        //if (turningr == false)
+        //{
+        //    timerforfacingvectorupdate -= Time.deltaTime;
+        //    if(timerforfacingvectorupdate<=0)
+        //    {
+        //        turningr=true;
+        //        timerforfacingvectorupdate2=2.0f;
 				
-			}
+        //    }
 
 
-		}
-		if (turningr == true)
-		{
-			timerforfacingvectorupdate2 -= Time.deltaTime;
-			if(timerforfacingvectorupdate2<=0)
-			{
-				turningr=false;
-				timerforfacingvectorupdate=2.0f;
-			}
-		}
+        //}
+        //if (turningr == true)
+        //{
+        //    timerforfacingvectorupdate2 -= Time.deltaTime;
+        //    if(timerforfacingvectorupdate2<=0)
+        //    {
+        //        turningr=false;
+        //        timerforfacingvectorupdate=2.0f;
+        //    }
+        //}
 
         AttackTimer -= Time.deltaTime;
         if (heroEquipment.paused == false)
