@@ -119,7 +119,7 @@ public class MapAndStatsMenu : MonoBehaviour
                 }
                 else offsetIndex = 18;
             }
-            Vector2 offset = new Vector2(((Screen.width / 2) - (generator.finalRoomInfoArray[offsetIndex].width / 2) * 5) + 150,
+            Vector2 offset = new Vector2(((Screen.width / 2) - (generator.finalRoomInfoArray[offsetIndex].width / 2) * 5) + 250,
                 (Screen.height / 2) - (generator.finalRoomInfoArray[offsetIndex].height / 2) * 5);
             for (int i = offsetIndex + 1; i <= generator.currentRoom; i++)
             {
