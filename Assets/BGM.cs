@@ -222,6 +222,20 @@ public class BGM : MonoBehaviour {
 
 
     }
+	public void bossmusic()
+	{
+		audioPlayer.Stop();
+		audioPlayer.clip = clips[2];
+		audioPlayer.Play();
+
+	}
+	public void finalbossmusic()
+	{
+
+		audioPlayer.Stop();
+		audioPlayer.clip = clips[3];
+		audioPlayer.Play();
+	}
  void SetToMenu()
     {
         audioPlayer.Stop();

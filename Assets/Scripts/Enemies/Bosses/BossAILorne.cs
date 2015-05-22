@@ -62,6 +62,7 @@ public class BossAILorne : MonoBehaviour {
             spellMinRange = 3.0f;
    spellTimerMax=4.0f;
             spellTimer=spellTimerMax;
+		GameObject.FindObjectOfType<BGM> ().bossmusic ();
 //            spTimerMax = 10.0f;
 //            specialTimer = spTimerMax;
         

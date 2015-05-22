@@ -77,6 +77,8 @@ public class AIBossDethImproved : MonoBehaviour
 
         healthB = (GameObject)Instantiate(BossHealthBar);
         HealthRemaining = GameObject.FindGameObjectWithTag("Boss Health");
+
+		GameObject.FindObjectOfType<BGM> ().bossmusic ();
     }
 
     void DetermineDoorPositions()
