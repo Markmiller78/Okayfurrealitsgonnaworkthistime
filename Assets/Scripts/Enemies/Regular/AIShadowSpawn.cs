@@ -13,10 +13,10 @@ public class AIShadowSpawn : MonoBehaviour
     public Animation GetHurt;
     public Animator ghastAnimator;
     public GameObject Lightexplosion;
-	Vector3 vectoplayer;
-	float timerforfacingvectorupdate;
-	float timerforfacingvectorupdate2;
-	public AudioSource Playsounds;
+    Vector3 vectoplayer;
+    float timerforfacingvectorupdate;
+    float timerforfacingvectorupdate2;
+    public AudioSource Playsounds;
     public AudioClip SapLight;
     public AudioClip GetScary;
     bool EnragedSoundPlaying;
@@ -45,7 +45,7 @@ public class AIShadowSpawn : MonoBehaviour
     bool AbleToMelee;
     public float attackDamage;
     float AttackTimer;
-	bool turningr=true;
+    bool turningr = true;
 
     GameObject PrimaryThreat;
     GameObject SecondaryThreat;
@@ -54,8 +54,8 @@ public class AIShadowSpawn : MonoBehaviour
     State CurrentState = State.Idle;
     void Start()
     {
-		timerforfacingvectorupdate = 2.0f;
-		timerforfacingvectorupdate2 = 2.0f;
+        timerforfacingvectorupdate = 2.0f;
+        timerforfacingvectorupdate2 = 2.0f;
         AttackTimer = .5f;
         AbleToMelee = false;
         EnragedSoundPlaying = false;
@@ -78,7 +78,7 @@ public class AIShadowSpawn : MonoBehaviour
         stuckCounter = 0;
         DistancetoLight = 100;
         DistancetoPlayer = 100;
-        AnimTimer = 1;
+        //AnimTimer = 1;
     }
 
     // Update is called once per frame
@@ -91,7 +91,7 @@ public class AIShadowSpawn : MonoBehaviour
         //    {
         //        turningr=true;
         //        timerforfacingvectorupdate2=2.0f;
-				
+
         //    }
 
 
@@ -111,7 +111,7 @@ public class AIShadowSpawn : MonoBehaviour
         {
             //WorkPlease.SetInteger("AnimationNum", 0);
             timer -= Time.deltaTime;
-            AnimTimer -= Time.deltaTime;
+            //AnimTimer -= Time.deltaTime;
             DistancetoPlayer = DistancetoLight = 100;
             //calculate distance to player.
             if (timer < 0)
@@ -206,15 +206,15 @@ public class AIShadowSpawn : MonoBehaviour
 
             //Change Animations
 
-            if (AnimTimer < 0)
-            {
-                if (State.Enrage == CurrentState)
-                    ghastAnimator.SetInteger("AnimationNum", 2);
-                else
-                    ghastAnimator.SetInteger("AnimationNum", 0);
+            //if (AnimTimer < 0)
+            //{
+            //    if (State.Enrage == CurrentState)
+            //        ghastAnimator.SetInteger("AnimationNum", 2);
+            //    else
+            //        ghastAnimator.SetInteger("AnimationNum", 0);
 
-                //print("did stuff");
-            }
+            //    //print("did stuff");
+            //}
 
             if (DistancetoPlayer < 2f && AbleToMelee == true)
                 Attack();
@@ -375,8 +375,8 @@ public class AIShadowSpawn : MonoBehaviour
             }
             Destroy(NearestLightPickup);
 
-            ghastAnimator.SetInteger("AnimationNum", 1);
-            AnimTimer = .3f;
+           // ghastAnimator.SetInteger("AnimationNum", 1);
+           // AnimTimer = .3f;
         }
 
         //DO Dead things
@@ -384,7 +384,7 @@ public class AIShadowSpawn : MonoBehaviour
         {
             BlindedByTheLight();
             Destroy(gameObject);
-    }
+        }
 
 
 
@@ -440,32 +440,32 @@ public class AIShadowSpawn : MonoBehaviour
         return closest;
     }
 
-	void FacePlayer()
-	{
-		//float tempangle=Vector3.Angle (transform.up,disttoplayer);
-		//transform.Rotate (Vector3.back,tempangle+180);
-		if (timerforfacingvectorupdate == 2.0f) 
-		
-		{
-			vectoplayer = player.transform.position - transform.position;
-			turningr=false;
-		}
-		float tempangle = Mathf.Atan2 (vectoplayer.y, vectoplayer.x) * Mathf.Rad2Deg;
-		if (turningr)
-		{
-	
-			tempangle += 90.0f;
-		}
-		else
-		{	 
-			tempangle -= 90.0f;
-		}
-		Quaternion rotation = Quaternion.AngleAxis(tempangle, Vector3.forward);
-		transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 2.5f);
-		
-		
-		
-	}
+    //void FacePlayer()
+    //{
+    //    //float tempangle=Vector3.Angle (transform.up,disttoplayer);
+    //    //transform.Rotate (Vector3.back,tempangle+180);
+    //    if (timerforfacingvectorupdate == 2.0f) 
+
+    //    {
+    //        vectoplayer = player.transform.position - transform.position;
+    //        turningr=false;
+    //    }
+    //    float tempangle = Mathf.Atan2 (vectoplayer.y, vectoplayer.x) * Mathf.Rad2Deg;
+    //    if (turningr)
+    //    {
+
+    //        tempangle += 90.0f;
+    //    }
+    //    else
+    //    {	 
+    //        tempangle -= 90.0f;
+    //    }
+    //    Quaternion rotation = Quaternion.AngleAxis(tempangle, Vector3.forward);
+    //    transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 2.5f);
+
+
+
+    //}
 
 
 }
