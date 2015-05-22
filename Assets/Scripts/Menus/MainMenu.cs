@@ -901,8 +901,11 @@ public class MainMenu : MonoBehaviour
                     {
                         //CONTINUE PREVIOUS GAME
                         //  LoadStats();
+				if(theOptions.GetComponent<SaveTest>().data.canyousave==true)
+				{
                         theOptions.shouldload = true;
                         LevelManager.Load("Game");
+				}
                         break;
                     }
                 case 1:

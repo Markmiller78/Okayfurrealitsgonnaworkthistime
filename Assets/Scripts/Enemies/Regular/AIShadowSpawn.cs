@@ -13,8 +13,10 @@ public class AIShadowSpawn : MonoBehaviour
     public Animation GetHurt;
     public Animator ghastAnimator;
     public GameObject Lightexplosion;
-
-    public AudioSource Playsounds;
+	Vector3 vectoplayer;
+	float timerforfacingvectorupdate;
+	float timerforfacingvectorupdate2;
+	public AudioSource Playsounds;
     public AudioClip SapLight;
     public AudioClip GetScary;
     bool EnragedSoundPlaying;
@@ -43,6 +45,7 @@ public class AIShadowSpawn : MonoBehaviour
     bool AbleToMelee;
     public float attackDamage;
     float AttackTimer;
+	bool turningr=true;
 
     GameObject PrimaryThreat;
     GameObject SecondaryThreat;
@@ -51,6 +54,8 @@ public class AIShadowSpawn : MonoBehaviour
     State CurrentState = State.Idle;
     void Start()
     {
+		timerforfacingvectorupdate = 2.0f;
+		timerforfacingvectorupdate2 = 2.0f;
         AttackTimer = .5f;
         AbleToMelee = false;
         EnragedSoundPlaying = false;
@@ -79,6 +84,28 @@ public class AIShadowSpawn : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+		if (turningr == false)
+		{
+			timerforfacingvectorupdate -= Time.deltaTime;
+			if(timerforfacingvectorupdate<=0)
+			{
+				turningr=true;
+				timerforfacingvectorupdate2=2.0f;
+				
+			}
+
+
+		}
+		if (turningr == true)
+		{
+			timerforfacingvectorupdate2 -= Time.deltaTime;
+			if(timerforfacingvectorupdate2<=0)
+			{
+				turningr=false;
+				timerforfacingvectorupdate=2.0f;
+			}
+		}
+
         AttackTimer -= Time.deltaTime;
         if (heroEquipment.paused == false)
         {
@@ -412,6 +439,33 @@ public class AIShadowSpawn : MonoBehaviour
 
         return closest;
     }
+
+	void FacePlayer()
+	{
+		//float tempangle=Vector3.Angle (transform.up,disttoplayer);
+		//transform.Rotate (Vector3.back,tempangle+180);
+		if (timerforfacingvectorupdate == 2.0f) 
+		
+		{
+			vectoplayer = player.transform.position - transform.position;
+			turningr=false;
+		}
+		float tempangle = Mathf.Atan2 (vectoplayer.y, vectoplayer.x) * Mathf.Rad2Deg;
+		if (turningr)
+		{
+	
+			tempangle += 90.0f;
+		}
+		else
+		{	 
+			tempangle -= 90.0f;
+		}
+		Quaternion rotation = Quaternion.AngleAxis(tempangle, Vector3.forward);
+		transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 2.5f);
+		
+		
+		
+	}
 
 
 }

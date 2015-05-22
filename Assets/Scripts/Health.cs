@@ -151,6 +151,7 @@ public class Health : MonoBehaviour
                 anim.CrossFade("Dying", 0.01f);
                 GameObject.FindObjectOfType<BGM>().SendMessage("SetToMenu", SendMessageOptions.DontRequireReceiver);
                // GameObject.FindObjectOfType<BGM>().audioPlayer.Stop();
+				GameObject.FindObjectOfType<Options>().GetComponent<SaveTest>().YOUDIED();
                 player.GetComponent<AudioSource>().PlayOneShot(loseSound);
                 equipment.paused = true;
                 playerDead = true;

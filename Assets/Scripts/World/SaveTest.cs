@@ -17,13 +17,18 @@ public class SaveTest : MonoBehaviour {
     public RoomGeneration theRooms;
     Options options;
     PlayerStats theStats;
-	PlayerData data;
+	public PlayerData data;
     public int enemies=0;
     public bool saved = false;
 	PlayerEquipment eq;
 
 	
 
+	public void YOUDIED()
+	{
+		data.canyousave = false;
+		Save ();
+	}
 	
 	// Use this for initialization
 	void Start ()
@@ -73,8 +78,9 @@ public class SaveTest : MonoBehaviour {
                     
                     {
                         Save();
+				data.canyousave=true;
                         Debug.Log("Saved!");
-                      
+
                         saved = true;
                     }
  
@@ -84,120 +90,117 @@ public class SaveTest : MonoBehaviour {
  
    public void Save()
     {
-		player = GameObject.FindGameObjectWithTag("Player");
-		if(player!=null)
-		{
-			eq=player.GetComponent<PlayerEquipment>();
-			theStats = player.GetComponent<PlayerStats>();
+		player = GameObject.FindGameObjectWithTag ("Player");
+		if (player != null) {
+			eq = player.GetComponent<PlayerEquipment> ();
+			theStats = player.GetComponent<PlayerStats> ();
 			
 		}
+		if (data.canyousave==true) {
 
-        if (Application.platform == RuntimePlatform.OSXWebPlayer
-           || Application.platform == RuntimePlatform.WindowsWebPlayer)
-        {
-			Debug.Log("OK Save");
+			if (Application.platform == RuntimePlatform.OSXWebPlayer
+				|| Application.platform == RuntimePlatform.WindowsWebPlayer) {
+				Debug.Log ("OK Save");
 			
-            PlayerPrefs.SetFloat("PlayerHealth", player.GetComponent<Health>().currentHP);
-            PlayerPrefs.SetFloat("PlayerLight",player.GetComponent<PlayerLight>().currentLight);
-			PlayerPrefs.SetFloat("MeleeMod",theStats.meleeModifier);
-			PlayerPrefs.SetFloat("SpellMod",theStats.spellModifier);
-			PlayerPrefs.SetFloat("LightMod",theStats.maxLightModifier);
-			PlayerPrefs.SetFloat("LifeMod",theStats.maxHPModifier);
-			PlayerPrefs.SetString("EmberName", eq.AccessoryName);
-			PlayerPrefs.SetString("BootName",eq.BootName);
-			PlayerPrefs.SetInt("Spell", (int)eq.equippedAccessory);
-            PlayerPrefs.SetFloat("EmberStat1", eq.AccessoryStat1.StatAmount);
-            PlayerPrefs.SetInt("EmberStat1t", (int)eq.EmberStat1.TheStat);
-            PlayerPrefs.SetFloat("EmberStat2", eq.AccessoryStat2.StatAmount);
-            PlayerPrefs.SetInt("EmberStat2t", (int)eq.EmberStat2.TheStat);
-            PlayerPrefs.SetFloat("BootStat1", eq.BootStat1.StatAmount);
-            PlayerPrefs.SetInt("BootStat1t", (int)eq.BootStat1.TheStat);
-            PlayerPrefs.SetFloat("BootStat2", eq.BootStat2.StatAmount);
-            PlayerPrefs.SetInt("BootStat2t", (int)eq.BootStat2.TheStat);
-            PlayerPrefs.SetFloat("Durability", eq.emberDurability);
+				PlayerPrefs.SetFloat ("PlayerHealth", player.GetComponent<Health> ().currentHP);
+				PlayerPrefs.SetFloat ("PlayerLight", player.GetComponent<PlayerLight> ().currentLight);
+				PlayerPrefs.SetFloat ("MeleeMod", theStats.meleeModifier);
+				PlayerPrefs.SetFloat ("SpellMod", theStats.spellModifier);
+				PlayerPrefs.SetFloat ("LightMod", theStats.maxLightModifier);
+				PlayerPrefs.SetFloat ("LifeMod", theStats.maxHPModifier);
+				PlayerPrefs.SetString ("EmberName", eq.AccessoryName);
+				PlayerPrefs.SetString ("BootName", eq.BootName);
+				PlayerPrefs.SetInt ("Spell", (int)eq.equippedAccessory);
+				PlayerPrefs.SetFloat ("EmberStat1", eq.AccessoryStat1.StatAmount);
+				PlayerPrefs.SetInt ("EmberStat1t", (int)eq.EmberStat1.TheStat);
+				PlayerPrefs.SetFloat ("EmberStat2", eq.AccessoryStat2.StatAmount);
+				PlayerPrefs.SetInt ("EmberStat2t", (int)eq.EmberStat2.TheStat);
+				PlayerPrefs.SetFloat ("BootStat1", eq.BootStat1.StatAmount);
+				PlayerPrefs.SetInt ("BootStat1t", (int)eq.BootStat1.TheStat);
+				PlayerPrefs.SetFloat ("BootStat2", eq.BootStat2.StatAmount);
+				PlayerPrefs.SetInt ("BootStat2t", (int)eq.BootStat2.TheStat);
+				PlayerPrefs.SetFloat ("Durability", eq.emberDurability);
 	 
-			if(options.easyMode==true)
-				PlayerPrefs.SetInt("EasyMode", 1);
-			else
-				PlayerPrefs.SetInt("EasyMode", 0);
-			PlayerPrefs.SetInt("Ember",(int)eq.equippedEmber);
-			PlayerPrefs.SetInt("Boot",(int)eq.equippedBoot);
-			PlayerPrefs.SetInt("CurrentRoom", theRooms.currentRoom);
+				if (options.easyMode == true)
+					PlayerPrefs.SetInt ("EasyMode", 1);
+				else
+					PlayerPrefs.SetInt ("EasyMode", 0);
+				PlayerPrefs.SetInt ("Ember", (int)eq.equippedEmber);
+				PlayerPrefs.SetInt ("Boot", (int)eq.equippedBoot);
+				PlayerPrefs.SetInt ("CurrentRoom", theRooms.currentRoom);
 
-            PlayerPrefs.SetInt("RoomArrLenght", theRooms.finalRoomInfoArray.Length);
+				PlayerPrefs.SetInt ("RoomArrLenght", theRooms.finalRoomInfoArray.Length);
 		 
 
-            for (int i = 0; i < theRooms.finalRoomInfoArray.Length; i++)
-            {
-                string temp= "Room_"+i.ToString()+"_been there";
-                string temps= "RoomID_"+i.ToString();
-				string tempsss= "RoomExitDir_"+ i.ToString();
-				string tempss= "RoomEntryDir_"+i.ToString();
-				if(theRooms.finalRoomInfoArray[i].beenThere==true)
-					PlayerPrefs.SetInt(temp, 1);
-				else
-					PlayerPrefs.SetInt(temp, 0);
-                PlayerPrefs.SetInt(temps, theRooms.finalRoomInfoArray[i].roomID);
-				PlayerPrefs.SetInt(tempss,theRooms.finalRoomInfoArray[i].entranceDir);
-				PlayerPrefs.SetInt(tempsss,theRooms.finalRoomInfoArray[i].exitDir);
+				for (int i = 0; i < theRooms.finalRoomInfoArray.Length; i++) {
+					string temp = "Room_" + i.ToString () + "_been there";
+					string temps = "RoomID_" + i.ToString ();
+					string tempsss = "RoomExitDir_" + i.ToString ();
+					string tempss = "RoomEntryDir_" + i.ToString ();
+					if (theRooms.finalRoomInfoArray [i].beenThere == true)
+						PlayerPrefs.SetInt (temp, 1);
+					else
+						PlayerPrefs.SetInt (temp, 0);
+					PlayerPrefs.SetInt (temps, theRooms.finalRoomInfoArray [i].roomID);
+					PlayerPrefs.SetInt (tempss, theRooms.finalRoomInfoArray [i].entranceDir);
+					PlayerPrefs.SetInt (tempsss, theRooms.finalRoomInfoArray [i].exitDir);
 				
 
                 
-            }
+				}
 
-        }
-        else
-        {
-			     FileStream file ;
+			} else {
+				FileStream file;
         
-            BinaryFormatter bin = new BinaryFormatter();
-            if (!File.Exists(Application.persistentDataPath + "/playerinfo.dat"))
-                file = File.Create(Application.persistentDataPath + "/playerinfo.dat");
-            else
-                file = File.Open(Application.persistentDataPath + "/playerinfo.dat", FileMode.Open);
+				BinaryFormatter bin = new BinaryFormatter ();
+				if (!File.Exists (Application.persistentDataPath + "/playerinfo.dat"))
+					file = File.Create (Application.persistentDataPath + "/playerinfo.dat");
+				else
+					file = File.Open (Application.persistentDataPath + "/playerinfo.dat", FileMode.Open);
          
            
-            data.health = player.GetComponent<Health>().currentHP;
-            data.theLight = player.GetComponent<PlayerLight>().currentLight;
+				data.health = player.GetComponent<Health> ().currentHP;
+				data.theLight = player.GetComponent<PlayerLight> ().currentLight;
 
-            data.easymode = options.easyMode;
+				data.easymode = options.easyMode;
 
-            data.maxHPModifier = theStats.maxHPModifier;
-            data.maxLightModifier = theStats.maxLightModifier;
-            data.meleeModifier = theStats.meleeModifier;
-            data.spellModifier = theStats.spellModifier;
+				data.maxHPModifier = theStats.maxHPModifier;
+				data.maxLightModifier = theStats.maxLightModifier;
+				data.meleeModifier = theStats.meleeModifier;
+				data.spellModifier = theStats.spellModifier;
 
-			data.equippedember= (int)eq.equippedEmber;
-			data.equippedboot= (int)eq.equippedBoot;
+				data.equippedember = (int)eq.equippedEmber;
+				data.equippedboot = (int)eq.equippedBoot;
 
-			data.embername= eq.AccessoryName;
-			Debug.Log(data.embername);
+				data.embername = eq.AccessoryName;
+				Debug.Log (data.embername);
 
-			data.emberstat1=eq.EmberStat1.StatAmount;
-			data.emberstattype1= (int)eq.EmberStat1.TheStat;
-			data.emberstat2= eq.EmberStat2.StatAmount;
-			data.emberstattype2= (int)eq.EmberStat2.TheStat;
-			data.emberdurability= eq.emberDurability;
+				data.emberstat1 = eq.EmberStat1.StatAmount;
+				data.emberstattype1 = (int)eq.EmberStat1.TheStat;
+				data.emberstat2 = eq.EmberStat2.StatAmount;
+				data.emberstattype2 = (int)eq.EmberStat2.TheStat;
+				data.emberdurability = eq.emberDurability;
 
-			data.bootname= eq.BootName;		
-			data.bootstat1= eq.BootStat1.StatAmount;
-			data.boottattype1= (int)eq.BootStat1.TheStat;
-			data.bootstat2=eq.BootStat2.StatAmount;
-			data.boottattype2= (int)eq.BootStat2.TheStat;
-			Debug.Log (data.bootname);
-			data.currentroom= theRooms.currentRoom;
-			data.equippedspell= (int)eq.equippedAccessory;
-            CopyRooms(data);
+				data.bootname = eq.BootName;		
+				data.bootstat1 = eq.BootStat1.StatAmount;
+				data.boottattype1 = (int)eq.BootStat1.TheStat;
+				data.bootstat2 = eq.BootStat2.StatAmount;
+				data.boottattype2 = (int)eq.BootStat2.TheStat;
+				Debug.Log (data.bootname);
+				data.currentroom = theRooms.currentRoom;
+				data.equippedspell = (int)eq.equippedAccessory;
+				CopyRooms (data);
            
-            bin.Serialize(file, data);
+				bin.Serialize (file, data);
  
-            file.Close();
+				file.Close ();
         
 	 
+			}
+
 		}
 
-    }
-
+	}
 
    public void Load()
    {
@@ -438,6 +441,7 @@ public class PlayerData
 	public int emberstattype2;
 	public int boottattype1;
 	public int boottattype2;
+	public bool canyousave;
 
 
 
