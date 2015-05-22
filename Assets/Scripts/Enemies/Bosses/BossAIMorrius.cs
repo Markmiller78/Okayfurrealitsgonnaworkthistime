@@ -87,6 +87,7 @@ public class BossAIMorrius : MonoBehaviour
         currentState = 555;
         RenderSettings.ambientLight = new Color(42f / 255f, 42f / 255f, 42f / 255f);
         Myhealth = gameObject.GetComponent<Health>();
+		GameObject.FindObjectOfType<BGM> ().finalbossmusic ();
         //healthB = (GameObject)Instantiate(BossHealthBar);
         //HealthRemaining = GameObject.FindGameObjectWithTag("Boss Health");
     }

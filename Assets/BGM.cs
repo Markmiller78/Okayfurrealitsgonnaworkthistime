@@ -9,6 +9,7 @@ public class BGM : MonoBehaviour {
   public AudioSource audioPlayer;
     bool beenAssigned;
    // public int volume;
+	bool once=true;
 
 
     private static BGM _instance;
@@ -140,39 +141,41 @@ public class BGM : MonoBehaviour {
 
                     if (!GameObject.FindObjectOfType<Options>().easyMode)
                     {
-                        if (!audioPlayer.isPlaying)
-                        {
-                            audioPlayer.clip = clips[0];
-                            audioPlayer.Play();
-                        }
+                       
 
                         if (theRooms.currentRoom < 8 && audioPlayer.clip != clips[0])
                         {
                             audioPlayer.Stop();
                             audioPlayer.clip = clips[0];
+							once=true;
+							
                             audioPlayer.Play();
 
 
                         }
-                        else if (theRooms.currentRoom == 8 || theRooms.currentRoom == 17 && audioPlayer.clip != clips[2])
+                        else if ((theRooms.currentRoom == 8 || theRooms.currentRoom == 17 )&& audioPlayer.clip != clips[2]&&once==true)
                         {
                             audioPlayer.Stop();
                             audioPlayer.clip = clips[2];
                             audioPlayer.Play();
+							once=false;
 
                         }
                         else if (theRooms.currentRoom > 8 && audioPlayer.clip != clips[1])
                         {
                             audioPlayer.Stop();
+							once=true;
+							
                             audioPlayer.clip = clips[1];
                             audioPlayer.Play();
 
 
                         }
-                        else if (theRooms.currentRoom == 26 && audioPlayer.clip != clips[3])
+                        else if (theRooms.currentRoom == 26 && audioPlayer.clip != clips[3]&&once==true)
                         {
                             audioPlayer.Stop();
                             audioPlayer.clip = clips[3];
+							once=false;
                             audioPlayer.Play();
                         }
 
@@ -183,28 +186,32 @@ public class BGM : MonoBehaviour {
                         {
                             audioPlayer.Stop();
                             audioPlayer.clip = clips[0];
+							once=true;
                             audioPlayer.Play();
 
 
                         }
-                        else if (theRooms.currentRoom == 10 || theRooms.currentRoom == 21 && audioPlayer.clip != clips[2])
+                        else if ((theRooms.currentRoom == 10 || theRooms.currentRoom == 21) && audioPlayer.clip != clips[2]&&once==true)
                         {
                             audioPlayer.Stop();
                             audioPlayer.clip = clips[2];
                             audioPlayer.Play();
+							once=false
 
                         }
                         else if (theRooms.currentRoom > 10 && audioPlayer.clip != clips[1])
                         {
                             audioPlayer.Stop();
+							once=true;
                             audioPlayer.clip = clips[1];
                             audioPlayer.Play();
 
 
                         }
-                        else if (theRooms.currentRoom == 32 && audioPlayer.clip != clips[3])
+                        else if (theRooms.currentRoom == 32 && audioPlayer.clip != clips[3]&&once==true)
                         {
                             audioPlayer.Stop();
+							once=false;
                             audioPlayer.clip = clips[3];
                             audioPlayer.Play();
                         }
@@ -222,6 +229,23 @@ public class BGM : MonoBehaviour {
 
 
     }
+	public void bossmusic()
+	{
+		audioPlayer.Stop();
+		Debug.Log ("Trying");
+		audioPlayer.clip = clips[2];
+		Debug.Log ("Changed");
+		audioPlayer.Play();
+		Debug.Log ("Playing");
+
+	}
+	public void finalbossmusic()
+	{
+
+		audioPlayer.Stop();
+		audioPlayer.clip = clips[3];
+		audioPlayer.Play();
+	}
  void SetToMenu()
     {
         audioPlayer.Stop();

@@ -62,7 +62,8 @@ public class BossAILorne : MonoBehaviour {
             spellMinRange = 3.0f;
    spellTimerMax=4.0f;
             spellTimer=spellTimerMax;
-//            spTimerMax = 10.0f;
+	//	GameObject.FindObjectOfType<BGM> ().bossmusic ();
+		//            spTimerMax = 10.0f;
 //            specialTimer = spTimerMax;
         
 	
@@ -72,6 +73,8 @@ public class BossAILorne : MonoBehaviour {
 	void Update ()
     
     {
+	 
+
         distanceToPlayer = (transform.position - player.transform.position).magnitude;
         if (transform.position.x < -9.0f ||
             transform.position.x > 20f ||
