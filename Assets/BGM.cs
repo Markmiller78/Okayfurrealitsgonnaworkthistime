@@ -196,7 +196,7 @@ public class BGM : MonoBehaviour {
                             audioPlayer.Stop();
                             audioPlayer.clip = clips[2];
                             audioPlayer.Play();
-							once=false
+							once=false;
 
                         }
                         else if (theRooms.currentRoom > 10 && audioPlayer.clip != clips[1])
