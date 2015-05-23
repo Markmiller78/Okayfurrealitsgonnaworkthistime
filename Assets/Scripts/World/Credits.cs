@@ -5,7 +5,7 @@ public class Credits : MonoBehaviour {
 
 	 
 	public Vector3 scrolling= 	new Vector3(0.0f,0.1f,0.0f);
-	public Canvas[] creds;
+	public GameObject[] creds;
 	public GameObject[] Buttons= new GameObject[3];
 	public AudioClip clip;
 	public bool playing=false;
@@ -13,8 +13,8 @@ public class Credits : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
     {
- 
-		creds = Canvas.FindObjectsOfType<Canvas>();
+
+        creds = GameObject.FindGameObjectsWithTag("Chest");
     	}
 	
 	// Update is called once per frame
@@ -33,6 +33,7 @@ public class Credits : MonoBehaviour {
 	 
 			if (creds[i].transform.position.y >= Screen.height * 4.5f) {
 				scrolling.y = -130.0f;
+                GameObject.Find("TheOptions").GetComponent<Options>().WatchCredits();
 
 			}
 		 

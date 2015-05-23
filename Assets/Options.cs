@@ -60,11 +60,17 @@ public class Options : MonoBehaviour
     [HideInInspector]
     public bool easyMode;
 
+    public bool watchIntro;
+
+    float timer;
+
     public AudioClip achvSound;
     AudioSource aPlayer;
 
     void Start()
     {
+        timer = 0;
+        watchIntro = false;
         achievements = new bool[24];
 
         //Page 1
@@ -79,17 +85,17 @@ public class Options : MonoBehaviour
 
         achievements[8] = false; // Attempt 3 playthroughs
         achievements[9] = false; // Defeat a boss with full hp remaining
-        achievements[10] = false; // 
-        achievements[11] = false; // 
-        achievements[12] = false; // 
-        achievements[13] = false; //
-        achievements[14] = false; //
-        achievements[15] = false; //
+        achievements[10] = false; // Watch credits
+        achievements[11] = false; // Fire ember
+        achievements[12] = false; // wind ember
+        achievements[13] = false; // frost ember
+        achievements[14] = false; // death ember
+        achievements[15] = false; // life ember
 
-        achievements[16] = false; // 
-        achievements[17] = false; // 
-        achievements[18] = false; // 
-        achievements[19] = false; // 
+        achievements[16] = false; // earth ember
+        achievements[17] = false; // ping
+        achievements[18] = false; // die
+        achievements[19] = false; // intro cutscene
         achievements[20] = false; // 
         achievements[21] = false; //
         achievements[22] = false; //
@@ -234,9 +240,129 @@ public class Options : MonoBehaviour
         }
     }
 
+    public void WatchCredits()
+    {
+        if (achievements[10] == false)
+        {
+            GameObject.Find("TheAchv").GetComponent<Image>().enabled = true;
+            achievements[10] = true;
+            aPlayer.PlayOneShot(achvSound);
+            Save();
+        }
+    }
+
+    public void FireAchv()
+    {
+        if (achievements[11] == false)
+        {
+            GameObject.Find("FireAchv").GetComponent<Image>().enabled = true;
+            achievements[11] = true;
+            aPlayer.PlayOneShot(achvSound);
+            Save();
+        }
+    }
+
+    public void WindAchv()
+    {
+        if (achievements[12] == false)
+        {
+            GameObject.Find("WindAchv").GetComponent<Image>().enabled = true;
+            achievements[12] = true;
+            aPlayer.PlayOneShot(achvSound);
+            Save();
+        }
+    }
+
+    public void FrostAchv()
+    {
+        if (achievements[13] == false)
+        {
+            GameObject.Find("FrostAchv").GetComponent<Image>().enabled = true;
+            achievements[13] = true;
+            aPlayer.PlayOneShot(achvSound);
+            Save();
+        }
+    }
+
+    public void DeathAchv()
+    {
+        if (achievements[14] == false)
+        {
+            GameObject.Find("DeathAchv").GetComponent<Image>().enabled = true;
+            achievements[14] = true;
+            aPlayer.PlayOneShot(achvSound);
+            Save();
+        }
+    }
+
+    public void LifeAchv()
+    {
+        if (achievements[15] == false)
+        {
+            GameObject.Find("LifeAchv").GetComponent<Image>().enabled = true;
+            achievements[15] = true;
+            aPlayer.PlayOneShot(achvSound);
+            Save();
+        }
+    }
+
+    public void EarthAchv()
+    {
+        if (achievements[16] == false)
+        {
+            GameObject.Find("EarthAchv").GetComponent<Image>().enabled = true;
+            achievements[16] = true;
+            aPlayer.PlayOneShot(achvSound);
+            Save();
+        }
+    }
+
+    public void PingAchv()
+    {
+        if (achievements[17] == false)
+        {
+            GameObject.Find("PingAchv").GetComponent<Image>().enabled = true;
+            achievements[17] = true;
+            aPlayer.PlayOneShot(achvSound);
+            Save();
+        }
+    }
+
+    public void DieAchv()
+    {
+        if (achievements[18] == false)
+        {
+            GameObject.Find("DieAchv").GetComponent<Image>().enabled = true;
+            achievements[18] = true;
+            aPlayer.PlayOneShot(achvSound);
+            Save();
+        }
+    }
+
+    public void IntroAchv()
+    {
+        if (achievements[19] == false)
+        {
+            GameObject.Find("IntroAchv").GetComponent<Image>().enabled = true;
+            achievements[19] = true;
+            aPlayer.PlayOneShot(achvSound);
+            watchIntro = false;
+            Save();
+        }
+    }
+
 
     void Update()
     {
+        if (watchIntro)
+        {
+            timer += Time.deltaTime;
+            if (timer >= 5.0f)
+            {
+                IntroAchv();
+            }
+        }
+
         if (!beenAssigned && Application.loadedLevelName == "Game")
         {
             player = GameObject.FindGameObjectWithTag("Player");
@@ -428,6 +554,22 @@ public class Options : MonoBehaviour
                 achievements[5] = data.achieve5;
                 achievements[6] = data.achieve6;
                 achievements[7] = data.achieve7;
+                achievements[8] = data.achieve8;
+                achievements[9] = data.achieve9;
+                achievements[10] = data.achieve10;
+                achievements[11] = data.achieve11;
+                achievements[12] = data.achieve12;
+                achievements[13] = data.achieve13;
+                achievements[14] = data.achieve14;
+                achievements[15] = data.achieve15;
+                achievements[16] = data.achieve16;
+                achievements[17] = data.achieve17;
+                achievements[18] = data.achieve18;
+                achievements[19] = data.achieve19;
+                achievements[20] = data.achieve20;
+                achievements[21] = data.achieve21;
+                achievements[22] = data.achieve22;
+                achievements[23] = data.achieve23;
 
                 file.Close();
 
