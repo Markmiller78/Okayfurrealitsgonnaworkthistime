@@ -35,7 +35,10 @@ public class UpdateToolText : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (transform.parent.name.Contains("Chest"))
+        {
+            GetComponentInChildren<Text>().text = ("Press " + (InputManager.controller ? "X" : "E") + " To Open");
+        }
     }
 
     void ToolSetTexts(SetToolTipTexts theInfo)
