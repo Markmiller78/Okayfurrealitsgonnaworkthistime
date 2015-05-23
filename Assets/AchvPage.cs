@@ -195,85 +195,48 @@ public class AchvPage : MonoBehaviour
 
             else if (page == 3)
             {
-                
-            if (theoptions.achievements[16] == true)
-            {
-                lock1.SetActive(false);
-            }
-            else
-            {
-                lock1.SetActive(true);
-            }
 
-            if (theoptions.achievements[17] == true)
-            {
-                lock2.SetActive(false);
-            }
-            else
-            {
-                lock2.SetActive(true);
-            }
+                if (theoptions.achievements[16] == true)
+                {
+                    lock1.SetActive(false);
+                }
+                else
+                {
+                    lock1.SetActive(true);
+                }
 
-            if (theoptions.achievements[18] == true)
-            {
-                lock3.SetActive(false);
-            }
-            else
-            {
-                lock3.SetActive(true);
-            }
+                if (theoptions.achievements[17] == true)
+                {
+                    lock2.SetActive(false);
+                }
+                else
+                {
+                    lock2.SetActive(true);
+                }
 
-            if (theoptions.achievements[19] == true)
-            {
-                lock4.SetActive(false);
-            }
-            else
-            {
-                lock4.SetActive(true);
-            }
+                if (theoptions.achievements[18] == true)
+                {
+                    lock3.SetActive(false);
+                }
+                else
+                {
+                    lock3.SetActive(true);
+                }
 
-            if (theoptions.achievements[20] == true)
-            {
-                lock5.SetActive(false);
-            }
-            else
-            {
-                lock5.SetActive(true);
-            }
+                if (theoptions.achievements[19] == true)
+                {
+                    lock4.SetActive(false);
+                }
+                else
+                {
+                    lock4.SetActive(true);
+                }
 
-            if (theoptions.achievements[21] == true)
-            {
-                lock6.SetActive(false);
-            }
-            else
-            {
-                lock6.SetActive(true);
-            }
 
-            if (theoptions.achievements[22] == true)
-            {
-                lock7.SetActive(false);
-            }
-            else
-            {
-                lock7.SetActive(true);
-            }
-
-            if (theoptions.achievements[23] == true)
-            {
-                lock8.SetActive(false);
-            }
-            else
-            {
-                lock8.SetActive(true);
-            }
 
             }
-
 
         }
-
-
 
     }
 }

@@ -18,6 +18,8 @@ public class PingAction : MonoBehaviour
         heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
         Destroy(gameObject, 0.6f);
 
+        GameObject.Find("TheOptions").GetComponent<Options>().PingAchv();
+
     }
 
     void Update()

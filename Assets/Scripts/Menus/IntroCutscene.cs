@@ -265,6 +265,7 @@ public class IntroCutscene : MonoBehaviour
 
     void NextLevel()
     {
+        GameObject.Find("TheOptions").GetComponent<Options>().watchIntro = true;
         LevelManager.Load("Tutorial");
     }
 
