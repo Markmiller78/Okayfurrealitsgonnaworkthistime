@@ -52,9 +52,24 @@ public class GenerateLoot : MonoBehaviour
         {
             int RandNum = Random.Range(1, 19);
             GameObject Loot = DetermineType(RandNum);
-            string SendName = DetermineName(RandNum, 1, 1);
+            DetStat1 = DetermineStat(RandNum);
+            DetStat2 = DetermineStat(RandNum);
+            string SendName = DetermineName(RandNum, DetStat1, DetStat2);
             GameObject temp = (GameObject)Instantiate(Loot, transform.position, transform.rotation);
             temp.SendMessage("SetName", SendName, SendMessageOptions.DontRequireReceiver);
+
+            SendStat.TheStat = (StatType)DetStat1;
+            SendStat.StatAmount = DetermineStatAmount(RandNum);
+            temp.SendMessage("SetStat1", SendStat, SendMessageOptions.DontRequireReceiver);
+            //50% Chance to Generate a Second stat
+            SecondStat = Random.Range(0, 100);
+            if (SecondStat > 50)
+            {
+                SendStat.TheStat = (StatType)DetStat2;
+                SendStat.StatAmount = DetermineStatAmount(RandNum);
+                temp.SendMessage("SetStat2", SendStat, SendMessageOptions.DontRequireReceiver);
+            }
+
             int MoreLoots = Random.Range(0, 100);
             if (MoreLoots > 50)
             {
@@ -264,7 +279,7 @@ public class GenerateLoot : MonoBehaviour
     {
 
         //IF (ItemID is an Ember)
-        if (ItemID < 7)
+        if (ItemID <= 6)
         {
             return 0; //No Stat Boosts
         }
@@ -425,17 +440,17 @@ public class GenerateLoot : MonoBehaviour
             {
                 case 1:
                     {
-                        name = "Quaking Ember of ";
+                        name = "Quaking Ember";
                         break;
                     }
                 case 2:
                     {
-                        name = "Earth Ember of ";
+                        name = "Earth Ember";
                         break;
                     }
                 case 3:
                     {
-                        name = "EarthQuake Ember of ";
+                        name = "EarthQuake Ember";
                         break;
                     }
             }
