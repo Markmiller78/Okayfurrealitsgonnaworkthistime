@@ -23,24 +23,24 @@ public class AchievementMenu : MonoBehaviour {
         {
             timer = 0.1f;
 
-            //if (theMenu.achvState == 0)
-            //{
+            if (theMenu.achvState == 0)
+            {
                 page1.SetActive(true);
                 page2.SetActive(false);
                 page3.SetActive(false);
-            //}
-            //else if (theMenu.achvState == 1)
-            //{
-            //    page1.SetActive(false);
-            //    page2.SetActive(true);
-            //    page3.SetActive(false);
-            //}
-            //else if (theMenu.achvState == 2)
-            //{
-            //    page1.SetActive(false);
-            //    page2.SetActive(false);
-            //    page3.SetActive(true);
-            //}
+            }
+            else if (theMenu.achvState == 1)
+            {
+                page1.SetActive(false);
+                page2.SetActive(true);
+                page3.SetActive(false);
+            }
+            else if (theMenu.achvState == 2)
+            {
+                page1.SetActive(false);
+                page2.SetActive(false);
+                page3.SetActive(true);
+            }
 
         }
     

@@ -48,6 +48,7 @@ public class Options : MonoBehaviour
     int numMelee;
     int numDash;
     int numEnemiesKilled;
+    int numAttempts;
 
     public bool[] achievements;
     public bool shouldload = false;
@@ -64,9 +65,9 @@ public class Options : MonoBehaviour
 
     void Start()
     {
-        achievements = new bool[8];
+        achievements = new bool[24];
 
-
+        //Page 1
         achievements[0] = false; // Defeat 100 enemies
         achievements[1] = false; // Melee
         achievements[2] = false; // Chest
@@ -75,6 +76,26 @@ public class Options : MonoBehaviour
         achievements[5] = false; // Defeat Dethros
         achievements[6] = false; // Defeat Lorne
         achievements[7] = false; // Defeat Morrius
+
+        achievements[8] = false; // Attempt 3 playthroughs
+        achievements[9] = false; // Defeat a boss with full hp remaining
+        achievements[10] = false; // 
+        achievements[11] = false; // 
+        achievements[12] = false; // 
+        achievements[13] = false; //
+        achievements[14] = false; //
+        achievements[15] = false; //
+
+        achievements[16] = false; // 
+        achievements[17] = false; // 
+        achievements[18] = false; // 
+        achievements[19] = false; // 
+        achievements[20] = false; // 
+        achievements[21] = false; //
+        achievements[22] = false; //
+        achievements[23] = false; //
+
+
         Load();
         DontDestroyOnLoad(gameObject);
         sfxInt.text = sfxVolume.ToString();
@@ -86,6 +107,7 @@ public class Options : MonoBehaviour
         numMelee = 0;
         numEnemiesKilled = 0;
         numDash = 0;
+        numAttempts = 0;
 
         aPlayer = GetComponent<AudioSource>();
         aPlayer.volume = sfxVolume * 0.01f;
@@ -184,6 +206,29 @@ public class Options : MonoBehaviour
         {
             GameObject.Find("MorriusAchv").GetComponent<Image>().enabled = true;
             achievements[7] = true;
+            aPlayer.PlayOneShot(achvSound);
+            Save();
+        }
+    }
+
+    public void StartAttempt()
+    {
+        numAttempts++;
+        if (numAttempts >= 3 && achievements[8] == false)
+        {
+            GameObject.Find("AttemptAchv").GetComponent<Image>().enabled = true;
+            achievements[8] = true;
+            aPlayer.PlayOneShot(achvSound);
+            Save();
+        }
+    }
+
+    public void FullHp()
+    {
+        if (achievements[9] == false)
+        {
+            GameObject.Find("FullhpAchv").GetComponent<Image>().enabled = true;
+            achievements[9] = true;
             aPlayer.PlayOneShot(achvSound);
             Save();
         }
@@ -335,6 +380,22 @@ public class Options : MonoBehaviour
             data.achieve5 = achievements[5];
             data.achieve6 = achievements[6];
             data.achieve7 = achievements[7];
+            data.achieve8 = achievements[8];
+            data.achieve9 = achievements[9];
+            data.achieve10 = achievements[10];
+            data.achieve11 = achievements[11];
+            data.achieve12 = achievements[12];
+            data.achieve13 = achievements[13];
+            data.achieve14 = achievements[14];
+            data.achieve15 = achievements[15];
+            data.achieve16 = achievements[16];
+            data.achieve17 = achievements[17];
+            data.achieve18 = achievements[18];
+            data.achieve19 = achievements[19];
+            data.achieve20 = achievements[20];
+            data.achieve21 = achievements[21];
+            data.achieve22 = achievements[22];
+            data.achieve23 = achievements[23];
             bin.Serialize(file, data);
             file.Close();
         }
@@ -388,6 +449,22 @@ public class OptionData
     public bool achieve5;
     public bool achieve6;
     public bool achieve7;
+    public bool achieve8;
+    public bool achieve9;
+    public bool achieve10;
+    public bool achieve11;
+    public bool achieve12;
+    public bool achieve13;
+    public bool achieve14;
+    public bool achieve15;
+    public bool achieve16;
+    public bool achieve17;
+    public bool achieve18;
+    public bool achieve19;
+    public bool achieve20;
+    public bool achieve21;
+    public bool achieve22;
+    public bool achieve23;
 
 
 }
