@@ -130,14 +130,26 @@ public class Health : MonoBehaviour
             if (this.name == "Morrius(Clone)" || this.name == "Morrius")
             {
                 theoptions.MorriusDie();
+                if (playerHealth.currentHP >= playerHealth.maxHP)
+                {
+                    theoptions.FullHp();
+                }
             }
             else if (this.name == "Lorne(Clone)" || this.name == "Lorne")
             {
                 theoptions.LorneDie();
+                if (playerHealth.currentHP >= playerHealth.maxHP)
+                {
+                    theoptions.FullHp();
+                }
             }
             else if (this.name == "Dethros(Clone)" || this.name == "Dethros")
             {
                 theoptions.DethrosDie();
+                if (playerHealth.currentHP >= playerHealth.maxHP)
+                {
+                    theoptions.FullHp();
+                }
             }
 
         }
