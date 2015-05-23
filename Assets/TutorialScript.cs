@@ -687,7 +687,7 @@ public class TutorialScript : MonoBehaviour
             Step = 28;
         }
 
-        print(Step);
+        //print(Step);
     }
 
     void ChangeText(string theText)
