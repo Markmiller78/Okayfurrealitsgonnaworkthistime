@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class AchvPage : MonoBehaviour {
+public class AchvPage : MonoBehaviour
+{
 
     public GameObject lock1;
     public GameObject lock2;
@@ -16,6 +17,8 @@ public class AchvPage : MonoBehaviour {
     // Use this for initialization
 
     MainMenu theMenu;
+
+    public int page;
 
 
     Options theoptions;
@@ -35,7 +38,165 @@ public class AchvPage : MonoBehaviour {
         {
             timer = 0.3f;
 
-            if (theoptions.achievements[0] == true)
+            if (page == 1)
+            {
+
+                if (theoptions.achievements[0] == true)
+                {
+                    lock1.SetActive(false);
+                }
+                else
+                {
+                    lock1.SetActive(true);
+                }
+
+                if (theoptions.achievements[1] == true)
+                {
+                    lock2.SetActive(false);
+                }
+                else
+                {
+                    lock2.SetActive(true);
+                }
+
+                if (theoptions.achievements[2] == true)
+                {
+                    lock3.SetActive(false);
+                }
+                else
+                {
+                    lock3.SetActive(true);
+                }
+
+                if (theoptions.achievements[3] == true)
+                {
+                    lock4.SetActive(false);
+                }
+                else
+                {
+                    lock4.SetActive(true);
+                }
+
+                if (theoptions.achievements[4] == true)
+                {
+                    lock5.SetActive(false);
+                }
+                else
+                {
+                    lock5.SetActive(true);
+                }
+
+                if (theoptions.achievements[5] == true)
+                {
+                    lock6.SetActive(false);
+                }
+                else
+                {
+                    lock6.SetActive(true);
+                }
+
+                if (theoptions.achievements[6] == true)
+                {
+                    lock7.SetActive(false);
+                }
+                else
+                {
+                    lock7.SetActive(true);
+                }
+
+                if (theoptions.achievements[7] == true)
+                {
+                    lock8.SetActive(false);
+                }
+                else
+                {
+                    lock8.SetActive(true);
+                }
+
+            }
+            else if (page == 2)
+            {
+
+                if (theoptions.achievements[8] == true)
+                {
+                    lock1.SetActive(false);
+                }
+                else
+                {
+                    lock1.SetActive(true);
+                }
+
+                if (theoptions.achievements[9] == true)
+                {
+                    lock2.SetActive(false);
+                }
+                else
+                {
+                    lock2.SetActive(true);
+                }
+
+                if (theoptions.achievements[10] == true)
+                {
+                    lock3.SetActive(false);
+                }
+                else
+                {
+                    lock3.SetActive(true);
+                }
+
+                if (theoptions.achievements[11] == true)
+                {
+                    lock4.SetActive(false);
+                }
+                else
+                {
+                    lock4.SetActive(true);
+                }
+
+                if (theoptions.achievements[12] == true)
+                {
+                    lock5.SetActive(false);
+                }
+                else
+                {
+                    lock5.SetActive(true);
+                }
+
+                if (theoptions.achievements[13] == true)
+                {
+                    lock6.SetActive(false);
+                }
+                else
+                {
+                    lock6.SetActive(true);
+                }
+
+                if (theoptions.achievements[14] == true)
+                {
+                    lock7.SetActive(false);
+                }
+                else
+                {
+                    lock7.SetActive(true);
+                }
+
+                if (theoptions.achievements[15] == true)
+                {
+                    lock8.SetActive(false);
+                }
+                else
+                {
+                    lock8.SetActive(true);
+                }
+
+
+
+            }
+
+            else if (page == 3)
+            {
+                
+            if (theoptions.achievements[16] == true)
             {
                 lock1.SetActive(false);
             }
@@ -44,7 +205,7 @@ public class AchvPage : MonoBehaviour {
                 lock1.SetActive(true);
             }
 
-            if (theoptions.achievements[1] == true)
+            if (theoptions.achievements[17] == true)
             {
                 lock2.SetActive(false);
             }
@@ -53,7 +214,7 @@ public class AchvPage : MonoBehaviour {
                 lock2.SetActive(true);
             }
 
-            if (theoptions.achievements[2] == true)
+            if (theoptions.achievements[18] == true)
             {
                 lock3.SetActive(false);
             }
@@ -62,7 +223,7 @@ public class AchvPage : MonoBehaviour {
                 lock3.SetActive(true);
             }
 
-            if (theoptions.achievements[3] == true)
+            if (theoptions.achievements[19] == true)
             {
                 lock4.SetActive(false);
             }
@@ -71,7 +232,7 @@ public class AchvPage : MonoBehaviour {
                 lock4.SetActive(true);
             }
 
-            if (theoptions.achievements[4] == true)
+            if (theoptions.achievements[20] == true)
             {
                 lock5.SetActive(false);
             }
@@ -80,7 +241,7 @@ public class AchvPage : MonoBehaviour {
                 lock5.SetActive(true);
             }
 
-            if (theoptions.achievements[5] == true)
+            if (theoptions.achievements[21] == true)
             {
                 lock6.SetActive(false);
             }
@@ -89,7 +250,7 @@ public class AchvPage : MonoBehaviour {
                 lock6.SetActive(true);
             }
 
-            if (theoptions.achievements[6] == true)
+            if (theoptions.achievements[22] == true)
             {
                 lock7.SetActive(false);
             }
@@ -98,7 +259,7 @@ public class AchvPage : MonoBehaviour {
                 lock7.SetActive(true);
             }
 
-            if (theoptions.achievements[7] == true)
+            if (theoptions.achievements[23] == true)
             {
                 lock8.SetActive(false);
             }
@@ -107,8 +268,12 @@ public class AchvPage : MonoBehaviour {
                 lock8.SetActive(true);
             }
 
+            }
+
 
         }
+
+
 
     }
 }

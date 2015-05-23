@@ -11,7 +11,7 @@ public class TutorialCamera : MonoBehaviour
     bool alternate;
     float timer;
 
-    float damp = .15f;
+    float damp = .3f;
     Vector3 velocity = Vector3.zero;
 
     void Start()
