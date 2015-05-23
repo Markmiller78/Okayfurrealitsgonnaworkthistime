@@ -25,7 +25,7 @@ public class ChestScript : MonoBehaviour {
         theoptions = GameObject.Find("TheOptions").GetComponent<Options>();
 		temp = Instantiate (TooltipWindow);
 		temp.SetActive (false);
-		ToolTipTexts._ItemName = "Press E to open!";
+	 
 
 	}
 	
