@@ -30,6 +30,29 @@ public class InputManager : MonoBehaviour
         //{
         //    controller = !controller;
         //}
+
+
+        // Escape or P to pause
+        if (!mapMenu && (Input.GetButtonDown("KBPause") ||  Input.GetButtonDown("CPause")))
+        {
+            GameObject[] allObjects;
+            allObjects = GameObject.FindObjectsOfType<GameObject>();
+            isPaused = !isPaused;
+            if (isPaused)
+            {
+                foreach (GameObject obj in allObjects)
+                {
+                    obj.SendMessage("Pause", SendMessageOptions.DontRequireReceiver);
+                }
+            }
+            else
+            {
+                foreach (GameObject obj in allObjects)
+                {
+                    obj.SendMessage("UnPause", SendMessageOptions.DontRequireReceiver);
+                }
+            }
+        }
         if (controller)
         {
             #region Controller Input
@@ -76,26 +99,26 @@ public class InputManager : MonoBehaviour
                 }
             }
             // Start to pause
-            if (!mapMenu && Input.GetButtonDown("CPause"))
-            {
-                GameObject[] allObjects;
-                allObjects = GameObject.FindObjectsOfType<GameObject>();
-                isPaused = !isPaused;
-                if (isPaused)
-                {
-                    foreach (GameObject obj in allObjects)
-                    {
-                        obj.SendMessage("Pause", SendMessageOptions.DontRequireReceiver);
-                    }
-                }
-                else
-                {
-                    foreach (GameObject obj in allObjects)
-                    {
-                        obj.SendMessage("UnPause", SendMessageOptions.DontRequireReceiver);
-                    }
-                }
-            }
+            //if (!mapMen)
+            //{
+            //    GameObject[] allObjects;
+            //    allObjects = GameObject.FindObjectsOfType<GameObject>();
+            //    isPaused = !isPaused;
+            //    if (isPaused)
+            //    {
+            //        foreach (GameObject obj in allObjects)
+            //        {
+            //            obj.SendMessage("Pause", SendMessageOptions.DontRequireReceiver);
+            //        }
+            //    }
+            //    else
+            //    {
+            //        foreach (GameObject obj in allObjects)
+            //        {
+            //            obj.SendMessage("UnPause", SendMessageOptions.DontRequireReceiver);
+            //        }
+            //    }
+            //}
             // Back for map/stats
             if (Application.loadedLevelName != "Tutorial" && !isPaused && Input.GetButtonDown("CMapAndStats"))
             {
@@ -167,27 +190,6 @@ public class InputManager : MonoBehaviour
                     {
                         if (chest[i] != null)
                             chest[i].SendMessage("Interact", SendMessageOptions.DontRequireReceiver);
-                    }
-                }
-            }
-            // Escape or P to pause
-            if (!mapMenu && Input.GetButtonDown("KBPause"))
-            {
-                GameObject[] allObjects;
-                allObjects = GameObject.FindObjectsOfType<GameObject>();
-                isPaused = !isPaused;
-                if (isPaused)
-                {
-                    foreach (GameObject obj in allObjects)
-                    {
-                        obj.SendMessage("Pause", SendMessageOptions.DontRequireReceiver);
-                    }
-                }
-                else
-                {
-                    foreach (GameObject obj in allObjects)
-                    {
-                        obj.SendMessage("UnPause", SendMessageOptions.DontRequireReceiver);
                     }
                 }
             }
