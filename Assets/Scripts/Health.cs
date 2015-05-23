@@ -99,6 +99,23 @@ public class Health : MonoBehaviour
                 playerHealth.GainHealth(1);
 
             }
+			else
+			{
+                   if(anim!=null)
+				{
+			  if (this.GetComponent<AISkeletonArcher>()!=null)
+					anim.CrossFade("SkeletonATakingDamage",0.01f);
+				else if (this.GetComponent<AIShadowCloud>()!=null)
+					anim.CrossFade("CloudTakingDamage",0.01f);
+				else if (this.GetComponent<AICommander>()!=null)
+					anim.CrossFade("CommanderTakingDamage",0.01f);
+				}
+		 
+
+				
+				
+
+			}
         }
     }
 
