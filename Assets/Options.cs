@@ -67,6 +67,10 @@ public class Options : MonoBehaviour
     public AudioClip achvSound;
     AudioSource aPlayer;
 
+    //public PlayerEquipment tutEquip;
+    //bool tutEquipAssigned;
+    //bool tutPlayerAssigned;
+
     void Start()
     {
         timer = 0;
@@ -118,7 +122,9 @@ public class Options : MonoBehaviour
         aPlayer = GetComponent<AudioSource>();
         aPlayer.volume = sfxVolume * 0.01f;
 
-
+        //tutEquip = null;
+        //tutEquipAssigned = false;
+        //tutPlayerAssigned = false;
     }
 
 
@@ -368,6 +374,23 @@ public class Options : MonoBehaviour
             player = GameObject.FindGameObjectWithTag("Player");
             beenAssigned = true;
         }
+
+        //if (!tutPlayerAssigned && Application.loadedLevelName == "Tutorial")
+        //{
+        //    player = GameObject.FindGameObjectWithTag("Player");
+        //    tutPlayerAssigned = true;
+        //}
+        //
+        //if (player && Application.loadedLevelName == "Tutorial")
+        //{
+        //    tutEquip = player.GetComponent<PlayerEquipment>();
+        //}
+        //
+        //if (!tutEquipAssigned && player && Application.loadedLevelName == "Game")
+        //{
+        //    player.GetComponent<PlayerEquipment>().SetToTutEquip(tutEquip);
+        //    tutEquipAssigned = true;
+        //}
 
 #if UNITY_WEBPLAYER
         if (Screen.fullScreen)

@@ -31,6 +31,7 @@ public class LeaveTheTutorial : MonoBehaviour
         {
 
             start = true;
+            //GameObject.FindObjectOfType<Options>().tutEquip = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
             LevelManager.Load("Game");
         }
     }

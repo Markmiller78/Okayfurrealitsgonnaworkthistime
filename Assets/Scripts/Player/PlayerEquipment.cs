@@ -60,6 +60,27 @@ public class PlayerEquipment : MonoBehaviour
 
     }
 
+    //public void SetToTutEquip(PlayerEquipment tut)
+    //{
+    //    equippedBoot = tut.equippedBoot;
+    //    BootName = tut.BootName;
+    //    BootStat1 = tut.BootStat1;
+    //    BootStat2 = tut.BootStat2;
+    //    equippedAccessory = tut.equippedAccessory;
+    //    AccessoryName = tut.AccessoryName;
+    //    AccessoryStat1 = tut.AccessoryStat1;
+    //    AccessoryStat2 = tut.AccessoryStat2;
+    //    equippedEmber = tut.equippedEmber;
+    //    EmberName = tut.EmberName;
+    //    EmberStat1 = tut.EmberStat1;
+    //    EmberStat2 = tut.EmberStat2;
+    //    TotalAD = tut.TotalAD;
+    //    TotalSP = tut.TotalSP;
+    //    MaxHP = tut.MaxHP;
+    //    MaxLight = tut.MaxLight;
+    //    emberDurability = tut.emberDurability;
+    //}
+
     public void EmberLoseDurability()
     {
         emberDurability--;
