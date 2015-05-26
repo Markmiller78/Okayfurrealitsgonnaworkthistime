@@ -365,33 +365,33 @@ public class Pickup : MonoBehaviour
                             break;
                         case 2:
                             equipment.emberDurability = 10;
+                            equipment.equippedEmber = ember.Death;
                             GameObject.Find("TheOptions").GetComponent<Options>().DeathAchv();
 
-                            equipment.equippedEmber = ember.Death;
                             break;
                         case 3:
                             equipment.emberDurability = 10;
-                            GameObject.Find("TheOptions").GetComponent<Options>().EarthAchv();
 
                             equipment.equippedEmber = ember.Earth;
+                            GameObject.Find("TheOptions").GetComponent<Options>().EarthAchv();
                             break;
                         case 4:
                             equipment.emberDurability = 10;
-                            GameObject.Find("TheOptions").GetComponent<Options>().WindAchv();
 
                             equipment.equippedEmber = ember.Wind;
+                            GameObject.Find("TheOptions").GetComponent<Options>().WindAchv();
                             break;
                         case 5:
                             equipment.emberDurability = 10;
-                            GameObject.Find("TheOptions").GetComponent<Options>().FireAchv();
 
                             equipment.equippedEmber = ember.Fire;
+                            GameObject.Find("TheOptions").GetComponent<Options>().FireAchv();
                             break;
                         case 6:
                             equipment.emberDurability = 10;
-                            GameObject.Find("TheOptions").GetComponent<Options>().FrostAchv();
 
                             equipment.equippedEmber = ember.Ice;
+                            GameObject.Find("TheOptions").GetComponent<Options>().FrostAchv();
                             break;
                         default:
                             break;
