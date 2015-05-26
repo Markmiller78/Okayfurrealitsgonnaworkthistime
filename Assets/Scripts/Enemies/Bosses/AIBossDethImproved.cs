@@ -15,6 +15,7 @@ public class AIBossDethImproved : MonoBehaviour
     public GameObject DarkOrb;
     public GameObject VanishParts;
     public GameObject AppearParts;
+    public GameObject BossLoot;
     bool vanishbool;
     bool vanishbool2;
     float vanishTimer;
@@ -39,6 +40,7 @@ public class AIBossDethImproved : MonoBehaviour
     float StateTimer;
     float SpawnTimer;
     int CurrentState;
+    int SummonState;
     public GameObject Forcefield;
     float DistanceToPlayer;
     public GameObject BossHealthBar;
@@ -73,12 +75,13 @@ public class AIBossDethImproved : MonoBehaviour
         angleOffset = 0;
         vanishbool = true;
         vanishbool2 = true;
+        SummonState = 0;
         Myhealth = gameObject.GetComponent<Health>();
 
         healthB = (GameObject)Instantiate(BossHealthBar);
         HealthRemaining = GameObject.FindGameObjectWithTag("Boss Health");
 
-		GameObject.FindObjectOfType<BGM> ().bossmusic ();
+        GameObject.FindObjectOfType<BGM>().bossmusic();
     }
 
     void DetermineDoorPositions()
@@ -122,7 +125,10 @@ public class AIBossDethImproved : MonoBehaviour
             if (RightDoor < PossibleBoundary)
                 RightDoor = PossibleBoundary;
         }
-
+        BottomDoor += 2;
+        RightDoor -= 2;
+        LeftDoor += 2;
+        TopDoor -= 2;
         roomWidth = RightDoor - LeftDoor;
         roomHeight = BottomDoor - TopDoor;
 
@@ -159,44 +165,72 @@ public class AIBossDethImproved : MonoBehaviour
 
 
 
-            if (Myhealth.healthPercent < .75f && CurrentState == 0 && StateTimer < 0)
-            {
-                        Spawn = GameObject.FindGameObjectsWithTag("DethSpawn");
-
-                        foreach (GameObject Spawner in Spawn)
-                        {
-                                Spawner.SendMessage("TurnOnSummoning", SendMessageOptions.DontRequireReceiver);
-                        }
-                gameObject.tag = "Invincible";
-                Forcefield.SetActive(true);
-                StateTimer = 20;
-                SpawnTimer = 4;
-                CurrentState = 1;
-            }
-
-            if(Myhealth.healthPercent < .75f && CurrentState == 1 && StateTimer < 0)
+            if (Myhealth.healthPercent < .75f && CurrentState == 0 && SummonState == 0)
             {
                 Spawn = GameObject.FindGameObjectsWithTag("DethSpawn");
 
                 foreach (GameObject Spawner in Spawn)
                 {
-                        Spawner.SendMessage("TurnOffSummoning", SendMessageOptions.DontRequireReceiver);
+                    Spawner.SendMessage("TurnOnSummoning", SendMessageOptions.DontRequireReceiver);
+                }
+                gameObject.tag = "Invincible";
+                Forcefield.SetActive(true);
+                StateTimer = 20;
+                SpawnTimer = 4;
+                CurrentState = 1;
+                SummonState = 1;
+            }
+            if (Myhealth.healthPercent < .50f && CurrentState == 0 && SummonState == 1)
+            {
+                Spawn = GameObject.FindGameObjectsWithTag("DethSpawn");
+
+                foreach (GameObject Spawner in Spawn)
+                {
+                    Spawner.SendMessage("TurnOnSummoning", SendMessageOptions.DontRequireReceiver);
+                }
+                gameObject.tag = "Invincible";
+                Forcefield.SetActive(true);
+                StateTimer = 20;
+                SpawnTimer = 4;
+                CurrentState = 1;
+                SummonState = 2;
+            }
+            if (Myhealth.healthPercent < .25f && CurrentState == 0 && SummonState == 2)
+            {
+                Spawn = GameObject.FindGameObjectsWithTag("DethSpawn");
+
+                foreach (GameObject Spawner in Spawn)
+                {
+                    Spawner.SendMessage("TurnOnSummoning", SendMessageOptions.DontRequireReceiver);
+                }
+                gameObject.tag = "Invincible";
+                Forcefield.SetActive(true);
+                StateTimer = 20;
+                SpawnTimer = 4;
+                CurrentState = 1;
+                SummonState = 3;
+            }
+
+            if (Myhealth.healthPercent < .75f && CurrentState == 1 && StateTimer < 0)
+            {
+                Spawn = GameObject.FindGameObjectsWithTag("DethSpawn");
+
+                foreach (GameObject Spawner in Spawn)
+                {
+                    Spawner.SendMessage("TurnOffSummoning", SendMessageOptions.DontRequireReceiver);
                 }
                 gameObject.tag = "Enemy";
                 Forcefield.SetActive(false);
+                float RandX = Random.Range(-5, 5);
+                float RandY = Random.Range(-5, 5);
+                gameObject.GetComponent<GenerateLoot>().DropAPieceOfGear(new Vector3(transform.position.x + RandX, transform.position.y + RandY, -1));
                 StateTimer = 60;
                 CurrentState = 0;
             }
-
-
-
-
-
-
             switch (CurrentState)
             {
 
-                    //BASIC STATE
+                //BASIC STATE
                 case 0:
                     {
                         if (wayPointTimer < .5f && vanishbool)
@@ -257,13 +291,13 @@ public class AIBossDethImproved : MonoBehaviour
                         break;
                     }
 
-                    //SUMMON CREATURES
+                //SUMMON CREATURES
                 case 1:
                     {
 
                         transform.position = new Vector3(9.5f, -9, -1);
 
-                        if(SpawnTimer < 0)
+                        if (SpawnTimer < 0)
                         {
                             SpawnTimer = 7;
                             RaiseTheDead();
@@ -305,6 +339,34 @@ public class AIBossDethImproved : MonoBehaviour
         controller.Move(moveTo * Time.deltaTime * moveSpeed);
     }
 
+    void StarFire()
+    {
+        int p = 0;
+        for (int i = 0; i < 6; i++)
+        {
+            p += 60;
+            Vector3 orbRot2 = transform.rotation.eulerAngles;
+            Vector3 orbRot1 = new Vector3(orbRot2.x, orbRot2.y, orbRot2.z + p);
+            Quaternion rot2 = transform.rotation;
+            rot2.eulerAngles = orbRot1;
+            Instantiate(DarkOrb, transform.position, rot2);
+        }
+
+    }
+    void StarFire2()
+    {
+        int p = 0;
+        for (int i = 0; i < 12; i++)
+        {
+            p += 30;
+            Vector3 orbRot2 = transform.rotation.eulerAngles;
+            Vector3 orbRot1 = new Vector3(orbRot2.x, orbRot2.y, orbRot2.z + p);
+            Quaternion rot2 = transform.rotation;
+            rot2.eulerAngles = orbRot1;
+            Instantiate(DarkOrb, transform.position, rot2);
+        }
+
+    }
     void Attack()
     {
         DistanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
@@ -314,7 +376,20 @@ public class AIBossDethImproved : MonoBehaviour
         if (AttackCD)
         {
             AttackCD = false;
-            AttackTimer = .5f;
+            if (Myhealth.healthPercent <= .50f)
+            {
+                AttackTimer = .3f;
+            }
+            else if (Myhealth.healthPercent <= .25f)
+            {
+                AttackTimer = .2f;
+            }
+            else if (Myhealth.healthPercent <= .10f)
+            {
+                AttackTimer = .1f;
+            }
+            else
+                AttackTimer = .5f;
         }
         AttackTimer -= Time.deltaTime;
 
@@ -340,8 +415,8 @@ public class AIBossDethImproved : MonoBehaviour
             {
 
 
-                    randX = Random.Range(-5, 5);
-                    randY = Random.Range(-5,5);
+                randX = Random.Range(-5, 5);
+                randY = Random.Range(-5, 5);
 
 
 
@@ -428,6 +503,10 @@ public class AIBossDethImproved : MonoBehaviour
     {
         print("Re-appeared");
         transform.position = new Vector3(transform.position.x, transform.position.y, -1);
+        if (Myhealth.healthPercent < .25f)
+            StarFire2();
+        else if (Myhealth.healthPercent < .5f)
+            StarFire();
     }
 
     void RaiseTheDead()
@@ -437,16 +516,17 @@ public class AIBossDethImproved : MonoBehaviour
         foreach (GameObject Spawner in Spawn)
         {
 
-            if(Myhealth.healthPercent < .25f)
+            if (Myhealth.healthPercent < .25f)
                 Spawner.SendMessage("SpawnWraith", SendMessageOptions.DontRequireReceiver);
             else
-            Spawner.SendMessage("SpawnLivingDead", SendMessageOptions.DontRequireReceiver);
+                Spawner.SendMessage("SpawnLivingDead", SendMessageOptions.DontRequireReceiver);
         }
     }
 
     void DestroyHealthBar()
     {
         Destroy(healthB);
+        Instantiate(BossLoot, transform.position, Quaternion.identity);
     }
 
 }

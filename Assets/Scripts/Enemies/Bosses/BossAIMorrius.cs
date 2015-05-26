@@ -289,6 +289,10 @@ public class BossAIMorrius : MonoBehaviour
     void Attack()
     {
         moveSpeed = 7;
+        if (Myhealth.healthPercent < .5f)
+            moveSpeed = 9;
+        if (Myhealth.healthPercent < .25f)
+            moveSpeed = 12;
         if (Myhealth.healthPercent < .75)
         {
             if (returnOrginTimer < .1f)
@@ -410,6 +414,10 @@ public class BossAIMorrius : MonoBehaviour
 
         //Continue Charging if nothing hit
         moveSpeed = 10;
+        if (Myhealth.healthPercent < .5f)
+            moveSpeed = 15;
+        if (Myhealth.healthPercent < .25f)
+            moveSpeed = 20;
         controller.Move(ChargeTo * Time.deltaTime * moveSpeed);
     }
     void endCharge(Vector3 ExplodeOnSpot)
@@ -428,6 +436,10 @@ public class BossAIMorrius : MonoBehaviour
     {
         RenderSettings.ambientLight = new Color(1f / 255f, 1f / 255f, 1f / 255f);
 
+        float RandX = Random.Range(-5, 5);
+        float RandY = Random.Range(-5, 5);
+        gameObject.GetComponent<GenerateLoot>().DropAPieceOfGear(new Vector3(transform.position.x + RandX, transform.position.y + RandY, -1));
+           
         if (FirstShadowSwap)
         {
             Instantiate(SummonShadowSpawn, new Vector3(player.transform.position.x - 3, player.transform.position.y, -1), new Quaternion(0, 0, 0, 0));

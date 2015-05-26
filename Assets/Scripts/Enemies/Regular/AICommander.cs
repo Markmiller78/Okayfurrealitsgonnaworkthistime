@@ -33,27 +33,13 @@ public class AICommander : MonoBehaviour
     public float infecttimer;
     // Use this for initialization
     PlayerMovement hMove;
-	GameObject[] Commanders;
-	public int commandercount;
-
-	public void UnReinforcing()
-	{
-		list = GameObject.FindGameObjectsWithTag("Enemy");
-		 
-			foreach (GameObject obj in list)
-			{
-				obj.SendMessage("UnReinforce", SendMessageOptions.DontRequireReceiver);
-			obj.SendMessage("UnReinforcin", SendMessageOptions.DontRequireReceiver);
-			}
- 
-
-		
-	}
+    GameObject[] Commanders;
+    public int commandercount;
     void Start()
     {
-		Commanders = new GameObject[20];
-		timer = 2.0f;
-		commandercount = 0;
+        Commanders = new GameObject[20];
+        timer = 2.0f;
+        commandercount = 0;
         path = Vector3.zero;
         MoveTo = Vector3.zero;
         infecttimer = 3.0f;
@@ -88,7 +74,7 @@ public class AICommander : MonoBehaviour
             dist = vectoplayer.magnitude;
             FacePlayer();
             size = list.Length;
-            if (size == 1||size==commandercount)
+            if (size == 1 || size == commandercount)
             {
                 MoveTowardsPlayer();
                 AttackPlayer();
@@ -102,7 +88,8 @@ public class AICommander : MonoBehaviour
                     distance = new float[size];
                     for (int i = 0; i < size; i++)
                     {
-                        distance[i] = (transform.position - list[i].transform.position).magnitude;
+                        if (list[i])
+                            distance[i] = (transform.position - list[i].transform.position).magnitude;
                     }
 
                     FacePlayer();
@@ -138,23 +125,23 @@ public class AICommander : MonoBehaviour
 
                     foreach (GameObject obj in list)
                     {
-						if(obj.GetComponent<AICommander>()!=null)
-						{
-							bool shouldadd=false;
-                        for (int i = 0; i < 20; i++)
-						{
-								if(obj!=Commanders[i])
-									shouldadd=true;
-								else
-									shouldadd=false;
+                        if (obj.GetComponent<AICommander>() != null)
+                        {
+                            bool shouldadd = false;
+                            for (int i = 0; i < 20; i++)
+                            {
+                                if (obj != Commanders[i])
+                                    shouldadd = true;
+                                else
+                                    shouldadd = false;
 
-                         }
-						if(shouldadd==true)
-							{
-								Commanders[commandercount]=obj;
-							++commandercount;
-							}
-						}
+                            }
+                            if (shouldadd == true)
+                            {
+                                Commanders[commandercount] = obj;
+                                ++commandercount;
+                            }
+                        }
                         obj.SendMessage("Reinforce", SendMessageOptions.DontRequireReceiver);
                     }
 
@@ -177,14 +164,14 @@ public class AICommander : MonoBehaviour
     {
         if (timer == 2.0f)
         {
-           
+
             MoveTo = Pathfind();
-            
+
         }
         timer -= Time.deltaTime;
         if (timer <= 0.0f)
             timer = 2.0f;
-        controller.Move( MoveTo* Time.deltaTime * movementspeed);
+        controller.Move(MoveTo * Time.deltaTime * movementspeed);
     }
 
     void FacePlayer()
@@ -192,13 +179,13 @@ public class AICommander : MonoBehaviour
         //float tempangle=Vector3.Angle (transform.up,disttoplayer);
         //transform.Rotate (Vector3.back,tempangle+180);
 
-   
-            float tempangle = Mathf.Atan2(vectoplayer.y, vectoplayer.x) * Mathf.Rad2Deg;
-            tempangle += 90.0f;
-            Quaternion rotation = Quaternion.AngleAxis(tempangle, Vector3.forward);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 2.5f);
-       
-      
+
+        float tempangle = Mathf.Atan2(vectoplayer.y, vectoplayer.x) * Mathf.Rad2Deg;
+        tempangle += 90.0f;
+        Quaternion rotation = Quaternion.AngleAxis(tempangle, Vector3.forward);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 2.5f);
+
+
 
     }
     void AttackPlayer()
@@ -208,8 +195,8 @@ public class AICommander : MonoBehaviour
         {
 
             if (player != null)
-                player.GetComponent<PlayerMovement>().SendMessage("Knockback",vectoplayer.normalized, SendMessageOptions.DontRequireReceiver);
-                       player.GetComponent<Health>().LoseHealth(atkdmg);
+                player.GetComponent<PlayerMovement>().SendMessage("Knockback", vectoplayer.normalized, SendMessageOptions.DontRequireReceiver);
+            player.GetComponent<Health>().LoseHealth(atkdmg);
 
             isAttacking = true;
         }
@@ -265,9 +252,9 @@ public class AICommander : MonoBehaviour
     Vector3 Pathfind()
     {
 
-       
-            path = -vectoplayer;
-   
+
+        path = -vectoplayer;
+
         RaycastHit info;
         Physics.Raycast(transform.position, path.normalized, out info);
         {
@@ -310,8 +297,8 @@ public class AICommander : MonoBehaviour
                 Debug.Log("No need!");
 
             }
-          
-          
+
+
         }
 
 
@@ -319,6 +306,4 @@ public class AICommander : MonoBehaviour
     }
 
 
-
- 
 }

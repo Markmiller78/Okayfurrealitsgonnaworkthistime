@@ -14,7 +14,7 @@ public class TutorialEmptyCheck : MonoBehaviour {
 	
 
 	}
-    void OnTriggerEnter(Collider Other)
+    void OnTriggerStay(Collider Other)
     {
         if (Other.tag == "Player")
         {
