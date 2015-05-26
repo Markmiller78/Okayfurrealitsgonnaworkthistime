@@ -39,12 +39,6 @@ public class Options : MonoBehaviour
     public int sfxVolume;
     public int musicVolume;
 
-    public Text sfxInt;
-    public Text musicInt;
-
-    public Text sfxInt2;
-    public Text musicInt2;
-
     int numMelee;
     int numDash;
     int numEnemiesKilled;
@@ -108,11 +102,7 @@ public class Options : MonoBehaviour
 
         Load();
         DontDestroyOnLoad(gameObject);
-        sfxInt.text = sfxVolume.ToString();
-        musicInt.text = musicVolume.ToString();
 
-        sfxInt2.text = sfxVolume.ToString();
-        musicInt2.text = musicVolume.ToString();
         beenAssigned = false;
         numMelee = 0;
         numEnemiesKilled = 0;
@@ -360,6 +350,11 @@ public class Options : MonoBehaviour
 
     void Update()
     {
+        if (Screen.currentResolution.height != 720 || Screen.currentResolution.width != 1280)
+        {
+            Screen.SetResolution(1280, 720, Screen.fullScreen);
+        }
+
         if (watchIntro)
         {
             timer += Time.deltaTime;
@@ -408,10 +403,6 @@ public class Options : MonoBehaviour
         {
             sfxVolume = 100;
         }
-        if (sfxInt)
-            sfxInt.text = sfxVolume.ToString();
-        if (sfxInt2)
-            sfxInt2.text = sfxVolume.ToString();
         Save();
 
         GameObject[] objects = (GameObject[])GameObject.FindObjectsOfType(typeof(GameObject));
@@ -432,14 +423,7 @@ public class Options : MonoBehaviour
         {
             sfxVolume = 0;
         }
-        if (sfxInt)
-        {
-            sfxInt.text = sfxVolume.ToString();
-        }
-        if (sfxInt2)
-        {
-            sfxInt2.text = sfxVolume.ToString();
-        }
+        
         Save();
 
         GameObject[] objects = (GameObject[])GameObject.FindObjectsOfType(typeof(GameObject));
@@ -461,15 +445,7 @@ public class Options : MonoBehaviour
         {
             musicVolume = 100;
         }
-        if (musicInt != null)
-        {
 
-            musicInt.text = musicVolume.ToString();
-        }
-        if (musicInt2 != null)
-        {
-            musicInt2.text = musicVolume.ToString();
-        }
 
         Save();
 
@@ -490,10 +466,7 @@ public class Options : MonoBehaviour
         {
             musicVolume = 0;
         }
-        if (musicInt)
-            musicInt.text = musicVolume.ToString();
-        if (musicInt2)
-            musicInt2.text = musicVolume.ToString();
+
         Save();
 
         GameObject[] objects = (GameObject[])GameObject.FindObjectsOfType(typeof(GameObject));
