@@ -344,7 +344,7 @@ public class TutorialScript : MonoBehaviour
             case 23:
                 {
                     if (InputManager.controller)
-                        ChangeText("Right Bumper to Absorb dropped light in the room");
+                        ChangeText("Rb to Absorb dropped light in the room");
                     else
                         ChangeText("Press Q to Absorb dropped light in the room");
                     FadeIn();
@@ -382,7 +382,7 @@ public class TutorialScript : MonoBehaviour
             case 25:
                 {
                     if (InputManager.controller)
-                        ChangeText("Left Bumper to use Equipped Dash Spell");
+                        ChangeText("Lb to use Equipped Dash Spell");
                     else
                         ChangeText("Press Shift to use Equipped Dash Spell");
                     FadeIn();
