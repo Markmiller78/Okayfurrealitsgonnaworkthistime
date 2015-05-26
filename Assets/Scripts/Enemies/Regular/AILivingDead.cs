@@ -24,7 +24,6 @@ public class AILivingDead : MonoBehaviour
     float distanceToPlayer;
     float snaredSpeed;
     float SnareTimer;
-    bool isSnared;
     public float infectRange;
     public float infecttimer;
 	Animator anim;
@@ -34,7 +33,6 @@ public class AILivingDead : MonoBehaviour
     void Start()
     {
         infecttimer = 3.0f;
-        isSnared = false;
         moveSpeed = 1;
         player = GameObject.FindGameObjectWithTag("Player");
 		anim = player.GetComponent<Animator> ();
@@ -53,6 +51,7 @@ public class AILivingDead : MonoBehaviour
     {
         if (heroEquipment.paused == false && !playMove.transitioning)
         {
+            SnareTimer -= Time.deltaTime;
             distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
             if (attacking)
             {
@@ -65,16 +64,11 @@ public class AILivingDead : MonoBehaviour
             {
                 Attack();
                 attacking = true;
-            } 
-            if(isSnared)
+            }
+            if (SnareTimer < 0)
             {
-                SnareTimer -= Time.deltaTime;
-
-                if(SnareTimer < 0)
-                {
-                    Unsnare();
-                    isSnared = false;
-                }
+                Unsnare();
+                SnareTimer = 100000;
             }
         }
     }
@@ -115,7 +109,15 @@ public class AILivingDead : MonoBehaviour
             attacking = false;
         }
     }
-
+    void Snare()
+    {
+        moveSpeed = 0;
+        SnareTimer = 3;
+    }
+    void Unsnare()
+    {
+        moveSpeed = 1;
+    }
     void Slow()
     {
         moveSpeed = moveSpeed * 0.5f;
@@ -126,17 +128,6 @@ public class AILivingDead : MonoBehaviour
         moveSpeed = moveSpeed * 2;
     }
 
-    void Snare()
-    {
-        isSnared = true;
-        SnareTimer = 2;
-        snaredSpeed = moveSpeed;
-        moveSpeed = 0;
-    }
-    void Unsnare()
-    {
-        moveSpeed = snaredSpeed;
-    }
 	void Reinforce()
 	{
 		if (!isReinforced) {

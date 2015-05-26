@@ -789,7 +789,7 @@ public class MainMenu : MonoBehaviour
 
             switch (currentSelection)
             {
-                case 0:
+                default:
                     {
                         SelectRects[0] = new Rect(516, 125, 300, 150);
                         SelectRects[1] = new Rect(516, 192, 300, 150);

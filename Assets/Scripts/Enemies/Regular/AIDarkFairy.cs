@@ -40,7 +40,6 @@ public class AIDarkFairy : MonoBehaviour
     public float infecttimer;
     float snaredSpeed;
     float SnareTimer;
-    bool isSnared;
 
     PlayerMovement hMove;
 
@@ -52,7 +51,6 @@ public class AIDarkFairy : MonoBehaviour
         distanceToPlayer = 0;
         currentState = 0;
         infecttimer = 3.0f;
-        isSnared = false;
         timer = 0.0f;
         player = GameObject.FindGameObjectWithTag("Player");
         heroEquipment = player.GetComponent<PlayerEquipment>();
@@ -73,6 +71,7 @@ public class AIDarkFairy : MonoBehaviour
             transform.position = new Vector3(transform.position.x, transform.position.y, -1);
         if (heroEquipment.paused == false && !hMove.transitioning)
         {
+            SnareTimer -= Time.deltaTime;
             dodgeTimer -= Time.deltaTime;
             timer -= Time.deltaTime;
             TargetTimer -= Time.deltaTime;
@@ -197,7 +196,11 @@ public class AIDarkFairy : MonoBehaviour
                         break;
                     }
             }
-
+            if (SnareTimer < 0)
+            {
+                Unsnare();
+                SnareTimer = 100000;
+            }
         }
 
         print(currentState);
@@ -343,14 +346,12 @@ public class AIDarkFairy : MonoBehaviour
     }
     void Snare()
     {
-        isSnared = true;
-        SnareTimer = 2;
-        snaredSpeed = moveSpeed;
         moveSpeed = 0;
+        SnareTimer = 3;
     }
     void Unsnare()
     {
-        moveSpeed = snaredSpeed;
+        moveSpeed = 1;
     }
     void Decoy()
     {

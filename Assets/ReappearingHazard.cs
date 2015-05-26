@@ -10,7 +10,7 @@ public class ReappearingHazard : MonoBehaviour {
     public float timeSleeping;
 
     public timeOffsets timeOffset;
-    
+    PlayerEquipment heroEquipment;
 
     float timer;
 
@@ -24,6 +24,7 @@ public class ReappearingHazard : MonoBehaviour {
     SpriteRenderer sprite;
 	// Use this for initialization
 	void Start () {
+        heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
         sprite = gameObject.GetComponent<SpriteRenderer>();
 
         active = false;
@@ -50,54 +51,60 @@ public class ReappearingHazard : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-        timer += Time.deltaTime;
-        if (active == false)
+    void Update()
+    {
+
+        if (heroEquipment.paused == false)
         {
-
-            if (timer >= timeSleeping)
+            timer += Time.deltaTime;
+            if (active == false)
             {
-                active = true;
-                fadingIn = true;
-                timer = 0;
+
+                if (timer >= timeSleeping)
+                {
+                    active = true;
+                    fadingIn = true;
+                    timer = 0;
+                }
             }
-        }
-        else
-        {
-            if (timer >= timeActive)
+            else
             {
-                active = false;
-                fadingOut = true;
-                doingDamage = false;
-                timer = 0;
+                if (timer >= timeActive)
+                {
+                    active = false;
+                    fadingOut = true;
+                    doingDamage = false;
+                    timer = 0;
+                }
             }
-        }
 
-        if (fadingIn)
-        {
-            float alpha = sprite.color.a + (Time.deltaTime * 0.5f);
-            if (alpha > 1.0f)
+            if (fadingIn)
             {
-                fadingIn = false;
-                alpha = 1f;
-                doingDamage = true;
-                
-            }
-            sprite.color = new Color(1f, 1f, 1f, alpha);
+                float alpha = sprite.color.a + (Time.deltaTime * 0.5f);
+                if (alpha > 1.0f)
+                {
+                    fadingIn = false;
+                    alpha = 1f;
+                    doingDamage = true;
 
-        }
-        if (fadingOut)
-        {
-            float alpha = sprite.color.a - (Time.deltaTime * 0.5f);
-            if (alpha < 0.0f)
+                }
+                sprite.color = new Color(1f, 1f, 1f, alpha);
+
+            }
+            if (fadingOut)
             {
-                fadingOut = false;
-                alpha = 0.0f;
+                float alpha = sprite.color.a - (Time.deltaTime * 0.5f);
+                if (alpha < 0.0f)
+                {
+                    fadingOut = false;
+                    alpha = 0.0f;
+                }
+                sprite.color = new Color(1f, 1f, 1f, alpha);
+
             }
-            sprite.color = new Color(1f, 1f, 1f, alpha);
+
 
         }
 
-
-	}
+    }
 }

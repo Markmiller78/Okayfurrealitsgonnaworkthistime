@@ -20,7 +20,7 @@ public class AIShadowCloud : MonoBehaviour
 
 
     PlayerMovement hMove;
-    float snaredSpeed;
+    float SnareTimer;
 //    float SnareTimer;
 //    bool isSnared;
 
@@ -41,6 +41,7 @@ public class AIShadowCloud : MonoBehaviour
     {
         if (heroEquipment.paused == false && !hMove.transitioning)
         {
+            SnareTimer -= Time.deltaTime;
             if(isInfected)
             Infect();
             if (target == null)
@@ -52,7 +53,12 @@ public class AIShadowCloud : MonoBehaviour
             Vector2 moveTo = (target.transform.position - transform.position).normalized;
             moveTo = moveTo * Time.deltaTime * moveSpeed;
 
-            transform.position = new Vector3(moveTo.x + transform.position.x, moveTo.y + transform.position.y, -1.2f); 
+            transform.position = new Vector3(moveTo.x + transform.position.x, moveTo.y + transform.position.y, -1.2f);
+            if (SnareTimer < 0)
+            {
+                Unsnare();
+                SnareTimer = 100000;
+            }
         }
 
     }
@@ -108,16 +114,13 @@ public class AIShadowCloud : MonoBehaviour
 
     void Snare()
     {
-//        isSnared = true;
-//        SnareTimer = 2;
-        snaredSpeed = moveSpeed;
         moveSpeed = 0;
+        SnareTimer = 3;
     }
     void Unsnare()
     {
-        moveSpeed = snaredSpeed;
+        moveSpeed = 1;
     }
-
     void GetInfected()
     {
         isInfected = true;

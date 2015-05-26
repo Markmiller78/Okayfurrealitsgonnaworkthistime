@@ -38,29 +38,31 @@ public class RoomGeneration : MonoBehaviour
     public GameObject chest;
     public GameObject torchWood;
     public GameObject CPCrystal;
-	public SaveTest savenload;
+    public SaveTest savenload;
     public GameObject[] checkpointRooms;
     Room[] checkpointRoomsInfo;
+    PlayerMovement movement;
 
     bool easyMode;
     //int enemyMod;
     int prevRoom = -1;
     bool loading = false;
-    bool firstRoom;
+    //bool firstRoom;
 
     public PlayerData loadedData;
 
     void Start()
     {
-		savenload = GameObject.FindObjectOfType<Options>().GetComponent<SaveTest> ();
-        firstRoom = true;
+        savenload = GameObject.FindObjectOfType<Options>().GetComponent<SaveTest>();
+        //firstRoom = true;
         //DontDestroyOnLoad(this);
         player = GameObject.FindGameObjectWithTag("Player");
+        movement = player.GetComponent<PlayerMovement>();
 
         loading = GameObject.FindObjectOfType<Options>().shouldload;
         if (loading)
         {
-			savenload.LoadDungeon();
+            savenload.LoadDungeon();
             easyMode = loadedData.easymode;
         }
         else easyMode = GameObject.FindObjectOfType<Options>().easyMode;
@@ -148,7 +150,7 @@ public class RoomGeneration : MonoBehaviour
         //ENDTESTING
 
         CreateRoom();
-        firstRoom = false;
+        //firstRoom = false;
         //Reset();
         //enemyMod = (easyMode ? 11 : 9);
     }
@@ -425,9 +427,17 @@ public class RoomGeneration : MonoBehaviour
             //    max -= enemyMod;
             //}
             finalRoomInfoArray[currentRoom].numEnemies = Random.Range(min, max);
-            Instantiate(finalRoomInfoArray[currentRoom].enemiesThatCanSpawn[0], new Vector3(finalRoomInfoArray[currentRoom].enemySpawnPoints[0].x, -finalRoomInfoArray[currentRoom].enemySpawnPoints[0].y, -1f), Quaternion.identity);
-            Instantiate(finalRoomInfoArray[currentRoom].enemiesThatCanSpawn[1], new Vector3(finalRoomInfoArray[currentRoom].enemySpawnPoints[1].x, -finalRoomInfoArray[currentRoom].enemySpawnPoints[1].y, -1f), Quaternion.identity);
-            int enemiesSpawned = 2;
+            int enemiesSpawned = 0;
+            if (finalRoomInfoArray[currentRoom].enemiesThatCanSpawn.Length > 0)
+            {
+                Instantiate(finalRoomInfoArray[currentRoom].enemiesThatCanSpawn[0], new Vector3(finalRoomInfoArray[currentRoom].enemySpawnPoints[0].x, -finalRoomInfoArray[currentRoom].enemySpawnPoints[0].y, -1f), Quaternion.identity);
+                enemiesSpawned = 1;
+            }
+            if (finalRoomInfoArray[currentRoom].enemiesThatCanSpawn.Length > 1)
+            {
+                Instantiate(finalRoomInfoArray[currentRoom].enemiesThatCanSpawn[1], new Vector3(finalRoomInfoArray[currentRoom].enemySpawnPoints[1].x, -finalRoomInfoArray[currentRoom].enemySpawnPoints[1].y, -1f), Quaternion.identity);
+                enemiesSpawned = 2;
+            }
             while (enemiesSpawned < finalRoomInfoArray[currentRoom].numEnemies)
             {
                 for (int i = 2; i < finalRoomInfoArray[currentRoom].enemySpawnPoints.Length; i++)
@@ -482,16 +492,16 @@ public class RoomGeneration : MonoBehaviour
             switch (finalRoomInfoArray[currentRoom].entranceDir)
             {
                 case 0:
-                    player.transform.position = new Vector3(finalRoomInfoArray[currentRoom].bottomPlayerSpawn.x, -(finalRoomInfoArray[currentRoom].bottomPlayerSpawn.y + (firstRoom ? 0f : 2f)), -1.0f);
+                    player.transform.position = new Vector3(finalRoomInfoArray[currentRoom].bottomPlayerSpawn.x, -(finalRoomInfoArray[currentRoom].bottomPlayerSpawn.y + (!movement.transitioning ? 0f : 2f)), -1.0f);
                     break;
                 case 1:
-                    player.transform.position = new Vector3(finalRoomInfoArray[currentRoom].leftPlayerSpawn.x - (firstRoom ? 0f : 2f), -finalRoomInfoArray[currentRoom].leftPlayerSpawn.y, -1.0f);
+                    player.transform.position = new Vector3(finalRoomInfoArray[currentRoom].leftPlayerSpawn.x - (!movement.transitioning ? 0f : 2f), -finalRoomInfoArray[currentRoom].leftPlayerSpawn.y, -1.0f);
                     break;
                 case 2:
-                    player.transform.position = new Vector3(finalRoomInfoArray[currentRoom].topPlayerSpawn.x, -(finalRoomInfoArray[currentRoom].topPlayerSpawn.y - (firstRoom ? 0f : 2f)), -1.0f);
+                    player.transform.position = new Vector3(finalRoomInfoArray[currentRoom].topPlayerSpawn.x, -(finalRoomInfoArray[currentRoom].topPlayerSpawn.y - (!movement.transitioning ? 0f : 2f)), -1.0f);
                     break;
                 case 3:
-                    player.transform.position = new Vector3(finalRoomInfoArray[currentRoom].rightPlayerSpawn.x + (firstRoom ? 0f : 2f), -finalRoomInfoArray[currentRoom].rightPlayerSpawn.y, -1.0f);
+                    player.transform.position = new Vector3(finalRoomInfoArray[currentRoom].rightPlayerSpawn.x + (!movement.transitioning ? 0f : 2f), -finalRoomInfoArray[currentRoom].rightPlayerSpawn.y, -1.0f);
                     break;
                 default:
                     break;
@@ -502,16 +512,16 @@ public class RoomGeneration : MonoBehaviour
             switch (finalRoomInfoArray[currentRoom].exitDir)
             {
                 case 0:
-                    player.transform.position = new Vector3(finalRoomInfoArray[currentRoom].bottomPlayerSpawn.x, -(finalRoomInfoArray[currentRoom].bottomPlayerSpawn.y + (firstRoom ? 0f : 2f)), -1.0f);
+                    player.transform.position = new Vector3(finalRoomInfoArray[currentRoom].bottomPlayerSpawn.x, -(finalRoomInfoArray[currentRoom].bottomPlayerSpawn.y + (!movement.transitioning ? 0f : 2f)), -1.0f);
                     break;
                 case 1:
-                    player.transform.position = new Vector3(finalRoomInfoArray[currentRoom].leftPlayerSpawn.x - (firstRoom ? 0f : 2f), -finalRoomInfoArray[currentRoom].leftPlayerSpawn.y, -1.0f);
+                    player.transform.position = new Vector3(finalRoomInfoArray[currentRoom].leftPlayerSpawn.x - (!movement.transitioning ? 0f : 2f), -finalRoomInfoArray[currentRoom].leftPlayerSpawn.y, -1.0f);
                     break;
                 case 2:
-                    player.transform.position = new Vector3(finalRoomInfoArray[currentRoom].topPlayerSpawn.x, -(finalRoomInfoArray[currentRoom].topPlayerSpawn.y - (firstRoom ? 0f : 2f)), -1.0f);
+                    player.transform.position = new Vector3(finalRoomInfoArray[currentRoom].topPlayerSpawn.x, -(finalRoomInfoArray[currentRoom].topPlayerSpawn.y - (!movement.transitioning ? 0f : 2f)), -1.0f);
                     break;
                 case 3:
-                    player.transform.position = new Vector3(finalRoomInfoArray[currentRoom].rightPlayerSpawn.x + (firstRoom ? 0f : 2f), -finalRoomInfoArray[currentRoom].rightPlayerSpawn.y, -1.0f);
+                    player.transform.position = new Vector3(finalRoomInfoArray[currentRoom].rightPlayerSpawn.x + (!movement.transitioning ? 0f : 2f), -finalRoomInfoArray[currentRoom].rightPlayerSpawn.y, -1.0f);
                     break;
                 default:
                     break;
@@ -520,7 +530,7 @@ public class RoomGeneration : MonoBehaviour
         // make sure enemies can't respawn
         finalRoomInfoArray[currentRoom].beenThere = true;
         prevRoom = currentRoom;
-        firstRoom = false;
+        //firstRoom = false;
     }
 
     void FillDungeon()
@@ -1504,8 +1514,8 @@ public class RoomGeneration : MonoBehaviour
                 Destroy(obj);
             }
         }
-       // player.GetComponent<SaveTest>().saved = false;
-		savenload.saved = false;
+        // player.GetComponent<SaveTest>().saved = false;
+        savenload.saved = false;
         CreateRoom();
     }
 }

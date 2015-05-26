@@ -18,6 +18,7 @@ public class YouLoseMenu : MonoBehaviour
     Health playerHealth;
     PlayerLight dasLicht;
     PlayerEquipment equipment;
+    Animator anim;
 
     // Use this for initialization
     void Start()
@@ -30,6 +31,7 @@ public class YouLoseMenu : MonoBehaviour
         playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>();
         dasLicht = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerLight>();
         equipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
+        anim = GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -93,6 +95,7 @@ public class YouLoseMenu : MonoBehaviour
                             playerHealth.GainHealth(playerHealth.maxHP);
                             dasLicht.currentLight = dasLicht.maxLight;
                             GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Light>().cookie = null;
+                            anim.CrossFade("Idle", .01f);
                             Destroy(this.gameObject);
                         }
                         else
