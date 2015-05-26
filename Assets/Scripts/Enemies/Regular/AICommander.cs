@@ -35,6 +35,20 @@ public class AICommander : MonoBehaviour
     PlayerMovement hMove;
 	GameObject[] Commanders;
 	public int commandercount;
+
+	public void UnReinforcing()
+	{
+		list = GameObject.FindGameObjectsWithTag("Enemy");
+		 
+			foreach (GameObject obj in list)
+			{
+				obj.SendMessage("UnReinforce", SendMessageOptions.DontRequireReceiver);
+			obj.SendMessage("UnReinforcin", SendMessageOptions.DontRequireReceiver);
+			}
+ 
+
+		
+	}
     void Start()
     {
 		Commanders = new GameObject[20];
@@ -303,6 +317,8 @@ public class AICommander : MonoBehaviour
 
         return path.normalized;
     }
+
+
 
  
 }
