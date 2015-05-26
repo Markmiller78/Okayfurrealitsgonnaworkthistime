@@ -237,7 +237,7 @@ public class PlayerDashing : MonoBehaviour
             heroEquipment.EmberLoseDurability();
             heroCooldowns.dashCooling = true;
             timeRemaining = dashDuration;
-            if (heroEquipment.equippedBoot != boot.Whirlwind||heroEquipment.equippedBoot!=boot.Decoy)
+            if (heroEquipment.equippedBoot != boot.Whirlwind && heroEquipment.equippedBoot!=boot.Decoy)
             {
                 //Change the animation state into dashing
                 anim.CrossFade("PlayerDashing", 0.01f);
