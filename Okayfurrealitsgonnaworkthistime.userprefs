@@ -1,15 +1,16 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\UpdateToolText.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Reinforced.cs">
     <Files>
-      <File FileName="Assets\Scripts\UpdateToolText.cs" Line="40" Column="126" />
+      <File FileName="Assets\Reinforced.cs" Line="36" Column="24" />
+      <File FileName="Assets\Scripts\Health.cs" Line="171" Column="40" />
+      <File FileName="Assets\Scripts\UpdateToolText.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\SlideAnim.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Enemies\Bosses\BossAILorne.cs" Line="1" Column="1" />
       <File FileName="Assets\BGM.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\World\SaveTest.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Enemies\Bosses\AIBossDethImproved.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Enemies\Bosses\BossAIMorrius.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Health.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Knockback.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\World\RoomGeneration.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Player\PlayerDashing.cs" Line="1" Column="1" />
@@ -28,6 +29,8 @@
       <Breakpoint file="C:\Users\Jean-Francois\Desktop\Luminescence\Okayfurrealitsgonnaworkthistime\Assets\Scripts\World\SaveTest.cs" line="180" />
       <Breakpoint file="C:\Users\Jean-Francois\Desktop\Luminescence\Okayfurrealitsgonnaworkthistime\Assets\Scripts\World\SaveTest.cs" line="191" />
       <Breakpoint file="C:\Users\Jean-Francois\Desktop\Luminescence\Okayfurrealitsgonnaworkthistime\Assets\BGM.cs" line="158" />
+      <Breakpoint file="C:\Users\Jean-Francois\Desktop\Luminescence\Okayfurrealitsgonnaworkthistime\Assets\Scripts\Health.cs" line="105" />
+      <Breakpoint file="C:\Users\Jean-Francois\Desktop\Luminescence\Okayfurrealitsgonnaworkthistime\Assets\Scripts\Health.cs" line="108" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
