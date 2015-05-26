@@ -125,10 +125,6 @@ public class AIBossDethImproved : MonoBehaviour
             if (RightDoor < PossibleBoundary)
                 RightDoor = PossibleBoundary;
         }
-        BottomDoor += 2;
-        RightDoor -= 2;
-        LeftDoor += 2;
-        TopDoor -= 2;
         roomWidth = RightDoor - LeftDoor;
         roomHeight = BottomDoor - TopDoor;
 
@@ -150,23 +146,18 @@ public class AIBossDethImproved : MonoBehaviour
             timer -= Time.deltaTime;
 
 
-            if (Myhealth.healthPercent < .75f && StateTimer > 1000)
-                StateTimer = 1;
+            //if (Myhealth.healthPercent < .75f && StateTimer > 1000)
+            //    StateTimer = 1;
 
 
-            if (Myhealth.healthPercent < .75f && CurrentState == 0 && StateTimer < 2 && StateTimer > 1.9f)
-            {
-                VanishEffect();
-            }
-            if (Myhealth.healthPercent < .75f && CurrentState == 0 && StateTimer < 1.7f)
-            {
-                Vanish();
-            }
+
 
 
 
             if (Myhealth.healthPercent < .75f && CurrentState == 0 && SummonState == 0)
             {
+                VanishEffect();
+                Vanish();
                 Spawn = GameObject.FindGameObjectsWithTag("DethSpawn");
 
                 foreach (GameObject Spawner in Spawn)
@@ -182,6 +173,8 @@ public class AIBossDethImproved : MonoBehaviour
             }
             if (Myhealth.healthPercent < .50f && CurrentState == 0 && SummonState == 1)
             {
+                VanishEffect();
+                Vanish();
                 Spawn = GameObject.FindGameObjectsWithTag("DethSpawn");
 
                 foreach (GameObject Spawner in Spawn)
@@ -197,6 +190,8 @@ public class AIBossDethImproved : MonoBehaviour
             }
             if (Myhealth.healthPercent < .25f && CurrentState == 0 && SummonState == 2)
             {
+                VanishEffect();
+                Vanish();
                 Spawn = GameObject.FindGameObjectsWithTag("DethSpawn");
 
                 foreach (GameObject Spawner in Spawn)
@@ -226,6 +221,7 @@ public class AIBossDethImproved : MonoBehaviour
                 gameObject.GetComponent<GenerateLoot>().DropAPieceOfGear(new Vector3(transform.position.x + RandX, transform.position.y + RandY, -1));
                 StateTimer = 60;
                 CurrentState = 0;
+                vanishTimer = -1;
             }
             switch (CurrentState)
             {
@@ -341,6 +337,8 @@ public class AIBossDethImproved : MonoBehaviour
 
     void StarFire()
     {
+        transform.position = new Vector3(transform.position.x, transform.position.y, -1);
+
         int p = 0;
         for (int i = 0; i < 6; i++)
         {
@@ -351,10 +349,12 @@ public class AIBossDethImproved : MonoBehaviour
             rot2.eulerAngles = orbRot1;
             Instantiate(DarkOrb, transform.position, rot2);
         }
+        transform.position = new Vector3(transform.position.x, transform.position.y, -1);
 
     }
     void StarFire2()
     {
+        transform.position = new Vector3(transform.position.x, transform.position.y, -1);
         int p = 0;
         for (int i = 0; i < 12; i++)
         {
@@ -365,7 +365,7 @@ public class AIBossDethImproved : MonoBehaviour
             rot2.eulerAngles = orbRot1;
             Instantiate(DarkOrb, transform.position, rot2);
         }
-
+        transform.position = new Vector3(transform.position.x, transform.position.y, -1);
     }
     void Attack()
     {
