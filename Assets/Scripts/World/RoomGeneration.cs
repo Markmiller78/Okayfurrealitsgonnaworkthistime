@@ -406,7 +406,12 @@ public class RoomGeneration : MonoBehaviour
         }
         for (int i = 0; i < finalRoomInfoArray[currentRoom].hazardSpawnPoints.Length; i++)
         {
-            Instantiate(finalRoomInfoArray[currentRoom].hazard, new Vector3(finalRoomInfoArray[currentRoom].hazardSpawnPoints[i].x, -finalRoomInfoArray[currentRoom].hazardSpawnPoints[i].y, -1), Quaternion.identity);
+            float z = -1;
+            if (currentRoom > (easyMode ? 11 : 8) && currentRoom < (easyMode ? 22 : 18))
+            {
+                z = -.5f;
+            }
+            Instantiate(finalRoomInfoArray[currentRoom].hazard, new Vector3(finalRoomInfoArray[currentRoom].hazardSpawnPoints[i].x, -finalRoomInfoArray[currentRoom].hazardSpawnPoints[i].y, z), Quaternion.identity);
         }
         // Spawn enemies & possibly a chest
         if (!finalRoomInfoArray[currentRoom].beenThere)
