@@ -26,6 +26,21 @@ public class DarkOrbOfLight : MonoBehaviour {
     {
         if (heroEquipment.paused == false)
         {
+            if(name.Contains("Morrius"))
+            {
+                Health MorHealth = GameObject.Find("Morrius(Clone)").GetComponent<Health>();
+                if (MorHealth != null)
+                {
+                    if (MorHealth.healthPercent <= .5f)
+                    {
+                        speed = 4;
+                    }
+                    if (MorHealth.healthPercent <= .25f)
+                    {
+                        speed = 6;
+                    }
+                }
+            }
             transform.position += transform.up * speed * Time.deltaTime;
             distanceTraveled += speed * Time.deltaTime;
 

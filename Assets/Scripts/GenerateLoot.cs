@@ -42,7 +42,59 @@ public class GenerateLoot : MonoBehaviour
 
     }
 
+    public void DropAPieceOfGear(Vector3 POS)
+    {
+        int SecondStat;
+        int DetStat1, DetStat2;
 
+        int RandNum = Random.Range(7, 19);
+        GameObject Loot = DetermineType(RandNum);
+        DetStat1 = DetermineStat(RandNum);
+        DetStat2 = DetermineStat(RandNum);
+        string SendName = DetermineName(RandNum, DetStat1, DetStat2);
+        GameObject temp = (GameObject)Instantiate(Loot, POS, transform.rotation);
+        temp.SendMessage("SetName", SendName, SendMessageOptions.DontRequireReceiver);
+
+        SendStat.TheStat = (StatType)DetStat1;
+        SendStat.StatAmount = DetermineStatAmount(RandNum);
+        temp.SendMessage("SetStat1", SendStat, SendMessageOptions.DontRequireReceiver);
+
+        //50% Chance to Generate a Second stat
+        SecondStat = Random.Range(0, 100);
+        if (SecondStat > 50)
+        {
+            SendStat.TheStat = (StatType)DetStat2;
+            SendStat.StatAmount = DetermineStatAmount(RandNum);
+            temp.SendMessage("SetStat2", SendStat, SendMessageOptions.DontRequireReceiver);
+        }
+    }
+
+    public void DropAnEmber()
+    {
+        int SecondStat;
+        int DetStat1, DetStat2;
+
+        int RandNum = Random.Range(1, 6);
+        GameObject Loot = DetermineType(RandNum);
+        DetStat1 = DetermineStat(RandNum);
+        DetStat2 = DetermineStat(RandNum);
+        string SendName = DetermineName(RandNum, DetStat1, DetStat2);
+        GameObject temp = (GameObject)Instantiate(Loot, transform.position, transform.rotation);
+        temp.SendMessage("SetName", SendName, SendMessageOptions.DontRequireReceiver);
+
+        SendStat.TheStat = (StatType)DetStat1;
+        SendStat.StatAmount = DetermineStatAmount(RandNum);
+        temp.SendMessage("SetStat1", SendStat, SendMessageOptions.DontRequireReceiver);
+
+        //50% Chance to Generate a Second stat
+        SecondStat = Random.Range(0, 100);
+        if (SecondStat > 50)
+        {
+            SendStat.TheStat = (StatType)DetStat2;
+            SendStat.StatAmount = DetermineStatAmount(RandNum);
+            temp.SendMessage("SetStat2", SendStat, SendMessageOptions.DontRequireReceiver);
+        }
+    }
     public void Generateloot()
     {
         int SecondStat;
