@@ -21,6 +21,7 @@ public class PlayerMeleeAttack : MonoBehaviour
     public GameObject frostDebuff;
 
     public AudioClip meleeSound;
+    public AudioClip hitSound;
 
     Options theoptions;
 
@@ -62,6 +63,7 @@ public class PlayerMeleeAttack : MonoBehaviour
         if (attacking && other.gameObject != player && other.gameObject.GetComponent<Health>() != null)
         {
             other.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
+            audioPlayer.PlayOneShot(hitSound);
 
             if (heroEqp.equippedEmber == ember.None)
             {
