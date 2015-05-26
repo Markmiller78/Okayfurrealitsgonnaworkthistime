@@ -10,12 +10,14 @@ public class Decoy : MonoBehaviour
     public GameObject explosion;
     GameObject player;
     PlayerStats theStats;
+    PlayerEquipment equip;
 
     // Use this for initialization
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         theStats = player.GetComponent<PlayerStats>();
+        equip = player.GetComponent<PlayerEquipment>();
         timer = 0;
         GameObject[] allObjects = GameObject.FindObjectsOfType<GameObject>();
         foreach (GameObject obj in allObjects)
@@ -28,7 +30,8 @@ public class Decoy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timer += Time.deltaTime;
+        if (!equip.paused)
+            timer += Time.deltaTime;
         if (timer >= 3.0f)
         {
             GameObject[] allObjects = GameObject.FindObjectsOfType<GameObject>();
