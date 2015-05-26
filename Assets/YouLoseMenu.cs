@@ -79,7 +79,7 @@ public class YouLoseMenu : MonoBehaviour
                 case 0:
                     {
                         //
-                        if (easyMode && generator.currentRoom > 3)
+                        if (easyMode && generator && generator.currentRoom > 3)
                         {
                             while (generator.currentRoom != 3 &&
                                 generator.currentRoom != 7 &&

@@ -108,11 +108,29 @@ public class Options : MonoBehaviour
 
         Load();
         DontDestroyOnLoad(gameObject);
-        sfxInt.text = sfxVolume.ToString();
-        musicInt.text = musicVolume.ToString();
 
-        sfxInt2.text = sfxVolume.ToString();
-        musicInt2.text = musicVolume.ToString();
+        if (sfxInt)
+        {
+            sfxInt.text = sfxVolume.ToString();
+            
+        }
+        if (musicInt)
+        {
+            musicInt.text = musicVolume.ToString();
+            
+        }
+        if (sfxInt2)
+        {
+            sfxInt2.text = sfxVolume.ToString();
+            
+        }
+        if (musicInt2)
+        {
+            musicInt2.text = musicVolume.ToString();
+            
+        }
+
+
         beenAssigned = false;
         numMelee = 0;
         numEnemiesKilled = 0;
