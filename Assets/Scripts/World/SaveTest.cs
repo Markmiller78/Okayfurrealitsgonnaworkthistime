@@ -20,13 +20,14 @@ public class SaveTest : MonoBehaviour {
 	public PlayerData data;
     public int enemies=0;
     public bool saved = false;
+	public bool canyouload=true;
 	PlayerEquipment eq;
 
 	
 
 	public void YOUDIED()
 	{
-		data.canyousave = false;
+		data.canyouload = false;
 		Save ();
 	}
 	
@@ -43,7 +44,7 @@ public class SaveTest : MonoBehaviour {
 			theRooms = dungeon.GetComponent<RoomGeneration>();
 
  
-
+		data.canyouload = true;
 		LoadData ();
       
 	}
@@ -96,7 +97,7 @@ public class SaveTest : MonoBehaviour {
 			theStats = player.GetComponent<PlayerStats> ();
 			
 		}
-		if (data.canyousave==true) {
+	 
 
 			if (Application.platform == RuntimePlatform.OSXWebPlayer
 				|| Application.platform == RuntimePlatform.WindowsWebPlayer) {
@@ -190,7 +191,7 @@ public class SaveTest : MonoBehaviour {
 				data.currentroom = theRooms.currentRoom;
 				data.equippedspell = (int)eq.equippedAccessory;
 				CopyRooms (data);
-           
+			Debug.Log(data.canyouload);
 				bin.Serialize (file, data);
  
 				file.Close ();
@@ -198,7 +199,7 @@ public class SaveTest : MonoBehaviour {
 	 
 			}
 
-		}
+
 
 	}
 
@@ -442,6 +443,7 @@ public class PlayerData
 	public int boottattype1;
 	public int boottattype2;
 	public bool canyousave;
+	public bool canyouload;
 
 
 

@@ -168,7 +168,8 @@ public class Health : MonoBehaviour
                 Explode();
             }
 
-
+			if(GetComponent<Reinforced>()!=null)
+				Destroy(GetComponent<Reinforced>().temp);
             Destroy(this.gameObject);
             if(generator != null)
             --generator.finalRoomInfoArray[generator.currentRoom].numEnemies;

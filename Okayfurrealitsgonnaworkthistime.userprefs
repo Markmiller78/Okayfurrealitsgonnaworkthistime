@@ -1,33 +1,22 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\UpdateToolText.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\World\SaveTest.cs">
     <Files>
-      <File FileName="Assets\Scripts\UpdateToolText.cs" Line="40" Column="126" />
-      <File FileName="Assets\Scripts\SlideAnim.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Enemies\Bosses\BossAILorne.cs" Line="1" Column="1" />
-      <File FileName="Assets\BGM.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\World\SaveTest.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Enemies\Bosses\AIBossDethImproved.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Enemies\Bosses\BossAIMorrius.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Health.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Knockback.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\World\RoomGeneration.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Player\PlayerDashing.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Enemies\Regular\AIShadowSpawn.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Enemies\Regular\AILivingDead.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Menus\MainMenu.cs" Line="1" Column="1" />
-      <File FileName="Assets\YouLoseMenu.cs" Line="1" Column="1" />
+      <File FileName="Assets\Reinforced.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\UpdateToolText.cs" Line="1" Column="1" />
+      <File FileName="Assets\BGM.cs" Line="202" Column="26" />
+      <File FileName="Assets\Scripts\World\SaveTest.cs" Line="94" Column="1" />
       <File FileName="Assets\Scripts\ChestScript.cs" Line="1" Column="1" />
+      <File FileName="Assets\Options.cs" Line="120" Column="25" />
+      <File FileName="Assets\Scripts\Menus\MainMenu.cs" Line="904" Column="3" />
+      <File FileName="Assets\Scripts\Health.cs" Line="105" Column="4" />
+      <File FileName="Assets\Scripts\Spells\SpellOrbOfLight.cs" Line="79" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="C:\Users\Jean-Francois\Desktop\Luminescence\Okayfurrealitsgonnaworkthistime\Assets\Scripts\ChestScript.cs" line="65" />
-      <Breakpoint file="C:\Users\Jean-Francois\Desktop\Luminescence\Okayfurrealitsgonnaworkthistime\Assets\Scripts\World\SaveTest.cs" line="184" />
       <Breakpoint file="C:\Users\Jean-Francois\Desktop\Luminescence\Okayfurrealitsgonnaworkthistime\Assets\Scripts\Player\PlayerEquipment.cs" line="59" />
-      <Breakpoint file="C:\Users\Jean-Francois\Desktop\Luminescence\Okayfurrealitsgonnaworkthistime\Assets\Scripts\World\SaveTest.cs" line="180" />
-      <Breakpoint file="C:\Users\Jean-Francois\Desktop\Luminescence\Okayfurrealitsgonnaworkthistime\Assets\Scripts\World\SaveTest.cs" line="191" />
-      <Breakpoint file="C:\Users\Jean-Francois\Desktop\Luminescence\Okayfurrealitsgonnaworkthistime\Assets\BGM.cs" line="158" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

@@ -10,11 +10,13 @@ public class Reinforced : MonoBehaviour {
     public float timer2ref;
     public GameObject symbol;
     public bool isReinforced = false;
-    GameObject temp;
+    public GameObject temp;
+	GameObject player;
     Color color;
 
 	void Start () 
     {
+		player = GameObject.FindGameObjectWithTag ("Player");
         symbol.transform.position = new Vector3(0, 0, -1);
         timer = 0.25f;
         timer2 = 0.0f;
@@ -31,7 +33,7 @@ public class Reinforced : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        if (gameObject == null)
+   if(gameObject==null)
             Destroy(temp);
         if (isReinforced)
         {

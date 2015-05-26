@@ -27,7 +27,8 @@ public class YouLoseMenu : MonoBehaviour
         maxchoices = 1;
         AxisChanged = false;
         easyMode = GameObject.FindObjectOfType<Options>().easyMode;
-        generator = GameObject.FindGameObjectWithTag("Dungeon").GetComponent<RoomGeneration>();
+        if (Application.loadedLevelName == "Game")
+            generator = GameObject.FindGameObjectWithTag("Dungeon").GetComponent<RoomGeneration>();
         playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>();
         dasLicht = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerLight>();
         equipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
@@ -78,7 +79,7 @@ public class YouLoseMenu : MonoBehaviour
                 case 0:
                     {
                         //
-                        if (easyMode && generator.currentRoom > 3)
+                        if (easyMode && generator && generator.currentRoom > 3)
                         {
                             while (generator.currentRoom != 3 &&
                                 generator.currentRoom != 7 &&
@@ -99,7 +100,7 @@ public class YouLoseMenu : MonoBehaviour
                             Destroy(this.gameObject);
                         }
                         else
-                            LevelManager.Load("Game");
+                            LevelManager.Load(Application.loadedLevelName);
                         break;
                     }
                 case 1:

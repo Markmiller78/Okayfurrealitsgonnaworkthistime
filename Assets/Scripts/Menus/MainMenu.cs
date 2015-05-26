@@ -24,6 +24,12 @@ public class MainMenu : MonoBehaviour
 
     SpriteRenderer backgroundScroll;
 
+    public Text sfxInt;
+    public Text musicInt;
+
+    public Text sfxInt2;
+    public Text musicInt2;
+
     public enum Menu { Main = 0, Options, Achievements, Credits, Continue, AreYouSure, SelectDifficulty };
     Menu CurrMenu = Menu.Main;
     public GameObject MainMenuText;
@@ -92,6 +98,8 @@ public class MainMenu : MonoBehaviour
         //     playerlight.text = light.ToString();
         //soundSource = GetComponent<AudioSource>();
         theOptions = GameObject.Find("TheOptions").GetComponent<Options>();
+
+        
 
         backgroundScroll = GetComponentInChildren<SpriteRenderer>();
     }
@@ -425,6 +433,11 @@ public class MainMenu : MonoBehaviour
         choices[9] = 1.9f;
         OptionsMenuText.SetActive(true);
 
+        sfxInt.text = theOptions.sfxVolume.ToString();
+        sfxInt2.text = theOptions.sfxVolume.ToString();
+        musicInt.text = theOptions.musicVolume.ToString();
+        musicInt2.text = theOptions.musicVolume.ToString();
+
 
 
         switch (currentSelection)
@@ -622,6 +635,9 @@ public class MainMenu : MonoBehaviour
             if (soundSource.isPlaying)
                 soundSource.Stop();
             soundSource.PlayOneShot(selectSound);
+            sfxInt.text = theOptions.sfxVolume.ToString();
+            sfxInt2.text = theOptions.sfxVolume.ToString();
+            
             AxisChanged = true;
         }
         if ((Input.GetAxis("CLSVertical") < -0.7f || Input.GetAxis("KBVertical") < 0 || Input.GetAxis("CDPadVertical") < -0.7f || Input.GetAxis("CLSHorizontal") < -0.7f || Input.GetAxis("KBHorizontal") < 0 || Input.GetAxis("CDPadHorizontal") < -0.7f) && AxisChanged == false && currentSelection == 8)
@@ -630,7 +646,8 @@ public class MainMenu : MonoBehaviour
             if (soundSource.isPlaying)
                 soundSource.Stop();
             soundSource.PlayOneShot(selectSound);
-
+            sfxInt.text = theOptions.sfxVolume.ToString();
+            sfxInt2.text = theOptions.sfxVolume.ToString();
             AxisChanged = true;
 
         }
@@ -644,11 +661,15 @@ public class MainMenu : MonoBehaviour
         if ((Input.GetAxis("CLSVertical") > .7f || Input.GetAxis("KBVertical") > 0 || Input.GetAxis("CDPadVertical") > .7f || Input.GetAxis("CLSHorizontal") > .7f || Input.GetAxis("KBHorizontal") > 0 || Input.GetAxis("CDPadHorizontal") > .7f) && AxisChanged == false && currentSelection == 9)
         {
             theOptions.musicIncrease();
+            musicInt.text = theOptions.musicVolume.ToString();
+            musicInt2.text = theOptions.musicVolume.ToString();
             AxisChanged = true;
         }
         if ((Input.GetAxis("CLSVertical") < -0.7f || Input.GetAxis("KBVertical") < 0 || Input.GetAxis("CDPadVertical") < -0.7f || Input.GetAxis("CLSHorizontal") < -0.7f || Input.GetAxis("KBHorizontal") < 0 || Input.GetAxis("CDPadHorizontal") < -0.7f) && AxisChanged == false && currentSelection == 9)
         {
             theOptions.musicDecrease();
+            musicInt.text = theOptions.musicVolume.ToString();
+            musicInt2.text = theOptions.musicVolume.ToString();
             AxisChanged = true;
 
         }
@@ -901,7 +922,9 @@ public class MainMenu : MonoBehaviour
                     {
                         //CONTINUE PREVIOUS GAME
                         //  LoadStats();
-				if(theOptions.GetComponent<SaveTest>().data.canyousave==true)
+		
+				Debug.Log(theOptions.GetComponent<SaveTest>().data.canyouload==true);
+				if(theOptions.GetComponent<SaveTest>().data.canyouload==true)
 				{
                         theOptions.shouldload = true;
                         LevelManager.Load("Game");
