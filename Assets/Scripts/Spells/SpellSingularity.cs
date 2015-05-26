@@ -14,12 +14,15 @@ public class SpellSingularity : MonoBehaviour
     public GameObject theExplosion;
     //GameObject player;
     Vector3 dir;
+
+    ParticleSystem particles;
     void Start()
     {
         lifeTimer = 0;
         theLight = gameObject.GetComponent<Light>();
         heroEquipment = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
         dir = transform.up;
+        particles = gameObject.GetComponent<ParticleSystem>();
         //player = GameObject.FindGameObjectWithTag("Player");
     }
     void Update()
@@ -33,6 +36,7 @@ public class SpellSingularity : MonoBehaviour
             if (lifeTimer >= 1.5)
             {
                 theLight.range -= Time.deltaTime * 2;
+                particles.emissionRate = 0;
             }
 
             if (lifeTimer >= 2.1)

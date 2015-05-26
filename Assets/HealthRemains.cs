@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class HealthRemains : MonoBehaviour {
+public class HealthRemains : MonoBehaviour
+{
 
     public GameObject missile;
     SpriteRenderer sprite;
@@ -13,18 +14,26 @@ public class HealthRemains : MonoBehaviour {
     Health heroHp;
     float deathTimer;
 
-	// Use this for initialization
-	void Start () {
+    GameObject player;
+
+
+    // Use this for initialization
+    void Start()
+    {
         heroHp = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>();
         particles = gameObject.GetComponentInChildren<ParticleSystem>();
         particleLight = gameObject.GetComponent<Light>();
         sprite = gameObject.GetComponent<SpriteRenderer>();
         active = true;
         deathTimer = 0;
-	}
-	
-	// Update is called once per frame
-	void Update () {
+
+        player = GameObject.FindGameObjectWithTag("Player");
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
         if (!active)
         {
             deathTimer += Time.deltaTime;
@@ -39,20 +48,29 @@ public class HealthRemains : MonoBehaviour {
 
                 Destroy(gameObject);
             }
-        }
-	}
 
-    void OnTriggerEnter(Collider other)
-    {
-        if (active)
+
+        }
+        else
         {
-            if (other.tag == "Player")
+            if (Vector3.Distance(transform.position, player.transform.position) <= 1f)
             {
                 PickUp();
             }
         }
-
     }
+
+    //void OnTriggerEnter(Collider other)
+    //{
+    //    if (active)
+    //    {
+    //        if (other.tag == "Player")
+    //        {
+    //            PickUp();
+    //        }
+    //    }
+
+    //}
 
     void PickUp()
     {

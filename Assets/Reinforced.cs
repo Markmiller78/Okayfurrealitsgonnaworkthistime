@@ -35,39 +35,32 @@ public class Reinforced : MonoBehaviour {
     {
    if(gameObject==null)
             Destroy(temp);
-        if (isReinforced)
-        {
-            temp.gameObject.transform.position = transform.position;
-            if (timer2 < 0.0f)
-            {
-                temp.SetActive(true);
-                timer2 = 0.0f;
-                color.a = 0.0f;
+		if (temp != null) {
+			if (isReinforced) {
+				temp.gameObject.transform.position = transform.position;
+				if (timer2 < 0.0f) {
+					temp.SetActive (true);
+					timer2 = 0.0f;
+					color.a = 0.0f;
 
-            }
-            else if (timer2 == 0)
-            {
-                if (timer > 0.0f)
-                {
-                    temp.transform.localScale += new Vector3(0.01F, 0.01f, 0f);
-                    color.a += 0.05f;
-                    symbol.GetComponent<SpriteRenderer>().color = color;
-                }
-                else
-                {
-                    timer = timerref;
-                    temp.SetActive(false);
-                    temp.transform.localScale = new Vector3(0.1f, 0.1f, 0);
-                    timer2 = timer2ref;
-                }
-                timer -= Time.deltaTime;
-            }
-            else
-            {
-                timer2 -= Time.deltaTime;
-            }
+				} else if (timer2 == 0) {
+					if (timer > 0.0f) {
+						temp.transform.localScale += new Vector3 (0.01F, 0.01f, 0f);
+						color.a += 0.05f;
+						symbol.GetComponent<SpriteRenderer> ().color = color;
+					} else {
+						timer = timerref;
+						temp.SetActive (false);
+						temp.transform.localScale = new Vector3 (0.1f, 0.1f, 0);
+						timer2 = timer2ref;
+					}
+					timer -= Time.deltaTime;
+				} else {
+					timer2 -= Time.deltaTime;
+				}
 
-        }
+			}
+		}
 	}
 
     void Reinforce()
@@ -86,4 +79,9 @@ public class Reinforced : MonoBehaviour {
          
 
     }
+	void UnReinforcin()
+	{
+		Destroy (temp);
+
+	}
 }
