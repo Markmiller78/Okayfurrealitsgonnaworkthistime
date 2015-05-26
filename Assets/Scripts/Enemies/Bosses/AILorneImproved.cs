@@ -20,6 +20,7 @@ public class AILorneImproved : MonoBehaviour
     Health MyHealth;
     public GameObject LightRemainsDropped;
     public GameObject LightRemainExplosion;
+    public GameObject BossLoot;
     CharacterController controller;
     public float attackDamage;
     public float attackRange;
@@ -88,7 +89,7 @@ public class AILorneImproved : MonoBehaviour
 
         if (heroEquipment.paused == false)
         {
-
+            transform.position = new Vector3(transform.position.x, transform.position.y, -1);
             stateTimer -= Time.deltaTime;
             WayPointChangeTimer -= Time.deltaTime;
             fairieSpawnTimer -= Time.deltaTime;
@@ -138,6 +139,12 @@ public class AILorneImproved : MonoBehaviour
                 case 0:
                     {
                         moveSpeed = 2;
+
+                        if (MyHealth.healthPercent < .5f)
+                            moveSpeed = 3;
+                        if (MyHealth.healthPercent < .25f)
+                            moveSpeed = 4;
+
                         distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
                         if (AttackActive)
                         {
@@ -264,7 +271,9 @@ public class AILorneImproved : MonoBehaviour
             {
                 Instantiate(PullParticles, player.transform.position, new Quaternion(0, 0, 0, 0));
                 doOnce = false;
-
+                float RandX = Random.Range(-5, 5);
+                float RandY = Random.Range(-5, 5);
+                gameObject.GetComponent<GenerateLoot>().DropAPieceOfGear(new Vector3(transform.position.x + RandX, transform.position.y + RandY, -1));
             }
         }
 
@@ -286,6 +295,7 @@ public class AILorneImproved : MonoBehaviour
     {
         LornSig.SetActive(false);
         Destroy(healthB);
+        Instantiate(BossLoot, transform.position, Quaternion.identity);
     }
 
 }
