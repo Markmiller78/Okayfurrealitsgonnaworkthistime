@@ -20,7 +20,10 @@ public class PlayerLight : MonoBehaviour
 
     void Update()
     {
-        playerLight.range = (currentLight/maxLight) + rangeMod;
+        playerLight.range = ((currentLight * 4 )/ maxLight) + 1.4f;
+        if (currentLight < 20)
+            currentLight += Time.deltaTime * 5;
+        
     }
 
     public void GainLight(float Amount)
@@ -41,9 +44,9 @@ public class PlayerLight : MonoBehaviour
         {
             currentLight = 0;
         }
-        if (rangeMod > 1f)
+        if (rangeMod > .4f)
         {
-            rangeMod -= Amount * .015f;
+            rangeMod -= Amount * .025f;
         }
     }
 }
