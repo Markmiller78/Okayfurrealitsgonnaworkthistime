@@ -53,6 +53,7 @@ public class SnareDebuff : MonoBehaviour {
 
                 if (timer > 3.0f)
                 {
+                    target.SendMessage("Unsnare");
                     Destroy(gameObject);
                 }
             }

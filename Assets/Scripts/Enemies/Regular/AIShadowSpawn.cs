@@ -46,7 +46,7 @@ public class AIShadowSpawn : MonoBehaviour
     public float attackDamage;
     float AttackTimer;
     bool turningr = true;
-
+    float SnareTimer;
     GameObject PrimaryThreat;
     GameObject SecondaryThreat;
     PlayerMovement playMove;
@@ -110,6 +110,8 @@ public class AIShadowSpawn : MonoBehaviour
         AttackTimer -= Time.deltaTime;
         if (heroEquipment.paused == false)
         {
+            SnareTimer -= Time.deltaTime;
+
             //WorkPlease.SetInteger("AnimationNum", 0);
             timer -= Time.deltaTime;
             //AnimTimer -= Time.deltaTime;
@@ -239,6 +241,12 @@ public class AIShadowSpawn : MonoBehaviour
             ConsumeLight();
             if (speed > 1)
                 controller.Move(Moveto);
+
+            if (SnareTimer < 0)
+            {
+                Unsnare();
+                SnareTimer = 100000;
+            }
         }
     }
 
@@ -301,7 +309,15 @@ public class AIShadowSpawn : MonoBehaviour
         }
 
     }
-
+    void Snare()
+    {
+        speed = 0;
+        SnareTimer = 3;
+    }
+    void Unsnare()
+    {
+        speed = 1;
+    }
     void Enrage()
     {
         if (EnragedSoundPlaying == false)
@@ -399,7 +415,7 @@ public class AIShadowSpawn : MonoBehaviour
         if (ShadowHealth != null)
             ShadowHealth.LoseHealth(StoredLight);
 
-        StoredLight += 15;
+        StoredLight += 8;
         Instantiate(BlindedParts, transform.position, transform.rotation);
         Instantiate(ReturningParts, transform.position, transform.rotation);
         ReturnLight.currentLight += StoredLight;
