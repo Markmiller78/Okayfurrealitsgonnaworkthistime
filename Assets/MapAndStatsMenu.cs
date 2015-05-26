@@ -73,10 +73,11 @@ public class MapAndStatsMenu : MonoBehaviour
         door.Apply();
         doorStyle = new GUIStyle();
         doorStyle.normal.background = door;
-        
+
 
         dungeon = GameObject.FindGameObjectWithTag("Dungeon");
-        generator = dungeon.GetComponent<RoomGeneration>();
+        if (dungeon)
+            generator = dungeon.GetComponent<RoomGeneration>();
         easyMode = GameObject.FindObjectOfType<Options>().easyMode;
     }
 
@@ -92,7 +93,7 @@ public class MapAndStatsMenu : MonoBehaviour
 
     void OnGUI()
     {
-        if (showing)
+        if (showing && dungeon)
         {
             int offsetIndex = 0;
             if (easyMode)
@@ -123,23 +124,23 @@ public class MapAndStatsMenu : MonoBehaviour
                 (Screen.height / 2) - (generator.finalRoomInfoArray[offsetIndex].height / 2) * 5);
             for (int i = offsetIndex + 1; i <= generator.currentRoom; i++)
             {
-                switch (generator.finalRoomInfoArray[i -1].exitDir)
-                    {
-                        case 0:
-                            offset.y += 25 + generator.finalRoomInfoArray[i - 1].height * 5;
-                            break;
-                        case 1:
-                            offset.x += 25 + generator.finalRoomInfoArray[i - 1].width * 5;
-                            break;
-                        case 2:
-                            offset.y -= 25 + generator.finalRoomInfoArray[i - 1].height * 5;
-                            break;
-                        case 3:
-                            offset.x -= 25 + generator.finalRoomInfoArray[i - 1].width * 5;
-                            break;
-                        default:
-                            break;
-                    }
+                switch (generator.finalRoomInfoArray[i - 1].exitDir)
+                {
+                    case 0:
+                        offset.y += 25 + generator.finalRoomInfoArray[i - 1].height * 5;
+                        break;
+                    case 1:
+                        offset.x += 25 + generator.finalRoomInfoArray[i - 1].width * 5;
+                        break;
+                    case 2:
+                        offset.y -= 25 + generator.finalRoomInfoArray[i - 1].height * 5;
+                        break;
+                    case 3:
+                        offset.x -= 25 + generator.finalRoomInfoArray[i - 1].width * 5;
+                        break;
+                    default:
+                        break;
+                }
             }
             for (int i = offsetIndex; i < generator.finalRoomInfoArray.Length; i++)
             {
@@ -237,7 +238,7 @@ public class MapAndStatsMenu : MonoBehaviour
         T1Stat2.text = equipment.AccessoryStat2.TheStat.ToString();
         T1StatAmount1.text = equipment.AccessoryStat1.StatAmount.ToString();
         T1StatAmount2.text = equipment.AccessoryStat2.StatAmount.ToString();
-        
+
         T2Name.text = equipment.BootName;
         T2Stat1.text = equipment.BootStat1.TheStat.ToString();
         T2Stat2.text = equipment.BootStat2.TheStat.ToString();
@@ -246,7 +247,7 @@ public class MapAndStatsMenu : MonoBehaviour
 
 
 
-        if(equipment.emberDurability > 0)
+        if (equipment.emberDurability > 0)
         {
             EmberIcon.SetActive(true);
             T3Name.text = equipment.EmberName;
@@ -266,7 +267,7 @@ public class MapAndStatsMenu : MonoBehaviour
         }
 
 
-            
+
 
 
 

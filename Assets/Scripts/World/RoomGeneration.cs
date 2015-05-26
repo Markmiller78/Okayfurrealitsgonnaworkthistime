@@ -38,7 +38,7 @@ public class RoomGeneration : MonoBehaviour
     public GameObject chest;
     public GameObject torchWood;
     public GameObject CPCrystal;
-	public SaveTest savenload;
+    public SaveTest savenload;
     public GameObject[] checkpointRooms;
     Room[] checkpointRoomsInfo;
     PlayerMovement movement;
@@ -53,7 +53,7 @@ public class RoomGeneration : MonoBehaviour
 
     void Start()
     {
-		savenload = GameObject.FindObjectOfType<Options>().GetComponent<SaveTest> ();
+        savenload = GameObject.FindObjectOfType<Options>().GetComponent<SaveTest>();
         //firstRoom = true;
         //DontDestroyOnLoad(this);
         player = GameObject.FindGameObjectWithTag("Player");
@@ -62,7 +62,7 @@ public class RoomGeneration : MonoBehaviour
         loading = GameObject.FindObjectOfType<Options>().shouldload;
         if (loading)
         {
-			savenload.LoadDungeon();
+            savenload.LoadDungeon();
             easyMode = loadedData.easymode;
         }
         else easyMode = GameObject.FindObjectOfType<Options>().easyMode;
@@ -427,9 +427,17 @@ public class RoomGeneration : MonoBehaviour
             //    max -= enemyMod;
             //}
             finalRoomInfoArray[currentRoom].numEnemies = Random.Range(min, max);
-            Instantiate(finalRoomInfoArray[currentRoom].enemiesThatCanSpawn[0], new Vector3(finalRoomInfoArray[currentRoom].enemySpawnPoints[0].x, -finalRoomInfoArray[currentRoom].enemySpawnPoints[0].y, -1f), Quaternion.identity);
-            Instantiate(finalRoomInfoArray[currentRoom].enemiesThatCanSpawn[1], new Vector3(finalRoomInfoArray[currentRoom].enemySpawnPoints[1].x, -finalRoomInfoArray[currentRoom].enemySpawnPoints[1].y, -1f), Quaternion.identity);
-            int enemiesSpawned = 2;
+            int enemiesSpawned = 0;
+            if (finalRoomInfoArray[currentRoom].enemiesThatCanSpawn.Length > 0)
+            {
+                Instantiate(finalRoomInfoArray[currentRoom].enemiesThatCanSpawn[0], new Vector3(finalRoomInfoArray[currentRoom].enemySpawnPoints[0].x, -finalRoomInfoArray[currentRoom].enemySpawnPoints[0].y, -1f), Quaternion.identity);
+                enemiesSpawned = 1;
+            }
+            if (finalRoomInfoArray[currentRoom].enemiesThatCanSpawn.Length > 1)
+            {
+                Instantiate(finalRoomInfoArray[currentRoom].enemiesThatCanSpawn[1], new Vector3(finalRoomInfoArray[currentRoom].enemySpawnPoints[1].x, -finalRoomInfoArray[currentRoom].enemySpawnPoints[1].y, -1f), Quaternion.identity);
+                enemiesSpawned = 2;
+            }
             while (enemiesSpawned < finalRoomInfoArray[currentRoom].numEnemies)
             {
                 for (int i = 2; i < finalRoomInfoArray[currentRoom].enemySpawnPoints.Length; i++)
@@ -1506,8 +1514,8 @@ public class RoomGeneration : MonoBehaviour
                 Destroy(obj);
             }
         }
-       // player.GetComponent<SaveTest>().saved = false;
-		savenload.saved = false;
+        // player.GetComponent<SaveTest>().saved = false;
+        savenload.saved = false;
         CreateRoom();
     }
 }
