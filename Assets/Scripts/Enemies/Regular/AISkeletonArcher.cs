@@ -32,12 +32,13 @@ public class AISkeletonArcher : MonoBehaviour
     Vector3 vectorToPlayer;
     float forgetTimer = 0.0f;
 
-    float snaredSpeed;
+    float SnareTimer;
 //    float SnareTimer;
 //    bool isSnared;
 
     void Start()
     {
+
         infectRange = 1.5f;
 //        isSnared = false;   
         infecttimer = 3.0f;
@@ -54,6 +55,7 @@ public class AISkeletonArcher : MonoBehaviour
     {
         if (heroEquipment.paused == false && !hMove.transitioning)
         {
+            SnareTimer -= Time.deltaTime;
             if (forgetTimer >= 10.0f)
             {
                 usedWaypoints.Forget();
@@ -84,6 +86,11 @@ public class AISkeletonArcher : MonoBehaviour
                 hasAttacked = true;
             }
             forgetTimer += Time.deltaTime;
+            if (SnareTimer < 0)
+            {
+                Unsnare();
+                SnareTimer = 100000;
+            }
         }
     }
 
@@ -169,16 +176,13 @@ public class AISkeletonArcher : MonoBehaviour
 
     void Snare()
     {
-//        isSnared = true;
-//        SnareTimer = 2;
-        snaredSpeed = moveSpeed;
         moveSpeed = 0;
+        SnareTimer = 3;
     }
     void Unsnare()
     {
-        moveSpeed = snaredSpeed;
+        moveSpeed = 1;
     }
-
     void Slow()
     {
         moveSpeed = moveSpeed * 0.5f;

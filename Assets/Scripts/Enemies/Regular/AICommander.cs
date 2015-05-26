@@ -58,6 +58,7 @@ public class AICommander : MonoBehaviour
     {
         if (heroEquipment.paused == false && !hMove.transitioning)
         {
+            SnareTimer -= Time.deltaTime;
             if (isInfected)
                 Infect();
             if (isAttacking)
@@ -145,15 +146,10 @@ public class AICommander : MonoBehaviour
 
                 }
             }
-            if (isSnared)
+            if (SnareTimer < 0)
             {
-                SnareTimer -= Time.deltaTime;
-
-                if (SnareTimer < 0)
-                {
-                    Unsnare();
-                    isSnared = false;
-                }
+                Unsnare();
+                SnareTimer = 100000;
             }
         }
 
@@ -218,14 +214,12 @@ public class AICommander : MonoBehaviour
     }
     void Snare()
     {
-        isSnared = true;
-        SnareTimer = 2;
-        snaredSpeed = movementspeed;
         movementspeed = 0;
+        SnareTimer = 3;
     }
     void Unsnare()
     {
-        movementspeed = snaredSpeed;
+        movementspeed = 1;
     }
     void Decoy()
     {

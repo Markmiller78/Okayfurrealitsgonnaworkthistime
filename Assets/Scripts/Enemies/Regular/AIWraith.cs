@@ -27,7 +27,8 @@ public class AIWraith : MonoBehaviour
 
     float AttackTimer;
     bool AttackCD;
-    float snaredSpeed;
+    float SnareTimer;
+    
 //    float SnareTimer;
 //    bool isSnared;
     float TopDoor, LeftDoor, roomWidth, roomHeight;
@@ -113,6 +114,7 @@ public class AIWraith : MonoBehaviour
         {
             wayPointTimer -= Time.deltaTime;
             timer -= Time.deltaTime;
+            SnareTimer -= Time.deltaTime;
 
             if (wayPointTimer < 0)
             {
@@ -143,7 +145,11 @@ public class AIWraith : MonoBehaviour
                 Attack();
             }
 
-
+            if (SnareTimer < 0)
+            {
+                Unsnare();
+                SnareTimer = 100000;
+            }
             Turn();
         }
     }
@@ -245,12 +251,12 @@ public class AIWraith : MonoBehaviour
     {
 //        isSnared = true;
 //        SnareTimer = 2;
-        snaredSpeed = moveSpeed;
         moveSpeed = 0;
+        SnareTimer = 3;
     }
     void Unsnare()
     {
-        moveSpeed = snaredSpeed;
+        moveSpeed = 4;
     }
 
     void Turn()
