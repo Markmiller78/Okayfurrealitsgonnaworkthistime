@@ -161,11 +161,10 @@ public class BGM : MonoBehaviour {
 							once=false;
 
                         }
-                        else if (theRooms.currentRoom > 8 && audioPlayer.clip != clips[1])
+                        else if (theRooms.currentRoom > 8 && audioPlayer.clip != clips[1]&&theRooms.currentRoom!=8&&theRooms.currentRoom!=17&&theRooms.currentRoom!=26)
                         {
                             audioPlayer.Stop();
-							once=true;
-							
+							once=true;						
                             audioPlayer.clip = clips[1];
                             audioPlayer.Play();
 
@@ -199,7 +198,7 @@ public class BGM : MonoBehaviour {
                             once = false;
 
                         }
-                        else if (theRooms.currentRoom > 10 && audioPlayer.clip != clips[1])
+                        else if (theRooms.currentRoom > 10 && audioPlayer.clip != clips[1]&&theRooms.currentRoom!=10&&theRooms.currentRoom!=21&&theRooms.currentRoom!=32)
                         {
                             audioPlayer.Stop();
 							once=true;

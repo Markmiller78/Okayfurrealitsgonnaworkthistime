@@ -901,7 +901,9 @@ public class MainMenu : MonoBehaviour
                     {
                         //CONTINUE PREVIOUS GAME
                         //  LoadStats();
-				if(theOptions.GetComponent<SaveTest>().data.canyousave==true)
+		
+				Debug.Log(theOptions.GetComponent<SaveTest>().data.canyouload==true);
+				if(theOptions.GetComponent<SaveTest>().data.canyouload==true)
 				{
                         theOptions.shouldload = true;
                         LevelManager.Load("Game");
