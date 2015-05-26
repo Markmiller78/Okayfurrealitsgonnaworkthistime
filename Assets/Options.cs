@@ -350,6 +350,11 @@ public class Options : MonoBehaviour
 
     void Update()
     {
+        if (Screen.currentResolution.height != 720 || Screen.currentResolution.width != 1280)
+        {
+            Screen.SetResolution(1280, 720, Screen.fullScreen);
+        }
+
         if (watchIntro)
         {
             timer += Time.deltaTime;
