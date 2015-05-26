@@ -168,7 +168,7 @@ public class Health : MonoBehaviour
                 Explode();
             }
 
-			if(GetComponent<Reinforced>()==null)
+			if(GetComponent<Reinforced>()!=null)
 				Destroy(GetComponent<Reinforced>().temp);
             Destroy(this.gameObject);
             if(generator != null)
