@@ -90,7 +90,7 @@ public class PlayerSpellCasting : MonoBehaviour
         heroEquipment = gameObject.GetComponent<PlayerEquipment>();
         heroCooldowns = gameObject.GetComponent<PlayerCooldowns>();
         heroLight = gameObject.GetComponent<PlayerLight>();
-        UICD = GameObject.Find("Spell").GetComponent<HUDCooldowns>();
+        UICD = GameObject.Find("Health bar").GetComponent<HUDCooldowns>();
         playersLight = gameObject.GetComponentInChildren<Light>();
         audioPlayer = gameObject.GetComponent<AudioSource>();
         chained = false;
@@ -215,7 +215,6 @@ public class PlayerSpellCasting : MonoBehaviour
             else if (heroEquipment.equippedEmber == ember.Earth)
             {
                 Instantiate(earthSing, transform.position, transform.rotation);
-
             }
         }
         else if (heroEquipment.equippedAccessory == accessory.BlastOfLight)
@@ -431,6 +430,10 @@ public class PlayerSpellCasting : MonoBehaviour
                     
                 }
 
+            }
+            else
+            {
+                UICD.FlashCooldown(0);
             }
         }
 
