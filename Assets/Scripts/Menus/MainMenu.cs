@@ -922,15 +922,20 @@ public class MainMenu : MonoBehaviour
                     {
                         //CONTINUE PREVIOUS GAME
                         //  LoadStats();
-		
+		if(theOptions.easyMode!=true)
+				{
+
 				Debug.Log(theOptions.GetComponent<SaveTest>().data.canyouload==true);
-				if(theOptions.GetComponent<SaveTest>().data.canyouload==true)
+
+				if(File.Exists (Application.persistentDataPath + "/playerinfo.dat"))
 				{
                         theOptions.shouldload = true;
                         LevelManager.Load("Game");
 				}
                         break;
-                    }
+
+                }
+			}
                 case 1:
                     {
                         ContinueText.SetActive(false);
