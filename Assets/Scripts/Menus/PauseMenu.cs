@@ -157,6 +157,8 @@ public class PauseMenu : MonoBehaviour
                     case 2:
                         #region Quit
                         SelectorRemains.transform.localPosition = new Vector3(-70f, -85f, -5.1f);
+                        if (Application.loadedLevelName == "Game")
+                            SelectorRemains.transform.localPosition = new Vector3(-120f, -85f, -5.1f);
                         if (Input.GetButtonDown("CMenuAccept"))
                         {
                             // Save & Quit Code Here
@@ -170,8 +172,8 @@ public class PauseMenu : MonoBehaviour
                                     if (gen.currentRoom > 0)
                                         gen.currentRoom -= 1;
                                 }
+                                GameObject.FindObjectOfType<Options>().GetComponent<SaveTest>().Save();
                             }
-                            GameObject.FindObjectOfType<Options>().GetComponent<SaveTest>().Save();
                             Application.LoadLevel("MainMenu");
                         }
                         else if (Input.GetButtonDown("KBMenuAccept"))
@@ -187,8 +189,8 @@ public class PauseMenu : MonoBehaviour
                                     if (gen.currentRoom > 0)
                                         gen.currentRoom -= 1;
                                 }
+                                GameObject.FindObjectOfType<Options>().GetComponent<SaveTest>().Save();
                             }
-                            GameObject.FindObjectOfType<Options>().GetComponent<SaveTest>().Save();
                             Application.LoadLevel("MainMenu");
                         }
                         break;
