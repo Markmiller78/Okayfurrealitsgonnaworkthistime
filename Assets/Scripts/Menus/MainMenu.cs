@@ -56,6 +56,8 @@ public class MainMenu : MonoBehaviour
     public AudioClip selectSound;
     public AudioSource soundSource;
 
+    public Text continueForGraying;
+
     public Rect[] SelectRects;
     Vector2 Mouse;
     Vector2 MouseOld;
@@ -871,6 +873,12 @@ public class MainMenu : MonoBehaviour
         choices[2] = -2.72f;
         ContinueText.SetActive(true);
 
+        if (!File.Exists(Application.persistentDataPath + "/playerinfo.dat"))
+        {
+            continueForGraying.color = new Color(.25f, .25f, .25f);
+            currentSelection = 1;
+        }
+
         switch (currentSelection)
         {
             //This is used for Highlighting the currently selected menu option
@@ -925,7 +933,7 @@ public class MainMenu : MonoBehaviour
                         if (theOptions.easyMode != true)
                         {
 
-                            Debug.Log(theOptions.GetComponent<SaveTest>().data.canyouload == true);
+                            //Debug.Log(theOptions.GetComponent<SaveTest>().data.canyouload == true);
 
                             if (File.Exists(Application.persistentDataPath + "/playerinfo.dat"))
                             {
