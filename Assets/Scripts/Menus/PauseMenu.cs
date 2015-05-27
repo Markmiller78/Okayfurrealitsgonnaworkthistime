@@ -160,15 +160,35 @@ public class PauseMenu : MonoBehaviour
                         if (Input.GetButtonDown("CMenuAccept"))
                         {
                             // Save & Quit Code Here
-                            //GameObject.FindGameObjectWithTag("Player").SendMessage("Save", SendMessageOptions.DontRequireReceiver);
-                            //Application.Quit();
+                            GameObject dungeon = GameObject.FindGameObjectWithTag("Dungeon");
+                            if (dungeon)
+                            {
+                                RoomGeneration gen = dungeon.GetComponent<RoomGeneration>();
+                                if (GameObject.FindGameObjectsWithTag("Enemy").Length + GameObject.FindGameObjectsWithTag("Invincible").Length > 0)
+                                {
+                                    gen.finalRoomInfoArray[gen.currentRoom].beenThere = false;
+                                    if (gen.currentRoom > 0)
+                                        gen.currentRoom -= 1;
+                                }
+                            }
+                            GameObject.FindObjectOfType<Options>().GetComponent<SaveTest>().Save();
                             Application.LoadLevel("MainMenu");
                         }
                         else if (Input.GetButtonDown("KBMenuAccept"))
                         {
                             // Save & Quit Code Here
-                            //GameObject.FindGameObjectWithTag("Player").SendMessage("Save", SendMessageOptions.DontRequireReceiver);
-                            //Application.Quit();
+                            GameObject dungeon = GameObject.FindGameObjectWithTag("Dungeon");
+                            if (dungeon)
+                            {
+                                RoomGeneration gen = dungeon.GetComponent<RoomGeneration>();
+                                if (GameObject.FindGameObjectsWithTag("Enemy").Length + GameObject.FindGameObjectsWithTag("Invincible").Length > 0)
+                                {
+                                    gen.finalRoomInfoArray[gen.currentRoom].beenThere = false;
+                                    if (gen.currentRoom > 0)
+                                        gen.currentRoom -= 1;
+                                }
+                            }
+                            GameObject.FindObjectOfType<Options>().GetComponent<SaveTest>().Save();
                             Application.LoadLevel("MainMenu");
                         }
                         break;
@@ -278,7 +298,7 @@ public class PauseMenu : MonoBehaviour
                         break;
                     case 3:
                         #region Control Mode
-                        SelectorRemains.transform.localPosition = new Vector3(-180f,-25f, -5.1f);
+                        SelectorRemains.transform.localPosition = new Vector3(-180f, -25f, -5.1f);
                         if (Input.GetButtonDown("CMenuAccept"))
                         {
                             InputManager.controller = !InputManager.controller;
@@ -321,7 +341,7 @@ public class PauseMenu : MonoBehaviour
             quit.enabled = false;
 
             sVolume.enabled = true;
-            sVolume.text = "SFX Volume: "  + GameObject.FindObjectOfType<Options>().sfxVolume.ToString();
+            sVolume.text = "SFX Volume: " + GameObject.FindObjectOfType<Options>().sfxVolume.ToString();
             mVolume.enabled = true;
             mVolume.text = "Music Volume: " + GameObject.FindObjectOfType<Options>().musicVolume.ToString();
             fullscreen.enabled = true;
