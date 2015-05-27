@@ -99,7 +99,7 @@ public class MainMenu : MonoBehaviour
         //soundSource = GetComponent<AudioSource>();
         theOptions = GameObject.Find("TheOptions").GetComponent<Options>();
 
-        
+
 
         backgroundScroll = GetComponentInChildren<SpriteRenderer>();
     }
@@ -637,7 +637,7 @@ public class MainMenu : MonoBehaviour
             soundSource.PlayOneShot(selectSound);
             sfxInt.text = theOptions.sfxVolume.ToString();
             sfxInt2.text = theOptions.sfxVolume.ToString();
-            
+
             AxisChanged = true;
         }
         if ((Input.GetAxis("CLSVertical") < -0.7f || Input.GetAxis("KBVertical") < 0 || Input.GetAxis("CDPadVertical") < -0.7f || Input.GetAxis("CLSHorizontal") < -0.7f || Input.GetAxis("KBHorizontal") < 0 || Input.GetAxis("CDPadHorizontal") < -0.7f) && AxisChanged == false && currentSelection == 8)
@@ -922,20 +922,20 @@ public class MainMenu : MonoBehaviour
                     {
                         //CONTINUE PREVIOUS GAME
                         //  LoadStats();
-		if(theOptions.easyMode!=true)
-				{
+                        if (theOptions.easyMode != true)
+                        {
 
-				Debug.Log(theOptions.GetComponent<SaveTest>().data.canyouload==true);
+                            Debug.Log(theOptions.GetComponent<SaveTest>().data.canyouload == true);
 
-				if(File.Exists (Application.persistentDataPath + "/playerinfo.dat"))
-				{
-                        theOptions.shouldload = true;
-                        LevelManager.Load("Game");
-				}
-                        break;
+                            if (File.Exists(Application.persistentDataPath + "/playerinfo.dat"))
+                            {
+                                theOptions.shouldload = true;
+                                LevelManager.Load("Game");
+                            }
 
-                }
-			}
+                        }
+                    }
+                    break;
                 case 1:
                     {
                         ContinueText.SetActive(false);
