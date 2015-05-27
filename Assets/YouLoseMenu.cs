@@ -87,6 +87,7 @@ public class YouLoseMenu : MonoBehaviour
                                 generator.currentRoom != 18)
                             {
                                 generator.finalRoomInfoArray[generator.currentRoom].beenThere = false;
+                                generator.finalRoomInfoArray[generator.currentRoom].setUsed();
                                 --generator.currentRoom;
                                 generator.Reset();
                             }

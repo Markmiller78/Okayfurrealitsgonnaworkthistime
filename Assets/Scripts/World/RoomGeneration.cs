@@ -407,7 +407,7 @@ public class RoomGeneration : MonoBehaviour
         for (int i = 0; i < finalRoomInfoArray[currentRoom].hazardSpawnPoints.Length; i++)
         {
             float z = -1;
-            if (currentRoom > (easyMode ? 11 : 8) && currentRoom < (easyMode ? 22 : 18))
+            if (currentRoom > (easyMode ? 10 : 8) && currentRoom < (easyMode ? 22 : 18))
             {
                 z = -.5f;
             }
@@ -436,11 +436,13 @@ public class RoomGeneration : MonoBehaviour
             if (finalRoomInfoArray[currentRoom].enemiesThatCanSpawn.Length > 0)
             {
                 Instantiate(finalRoomInfoArray[currentRoom].enemiesThatCanSpawn[0], new Vector3(finalRoomInfoArray[currentRoom].enemySpawnPoints[0].x, -finalRoomInfoArray[currentRoom].enemySpawnPoints[0].y, -1f), Quaternion.identity);
+                finalRoomInfoArray[currentRoom].enemySpawnPointUsed[0] = true;
                 enemiesSpawned = 1;
             }
             if (finalRoomInfoArray[currentRoom].enemiesThatCanSpawn.Length > 1)
             {
                 Instantiate(finalRoomInfoArray[currentRoom].enemiesThatCanSpawn[1], new Vector3(finalRoomInfoArray[currentRoom].enemySpawnPoints[1].x, -finalRoomInfoArray[currentRoom].enemySpawnPoints[1].y, -1f), Quaternion.identity);
+                finalRoomInfoArray[currentRoom].enemySpawnPointUsed[1] = true;
                 enemiesSpawned = 2;
             }
             while (enemiesSpawned < finalRoomInfoArray[currentRoom].numEnemies)
