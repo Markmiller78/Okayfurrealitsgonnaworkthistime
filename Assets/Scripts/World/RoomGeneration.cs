@@ -171,7 +171,7 @@ public class RoomGeneration : MonoBehaviour
         //}
 
         // Spawn torches in the checkpoints
-        if (easyMode && (currentRoom == 3 || currentRoom == 7 || currentRoom == 14 || currentRoom == 18 || currentRoom == 25 || currentRoom == 28))
+        if (easyMode && (currentRoom == 3 || currentRoom == 7 || currentRoom == 14 || currentRoom == 18 || currentRoom == 25 || currentRoom == 29))
         {
             Instantiate(torchWood, new Vector3(1, -1, -.8f), Quaternion.identity);
             Instantiate(torchWood, new Vector3(1, -8, -.8f), Quaternion.identity);
