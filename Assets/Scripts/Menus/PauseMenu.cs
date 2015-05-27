@@ -27,6 +27,22 @@ public class PauseMenu : MonoBehaviour
 
     bool optionsMode = false;
 
+    Rect resumeRect;
+    Rect optionsRect;
+    Rect quitRect;
+
+    Rect sfxRect;
+    Rect sfxLeftRect;
+    Rect sfxRightRect;
+    Rect musicRect;
+    Rect musicLeftRect;
+    Rect musicRightRect;
+    Rect fullscreenRect;
+    Rect controlsRect;
+    Rect backRect;
+
+    Vector2 mousePrevPos;
+
     //    Vector3 RemainsPOS;
     void Start()
     {
@@ -40,12 +56,28 @@ public class PauseMenu : MonoBehaviour
         fullscreen.enabled = false;
         controlMode.enabled = false;
         back.enabled = false;
+        resumeRect = new Rect(570, 410, 140, 50);
+        optionsRect = new Rect(570, 360, 140, 50);
+        if (Application.loadedLevelName == "Tutorial")
+            quitRect = new Rect(600, 250, 80, 50);
+        else
+            quitRect = new Rect(540, 250, 200, 50);
+        sfxRect = new Rect(500, 465, 280, 50);
+        sfxLeftRect = new Rect(715, 465, 30, 50);
+        sfxRightRect = new Rect(750, 465, 30, 50);
+        musicRect = new Rect(490, 420, 300, 45);
+        musicLeftRect = new Rect(730, 420, 30, 45);
+        musicRightRect = new Rect(765, 420, 30, 45);
+        fullscreenRect = new Rect(560, 360, 160, 50);
+        controlsRect = new Rect(480, 310, 320, 50);
+        backRect = new Rect(600, 255, 80, 45);
     }
 
     void Update()
     {
         if (isPaused)
         {
+            Debug.Log(Input.mousePosition);
             //if (InputManager.controller)
             {
                 #region Controller Input
@@ -108,6 +140,15 @@ public class PauseMenu : MonoBehaviour
 
             if (!optionsMode)
             {
+                if (mousePrevPos.x != Input.mousePosition.x || mousePrevPos.y != Input.mousePosition.y)
+                {
+                    if (resumeRect.Contains(Input.mousePosition))
+                        currOption = 0;
+                    if (optionsRect.Contains(Input.mousePosition))
+                        currOption = 1;
+                    if (quitRect.Contains(Input.mousePosition))
+                        currOption = 2;
+                }
                 switch (currOption)
                 {
                     case 0:
@@ -137,6 +178,18 @@ public class PauseMenu : MonoBehaviour
                             }
                             GameObject.Find("InputManager").GetComponent<InputManager>().isPaused = false;
                         }
+                        if (resumeRect.Contains(Input.mousePosition) && Input.GetButtonDown("KBSpells"))
+                        {
+                            // Resume Code Here
+                            GameObject[] allObjects;
+                            allObjects = GameObject.FindObjectsOfType<GameObject>();
+                            //isPaused = !isPaused;
+                            foreach (GameObject obj in allObjects)
+                            {
+                                obj.SendMessage("UnPause", SendMessageOptions.DontRequireReceiver);
+                            }
+                            GameObject.Find("InputManager").GetComponent<InputManager>().isPaused = false;
+                        }
                         break;
                         #endregion
                     case 1:
@@ -152,6 +205,8 @@ public class PauseMenu : MonoBehaviour
                             // Options Code Here
                             SwapMode();
                         }
+                        if (optionsRect.Contains(Input.mousePosition) && Input.GetButtonDown("KBSpells"))
+                            SwapMode();
                         break;
                         #endregion
                     case 2:
@@ -193,6 +248,22 @@ public class PauseMenu : MonoBehaviour
                             }
                             Application.LoadLevel("MainMenu");
                         }
+                        if (quitRect.Contains(Input.mousePosition) && Input.GetButtonDown("KBSpells"))
+                        {
+                            GameObject dungeon = GameObject.FindGameObjectWithTag("Dungeon");
+                            if (dungeon)
+                            {
+                                RoomGeneration gen = dungeon.GetComponent<RoomGeneration>();
+                                if (GameObject.FindGameObjectsWithTag("Enemy").Length + GameObject.FindGameObjectsWithTag("Invincible").Length > 0)
+                                {
+                                    gen.finalRoomInfoArray[gen.currentRoom].beenThere = false;
+                                    if (gen.currentRoom > 0)
+                                        gen.currentRoom -= 1;
+                                }
+                                GameObject.FindObjectOfType<Options>().GetComponent<SaveTest>().Save();
+                            }
+                            Application.LoadLevel("MainMenu");
+                        }
                         break;
                         #endregion
                     default:
@@ -201,6 +272,19 @@ public class PauseMenu : MonoBehaviour
             }
             else
             {
+                if (mousePrevPos.x != Input.mousePosition.x || mousePrevPos.y != Input.mousePosition.y)
+                {
+                    if (sfxRect.Contains(Input.mousePosition))
+                        currOptionOption = 0;
+                    if (musicRect.Contains(Input.mousePosition))
+                        currOptionOption = 1;
+                    if (fullscreenRect.Contains(Input.mousePosition))
+                        currOptionOption = 2;
+                    if (controlsRect.Contains(Input.mousePosition))
+                        currOptionOption = 3;
+                    if (backRect.Contains(Input.mousePosition))
+                        currOptionOption = 4;
+                }                
                 switch (currOptionOption)
                 {
                     case 0:
@@ -233,6 +317,16 @@ public class PauseMenu : MonoBehaviour
                             GameObject.FindObjectOfType<Options>().sfxIncrease();
                             sVolume.text = "SFX Volume: " + GameObject.FindObjectOfType<Options>().sfxVolume.ToString();
                             axisChanged = true;
+                        }
+                        if (sfxLeftRect.Contains(Input.mousePosition) && Input.GetButtonDown("KBSpells"))
+                        {
+                            GameObject.FindObjectOfType<Options>().sfxDecrease();
+                            sVolume.text = "SFX Volume: " + GameObject.FindObjectOfType<Options>().sfxVolume.ToString();
+                        }
+                        if (sfxRightRect.Contains(Input.mousePosition) && Input.GetButtonDown("KBSpells"))
+                        {
+                            GameObject.FindObjectOfType<Options>().sfxIncrease();
+                            sVolume.text = "SFX Volume: " + GameObject.FindObjectOfType<Options>().sfxVolume.ToString();
                         }
                         #endregion
                         break;
@@ -267,6 +361,16 @@ public class PauseMenu : MonoBehaviour
                             mVolume.text = "Music Volume: " + GameObject.FindObjectOfType<Options>().musicVolume.ToString();
                             axisChanged = true;
                         }
+                        if (musicLeftRect.Contains(Input.mousePosition) && Input.GetButtonDown("KBSpells"))
+                        {
+                            GameObject.FindObjectOfType<Options>().musicDecrease();
+                            mVolume.text = "Music Volume: " + GameObject.FindObjectOfType<Options>().musicVolume.ToString();
+                        }
+                        if (musicRightRect.Contains(Input.mousePosition) && Input.GetButtonDown("KBSpells"))
+                        {
+                            GameObject.FindObjectOfType<Options>().musicIncrease();
+                            mVolume.text = "Music Volume: " + GameObject.FindObjectOfType<Options>().musicVolume.ToString();
+                        }
                         #endregion
                         break;
                     case 2:
@@ -296,6 +400,18 @@ public class PauseMenu : MonoBehaviour
                             }
                             Screen.fullScreen = !Screen.fullScreen;
                         }
+                        if (fullscreenRect.Contains(Input.mousePosition) && Input.GetButtonDown("KBSpells"))
+                        {
+                            if (Screen.fullScreen)
+                            {
+                                Screen.SetResolution(1280, 720, !Screen.fullScreen);
+                            }
+                            else
+                            {
+                                Screen.SetResolution(1280, 720, Screen.fullScreen);
+                            }
+                            Screen.fullScreen = !Screen.fullScreen;
+                        }
                         #endregion
                         break;
                     case 3:
@@ -307,6 +423,11 @@ public class PauseMenu : MonoBehaviour
                             controlMode.text = "Controls: " + (InputManager.controller ? "Controller" : "KB/Mouse");
                         }
                         else if (Input.GetButtonDown("KBMenuAccept"))
+                        {
+                            InputManager.controller = !InputManager.controller;
+                            controlMode.text = "Controls: " + (InputManager.controller ? "Controller" : "KB/Mouse");
+                        }
+                        if (controlsRect.Contains(Input.mousePosition) && Input.GetButtonDown("KBSpells"))
                         {
                             InputManager.controller = !InputManager.controller;
                             controlMode.text = "Controls: " + (InputManager.controller ? "Controller" : "KB/Mouse");
@@ -324,6 +445,8 @@ public class PauseMenu : MonoBehaviour
                         {
                             SwapMode();
                         }
+                        if (backRect.Contains(Input.mousePosition) && Input.GetButtonDown("KBSpells"))
+                            SwapMode();
                         #endregion
                         break;
                     default:
@@ -331,6 +454,7 @@ public class PauseMenu : MonoBehaviour
                 }
             }
         }
+        mousePrevPos = Input.mousePosition;
     }
 
     void SwapMode()
@@ -377,6 +501,8 @@ public class PauseMenu : MonoBehaviour
         isPaused = true;
         pauseCanvas.SetActive(true);
         heroEquipment.paused = true;
+        if (optionsMode)
+            SwapMode();
     }
 
     void UnPause()
