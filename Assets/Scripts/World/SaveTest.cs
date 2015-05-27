@@ -28,7 +28,9 @@ public class SaveTest : MonoBehaviour {
 	public void YOUDIED()
 	{
 		data.canyouload = false;
-		Save ();
+		File.Delete (Application.persistentDataPath + "/playerinfo.dat");
+
+	//	Save ();
 	}
 	
 	// Use this for initialization
@@ -73,17 +75,17 @@ public class SaveTest : MonoBehaviour {
                 theRooms = GameObject.FindGameObjectWithTag("Dungeon").GetComponent<RoomGeneration>();
         }
 
-        else
-            if (theRooms != null)
-                if (enemies <= 0&&saved==false)
+      //  else
+         //   if (theRooms != null)
+          //      if (enemies <= 0&&saved==false)
                     
-                    {
-                        Save();
-				data.canyousave=true;
-                        Debug.Log("Saved!");
+         //           {
+       //                 Save();
+		//		data.canyousave=true;
+       //                 Debug.Log("Saved!");
 
-                        saved = true;
-                    }
+      //                  saved = true;
+      //              }
  
 
 	
@@ -150,11 +152,13 @@ public class SaveTest : MonoBehaviour {
                 
 				}
 
-			} else {
+			}
+		else
+		{
 				FileStream file;
         
 				BinaryFormatter bin = new BinaryFormatter ();
-				if (!File.Exists (Application.persistentDataPath + "/playerinfo.dat"))
+			if (!File.Exists (Application.persistentDataPath + "/playerinfo.dat"))
 					file = File.Create (Application.persistentDataPath + "/playerinfo.dat");
 				else
 					file = File.Open (Application.persistentDataPath + "/playerinfo.dat", FileMode.Open);
