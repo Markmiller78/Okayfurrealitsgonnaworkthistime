@@ -16,6 +16,8 @@ public class LightRemains : MonoBehaviour
    // public GameObject endParticles;
     public GameObject missile;
 
+    GameObject player;
+
     void Start()
     {
         heroLight = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerLight>();
@@ -25,24 +27,14 @@ public class LightRemains : MonoBehaviour
         active = true;
         deathTimer = 0;
         once = true;
+
+        player = GameObject.FindGameObjectWithTag("Player");
 	 
 		allObjects = GameObject.FindObjectsOfType<GameObject>();
 		foreach (GameObject obj in allObjects)
 		{
 			obj.SendMessage("AddDrop", this.gameObject, SendMessageOptions.DontRequireReceiver);
 		}
-
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-        if (active)
-        {
-            if (other.tag == "Player")
-            {
-                PickUp();
-            }
-        }
 
     }
 
@@ -73,6 +65,13 @@ public class LightRemains : MonoBehaviour
 				 
 			
                 Destroy(gameObject);
+            }
+        }
+        else
+        {
+            if (Vector3.Distance(transform.position, player.transform.position) <= 1f)
+            {
+                PickUp();
             }
         }
     }

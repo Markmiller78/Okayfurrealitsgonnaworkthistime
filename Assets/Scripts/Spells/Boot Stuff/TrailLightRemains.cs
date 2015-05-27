@@ -15,9 +15,12 @@ public class TrailLightRemains : MonoBehaviour
     public GameObject missile;
     public GameObject trailParticles;
 
+    GameObject player;
+
     void Start()
     {
         heroLight = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerLight>();
+        player = GameObject.FindGameObjectWithTag("Player");
         particles = gameObject.GetComponentInChildren<ParticleSystem>();
         particleLight = gameObject.GetComponent<Light>();
         sprite = gameObject.GetComponent<SpriteRenderer>();
@@ -26,17 +29,6 @@ public class TrailLightRemains : MonoBehaviour
         once = true;
     }
 
-    void OnTriggerEnter(Collider other)
-    {
-        if (active)
-        {
-            if (other.tag == "Player")
-            {
-                PickUp();
-            }
-        }
-
-    }
 
     void Update()
     {
@@ -58,6 +50,15 @@ public class TrailLightRemains : MonoBehaviour
             if (deathTimer > 0.7)
             {
                 Destroy(gameObject);
+            }
+
+
+        }
+        else
+        {
+            if (Vector3.Distance(transform.position, player.transform.position) <= 0.8f)
+            {
+                PickUp();
             }
         }
     }
