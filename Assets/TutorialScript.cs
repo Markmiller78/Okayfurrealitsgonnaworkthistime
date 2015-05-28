@@ -19,7 +19,7 @@ public class TutorialScript : MonoBehaviour
     {
         timer = 2;
         Step = 0;
-        standardTimeStep = 2;
+        standardTimeStep = 1.6f;
     }
 
     // Update is called once per frame
@@ -117,7 +117,7 @@ public class TutorialScript : MonoBehaviour
                     if (timer < 0)
                     {
                         Step++;
-                        timer = standardTimeStep;
+                        timer = 1;
                     }
                     break;
                 }
@@ -178,7 +178,7 @@ public class TutorialScript : MonoBehaviour
                     if (timer < 0)
                     {
                         Step++;
-                        timer = standardTimeStep;
+                        timer = 1;
                     }
                     break;
                 }
@@ -237,7 +237,7 @@ public class TutorialScript : MonoBehaviour
                     if (timer < 0)
                     {
                         Step++;
-                        timer = standardTimeStep;
+                        timer = 1;
                     }
                     break;
                 }
@@ -510,7 +510,7 @@ public class TutorialScript : MonoBehaviour
                             timer = standardTimeStep;
                         }
                     }
-                    if(timer < -7)
+                    if(timer < -5)
                     {
                         Step = 41;
                         timer = standardTimeStep;
@@ -557,7 +557,7 @@ public class TutorialScript : MonoBehaviour
                     if (timer < 0)
                     {
                         Step++;
-                        timer = standardTimeStep;
+                        timer = 1;
                     }
                     break;
                 }
@@ -624,6 +624,11 @@ public class TutorialScript : MonoBehaviour
                                 timer = standardTimeStep;
                             }
                         }
+                    }
+                    if (timer < -3)
+                    {
+                        Step++;
+                        timer = standardTimeStep;
                     }
                     break;
                 }
