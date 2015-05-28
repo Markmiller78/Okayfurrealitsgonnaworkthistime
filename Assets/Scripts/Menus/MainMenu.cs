@@ -773,6 +773,7 @@ public class MainMenu : MonoBehaviour
 
     void AchievementsMenu()
     {
+        disablemouse = true;
         maxchoices = 2;
         choices[0] = -4.25f;
         choices[1] = -4.25f;
@@ -824,6 +825,7 @@ public class MainMenu : MonoBehaviour
                         Achievements.SetActive(false);
                         CurrMenu = Menu.Main;
                         currentSelection = 3;
+                        disablemouse = false;
                         break;
                     }
             }
@@ -856,6 +858,7 @@ public class MainMenu : MonoBehaviour
                         SelectRects[6] = new Rect(516, 1867, 300, 150);
                         Achievements.SetActive(false);
                         CurrMenu = Menu.Main;
+                        disablemouse = false;
                         currentSelection = 3;
                         break;
                     }
