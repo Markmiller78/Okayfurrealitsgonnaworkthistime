@@ -83,7 +83,7 @@ public class HealthRemains : MonoBehaviour
         }
         else
         {
-            heroHp.GainHealth(2.1f);
+            heroHp.GainHealth(3.5f); // CHANGE THIS LATER
         }
         active = false;
     }

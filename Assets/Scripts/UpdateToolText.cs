@@ -39,6 +39,8 @@ public class UpdateToolText : MonoBehaviour
         {
             GetComponentInChildren<Text>().text = ("Press " + (InputManager.controller ? "X" : "E") + " To Open");
         }
+        if (transform.parent == null)
+            Destroy(gameObject);
     }
 
     void ToolSetTexts(SetToolTipTexts theInfo)

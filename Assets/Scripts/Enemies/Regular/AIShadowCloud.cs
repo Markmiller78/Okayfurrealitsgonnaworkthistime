@@ -59,10 +59,18 @@ public class AIShadowCloud : MonoBehaviour
                 Unsnare();
                 SnareTimer = 100000;
             }
+            Turn();
         }
 
     }
-
+    void Turn()
+    {
+        Vector3 vectorToPlayer = player.transform.position - transform.position;
+        float angle = Mathf.Atan2(vectorToPlayer.y, vectorToPlayer.x) * Mathf.Rad2Deg;
+        angle -= 270.0f;
+        Quaternion rot = Quaternion.AngleAxis(angle, Vector3.forward);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rot, Time.deltaTime * 7);
+    }
     public void Slow()
     {
         moveSpeed = moveSpeed * 0.5f;

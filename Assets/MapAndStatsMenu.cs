@@ -267,7 +267,7 @@ public class MapAndStatsMenu : MonoBehaviour
         }
         T1StatAmount1.text = Amount.ToString();
 
-
+        Amount = 0;
         switch (equipment.AccessoryStat2.TheStat)
         {
             case StatType.SpellMod:
@@ -300,7 +300,7 @@ public class MapAndStatsMenu : MonoBehaviour
 
 
 
-
+        Amount = 0;
         switch (equipment.BootStat1.TheStat)
         {
             case StatType.SpellMod:
@@ -325,7 +325,7 @@ public class MapAndStatsMenu : MonoBehaviour
                 }
         }
         T2StatAmount1.text = Amount.ToString();
-
+        Amount = 0;
         switch (equipment.BootStat2.TheStat)
         {
             case StatType.SpellMod:

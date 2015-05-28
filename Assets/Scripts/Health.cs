@@ -172,7 +172,7 @@ public class Health : MonoBehaviour
 			//	this.GetComponent<AICommander>().UnReinforcing();
 			}
             Instantiate(lightRemains, transform.position, transform.rotation);
-            Instantiate(corpse, new Vector3(transform.position.x, transform.position.y, -0.5f), transform.rotation);
+            Instantiate(corpse, new Vector3(transform.position.x, transform.position.y, -0.5f), Quaternion.identity);
             gameObject.GetComponent<GenerateLoot>().Generateloot();
             if (isInfected)
             {
