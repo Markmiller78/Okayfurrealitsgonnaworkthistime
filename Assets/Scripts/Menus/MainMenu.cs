@@ -922,8 +922,7 @@ public class MainMenu : MonoBehaviour
                     {
                         //CONTINUE PREVIOUS GAME
                         //  LoadStats();
-		if(theOptions.easyMode!=true)
-				{
+		 
 
 				Debug.Log(theOptions.GetComponent<SaveTest>().data.canyouload==true);
 
@@ -932,10 +931,11 @@ public class MainMenu : MonoBehaviour
                         theOptions.shouldload = true;
                         LevelManager.Load("Game");
 				}
-                        break;
+                   
 
                 }
-			}
+			
+				break; 
                 case 1:
                     {
                         ContinueText.SetActive(false);
