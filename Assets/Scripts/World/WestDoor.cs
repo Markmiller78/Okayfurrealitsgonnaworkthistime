@@ -79,7 +79,8 @@ public class WestDoor : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (generator.currentRoom == (easyMode ? 32 : 26))
+        if (generator.currentRoom == (easyMode ? 32 : 26)
+                && !movement.transitioning)
         {
             Application.LoadLevel("EndCutscene");
         }
