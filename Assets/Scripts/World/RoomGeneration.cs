@@ -469,8 +469,8 @@ public class RoomGeneration : MonoBehaviour
             }
             else if (chanceychance <= .3f)
             {
-                bool spawned = false;
-                while (!spawned)
+                bool spawnedAChest = false;
+                while (!spawnedAChest)
                 {
                     for (int i = 0; i < finalRoomInfoArray[currentRoom].chestSpawnLocations.Length; i++)
                     {
@@ -480,7 +480,7 @@ public class RoomGeneration : MonoBehaviour
                             Instantiate(chest, new Vector3(finalRoomInfoArray[currentRoom].chestSpawnLocations[i].x,
                                 -finalRoomInfoArray[currentRoom].chestSpawnLocations[i].y, -.9f),// Quaternion.identity);
                                 Quaternion.Euler(0.0f, 0.0f, finalRoomInfoArray[currentRoom].chestRotations[i]));
-                            spawned = true;
+                            spawnedAChest = true;
                             break;
                         }
                     }
