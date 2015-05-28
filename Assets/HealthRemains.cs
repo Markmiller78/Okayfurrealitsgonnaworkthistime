@@ -15,7 +15,7 @@ public class HealthRemains : MonoBehaviour
     float deathTimer;
 
     GameObject player;
-
+    Options theOptions;
 
     // Use this for initialization
     void Start()
@@ -26,7 +26,7 @@ public class HealthRemains : MonoBehaviour
         sprite = gameObject.GetComponent<SpriteRenderer>();
         active = true;
         deathTimer = 0;
-
+        theOptions = GameObject.Find("TheOptions").GetComponent<Options>();
         player = GameObject.FindGameObjectWithTag("Player");
 
     }
@@ -75,7 +75,16 @@ public class HealthRemains : MonoBehaviour
     void PickUp()
     {
         Instantiate(missile, transform.position, transform.rotation);
-        heroHp.GainHealth(1.2f);
+
+
+        if(theOptions.easyMode == true)
+        {
+            heroHp.GainHealth(3.5f);
+        }
+        else
+        {
+            heroHp.GainHealth(2.1f);
+        }
         active = false;
     }
 }

@@ -70,7 +70,7 @@ public class AIShadowCloud : MonoBehaviour
 
     void Unslow()
     {
-        moveSpeed = moveSpeed * 2;
+        moveSpeed = 2;
     }
     void Reinforce()
     {
@@ -119,7 +119,7 @@ public class AIShadowCloud : MonoBehaviour
     }
     void Unsnare()
     {
-        moveSpeed = 1;
+        moveSpeed = 2;
     }
     void GetInfected()
     {

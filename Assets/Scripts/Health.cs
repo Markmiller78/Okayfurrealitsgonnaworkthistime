@@ -20,7 +20,7 @@ public class Health : MonoBehaviour
    public bool playerDead;
     Animator anim;
     Health playerHealth;
- 
+    float hitTimer;
     public GameObject corpse;
     public GameObject BossDeathParticles;
 
@@ -34,7 +34,7 @@ public class Health : MonoBehaviour
     void Start()
     {
         theoptions = GameObject.Find("TheOptions").GetComponent<Options>();
-
+        hitTimer = 0;
         playerDead = false;
         player = GameObject.FindGameObjectWithTag("Player");
         anim = gameObject.GetComponent<Animator>();
@@ -57,7 +57,7 @@ public class Health : MonoBehaviour
 
     void Update()
     {
-
+        hitTimer -= Time.deltaTime;
 
     }
     public void GainHealth(float Amount)
@@ -81,9 +81,10 @@ public class Health : MonoBehaviour
     {
         if (equipment.paused == false)
         {
-            if(GetHit != null && PutSourceHere != null)
+            if(GetHit != null && PutSourceHere != null && hitTimer < 0)
             {
                 PutSourceHere.PlayOneShot(GetHit);
+                hitTimer = .5f;
             }
             currentHP -= Amount;
             if (currentHP <= 0)

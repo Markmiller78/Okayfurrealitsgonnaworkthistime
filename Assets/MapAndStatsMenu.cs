@@ -228,6 +228,9 @@ public class MapAndStatsMenu : MonoBehaviour
         PlayerStats plyStats = player.GetComponent<PlayerStats>();
         float health = plyStats.maxHPModifier + 100;
         float lght = plyStats.maxLightModifier + 100;
+
+
+
         SpellPower.text = plyStats.spellModifier.ToString();
         AttackDamage.text = plyStats.meleeModifier.ToString();
         MaxHP.text = health.ToString();
@@ -236,14 +239,118 @@ public class MapAndStatsMenu : MonoBehaviour
         T1Name.text = equipment.AccessoryName;
         T1Stat1.text = equipment.AccessoryStat1.TheStat.ToString();
         T1Stat2.text = equipment.AccessoryStat2.TheStat.ToString();
-        T1StatAmount1.text = equipment.AccessoryStat1.StatAmount.ToString();
-        T1StatAmount2.text = equipment.AccessoryStat2.StatAmount.ToString();
+
+
+        float Amount = 0;
+        switch (equipment.AccessoryStat1.TheStat)
+        {
+            case StatType.SpellMod:
+                {
+                    Amount = equipment.AccessoryStat1.StatAmount * .3f;
+                    break;
+                }
+            case StatType.MeleeMod:
+                {
+                    Amount = equipment.AccessoryStat1.StatAmount * .3f;
+                    break;
+                }
+            case StatType.MaxHP:
+                {
+                    Amount = equipment.AccessoryStat1.StatAmount * 2f;
+                    break;
+                }
+            case StatType.MaxLight:
+                {
+                    Amount = equipment.AccessoryStat1.StatAmount * 1.3f;
+                    break;
+                }
+        }
+        T1StatAmount1.text = Amount.ToString();
+
+
+        switch (equipment.AccessoryStat2.TheStat)
+        {
+            case StatType.SpellMod:
+                {
+                    Amount = equipment.AccessoryStat2.StatAmount * .3f;
+                    break;
+                }
+            case StatType.MeleeMod:
+                {
+                    Amount = equipment.AccessoryStat2.StatAmount * .3f;
+                    break;
+                }
+            case StatType.MaxHP:
+                {
+                    Amount = equipment.AccessoryStat2.StatAmount * 2f;
+                    break;
+                }
+            case StatType.MaxLight:
+                {
+                    Amount = equipment.AccessoryStat2.StatAmount * 1.3f;
+                    break;
+                }
+        }
+        T1StatAmount2.text = Amount.ToString();
+
 
         T2Name.text = equipment.BootName;
         T2Stat1.text = equipment.BootStat1.TheStat.ToString();
         T2Stat2.text = equipment.BootStat2.TheStat.ToString();
-        T2StatAmount1.text = equipment.BootStat1.StatAmount.ToString();
-        T2StatAmount2.text = equipment.BootStat2.StatAmount.ToString();
+
+
+
+
+        switch (equipment.BootStat1.TheStat)
+        {
+            case StatType.SpellMod:
+                {
+                    Amount = equipment.BootStat1.StatAmount * .3f;
+                    break;
+                }
+            case StatType.MeleeMod:
+                {
+                    Amount = equipment.BootStat1.StatAmount * .3f;
+                    break;
+                }
+            case StatType.MaxHP:
+                {
+                    Amount = equipment.BootStat1.StatAmount * 2f;
+                    break;
+                }
+            case StatType.MaxLight:
+                {
+                    Amount = equipment.BootStat1.StatAmount * 1.3f;
+                    break;
+                }
+        }
+        T2StatAmount1.text = Amount.ToString();
+
+        switch (equipment.BootStat2.TheStat)
+        {
+            case StatType.SpellMod:
+                {
+                    Amount = equipment.BootStat2.StatAmount * .3f;
+                    break;
+                }
+            case StatType.MeleeMod:
+                {
+                    Amount = equipment.BootStat2.StatAmount * .3f;
+                    break;
+                }
+            case StatType.MaxHP:
+                {
+                    Amount = equipment.BootStat2.StatAmount * 2f;
+                    break;
+                }
+            case StatType.MaxLight:
+                {
+                    Amount = equipment.BootStat2.StatAmount * 1.3f;
+                    break;
+                }
+        }
+        T2StatAmount2.text = Amount.ToString();
+
 
 
 
@@ -265,27 +372,6 @@ public class MapAndStatsMenu : MonoBehaviour
             T3StatAmount1.text = " ";
             T3StatAmount2.text = " ";
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     }
 }

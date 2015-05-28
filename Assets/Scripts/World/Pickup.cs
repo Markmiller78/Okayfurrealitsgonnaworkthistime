@@ -122,6 +122,7 @@ public class Pickup : MonoBehaviour
     }
     void DisplayTooltip()
     {
+
         displaytooltips = true;
         if (Temp != null)
         {
@@ -428,21 +429,25 @@ public class Pickup : MonoBehaviour
             case StatType.SpellMod:
                 {
                     theName = "Spell Power";
+                    firstStat.StatAmount *= .3f;
                     break;
                 }
             case StatType.MeleeMod:
                 {
                     theName = "Attack Damage";
+                    firstStat.StatAmount *= .3f;
                     break;
                 }
             case StatType.MaxHP:
                 {
                     theName = "Max HP";
+                    firstStat.StatAmount *= 2;
                     break;
                 }
             case StatType.MaxLight:
                 {
                     theName = "Max Light";
+                    firstStat.StatAmount *= 1.3f;
                     break;
                 }
         }
@@ -468,21 +473,25 @@ public class Pickup : MonoBehaviour
             case StatType.SpellMod:
                 {
                     theName = "Spell Power";
+                    secondStat.StatAmount *= .3f;
                     break;
                 }
             case StatType.MeleeMod:
                 {
                     theName = "Attack Damage";
+                    secondStat.StatAmount *= .3f;
                     break;
                 }
             case StatType.MaxHP:
                 {
                     theName = "Max HP";
+                    secondStat.StatAmount *= 2;
                     break;
                 }
             case StatType.MaxLight:
                 {
                     theName = "Max Light";
+                    secondStat.StatAmount *= 1.3f;
                     break;
                 }
         }
