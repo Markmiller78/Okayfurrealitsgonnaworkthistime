@@ -28,7 +28,7 @@ public class SpellOrbOfLight : MonoBehaviour
 
     void Start()
     {
-        damage = 5.0f;
+        damage = 3.0f;
         change = 0.5f;
         dir = transform.up;
         player = GameObject.FindGameObjectWithTag("Player");

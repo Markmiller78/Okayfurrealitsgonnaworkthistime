@@ -20,18 +20,21 @@ public class Health : MonoBehaviour
    public bool playerDead;
     Animator anim;
     Health playerHealth;
- 
+    float hitTimer;
     public GameObject corpse;
     public GameObject BossDeathParticles;
 
     Options theoptions;
 
     public AudioClip loseSound;
+    public AudioClip GetHit;
+    public AudioSource PutSourceHere;
+
 
     void Start()
     {
         theoptions = GameObject.Find("TheOptions").GetComponent<Options>();
-
+        hitTimer = 0;
         playerDead = false;
         player = GameObject.FindGameObjectWithTag("Player");
         anim = gameObject.GetComponent<Animator>();
@@ -54,7 +57,7 @@ public class Health : MonoBehaviour
 
     void Update()
     {
-
+        hitTimer -= Time.deltaTime;
 
     }
     public void GainHealth(float Amount)
@@ -78,6 +81,11 @@ public class Health : MonoBehaviour
     {
         if (equipment.paused == false)
         {
+            if(GetHit != null && PutSourceHere != null && hitTimer < 0)
+            {
+                PutSourceHere.PlayOneShot(GetHit);
+                hitTimer = .5f;
+            }
             currentHP -= Amount;
             if (currentHP <= 0)
             {
@@ -164,7 +172,7 @@ public class Health : MonoBehaviour
 			//	this.GetComponent<AICommander>().UnReinforcing();
 			}
             Instantiate(lightRemains, transform.position, transform.rotation);
-            Instantiate(corpse, new Vector3(transform.position.x, transform.position.y, -0.5f), transform.rotation);
+            Instantiate(corpse, new Vector3(transform.position.x, transform.position.y, -0.5f), Quaternion.identity);
             gameObject.GetComponent<GenerateLoot>().Generateloot();
             if (isInfected)
             {

@@ -60,6 +60,11 @@ public class BossAIMorrius : MonoBehaviour
     GameObject healthB;
     GameObject HealthRemaining;
     GameObject[] EnemyCount;
+    public AudioSource Source;
+    public AudioClip AwakeSound;
+    public AudioClip Clip2;
+    public GameObject LingerSound;
+
 
     // Use this for initialization
     void Start()
@@ -90,6 +95,8 @@ public class BossAIMorrius : MonoBehaviour
 		GameObject.FindObjectOfType<BGM> ().finalbossmusic ();
         //healthB = (GameObject)Instantiate(BossHealthBar);
         //HealthRemaining = GameObject.FindGameObjectWithTag("Boss Health");
+        Source.PlayOneShot(AwakeSound);
+
     }
 
 
@@ -434,6 +441,8 @@ public class BossAIMorrius : MonoBehaviour
     }
     void ShadowSwap()
     {
+
+        Source.PlayOneShot(Clip2);
         RenderSettings.ambientLight = new Color(1f / 255f, 1f / 255f, 1f / 255f);
 
         float RandX = Random.Range(-5, 5);
@@ -479,5 +488,6 @@ public class BossAIMorrius : MonoBehaviour
     void DestroyHealthBar()
     {
         Destroy(healthB);
+        Instantiate(LingerSound);
     }
 }

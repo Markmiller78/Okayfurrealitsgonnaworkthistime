@@ -8,8 +8,10 @@ public class Ping : MonoBehaviour
     public GameObject ping2;
     PlayerCooldowns heroCooldowns;
     GameObject[] Shadow;
+    public HUDCooldowns UICD;
     void Start()
     {
+        UICD = GameObject.Find("Health bar").GetComponent<HUDCooldowns>();
         heroCooldowns = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCooldowns>();
     }
 
@@ -31,6 +33,10 @@ public class Ping : MonoBehaviour
                         Shadow[i].SendMessage("BlindedByTheLight", SendMessageOptions.DontRequireReceiver);
                 }
             }
+        }
+        else
+        {
+            UICD.FlashCooldown(2);
         }
     }
 }

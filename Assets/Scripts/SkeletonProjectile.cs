@@ -35,6 +35,8 @@ public class SkeletonProjectile : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (player == null)
+            Destroy(gameObject);
         if (isActive && !eq.paused)
             transform.position += transform.up * speed * Time.deltaTime;
     }

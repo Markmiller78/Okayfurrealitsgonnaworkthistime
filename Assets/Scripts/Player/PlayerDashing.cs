@@ -101,7 +101,7 @@ public class PlayerDashing : MonoBehaviour
         heroLight = gameObject.GetComponent<PlayerLight>();
         heroCooldowns = gameObject.GetComponent<PlayerCooldowns>();
         trailBlazerDropTimer = 0.0f;
-        UICD = GameObject.Find("Boot").GetComponent<HUDCooldowns>();
+        UICD = GameObject.Find("Health bar").GetComponent<HUDCooldowns>();
         aPlayer = gameObject.GetComponent<AudioSource>();
         once = false;
         theoptions = GameObject.Find("TheOptions").GetComponent<Options>();
@@ -441,6 +441,10 @@ public class PlayerDashing : MonoBehaviour
                 }
 
             }
+        }
+        else
+        {
+            UICD.FlashCooldown(1);
         }
     }
 

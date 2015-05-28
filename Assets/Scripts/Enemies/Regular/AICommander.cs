@@ -181,9 +181,9 @@ public class AICommander : MonoBehaviour
 
 
         float tempangle = Mathf.Atan2(vectoplayer.y, vectoplayer.x) * Mathf.Rad2Deg;
-        tempangle += 90.0f;
+        tempangle += 270.0f;
         Quaternion rotation = Quaternion.AngleAxis(tempangle, Vector3.forward);
-        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 2.5f);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 6.5f);
 
 
 

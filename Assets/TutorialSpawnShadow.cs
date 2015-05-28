@@ -19,7 +19,7 @@ public class TutorialSpawnShadow : MonoBehaviour {
     {
         if(Other.tag == "Player")
         { 
-        Instantiate(Shadow, new Vector3(20, -7, -1), new Quaternion(0, 0, 0, 0));
+        Instantiate(Shadow, new Vector3(19, -3, -1), new Quaternion(0, 0, 0, 0));
         Destroy(gameObject);
         }
     }

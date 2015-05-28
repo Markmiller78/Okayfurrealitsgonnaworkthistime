@@ -44,6 +44,16 @@ public class GenerateLoot : MonoBehaviour
 
     public void DropAPieceOfGear(Vector3 POS)
     {
+        Vector3 ObjectPOS = transform.position;
+        GameObject[] objects = GameObject.FindGameObjectsWithTag("PickUp");
+        for (int i = 0; i < objects.Length; i++)
+        {
+            if (ObjectPOS.x < objects[i].transform.position.x + .3f && ObjectPOS.x > objects[i].transform.position.x - .3f && ObjectPOS.y < objects[i].transform.position.y + .3f && ObjectPOS.y > objects[i].transform.position.y - .3f)
+            {
+                //print("Loot Stacked! Deleted Generating Loot.");
+                return;
+            }
+        }
         int SecondStat;
         int DetStat1, DetStat2;
 
@@ -52,7 +62,7 @@ public class GenerateLoot : MonoBehaviour
         DetStat1 = DetermineStat(RandNum);
         DetStat2 = DetermineStat(RandNum);
         string SendName = DetermineName(RandNum, DetStat1, DetStat2);
-        GameObject temp = (GameObject)Instantiate(Loot, POS, transform.rotation);
+        GameObject temp = (GameObject)Instantiate(Loot, POS, Quaternion.identity);
         temp.SendMessage("SetName", SendName, SendMessageOptions.DontRequireReceiver);
 
         SendStat.TheStat = (StatType)DetStat1;
@@ -71,6 +81,17 @@ public class GenerateLoot : MonoBehaviour
 
     public void DropAnEmber()
     {
+
+        Vector3 ObjectPOS = transform.position;
+        GameObject[] objects = GameObject.FindGameObjectsWithTag("PickUp");
+        for (int i = 0; i < objects.Length; i++)
+        {
+            if (ObjectPOS.x < objects[i].transform.position.x + .3f && ObjectPOS.x > objects[i].transform.position.x - .3f && ObjectPOS.y < objects[i].transform.position.y + .3f && ObjectPOS.y > objects[i].transform.position.y - .3f)
+            {
+                //print("Loot Stacked! Deleted Generating Loot.");
+                return;
+            }
+        }
         int SecondStat;
         int DetStat1, DetStat2;
 
@@ -79,7 +100,7 @@ public class GenerateLoot : MonoBehaviour
         DetStat1 = DetermineStat(RandNum);
         DetStat2 = DetermineStat(RandNum);
         string SendName = DetermineName(RandNum, DetStat1, DetStat2);
-        GameObject temp = (GameObject)Instantiate(Loot, transform.position, transform.rotation);
+        GameObject temp = (GameObject)Instantiate(Loot, transform.position, Quaternion.identity);
         temp.SendMessage("SetName", SendName, SendMessageOptions.DontRequireReceiver);
 
         SendStat.TheStat = (StatType)DetStat1;
@@ -107,7 +128,7 @@ public class GenerateLoot : MonoBehaviour
             DetStat1 = DetermineStat(RandNum);
             DetStat2 = DetermineStat(RandNum);
             string SendName = DetermineName(RandNum, DetStat1, DetStat2);
-            GameObject temp = (GameObject)Instantiate(Loot, transform.position, transform.rotation);
+            GameObject temp = (GameObject)Instantiate(Loot, transform.position, Quaternion.identity);
             temp.SendMessage("SetName", SendName, SendMessageOptions.DontRequireReceiver);
 
             SendStat.TheStat = (StatType)DetStat1;
@@ -131,7 +152,7 @@ public class GenerateLoot : MonoBehaviour
                 DetStat1 = DetermineStat(RandNum);
                 DetStat2 = DetermineStat(RandNum);
                 SendName = DetermineName(RandNum, DetStat1, DetStat2);
-                temp = (GameObject)Instantiate(Loot, transform.position, transform.rotation);
+                temp = (GameObject)Instantiate(Loot, transform.position, Quaternion.identity);
                 temp.SendMessage("SetName", SendName, SendMessageOptions.DontRequireReceiver);
                 transform.position -= new Vector3(.5f, 0, 0);
 
@@ -157,7 +178,7 @@ public class GenerateLoot : MonoBehaviour
                 DetStat1 = DetermineStat(RandNum);
                 DetStat2 = DetermineStat(RandNum);
                 SendName = DetermineName(RandNum, DetStat1, DetStat2);
-                temp = (GameObject)Instantiate(Loot, transform.position, transform.rotation);
+                temp = (GameObject)Instantiate(Loot, transform.position, Quaternion.identity);
                 temp.SendMessage("SetName", SendName, SendMessageOptions.DontRequireReceiver);
                 transform.position += new Vector3(.7f, 0, 0);
 
@@ -183,7 +204,7 @@ public class GenerateLoot : MonoBehaviour
                 DetStat1 = DetermineStat(RandNum);
                 DetStat2 = DetermineStat(RandNum);
                 SendName = DetermineName(RandNum, DetStat1, DetStat2);
-                temp = (GameObject)Instantiate(Loot, transform.position, transform.rotation);
+                temp = (GameObject)Instantiate(Loot, transform.position, Quaternion.identity);
                 temp.SendMessage("SetName", SendName, SendMessageOptions.DontRequireReceiver);
                 transform.position -= new Vector3(0, .6f, 0);
 
@@ -206,45 +227,59 @@ public class GenerateLoot : MonoBehaviour
             int MoarLootz = Random.Range(0, 100);
             if (MoarLootz > 86)
             {
-                //transform.position += new Vector3(0, .6f, 0);
-                int RandNum = Random.Range(1, 19);
-                GameObject Loot = DetermineType(RandNum);
-                DetStat1 = DetermineStat(RandNum);
-                DetStat2 = DetermineStat(RandNum);
-                string SendName = DetermineName(RandNum, DetStat1, DetStat2);
+                int MoarLootzz = Random.Range(0, 100);
 
-
-                //Don't Allow Loot to Overlap
-                Vector3 ObjectPOS = transform.position;
-                GameObject[] objects = GameObject.FindGameObjectsWithTag("PickUp");
-                for (int i = 0; i < objects.Length; i++)
+                if (MoarLootzz > 70)
                 {
-                    if (ObjectPOS.x < objects[i].transform.position.x + .3f && ObjectPOS.x > objects[i].transform.position.x - .3f && ObjectPOS.y < objects[i].transform.position.y + .3f && ObjectPOS.y > objects[i].transform.position.y - .3f)
-                    {
-                        //print("Loot Stacked! Deleted Generating Loot.");
-                        return;
-                    }
+                    DropAPieceOfGear(transform.position);
                 }
-
-
-                GameObject temp = (GameObject)Instantiate(Loot, transform.position, transform.rotation);
-                temp.SendMessage("SetName", SendName, SendMessageOptions.DontRequireReceiver);
-
-                SendStat.TheStat = (StatType)DetStat1;
-                SendStat.StatAmount = DetermineStatAmount(RandNum);
-                temp.SendMessage("SetStat1", SendStat, SendMessageOptions.DontRequireReceiver);
-
-                //50% Chance to Generate a Second stat
-                SecondStat = Random.Range(0, 100);
-                if (SecondStat > 50)
+                else if (MoarLootzz < 70)
                 {
-                    SendStat.TheStat = (StatType)DetStat2;
-                    SendStat.StatAmount = DetermineStatAmount(RandNum);
-                    temp.SendMessage("SetStat2", SendStat, SendMessageOptions.DontRequireReceiver);
+                    DropAnEmber();
                 }
-                //temp.SendMessage("SetStat1", )
-                //transform.position -= new Vector3(0, .6f, 0);
             }
+            //    int MoarLootz = Random.Range(0, 100);
+            //    if (MoarLootz > 86)
+            //    {
+            //        //transform.position += new Vector3(0, .6f, 0);
+            //        int RandNum = Random.Range(1, 19);
+            //        GameObject Loot = DetermineType(RandNum);
+            //        DetStat1 = DetermineStat(RandNum);
+            //        DetStat2 = DetermineStat(RandNum);
+            //        string SendName = DetermineName(RandNum, DetStat1, DetStat2);
+
+
+            //        //Don't Allow Loot to Overlap
+            //        Vector3 ObjectPOS = transform.position;
+            //        GameObject[] objects = GameObject.FindGameObjectsWithTag("PickUp");
+            //        for (int i = 0; i < objects.Length; i++)
+            //        {
+            //            if (ObjectPOS.x < objects[i].transform.position.x + .3f && ObjectPOS.x > objects[i].transform.position.x - .3f && ObjectPOS.y < objects[i].transform.position.y + .3f && ObjectPOS.y > objects[i].transform.position.y - .3f)
+            //            {
+            //                //print("Loot Stacked! Deleted Generating Loot.");
+            //                return;
+            //            }
+            //        }
+
+
+            //        GameObject temp = (GameObject)Instantiate(Loot, transform.position, transform.rotation);
+            //        temp.SendMessage("SetName", SendName, SendMessageOptions.DontRequireReceiver);
+
+            //        SendStat.TheStat = (StatType)DetStat1;
+            //        SendStat.StatAmount = DetermineStatAmount(RandNum);
+            //        temp.SendMessage("SetStat1", SendStat, SendMessageOptions.DontRequireReceiver);
+
+            //        //50% Chance to Generate a Second stat
+            //        SecondStat = Random.Range(0, 100);
+            //        if (SecondStat > 50)
+            //        {
+            //            SendStat.TheStat = (StatType)DetStat2;
+            //            SendStat.StatAmount = DetermineStatAmount(RandNum);
+            //            temp.SendMessage("SetStat2", SendStat, SendMessageOptions.DontRequireReceiver);
+            //        }
+            //        //temp.SendMessage("SetStat1", )
+            //        //transform.position -= new Vector3(0, .6f, 0);
+            //    }
         }
 
     }
@@ -558,7 +593,7 @@ public class GenerateLoot : MonoBehaviour
 
 
 
-        if(Attribute1 == 2)
+        if (Attribute1 == 2)
         {
             RandomStuff = Random.Range(1, 4);
             switch (RandomStuff)
