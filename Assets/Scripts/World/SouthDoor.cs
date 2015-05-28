@@ -79,7 +79,7 @@ public class SouthDoor : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (generator.currentRoom == (easyMode ? 32 : 26)
+        if (other.gameObject == player && generator.currentRoom == (easyMode ? 32 : 26)
                 && !movement.transitioning)
         {
             Application.LoadLevel("EndCutscene");

@@ -92,6 +92,8 @@ public class PlayerDashing : MonoBehaviour
 
     Options theoptions;
 
+    PlayerMovement move;
+
     void Start()
     {
         earthtrailtime = 0;
@@ -105,12 +107,12 @@ public class PlayerDashing : MonoBehaviour
         aPlayer = gameObject.GetComponent<AudioSource>();
         once = false;
         theoptions = GameObject.Find("TheOptions").GetComponent<Options>();
-
+        move = GetComponent<PlayerMovement>();
     }
 
     void Update()
     {
-        if (heroEquipment.paused == false)
+        if (heroEquipment.paused == false && !move.transitioning)
         {
 
             //If the player is dashing, perform the dash
