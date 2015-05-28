@@ -876,7 +876,7 @@ public class MainMenu : MonoBehaviour
         choices[2] = -2.72f;
         ContinueText.SetActive(true);
 
-        if (!File.Exists(Application.persistentDataPath + "/playerinfo.dat"))
+        if (!File.Exists(Application.persistentDataPath + "/playerinfo.dat") && currentSelection == 0)
         {
             continueForGraying.color = new Color(.25f, .25f, .25f);
             currentSelection = 1;
