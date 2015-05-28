@@ -31,26 +31,28 @@ public class Decoy : MonoBehaviour
     void Update()
     {
         if (!equip.paused)
-            timer += Time.deltaTime;
-        if (timer >= 3.0f)
         {
-            GameObject[] allObjects = GameObject.FindObjectsOfType<GameObject>();
-            foreach (GameObject obj in allObjects)
+            timer += Time.deltaTime;
+            if (timer >= 3.0f)
             {
-                obj.SendMessage("UnDecoy", SendMessageOptions.DontRequireReceiver);
+                GameObject[] allObjects = GameObject.FindObjectsOfType<GameObject>();
+                foreach (GameObject obj in allObjects)
+                {
+                    obj.SendMessage("UnDecoy", SendMessageOptions.DontRequireReceiver);
 
-                //if (obj.tag == "Enemy")
-                //{
-                //    if (Vector3.Distance(transform.position, obj.transform.position) < 5.0f)
-                //    {
-                //        obj.GetComponent<Health>().LoseHealth(damage + theStats.spellModifier);
-                //        //obj.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
-                //    }
-                //}
+                    //if (obj.tag == "Enemy")
+                    //{
+                    //    if (Vector3.Distance(transform.position, obj.transform.position) < 5.0f)
+                    //    {
+                    //        obj.GetComponent<Health>().LoseHealth(damage + theStats.spellModifier);
+                    //        //obj.SendMessage("GetWrecked", SendMessageOptions.DontRequireReceiver);
+                    //    }
+                    //}
+                }
+
+                Explode();
+
             }
-
-            Explode();
-
         }
 
     }
