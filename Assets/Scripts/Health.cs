@@ -27,6 +27,9 @@ public class Health : MonoBehaviour
     Options theoptions;
 
     public AudioClip loseSound;
+    public AudioClip GetHit;
+    public AudioSource PutSourceHere;
+
 
     void Start()
     {
@@ -78,6 +81,10 @@ public class Health : MonoBehaviour
     {
         if (equipment.paused == false)
         {
+            if(GetHit != null && PutSourceHere != null)
+            {
+                PutSourceHere.PlayOneShot(GetHit);
+            }
             currentHP -= Amount;
             if (currentHP <= 0)
             {

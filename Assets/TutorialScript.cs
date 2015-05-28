@@ -13,6 +13,7 @@ public class TutorialScript : MonoBehaviour
     float standardTimeStep;
     int Step;
     Vector2 Mouse, OldMouse;
+    bool LearnedAboutDash, LearnedAboutStats, LearnedAboutTheHUD, LearnedAboutHazards;
     // Use this for initialization
     void Start()
     {
@@ -455,7 +456,6 @@ public class TutorialScript : MonoBehaviour
                 }
             case 30:
                 {
-                   // FadeOut();
                     if (timer < 0)
                     {
                         Step++;
@@ -478,20 +478,17 @@ public class TutorialScript : MonoBehaviour
                 {
                     FadeOut();
                     FadeOut2();
+
                     if (timer < 0)
                     {
-                        GameObject[] EnemyCount = GameObject.FindGameObjectsWithTag("Enemy");
-                        if (EnemyCount.Length == 1)
-                        {
-                            Step++;
-                            timer = standardTimeStep;
-                        }
+                        Step++;
+                        timer = standardTimeStep;
                     }
                     break;
                 }
             case 33:
                 {
-                    ChangeText("This next enemy steals Light");
+                    ChangeText("Be Sure To Avoid Cloud Hazards!");
                     FadeIn();
                     if (timer < 0)
                     {
@@ -503,6 +500,27 @@ public class TutorialScript : MonoBehaviour
             case 34:
                 {
                     FadeOut();
+                    FadeOut2();
+                    if (timer < 0)
+                    {
+                        GameObject[] EnemyCount = GameObject.FindGameObjectsWithTag("Enemy");
+                        if (EnemyCount.Length == 1)
+                        {
+                            Step++;
+                            timer = standardTimeStep;
+                        }
+                    }
+                    if(timer < -7)
+                    {
+                        Step = 41;
+                        timer = standardTimeStep;
+                    }
+                    break;
+                }
+            case 35:
+                {
+                    ChangeText("This next enemy steals Light");
+                    FadeIn();
                     if (timer < 0)
                     {
                         Step++;
@@ -510,7 +528,17 @@ public class TutorialScript : MonoBehaviour
                     }
                     break;
                 }
-            case 35:
+            case 36:
+                {
+                    FadeOut();
+                    if (timer < 0)
+                    {
+                        Step++;
+                        timer = standardTimeStep;
+                    }
+                    break;
+                }
+            case 37:
                 {
                     if (InputManager.controller)
                         ChangeText("Use Absorb(RB) to Steal your light back");
@@ -524,7 +552,7 @@ public class TutorialScript : MonoBehaviour
                     }
                     break;
                 }
-            case 36:
+            case 38:
                 {
                     if (timer < 0)
                     {
@@ -533,7 +561,7 @@ public class TutorialScript : MonoBehaviour
                     }
                     break;
                 }
-            case 37:
+            case 39:
                 {
                     ChangeText2("This deals extra damage");
                     FadeIn2();
@@ -544,7 +572,7 @@ public class TutorialScript : MonoBehaviour
                     }
                     break;
                 }
-            case 38:
+            case 40:
                 {
                     FadeOut();
                     FadeOut2();
@@ -555,7 +583,7 @@ public class TutorialScript : MonoBehaviour
                     }
                     break;
                 }
-            case 39:
+            case 41:
                 {
                     FadeOut();
                     if (timer < 0)
@@ -569,7 +597,7 @@ public class TutorialScript : MonoBehaviour
                     }
                     break;
                 }
-            case 40:
+            case 42:
                 {
                     if (DoorToOpen != null)
                         Destroy(DoorToOpen);
@@ -599,7 +627,7 @@ public class TutorialScript : MonoBehaviour
                     }
                     break;
                 }
-            case 41:
+            case 43:
                 {
                     FadeOut();
                     if (timer < 0)
@@ -609,7 +637,7 @@ public class TutorialScript : MonoBehaviour
                     }
                     break;
                 }
-            case 42:
+            case 44:
                 {
                     if (InputManager.controller)
                         ChangeText("X also equips items");
@@ -623,7 +651,7 @@ public class TutorialScript : MonoBehaviour
                     }
                     break;
                 }
-            case 43:
+            case 45:
                 {
                     FadeOut();
                     if (timer < 0)
@@ -633,7 +661,7 @@ public class TutorialScript : MonoBehaviour
                     }
                     break;
                 }
-            case 44:
+            case 46:
                 {
                     ChangeText("Boots and Accessories Change your equipped spell");
                     FadeIn();
@@ -644,7 +672,7 @@ public class TutorialScript : MonoBehaviour
                     }
                     break;
                 }
-            case 45:
+            case 47:
                 {
                     //FadeOut();
                     if (timer < 0)
@@ -654,7 +682,7 @@ public class TutorialScript : MonoBehaviour
                     }
                     break;
                 }
-            case 46:
+            case 48:
                 {
                     ChangeText2("Embers Augment your spells with elemental effects");
                     FadeIn2();
@@ -665,7 +693,54 @@ public class TutorialScript : MonoBehaviour
                     }
                     break;
                 }
-            case 47:
+            case 49:
+                {
+                    FadeOut();
+                    FadeOut2();
+                    if (timer < 0)
+                    {
+                        Step++;
+                        timer = standardTimeStep;
+                    }
+                    break;
+                }
+            case 50:
+                {
+                    if (InputManager.controller)
+                        ChangeText("Press Select to view the Map and Player Stats");
+                    else
+                        ChangeText("Press ~ to view the Map and Player Stats");
+                    FadeIn();
+                    if (timer < 0)
+                    {
+                        Step++;
+                        timer = 5;
+                    }
+                    break;
+                }
+            case 51:
+                {
+                    FadeOut();
+                    FadeOut2();
+                    if (timer < 0)
+                    {
+                        Step++;
+                        timer = standardTimeStep;
+                    }
+                    break;
+                }
+            case 52:
+                {
+                    ChangeText("Good Luck!");
+                    FadeIn();
+                    if (timer < 0)
+                    {
+                        Step++;
+                        timer = 5;
+                    }
+                    break;
+                }
+            case 53:
                 {
                     FadeOut();
                     FadeOut2();

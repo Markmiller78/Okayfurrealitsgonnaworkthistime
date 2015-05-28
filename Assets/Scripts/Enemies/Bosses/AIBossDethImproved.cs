@@ -47,8 +47,9 @@ public class AIBossDethImproved : MonoBehaviour
     GameObject healthB;
     GameObject HealthRemaining;
 
-
-
+    public AudioSource Playsounds;
+    public AudioClip DethSound1;
+    public GameObject LingerSound;
     // Use this for initialization
     void Start()
     {
@@ -492,6 +493,7 @@ public class AIBossDethImproved : MonoBehaviour
         NewWayPoint();
         vanishTimer = 2.5f;
         vanishbool2 = true;
+        Playsounds.PlayOneShot(DethSound1);
 
     }
     void AppearEffect()
@@ -527,6 +529,7 @@ public class AIBossDethImproved : MonoBehaviour
     {
         Destroy(healthB);
         Instantiate(BossLoot, transform.position, Quaternion.identity);
+        Instantiate(LingerSound);
     }
 
 }

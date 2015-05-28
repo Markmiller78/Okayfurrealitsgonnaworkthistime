@@ -203,48 +203,60 @@ public class GenerateLoot : MonoBehaviour
         }
         if (gameObject.tag == "Enemy")
         {
-            int MoarLootz = Random.Range(0, 100);
-            if (MoarLootz > 86)
-            {
-                //transform.position += new Vector3(0, .6f, 0);
-                int RandNum = Random.Range(1, 19);
-                GameObject Loot = DetermineType(RandNum);
-                DetStat1 = DetermineStat(RandNum);
-                DetStat2 = DetermineStat(RandNum);
-                string SendName = DetermineName(RandNum, DetStat1, DetStat2);
-
-
-                //Don't Allow Loot to Overlap
-                Vector3 ObjectPOS = transform.position;
-                GameObject[] objects = GameObject.FindGameObjectsWithTag("PickUp");
-                for (int i = 0; i < objects.Length; i++)
+                int MoarLootz = Random.Range(0, 100);
+                if (MoarLootz > 86)
                 {
-                    if (ObjectPOS.x < objects[i].transform.position.x + .3f && ObjectPOS.x > objects[i].transform.position.x - .3f && ObjectPOS.y < objects[i].transform.position.y + .3f && ObjectPOS.y > objects[i].transform.position.y - .3f)
+                    MoarLootz = Random.Range(0, 100);
+
+                    if (MoarLootz > 70)
                     {
-                        //print("Loot Stacked! Deleted Generating Loot.");
-                        return;
+                        DropAPieceOfGear(transform.position);
                     }
+                    else
+                        DropAnEmber();
                 }
+        //    int MoarLootz = Random.Range(0, 100);
+        //    if (MoarLootz > 86)
+        //    {
+        //        //transform.position += new Vector3(0, .6f, 0);
+        //        int RandNum = Random.Range(1, 19);
+        //        GameObject Loot = DetermineType(RandNum);
+        //        DetStat1 = DetermineStat(RandNum);
+        //        DetStat2 = DetermineStat(RandNum);
+        //        string SendName = DetermineName(RandNum, DetStat1, DetStat2);
 
 
-                GameObject temp = (GameObject)Instantiate(Loot, transform.position, transform.rotation);
-                temp.SendMessage("SetName", SendName, SendMessageOptions.DontRequireReceiver);
+        //        //Don't Allow Loot to Overlap
+        //        Vector3 ObjectPOS = transform.position;
+        //        GameObject[] objects = GameObject.FindGameObjectsWithTag("PickUp");
+        //        for (int i = 0; i < objects.Length; i++)
+        //        {
+        //            if (ObjectPOS.x < objects[i].transform.position.x + .3f && ObjectPOS.x > objects[i].transform.position.x - .3f && ObjectPOS.y < objects[i].transform.position.y + .3f && ObjectPOS.y > objects[i].transform.position.y - .3f)
+        //            {
+        //                //print("Loot Stacked! Deleted Generating Loot.");
+        //                return;
+        //            }
+        //        }
 
-                SendStat.TheStat = (StatType)DetStat1;
-                SendStat.StatAmount = DetermineStatAmount(RandNum);
-                temp.SendMessage("SetStat1", SendStat, SendMessageOptions.DontRequireReceiver);
 
-                //50% Chance to Generate a Second stat
-                SecondStat = Random.Range(0, 100);
-                if (SecondStat > 50)
-                {
-                    SendStat.TheStat = (StatType)DetStat2;
-                    SendStat.StatAmount = DetermineStatAmount(RandNum);
-                    temp.SendMessage("SetStat2", SendStat, SendMessageOptions.DontRequireReceiver);
-                }
-                //temp.SendMessage("SetStat1", )
-                //transform.position -= new Vector3(0, .6f, 0);
-            }
+        //        GameObject temp = (GameObject)Instantiate(Loot, transform.position, transform.rotation);
+        //        temp.SendMessage("SetName", SendName, SendMessageOptions.DontRequireReceiver);
+
+        //        SendStat.TheStat = (StatType)DetStat1;
+        //        SendStat.StatAmount = DetermineStatAmount(RandNum);
+        //        temp.SendMessage("SetStat1", SendStat, SendMessageOptions.DontRequireReceiver);
+
+        //        //50% Chance to Generate a Second stat
+        //        SecondStat = Random.Range(0, 100);
+        //        if (SecondStat > 50)
+        //        {
+        //            SendStat.TheStat = (StatType)DetStat2;
+        //            SendStat.StatAmount = DetermineStatAmount(RandNum);
+        //            temp.SendMessage("SetStat2", SendStat, SendMessageOptions.DontRequireReceiver);
+        //        }
+        //        //temp.SendMessage("SetStat1", )
+        //        //transform.position -= new Vector3(0, .6f, 0);
+        //    }
         }
 
     }
