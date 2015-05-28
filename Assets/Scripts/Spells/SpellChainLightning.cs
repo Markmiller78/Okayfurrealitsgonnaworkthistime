@@ -3,8 +3,6 @@ using System.Collections;
 
 public class SpellChainLightning : MonoBehaviour
 {
-    float safetyTimer;
-
     public float damage;
 
     public GameObject debuff;
@@ -53,7 +51,9 @@ public class SpellChainLightning : MonoBehaviour
         once = true;
         cantHit = null;
         dood = true;
-        safetyTimer = 0;
+
+        //Attempt to fix fuzzy balls of lightning
+        Destroy(gameObject, 1);
     }
 
     void FixedUpdate()
@@ -62,11 +62,6 @@ public class SpellChainLightning : MonoBehaviour
         {
             //Keep firing from the player
             // transform.position = player.transform.position;
-            safetyTimer += Time.deltaTime;
-            if (safetyTimer >= 1.0f)
-            {
-                Explode();
-            }
 
             if (target == null)
             {

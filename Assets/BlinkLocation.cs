@@ -21,11 +21,23 @@ public class BlinkLocation : MonoBehaviour {
         if (dungeon != null)
             generator = dungeon.GetComponent<RoomGeneration>();
 
-
-        if (transform.position.x < 0f || transform.position.x > (generator.finalRoomInfoArray[generator.currentRoom].width - 1) || transform.position.y > 0f || transform.position.y < -(generator.finalRoomInfoArray[generator.currentRoom].height - 1))
+        if (Application.loadedLevelName == "Tutorial")
         {
-            tpFailed = true;
+
+            if (transform.position.x < 0.5f || transform.position.x > 26.5f || transform.position.y > -0.5f || transform.position.y < -21.32f)
+            {
+                tpFailed = true;
+            }
         }
+        else
+        {
+
+            if (transform.position.x < 0f || transform.position.x > (generator.finalRoomInfoArray[generator.currentRoom].width - 1) || transform.position.y > 0f || transform.position.y < -(generator.finalRoomInfoArray[generator.currentRoom].height - 1))
+            {
+                tpFailed = true;
+            }
+        }
+
 	}
 	
 	// Update is called once per frame

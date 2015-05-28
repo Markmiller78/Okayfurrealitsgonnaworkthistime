@@ -56,6 +56,8 @@ public class MainMenu : MonoBehaviour
     public AudioClip selectSound;
     public AudioSource soundSource;
 
+    public Text continueForGraying;
+
     public Rect[] SelectRects;
     Vector2 Mouse;
     Vector2 MouseOld;
@@ -771,6 +773,7 @@ public class MainMenu : MonoBehaviour
 
     void AchievementsMenu()
     {
+        disablemouse = true;
         maxchoices = 2;
         choices[0] = -4.25f;
         choices[1] = -4.25f;
@@ -822,6 +825,7 @@ public class MainMenu : MonoBehaviour
                         Achievements.SetActive(false);
                         CurrMenu = Menu.Main;
                         currentSelection = 3;
+                        disablemouse = false;
                         break;
                     }
             }
@@ -854,6 +858,7 @@ public class MainMenu : MonoBehaviour
                         SelectRects[6] = new Rect(516, 1867, 300, 150);
                         Achievements.SetActive(false);
                         CurrMenu = Menu.Main;
+                        disablemouse = false;
                         currentSelection = 3;
                         break;
                     }
@@ -870,6 +875,12 @@ public class MainMenu : MonoBehaviour
         choices[1] = 1f;
         choices[2] = -2.72f;
         ContinueText.SetActive(true);
+
+        if (!File.Exists(Application.persistentDataPath + "/playerinfo.dat"))
+        {
+            continueForGraying.color = new Color(.25f, .25f, .25f);
+            currentSelection = 1;
+        }
 
         switch (currentSelection)
         {
@@ -925,7 +936,7 @@ public class MainMenu : MonoBehaviour
                         if (theOptions.easyMode != true)
                         {
 
-                            Debug.Log(theOptions.GetComponent<SaveTest>().data.canyouload == true);
+                            //Debug.Log(theOptions.GetComponent<SaveTest>().data.canyouload == true);
 
                             if (File.Exists(Application.persistentDataPath + "/playerinfo.dat"))
                             {
