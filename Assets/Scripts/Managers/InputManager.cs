@@ -11,6 +11,7 @@ public class InputManager : MonoBehaviour
     public bool isPaused = false;
     bool mapMenu = false;
     Animator anim;
+    PlayerMovement move;
 
     void Start()
     {
@@ -20,6 +21,7 @@ public class InputManager : MonoBehaviour
             cooldowns = player.GetComponent<PlayerCooldowns>();
             melee = player.GetComponentInChildren<PlayerMeleeAttack>();
             anim = player.GetComponent<Animator>();
+            move = player.GetComponent<PlayerMovement>();
         }
     }
 
@@ -80,7 +82,7 @@ public class InputManager : MonoBehaviour
                     player.SendMessage("CastSpell", SendMessageOptions.DontRequireReceiver);
                 }
                 // LB to dash
-                if (Input.GetButtonDown("CDash"))
+                if (Input.GetButtonDown("CDash") && !move.transitioning)
                 {
                     player.SendMessage("Dash", SendMessageOptions.DontRequireReceiver);
                 }
@@ -172,7 +174,7 @@ public class InputManager : MonoBehaviour
                     player.SendMessage("CastSpell", SendMessageOptions.DontRequireReceiver);
                 }
                 // Left Shift to dash
-                if (Input.GetButtonDown("KBDash"))
+                if (Input.GetButtonDown("KBDash") && !move.transitioning)
                 {
                     player.SendMessage("Dash", SendMessageOptions.DontRequireReceiver);
                 }
