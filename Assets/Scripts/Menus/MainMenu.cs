@@ -876,11 +876,16 @@ public class MainMenu : MonoBehaviour
         choices[2] = -2.72f;
         ContinueText.SetActive(true);
 
-        if (!File.Exists(Application.persistentDataPath + "/playerinfo.dat"))
-        {
-            continueForGraying.color = new Color(.25f, .25f, .25f);
-            currentSelection = 1;
-        }
+         if( Application.platform != RuntimePlatform.OSXWebPlayer
+     || Application.platform != RuntimePlatform.WindowsWebPlayer )
+ {
+     if (!File.Exists(Application.persistentDataPath + "/playerinfo.dat"))
+     {
+         continueForGraying.color = new Color(.25f, .25f, .25f);
+         currentSelection = 1;
+     }
+ }
+
 
         switch (currentSelection)
         {
